@@ -1,0 +1,79 @@
+:root {
+
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+body {
+  background: #f1f1f1;
+  color: #33333a;
+
+  font-family: 'Open Sans', sans-serif;
+  font-feature-settings: normal;
+  font-kerning: normal;
+  font-size: 16px;
+  font-variant-ligatures: normal;
+  line-height: 1.2;
+
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  margin: 0 auto;
+  width: 80%;
+}
+
+.card {
+  background: #fff;
+  border-radius: 3px;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.12);
+  margin-bottom: 20px;
+
+  &--header,
+  &--body,
+  &--footer {
+    padding: 20px;
+  }
+
+  &--header {
+    font-size: 18px;
+    line-height: 1.1;
+
+    &-caption {
+      color: #999;
+      font-size: 0.75rem;
+      font-weight: 400;
+      display: block;
+    }
+  }
+
+  div ~ div {
+    padding-top: 0;
+  }
+}
+
+h2 {
+  border-bottom: 1px dotted #ccc;
+  display: block;
+  line-height: 1.5;
+  margin: 0;
+}
+
+form {
+
+  label {
+    display: block;
+  }
+
+  input,
+  select {
+    margin: 0 10px;
+  }
+}
