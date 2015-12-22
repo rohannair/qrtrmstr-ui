@@ -26,7 +26,7 @@ export default class Survey extends React.Component {
               <span className="card--header-caption"></span>
             </h2>
             <div className="card--body">
-              <label><input name="os" type="radio" />OS X</label>
+              <label><input name="os" type="radio" />OS X 10.11</label>
               <label><input name="os" type="radio" />Linux</label>
               <label><input name="os" type="radio" />Windows</label>
             </div>
