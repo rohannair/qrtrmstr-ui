@@ -14,57 +14,55 @@ const componentName   = _.compose(_.capitalize, _.camelCase)(name);
 const componentNameLC = _.camelCase(name);
 const dest            = path.join(__dirname, '..', 'src', 'components', componentName);
 
-const tests = `
-  import test from 'tape';
-  import dom from 'cheerio';
-  import React from 'react';
+const tests = `import test from 'tape';
+import dom from 'cheerio';
+import React from 'react';
 
-  import ${componentName} from './index.jsx';
+import ${componentName} from './index.jsx';
 
-  const renderText = React.renderToStaticMarkup;
+const renderText = React.renderToStaticMarkup;
 
-  test('${componentName}', next => {
+test('${componentName}', next => {
 
-    next.test('...with no props', assert => {
+  next.test('...with no props', assert => {
 
-      const actual   = 'What is actual output';
-      const expected = 'What is expected output';
+    const actual   = 'What is actual output';
+    const expected = 'What is expected output';
 
-      assert.equal(actual, expected,
-        'What should the feature do?');
+    assert.equal(actual, expected,
+      'What should the feature do?');
 
-      assert.end();
-    });
+    assert.end();
   });
+});
 `;
 
-const js = `
-  import React, { Component, PropTypes } from 'react';
-  import styles from './${componentNameLC}.css';
+const js = `import React, { Component, PropTypes } from 'react';
+import styles from './${componentNameLC}.css';
 
-  class ${componentName} extends Component {
-    static propTypes = {
+class ${componentName} extends Component {
+  static propTypes = {
 
-    };
+  };
 
-    static defaultProps = {
+  static defaultProps = {
 
-    };
+  };
 
-    state = {
+  state = {
 
-    };
+  };
 
-    render() {
+  render() {
 
-      return (
-        <div className="${componentNameLC}">
-        </div>
-      );
-    }
+    return (
+      <div className="${componentNameLC}">
+      </div>
+    );
   }
+}
 
-  export default ${componentName};
+export default ${componentName};
 `;
 
 if (isDir.sync(dest)) {
