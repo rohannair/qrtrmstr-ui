@@ -17,6 +17,7 @@ export default class Survey extends React.Component {
             <div className="card--body">
               <label>Name: <input type="text" /></label>
               <label>Email: <input type="email" /></label>
+              <label>Phone Number: <input type="phone" /></label>
             </div>
           </div>
 
