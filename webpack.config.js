@@ -26,13 +26,13 @@ module.exports = {
 
       {
         test: /\.jsx$/,
-        loader: 'babel-loader',
+        loaders: ['react-hot', 'babel-loader'],
       },
 
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
+        loaders: ['react-hot', 'babel-loader'],
       },
 
       {
