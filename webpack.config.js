@@ -2,6 +2,11 @@ const autoprefixer = require('autoprefixer');
 const precss       = require('precss');
 const lost         = require('lost');
 const rucksack     = require('rucksack');
+const webpack      = require('webpack');
+
+const devFlagPlugin = new webpack.DefinePlugin({
+  __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false'))
+});
 
 module.exports = {
   context: __dirname + '/src',
@@ -42,14 +47,20 @@ module.exports = {
 
       {
         test  : /\.css$/,
-        loader: "style-loader!css-loader!postcss-loader"
+        loader: 'style-loader!css-loader!postcss-loader'
       }
 
     ]
   },
 
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(),
+    devFlagPlugin
+  ],
+
   postcss: function() {
-    return [lost, autoprefixer, precss]
+    return [lost, autoprefixer, precss];
   },
 
   resolveLoader: {
@@ -67,4 +78,4 @@ module.exports = {
     reasons: true
   },
 
-}
+};

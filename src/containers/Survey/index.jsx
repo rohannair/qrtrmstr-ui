@@ -1,52 +1,62 @@
-import React, { PropTypes } from 'react';
+// Deps
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+
+// Utils
 import { kebabCase } from 'lodash';
 
+// Components
 import Card from '../../components/Card';
 import SingleChoice from '../../components/SingleChoice';
+import InputGroup from '../../components/InputGroup';
 
+// Styles
 import styles from './survey.css';
 
-export default class Survey extends React.Component {
+class Survey extends Component {
   render() {
+    const { fields } = this.props;
+
     return (
       <div className="container container-survey">
         <h1>What type of stuff do you want?</h1>
 
         <form>
-          {this._returnOptions(this.props.fields)}
-
-          <Card title="Software">
-              <label>IDE/Text Editor:</label>
-              <select>
-                <option>Please select...</option>
-                <option>Atom</option>
-                <option>IntelliJ IDEA</option>
-                <option>Sublime Text 3</option>
-                <option>Webstorm</option>
-              </select>
-          </Card>
+          { this._returnCards(fields) }
         </form>
 
       </div>
     );
   }
 
-  _returnOptions = (fields) => {
-    return fields.map(val => {
-      switch (val.type) {
-      case 'singleChoice':
-        return <Card title={val.title}>{this._returnSingleChoices(val)}</Card>;
-        break;
-
-      case 'inputs':
-      default:
-        return <Card title={val.title}>{this._returnInputs(val)}</Card>;
-        break;
-      }
+  _returnCards = (fields) => {
+    return [...fields].map(val => {
+      return <Card title={val.title} key={val.id}>{this._returnOptComponent(val)}</Card>;
     });
+  }
+
+  _returnOptComponent = (val) => {
+    switch (val.type) {
+    case 'singleChoice':
+      return this._returnSingleChoices(val);
+      break;
+
+    case 'inputs':
+    default:
+      return <InputGroup groupOption={val} />;
+      break;
+    }
   }
 
   _returnSingleChoices = val => val.options.map(opt => <SingleChoice name={val.name} key={kebabCase(opt.name)}>{opt.name}</SingleChoice>);
 
   _returnInputs = val => val.options.map(opt => <label key={kebabCase(opt.name)}>{opt.name + ': '}<input type={opt.input.type}/></label>);
 }
+
+function select(state) {
+  return {
+    fields: state.default.fields,
+  };
+}
+
+export default connect(select)(Survey);

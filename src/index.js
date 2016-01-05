@@ -1,21 +1,19 @@
 import React from 'react';
-import ReactDom from 'react-dom';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+import { Router, Route, Link, browserHistory } from 'react-router';
 
 import Survey from './containers/Survey';
-import store from './store/appStore';
+import configure from './store';
 
-const App = React.createClass({
+const store = configure();
 
-  render() {
-    const fields = store.getState();
-
-    return (
-      <div>
-        <Survey fields={fields.default.fields}/>
-      </div>
-    );
-  }
-
-});
-
-ReactDom.render(<App />, document.getElementById('app'));
+render(
+  <div>
+    <Provider store={store}>
+      <Survey />
+    </Provider>
+  </div>
+  ,
+  document.getElementById('app')
+);

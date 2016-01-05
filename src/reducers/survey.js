@@ -1,11 +1,9 @@
 import * as stateMock from '../../mocks/surveyMock';
 
-function surveyReducer(state = stateMock, action) {
+export default function survey(state = stateMock, action) {
   switch (action.type) {
 
   default:
     return state;
   }
 }
-
-export default surveyReducer;

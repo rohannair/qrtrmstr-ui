@@ -1,21 +1,40 @@
 export default {
   fields: [
     {
-      title: 'Main',
+      id: 0,
+      title: 'Personal Details',
       type: 'inputs',
       options: [
         {
           name: 'Name',
           input: {
             placeholder: '',
-            type: 'text'
+            type: 'text',
+            value: 'Rohan Nair',
+          }
+        },
+        {
+          name: 'Title',
+          input: {
+            placeholder: '',
+            type: 'text',
+            value: 'Founder',
+          }
+        },
+        {
+          name: 'Department',
+          input: {
+            placeholder: '',
+            type: 'text',
+            value: 'Executive',
           }
         },
         {
           name: 'Email',
           input: {
             placeholder: '',
-            type: 'email'
+            type: 'email',
+            value: 'rohan@qrtrmstr.com'
           }
         },
         {
@@ -28,6 +47,7 @@ export default {
       ]
     },
     {
+      id: 1,
       title: 'OS Preference',
       name: 'os',
       type: 'singleChoice',
@@ -38,6 +58,7 @@ export default {
       ]
     },
     {
+      id: 2,
       title: 'Equipment Preference',
       name: 'equipment',
       type: 'singleChoice',
@@ -48,6 +69,7 @@ export default {
       ]
     },
     {
+      id: 3,
       title: 'External Monitors',
       name: 'monitors',
       type: 'singleChoice',
@@ -56,5 +78,17 @@ export default {
         { name: 'Dell Ultrasharp' },
       ]
     },
+    {
+      id: 4,
+      title: 'IDE/Editor',
+      name: 'editor',
+      type: 'singleChoice',
+      options: [
+        { name: 'Atom' },
+        { name: 'IntelliJ IDEA' },
+        { name: 'Sublime Text 3' },
+        { name: 'Webstorm' },
+      ]
+    }
   ]
 };
