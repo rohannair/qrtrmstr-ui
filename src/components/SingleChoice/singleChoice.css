@@ -1,0 +1,21 @@
+label {
+  display: inline-block;
+  padding: 10px;
+  margin: 0 10px 10px 0;
+}
+
+label.singleChoice {
+  background: #fff;
+  border: 2px solid #ddd;
+  border-radius: 3px;
+
+  &:hover {
+    background: #ddd;
+    border-color: #cfcfcf;
+    cursor: pointer;
+  }
+
+  input {
+    display: none;
+  }
+}
