@@ -7,7 +7,7 @@ html {
 }
 
 body {
-  background: #ddd;
+  background: #fafafa;
   color: #33333a;
 
   font-family: 'Open Sans', sans-serif;
@@ -23,5 +23,5 @@ body {
 
 .container {
   margin: 0 auto;
-  width: 90%;
+  width: 60%;
 }
