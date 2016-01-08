@@ -1,5 +1,10 @@
-label {
+.selection {
   display: inline-block;
+  padding: 10px;
+}
+
+label {
+  display: block;
   padding: 10px;
   margin: 0 10px 10px 0;
 }
@@ -8,6 +13,10 @@ label.singleChoice {
   background: #fff;
   border: 2px solid #ddd;
   border-radius: 3px;
+  min-width: 100px;
+  max-width: 150px;
+  margin: 0 auto;
+  text-align: center;
 
   &:hover {
     background: #ddd;
@@ -18,4 +27,17 @@ label.singleChoice {
   input {
     display: none;
   }
+}
+
+.imageContainer {
+  width: 100px;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+
+.thumbnail {
+  width: 70%;
+  display: block;
+  margin: 0 auto;
 }
