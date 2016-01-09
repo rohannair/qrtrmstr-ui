@@ -1,6 +1,12 @@
 .selection {
   display: inline-block;
   padding: 10px;
+  cursor: pointer;
+
+  &:hover label.singleChoice {
+    background: #4B257C;
+    color: #fff;
+  }
 }
 
 label {
@@ -17,12 +23,7 @@ label.singleChoice {
   margin: 0 auto;
   text-align: center;
   font-weight: bold;
-
-  &:hover {
-    background: #4B257C;
-    color: #fff;
-    cursor: pointer;
-  }
+  cursor: pointer;
 
   input {
     display: none;
