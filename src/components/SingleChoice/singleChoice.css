@@ -11,16 +11,16 @@ label {
 
 label.singleChoice {
   background: #fff;
-  border: 2px solid #ddd;
   border-radius: 3px;
   min-width: 100px;
   max-width: 150px;
   margin: 0 auto;
   text-align: center;
+  font-weight: bold;
 
   &:hover {
-    background: #ddd;
-    border-color: #cfcfcf;
+    background: #4B257C;
+    color: #fff;
     cursor: pointer;
   }
 
