@@ -7,8 +7,8 @@ html {
 }
 
 body {
-  background: #ddd;
-  color: #33333a;
+  background: #fafafa;
+  color: #363746;
 
   font-family: 'Open Sans', sans-serif;
   font-feature-settings: normal;
@@ -23,5 +23,5 @@ body {
 
 .container {
   margin: 0 auto;
-  width: 90%;
+  width: 60%;
 }

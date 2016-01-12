@@ -41,6 +41,9 @@ class Survey extends Component {
       return this._returnSingleChoices(val);
       break;
 
+    case 'text':
+      return <div><span className='cardBody'>{val.options.body}</span></div>
+
     case 'inputs':
     default:
       return <InputGroup groupOption={val} />;
@@ -48,7 +51,7 @@ class Survey extends Component {
     }
   }
 
-  _returnSingleChoices = val => val.options.map(opt => <SingleChoice name={val.name} key={kebabCase(opt.name)}>{opt.name}</SingleChoice>);
+  _returnSingleChoices = val => val.options.map(opt => <SingleChoice name={val.name} key={kebabCase(opt.name)} context={opt}>{opt.name}</SingleChoice>);
 
   _returnInputs = val => val.options.map(opt => <label key={kebabCase(opt.name)}>{opt.name + ': '}<input type={opt.input.type}/></label>);
 }
