@@ -1,0 +1,69 @@
+.userList {
+  &-metadata {
+    background: #F2F3F6;
+    color: #444;
+    font-size: 0.75em;
+    font-weight: bold;
+    padding: 10px 20px;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  &-header {
+    background: #F2F3F6;
+    border: 1px solid #DBDCE2;
+    border-left: 0;
+    border-right: 0;
+    width: 100%;
+  }
+
+  th {
+    color: #767E95;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-align: left;
+    text-transform: uppercase;
+    text-shadow: 0 2px 0 1px #FFF;
+  }
+
+  th, td {
+    padding: 20px;
+
+    &.checkbox {
+      width: 1.2rem;
+      text-align: center;
+    }
+
+    input {
+      font-size: 1rem;
+    }
+
+    &.name {
+      font-weight: bold;
+      color: #444;
+    }
+  }
+
+  &-option {
+    border-left: 4px solid transparent;
+    border-bottom: 1px solid #DBDCE2;
+
+    &:hover {
+      border-left-color: #4A167C;
+      background: #FEFBF2;
+      cursor: pointer;
+    }
+  }
+
+  &-actionBar {
+    display: flex;
+    flex-direction: row;
+
+    button {
+      margin-left: auto;
+      font-size: 0.75rem;
+    }
+  }
+}

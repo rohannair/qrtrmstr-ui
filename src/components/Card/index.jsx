@@ -1,15 +1,29 @@
 import React, { Component, PropTypes } from 'react';
 import styles from './card.css';
+import classNames from 'classnames';
 
 const Card = props => {
-  const { title, footer, children } = props;
+  const { title, footer, children, noPadding } = props;
+  const cardClasses = classNames(
+    'card',
+    { 'card-noPadding': !!noPadding }
+  );
+
   return (
-    <article className="card">
+    <article className={cardClasses}>
       <Header>{title}</Header>
       <Body>{children}</Body>
       <Footer>{footer}</Footer>
     </article>
   );
+};
+
+Card.PropTypes = {
+  noPadding: PropTypes.boolean
+};
+
+Card.defaultProps = {
+  noPadding: false
 };
 
 const Header = (props) => {

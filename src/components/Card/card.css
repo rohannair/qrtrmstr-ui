@@ -25,3 +25,11 @@
 
   }
 }
+
+.card-noPadding {
+  .card-header,
+  .card-body,
+  .card-footer {
+    padding: 0;
+  }
+}
