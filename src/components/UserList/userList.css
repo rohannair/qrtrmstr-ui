@@ -49,11 +49,54 @@
   &-option {
     border-left: 4px solid transparent;
     border-bottom: 1px solid #DBDCE2;
+    text-align: middle;
 
     &:hover {
-      border-left-color: #4A167C;
+      border-left-color: #EE6352;
       background: #FEFBF2;
       cursor: pointer;
+    }
+
+    .oi[data-glyph="key"] {
+      color: #EE6352;
+      font-size: 0.75rem;
+      margin-left: 5px;
+      padding: 3px;
+      text-align: center;
+    }
+
+    .actions {
+      text-align: right;
+
+      button {
+        background: #fff;
+        border: 1px solid #78848D;
+        border-radius: 1px;
+        color: #78848D;
+        font-size: 0.75em;
+        font-weight: bold;
+        margin-left: 5px;
+        padding: 5px 10px;
+
+        &:hover {
+          background: #78848D;
+          color: #fff;
+        }
+
+        &.disabled {
+          background: #ccc;
+          border-color: #777;
+          cursor: not-allowed;
+          color: #444;
+          opacity: 0.1;
+
+          &:hover {
+            color: #444;
+          }
+        }
+      }
+
+
     }
   }
 
@@ -62,8 +105,13 @@
     flex-direction: row;
 
     button {
-      margin-left: auto;
+      background: #EE6352;
+      border: 0;
+      color: #FAFAFF;
       font-size: 0.75rem;
+      font-weight: bold;
+      margin-left: auto;
+      padding: 10px 15px;
     }
   }
 }

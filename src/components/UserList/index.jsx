@@ -25,12 +25,23 @@ class UserList extends Component {
 
   render() {
     const userData = [...this.props.data].map(val => {
+      let adminIcon = val.isAdmin
+        ? <i className="oi" data-glyph="key" />
+        : null;
       return (
         <tr key={val.id} className="userList-option">
           <td className="checkbox"><input type="checkbox" /></td>
-          <td className="name">{ `${val.first_name} ${val.last_name}` }</td>
+          <td className="name">{ ` ${val.first_name} ${val.last_name}` }{ adminIcon }</td>
           <td>{ val.email }</td>
-          <td>{ (val.isAdmin).toString() }</td>
+          <td>{ val.department_name }</td>
+          <td className="actions">
+            <button>Edit</button>
+            <button
+              className={val.isAdmin ? 'disabled' : null}
+              disabled={val.isAdmin}>
+              Deactivate
+            </button>
+          </td>
         </tr>
       );
     });
@@ -53,7 +64,8 @@ class UserList extends Component {
                 <th className="checkbox"><input type="checkbox" /></th>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Is Admin?</th>
+                <th>Department</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>

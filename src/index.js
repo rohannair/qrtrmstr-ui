@@ -13,7 +13,11 @@ const store = configure();
 render(
   <div>
     <Provider store={store}>
-      <App />
+      <Router history={browserHistory}>
+        <Route path='/' component={App}>
+          <Route path='survey' component={Survey} />
+        </Route>
+      </Router>
     </Provider>
   </div>
   ,

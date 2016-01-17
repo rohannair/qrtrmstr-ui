@@ -12,7 +12,11 @@ function login(token = null) {
 
 export const LOG_OUT = 'LOG_OUT';
 export const logOut = function() {
-  return dispatch => dispatch({ type: LOG_OUT });
+  return dispatch => {
+    // Delete cookie
+    Cookies.set('token', '', { expires: -1 });
+    return dispatch({ type: LOG_OUT });
+  };
 };
 
 // Action creators
@@ -30,7 +34,7 @@ export const tryLogin = credentials => {
     .then(json => {
       console.log(JSON.stringify(json, null, 4));
       Cookies.set('token', json.token, { expires: 3 * 24 * 60 * 60 * 1000});
-      dispatch(login(json.token));
+      return dispatch(login(json.token));
     });
   };
 };
@@ -38,6 +42,6 @@ export const tryLogin = credentials => {
 export const setTokenCookie = token => {
   return dispatch => {
     Cookies.set('token', token, { expires: 3 * 24 * 60 * 60 * 1000});
-    dispatch(login(token));
+    return dispatch(login(token));
   };
 };

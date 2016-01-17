@@ -48,6 +48,11 @@ module.exports = {
       {
         test  : /\.css$/,
         loader: 'style-loader!css-loader!postcss-loader'
+      },
+
+      {
+        test: /\.(eot|woff|woff2|ttf|svg|png|jpg|otf)$/,
+        loader: 'url-loader?limit=30000&name=[name]-[hash].[ext]'
       }
 
     ]
