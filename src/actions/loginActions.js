@@ -1,25 +1,32 @@
 import fetch from 'isomorphic-fetch';
 import Cookies from 'cookies-js';
 
-// Action types
-export const LOG_IN  = 'LOG_IN';
-function login(token = null) {
-  return {
-    type: LOG_IN,
-    token
-  };
-}
+// Set Token
+export const login = (token = null, hasCookie) => {
 
-export const LOG_OUT = 'LOG_OUT';
-export const logOut = function() {
-  return dispatch => {
-    // Delete cookie
-    Cookies.set('token', '', { expires: -1 });
-    return dispatch({ type: LOG_OUT });
+  // Set cookie
+  if (!hasCookie) {
+    Cookies.set('token', token, { expires: 3 * 24 * 60 * 60 * 1000});
+  }
+
+  return {
+    type: 'LOG_IN',
+    token
   };
 };
 
-// Action creators
+// Remove token
+export const logout = () => {
+
+  // Delete cookie
+  Cookies.set('token', '', { expires: -1 });
+
+  return {
+    type: 'LOG_OUT'
+  };
+};
+
+// Login API call
 export const tryLogin = credentials => {
   return dispatch => {
     return fetch('http://localhost:3000/api/v1/login', {
@@ -31,17 +38,8 @@ export const tryLogin = credentials => {
       body: JSON.stringify(credentials),
     })
     .then(response => response.json())
-    .then(json => {
-      console.log(JSON.stringify(json, null, 4));
-      Cookies.set('token', json.token, { expires: 3 * 24 * 60 * 60 * 1000});
-      return dispatch(login(json.token));
+    .then(({ token }) => {
+      return dispatch(login(token));
     });
-  };
-};
-
-export const setTokenCookie = token => {
-  return dispatch => {
-    Cookies.set('token', token, { expires: 3 * 24 * 60 * 60 * 1000});
-    return dispatch(login(token));
   };
 };

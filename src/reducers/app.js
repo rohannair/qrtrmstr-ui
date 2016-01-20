@@ -1,13 +1,14 @@
-import { merge } from 'lodash';
-
 const initialState = {
   users: {},
 };
 
-export default function app(state = initialState, action) {
-  switch (action.type) {
+export default function app(state = initialState, { type, users }) {
+  switch (type) {
   case 'USERS_RETRIEVED':
-    return merge({}, state, {users: action.users});
+    return {
+      ...state,
+      users: users
+    };
   default:
     return state;
   }
