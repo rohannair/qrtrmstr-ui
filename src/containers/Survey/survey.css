@@ -97,12 +97,12 @@
       color: #EE6352;
     }
 
-    h2,
+    h3,
     p {
       padding: 0 10px;
     }
 
-    h2 {
+    h3 {
       font-size: 18px;
       font-weight: bold;
     }

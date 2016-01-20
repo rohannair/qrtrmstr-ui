@@ -2,6 +2,7 @@ export default {
   id: 'qrtrmstr-demo',
   survey: [
     {
+      id: 'text1',
       form: false,
       heading: 'Hi Finn, congratulations on joining Quartermaster!',
       headerStyles: {
@@ -10,6 +11,7 @@ export default {
       body: '<p>We\'re super excited for your first day on <strong>February 1st, 2016</strong>. To make your onboarding a lot more fun, and get you up to speed as fast as possible, let\'s walk through some stuff.</p><p>You are a <strong>Node.js Developer</strong> on the <strong>Product Development</strong> team, reporting directly to <strong>Rohan Nair</strong> (who you can contact directly at <a href="mailto:rohan@qrtrmstr.com">rohan@qrtrmstr.com</a>).</p>'
     },
     {
+      id: 'text2',
       form: false,
       heading: 'Hardware',
       body: '<p>At Quartermaster, we believe in giving you the equipment that you think will make you most succesful. On the following few pages you can choose the hardware you want, including:</p><ul><li><span>Workstation</span></li><li><span>Monitors</span></li><li><span>Mice</span></li><li><span>Keyboard</span></li><li><span>Stands</span></li><li><span>and other stuff...</span></li></ul><p>If you need something that you don\'t see, let us know on the last page</p>'
@@ -133,6 +135,7 @@ export default {
       }
     },
     {
+      id: 'text3',
       form: false,
       heading: 'Misc',
       className: 'textarea-container',
