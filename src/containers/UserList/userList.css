@@ -105,13 +105,7 @@
     flex-direction: row;
 
     button {
-      background: #EE6352;
-      border: 0;
-      color: #FAFAFF;
-      font-size: 0.75rem;
-      font-weight: bold;
       margin-left: auto;
-      padding: 10px 15px;
     }
   }
 }

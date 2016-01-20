@@ -19,6 +19,7 @@ class Login extends Component {
 
     return (
       <div className="login-box">
+        <h1>Log In</h1>
         <form
         onSubmit={submitForm}>
 
