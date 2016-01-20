@@ -2,63 +2,101 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-// Utils
-import { kebabCase } from 'lodash';
-
 // Components
 import Card from '../../components/Card';
-import SingleChoice from '../../components/SingleChoice';
-import InputGroup from '../../components/InputGroup';
+import Button from '../../components/Button';
+import Header from '../../components/Global/Header';
+import Footer from '../../components/Global/Footer';
 
 // Styles
 import styles from './survey.css';
 
 class Survey extends Component {
+
+  state = {
+    selected: null
+  };
+
   render() {
+    const state = this.state;
     const { fields } = this.props;
+    const cardFooter = <div className="nextButton"><Button classes={'lgLong primary'}>Next</Button></div>;
 
     return (
-      <div className="container container-survey">
-        <h1>What type of stuff do you want?</h1>
+      <div className="survey">
+        <Header />
 
-        <form>
-          { this._returnCards(fields) }
-        </form>
+        <div className="container container-survey">
+          {
+            // TODO: Pull out text card here
+            [...fields]
+            .filter(val => !val.form)
+            .map((val, i) => {
+              return (
+                <Card key={i} footer={cardFooter}>
+                  <h2>{val.heading}</h2>
+                  <div
+                    className = {val.className || ''}
+                    dangerouslySetInnerHTML={{__html: val.body}}
+                  />
+                </Card>);
+            })
+          }
+
+          {
+            [...fields]
+            .filter(val => val.form)
+            .map((val, i) => {
+              return (
+                <Card key={'form' + i} footer={cardFooter}>
+                  <h2>{val.heading}</h2>
+                  <div className={val.contents.type}>
+                  {
+                    // TODO: Pull out imageSelector-option here
+                    [...val.contents.options].map(({id, imageUri, title, body}) => {
+                      const classes = 'imageSelector-option' + (id === state.selected ? ' selected' : '');
+
+                      return (
+                        <a
+                          key={id}
+                          ref={id}
+                          className={classes}
+                          onClick={this._toggleOption.bind(this, { id, selected: state.selected})}
+                        >
+                          { imageUri ? <img src={imageUri} /> : <div className="img-placeholder" /> }
+                          <h2>{ title }</h2>
+                          <p>{ body }</p>
+                        </a>
+                      );
+                    })
+                  }
+                  </div>
+                </Card>
+              );
+            })
+          }
+        </div>
+
+        <Footer />
 
       </div>
     );
-  }
+  };
 
-  _returnCards = (fields) => {
-    return [...fields].map(val => {
-      return <Card title={val.title} key={val.id}>{this._returnOptComponent(val)}</Card>;
-    });
-  }
-
-  _returnOptComponent = (val) => {
-    switch (val.type) {
-    case 'singleChoice':
-      return this._returnSingleChoices(val);
-      break;
-
-    case 'text':
-      return <div><span className='cardBody'>{val.options.body}</span></div>
-
-    case 'inputs':
-    default:
-      return <InputGroup groupOption={val} />;
-      break;
+  _toggleOption = ({id, selected}) => {
+    // TODO: Fix this toggle to be card dependent
+    if (id === selected) {
+      return this.setState({selected: null});
     }
-  }
 
-  _returnSingleChoices = val => val.options.map(opt => <SingleChoice name={val.name} key={kebabCase(opt.name)} context={opt}>{opt.name}</SingleChoice>);
+    return this.setState({selected: id});
 
-  _returnInputs = val => val.options.map(opt => <label key={kebabCase(opt.name)}>{opt.name + ': '}<input type={opt.input.type}/></label>);
+  };
 }
 
 function select(state) {
   return {
-    fields: state.default.fields,
+    fields: state.survey.default.survey,
   };
 }
 
