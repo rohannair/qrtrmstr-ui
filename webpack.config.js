@@ -1,6 +1,7 @@
 const autoprefixer = require('autoprefixer');
 const precss       = require('precss');
 const lost         = require('lost');
+const path         = require('path');
 const rucksack     = require('rucksack');
 const webpack      = require('webpack');
 
@@ -8,21 +9,21 @@ const devFlagPlugin = new webpack.DefinePlugin({
   __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false'))
 });
 
-module.exports = {
-  context: __dirname + '/src',
-
+const config = {
   cache: true,
   debug: true,
-  devtool: 'eval-source-map',
+  devtool: 'cheap-module-eval-source-map',
 
-  entry: {
-    javascript: './index.js',
-    html: './index.html'
-  },
+  entry: [
+    'eventsource-polyfill', // necessary for hot reloading with IE
+    'webpack-hot-middleware/client',
+    './src/index.js'
+  ],
 
   output: {
-    path: __dirname + '/public',
+    path: path.join(__dirname, 'public'),
     filename: 'app.js',
+    publicPath: '/static/',
   },
 
   module: {
@@ -59,6 +60,7 @@ module.exports = {
   },
 
   plugins: [
+    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     devFlagPlugin
@@ -84,3 +86,5 @@ module.exports = {
   },
 
 };
+
+module.exports = config;
