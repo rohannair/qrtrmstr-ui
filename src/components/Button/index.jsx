@@ -1,26 +1,21 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
+import classNames from 'classnames';
 import styles from './button.css';
 
-class Button extends Component {
-  static propTypes = {
-
-  };
-
-  static defaultProps = {
-
-  };
-
-  state = {
-
-  };
-
-  render() {
-
-    return (
-      <div className="button">
-      </div>
-    );
-  }
-}
+const Button = ({
+  children,
+  classes = null,
+  text,
+  onClick
+}) => {
+  const buttonClasses = classNames('btn', classes);
+  return (
+    <button
+      className={ buttonClasses }
+      onClick={ onClick}>
+      { children || text }
+    </button>
+  );
+};
 
 export default Button;
