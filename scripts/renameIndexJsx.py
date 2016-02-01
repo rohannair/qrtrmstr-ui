@@ -6,8 +6,8 @@ from shutil import copyfile
 def modifyIndexJsx(file, name):
   wr = open(file, 'w')
   templ = """
-  import %s from './%s'
-  export default %s""" % (name, name, name)
+  import %s from './%s';
+  export default %s;""" % (name, name, name)
   wr.write(templ)
 
 for root, dir, files in os.walk(".."):
