@@ -11,9 +11,13 @@ import Header from '../../components/Global/Header';
 import SurveyCards from '../../components/SurveyCards';
 
 // Actions
-import { setSelection, submitSurvey } from '../../actions/surveyActions';
+import { setSelection, submitSurvey, getSurvey } from '../../actions/surveyActions';
 
 class Survey extends Component {
+  componentWillMount() {
+    this._getSurvey();
+  };
+
   render() {
     const { id, fields, selected } = this.props;
     return (
@@ -37,6 +41,11 @@ class Survey extends Component {
   _onSubmit = () => {
     const { selected } = this.props;
     return this.props.dispatch(submitSurvey(selected));
+  };
+
+  _getSurvey = (id = '05e66b0f-af7b-40a7-b112-8a1d05a3a2ef') => {
+    const { token, dispatch } = this.props;
+    return dispatch(getSurvey(token, id));
   }
 
 };

@@ -86,6 +86,7 @@
 
   &.disabled {
     cursor: not-allowed;
+    opacity: 0.2;
   }
 
   /*****
@@ -94,7 +95,8 @@
 
   &.block {
     display: block;
-    padding: 5px 12px;
+    padding: 10px 15px;
+    width: 100%;
   }
 
   &.xl {
@@ -125,5 +127,32 @@
   &.xs {
     font-size: 0.75rem;
     padding: 3px 5px;
+  }
+
+  &-icon {
+    text-align: left;
+  }
+
+  .oi {
+    margin-right: 10px;
+    font-size: 0.65em;
+    position: relative;
+    top: -1px;
+    text-align: center;
+
+    &.right {
+      float: right;
+    }
+
+    &.left {
+      float: left;
+    }
+  }
+
+  &-icon-center {
+    text-align: center;
+    .oi {
+      margin: 0;
+    }
   }
 }

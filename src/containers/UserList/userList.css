@@ -9,6 +9,7 @@
 
   table {
     width: 100%;
+    border-collapse: separate;
   }
 
   &-header {
@@ -29,7 +30,7 @@
   }
 
   th, td {
-    padding: 20px;
+    padding: 20px 0 20px 20px;
 
     &.checkbox {
       width: 1.2rem;
@@ -67,36 +68,8 @@
 
     .actions {
       text-align: right;
-
-      button {
-        background: #fff;
-        border: 1px solid #78848D;
-        border-radius: 1px;
-        color: #78848D;
-        font-size: 0.75em;
-        font-weight: bold;
-        margin-left: 5px;
-        padding: 5px 10px;
-
-        &:hover {
-          background: #78848D;
-          color: #fff;
-        }
-
-        &.disabled {
-          background: #ccc;
-          border-color: #777;
-          cursor: not-allowed;
-          color: #444;
-          opacity: 0.1;
-
-          &:hover {
-            color: #444;
-          }
-        }
-      }
-
-
+      padding-right: 20px;
+      position: relative;
     }
   }
 
@@ -107,5 +80,9 @@
     button {
       margin-left: auto;
     }
+  }
+
+  .checkbox {
+    padding-left: 10px;
   }
 }

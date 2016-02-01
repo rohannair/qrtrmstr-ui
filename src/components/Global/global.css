@@ -14,6 +14,7 @@ body {
   background: #e0e0e0;
   color: #777781;
   height: 100vh;
+  overflow-y: scroll;
 
   font-family: Gotham, 'Open Sans', sans-serif;
   font-feature-settings: normal;
@@ -26,7 +27,11 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-
+a {
+  &:link, &:visited {
+    text-decoration: none;
+  }
+}
 .app-login {
   display: flex;
   flex-direction: column;

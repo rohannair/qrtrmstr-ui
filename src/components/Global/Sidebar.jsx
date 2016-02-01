@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 
 const Sidebar = props => {
   return (
@@ -11,13 +12,12 @@ const Sidebar = props => {
       </div>
 
       <ul className="sidebar-menu">
-        <li><i className="oi" data-glyph="people" /> Departments</li>
-        <li><i className="oi" data-glyph="box" /> Packages</li>
-        <li><i className="oi" data-glyph="monitor" /> Products</li>
-        <li><i className="oi" data-glyph="document" /> Resources</li>
-        <li><i className="oi" data-glyph="project" /> Surveys</li>
-        <li><i className="oi" data-glyph="person" /> Users</li>
-        <li><i className="oi" data-glyph="video" /> Videos</li>
+        <Link to="/dashboard/surveys">
+          <li><i className="oi" data-glyph="project" /> Surveys</li>
+        </Link>
+        <Link to="/dashboard/users">
+          <li><i className="oi" data-glyph="person" /> Users</li>
+        </Link>
       </ul>
     </div>
   );

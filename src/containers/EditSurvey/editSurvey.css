@@ -1,0 +1,146 @@
+.editSurvey {
+  display: flex;
+  flex-direction: row;
+
+  &-details {
+    padding: 20px 0 0;
+
+    .details-container {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .details-instance {
+      font-size: 0.85rem;
+      background: #F2F3F6;
+      padding: 10px;
+      width: 25%;
+      border-right: 1px solid #DBDCE2;
+      border-bottom: 1px solid #DBDCE2;
+
+      &:first-child {
+        padding-left: 20px;
+      }
+
+      &:last-child {
+        border-right: 0;
+        padding-right: 20px;
+      }
+
+      h4 {
+        padding: 0;
+        margin: 0;
+        text-transform: uppercase;
+      }
+
+      span {
+        font-weight: normal;
+      }
+    }
+
+    h2 {
+      border-bottom: 1px solid #DBDCE2;
+      margin: 0;
+      padding: 0 20px 10px;
+    }
+
+    label {
+      font-size: 0.85rem;
+      font-weight: normal;
+    }
+  }
+
+  &-body {
+    width: 90%;
+    border-left: 1px solid #f1f1f1;
+    border-right: 1px solid #f1f1f1;
+    margin-top: 20px;
+  }
+
+  &-slide {
+    margin-bottom: 20px;
+    padding: 20px;
+
+    border-left: 2px solid #EE6352;
+    border-top: 1px solid #f1f1f1;
+    border-bottom: 1px solid #f1f1f1;
+
+    h3 {
+      margin: 0 0 20px;
+    }
+
+    .slide-heading {
+
+      .group {
+        float: right;
+        font-size: 0.7em;
+
+        .oi {
+          color: #ccc;
+          display: inline-block;
+          padding: 4px;
+          text-align: center;
+          margin-left: 3px;
+
+          &:hover {
+            color: #EE6352;
+            cursor: pointer;
+          }
+
+          &:before {
+            position: relative;
+            left: 1px;
+            top: 1px;
+          }
+        }
+      }
+    }
+  }
+
+  &-sidebar {
+    padding: 20px;
+    width: 10%;
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        display: block;
+        background-color: lightblue;
+        padding: 10px;
+        text-align: center;
+        margin: 0 0 10px;
+      }
+    }
+  }
+
+  .survey-option {
+    background: lightblue;
+    margin-bottom: 20px;
+    padding: 20px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 20px;
+
+    span {
+      display: block;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%
+    }
+  }
+
+  textarea {
+    width: 100%;
+  }
+
+  textarea, input {
+    padding: 5px;
+  }
+}

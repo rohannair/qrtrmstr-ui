@@ -1,0 +1,16 @@
+textarea, [role="textbox"] {
+  background: #fff;
+  border: 1px solid #ccc;
+  color: #444;
+  font-family: Georgia, serif;
+  min-height: 100px;
+  padding: 10px;
+
+  &>p {
+    margin-top: 0;
+  }
+}
+
+input {
+  font-family: Georgia, serif;
+}

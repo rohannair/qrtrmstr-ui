@@ -11,11 +11,12 @@ const SurveyCards = (props) => {
   const { fields, onClick, onSubmit, selected } = props;
   const cards = [...fields].map((val) => {
     if (!!val.form) {
+      let isSelected = selected ? selected[val.id] : null;
       return (
         <SurveyFormCard
           key = { val.id }
           onClick = { clickHandler(val.id, onClick) }
-          selected = { selected[val.id] }
+          selected = { isSelected }
           {...val}
         />
       );
