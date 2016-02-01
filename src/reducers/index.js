@@ -5,6 +5,7 @@ import { routeReducer } from 'redux-simple-router';
 import accountActions from './login';
 import app from './app';
 import survey from './survey';
+import surveyView from './surveyView';
 
-const reducers = combineReducers({ accountActions, app, survey, routing: routeReducer });
+const reducers = combineReducers({ accountActions, app, survey, routing: routeReducer, surveyList: surveyView });
 export default reducers;
