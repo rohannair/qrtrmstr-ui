@@ -1,5 +1,4 @@
 export default {
-  id: 'qrtrmstr-demo',
   survey: [
     {
       id: 'text1',
