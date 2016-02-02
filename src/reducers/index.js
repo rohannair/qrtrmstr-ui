@@ -7,5 +7,5 @@ import app from './app';
 import survey from './survey';
 import surveyView from './surveyView';
 
-const reducers = combineReducers({ accountActions, app, survey, routing: routeReducer, surveyList: surveyView });
+const reducers = combineReducers({ accountActions, app, survey, routing: routeReducer, surveyAdmin: surveyView });
 export default reducers;

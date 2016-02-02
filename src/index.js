@@ -20,7 +20,7 @@ import Survey from './containers/Survey';
 
 import NotFound from './components/NotFound';
 import SurveyView from './containers/SurveyView';
-import EditSurvey from './containers/EditSurvey';
+import SurveyEditor from './containers/SurveyEditor';
 import UserList from './containers/UserList';
 
 // Reducers
@@ -57,7 +57,7 @@ render(
         <Route path="dashboard" component={Home} onEnter={requireAuth}>
           <IndexRoute component={UserList} />
           <Route path="surveys" component={SurveyView} />
-          <Route path="surveys/edit/:surveyID" component={EditSurvey} />
+          <Route path="surveys/edit/:surveyID" component={SurveyEditor} />
           <Route path="users" component={UserList} />
           <Route path="*" component={NotFound} />
         </Route>

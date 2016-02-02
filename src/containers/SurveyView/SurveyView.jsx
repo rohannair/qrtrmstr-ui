@@ -40,7 +40,7 @@ class SurveyView extends Component {
             </thead>
             <tbody>
             {
-              [...this.props.surveyList.surveys]
+              [...this.props.surveyList]
               .map(val => {
                 return (
                   <tr key={val.id} className="userList-option">
@@ -74,7 +74,7 @@ function mapStateToProps(state) {
   const token = state.accountActions.token || Cookies.get('token');
   return {
     token,
-    surveyList: state.surveyList
+    surveyList: state.surveyAdmin.list
   };
 }
 export default connect(mapStateToProps)(SurveyView);

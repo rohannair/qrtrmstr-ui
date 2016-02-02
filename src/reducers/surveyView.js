@@ -1,5 +1,6 @@
 const initialState = {
-  surveys: {},
+  list: [],
+  survey: {},
   openCards: []
 };
 
@@ -9,7 +10,30 @@ export default function surveyView(state = initialState, action) {
   case 'SURVEYS_RETRIEVED':
     return {
       ...state,
-      surveys: action.surveys
+      list: action.surveyList
+    };
+
+  case 'SINGLE_SURVEY_RETRIEVED':
+    return {
+      ...state,
+      survey: action.survey[0]
+    };
+
+  case 'ADD_SLIDE':
+    const doc = {
+      ...state.survey.doc,
+      [action.slideID]: {
+        ...action.slideInfo,
+        slide_number: Object.keys(state.survey.doc).length
+      }
+    };
+
+    return {
+      ...state,
+      survey: {
+        ...state.survey,
+        doc
+      }
     };
 
   case 'TOGGLE_OPEN_CARD':

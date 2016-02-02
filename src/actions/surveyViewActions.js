@@ -1,10 +1,18 @@
 import fetch from 'isomorphic-fetch';
 
 // Surveys Retrieved action
-function surveysRetrieved(surveys = {}) {
+function surveysRetrieved(surveyList = {}) {
   return {
     type: 'SURVEYS_RETRIEVED',
-    surveys
+    surveyList
+  };
+}
+
+// Single survey retrieved for editing
+function singleSurveyRetrieved(survey = {}) {
+  return {
+    type: 'SINGLE_SURVEY_RETRIEVED',
+    survey
   };
 }
 
@@ -39,7 +47,7 @@ export const getSingleSurvey = (token, id) => {
     })
     .then(response => response.json())
     .then(json => {
-      return dispatch(surveysRetrieved(json));
+      return dispatch(singleSurveyRetrieved(json));
     });
   };
 };
@@ -87,5 +95,31 @@ export const toggleOpenCard = (cardID) => {
   return {
     type: 'TOGGLE_OPEN_CARD',
     cardID
+  };
+};
+
+// Add slide
+export const addSlide = (slideID, slideInfo) => {
+  return {
+    type: 'ADD_SLIDE',
+    slideID,
+    slideInfo
+  };
+};
+
+// Remove slide
+export const removeSlide = (slideID) => {
+  return {
+    type: 'REMOVE_SLIDE',
+    slideID
+  };
+};
+
+// Edit slide
+export const editSlide = (slideID, data) => {
+  return {
+    type: 'EDIT_SLIDE',
+    slideID,
+    data
   };
 };
