@@ -37,7 +37,11 @@ test('${containerName}', next => {
 });
 `;
 
-const js = `import React, { Component, PropTypes } from 'react';
+const styleFile = `.${containerNameLC} {
+
+}`;
+
+const containerFile = `import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import styles from './${containerNameLC}.css';
@@ -57,10 +61,15 @@ function mapStateToProps(state) {
 
   return {
     token
-  }
+  };
 }
 
 export default connect(mapStateToProps)(${containerName});
+
+`;
+
+const indexFile = `import ${containerName} from './${containerName}';
+export default ${containerName};
 `;
 
 if (isDir.sync(dest)) {
@@ -69,7 +78,9 @@ if (isDir.sync(dest)) {
 }
 
 fs.mkdir(dest);
-fs.writeFileSync(path.join(dest, 'index.jsx'), js);
+fs.writeFileSync(path.join(dest, 'index.jsx'), indexFile);
+fs.writeFileSync(path.join(dest, `${containerName}.jsx`), containerFile);
 fs.writeFileSync(path.join(dest, `${containerNameLC}.test.js`), tests);
-fs.writeFileSync(path.join(dest, `${containerNameLC}.css`), '');
+fs.writeFileSync(path.join(dest, `${containerNameLC}.css`), styleFile);
+
 console.log(chalk.green(`Container ${containerName} created`));

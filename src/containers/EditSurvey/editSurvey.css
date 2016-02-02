@@ -1,6 +1,7 @@
 .editSurvey {
   display: flex;
   flex-direction: row;
+  position: relative;
 
   &-details {
     padding: 20px 0 0;
@@ -51,29 +52,40 @@
   }
 
   &-body {
-    width: 90%;
+    width: 85%;
     border-left: 1px solid #f1f1f1;
     border-right: 1px solid #f1f1f1;
     margin-top: 20px;
   }
 
   &-slide {
-    margin-bottom: 20px;
-    padding: 20px;
-
-    border-left: 2px solid #EE6352;
     border-top: 1px solid #f1f1f1;
-    border-bottom: 1px solid #f1f1f1;
-
-    h3 {
-      margin: 0 0 20px;
-    }
 
     .slide-heading {
+      cursor: pointer;
+      margin: 0;
+      padding: 20px;
+      position: relative;
+
+      .counter {
+        border: 2px solid #777781;
+        border-radius: 9999px;
+        display: inline-block;
+        height: 2em;
+        margin-right: 20px;
+        text-align: center;
+        padding: 5px;
+        width: 2em;
+      }
 
       .group {
-        float: right;
+        background: #fff;
         font-size: 0.7em;
+        padding: 10px;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
 
         .oi {
           color: #ccc;
@@ -95,11 +107,21 @@
         }
       }
     }
+
+    .slide-body {
+      display: none;
+      padding: 20px;
+      border-left: 2px solid #EE6352;
+
+      &.open {
+        display: block;
+      }
+    }
   }
 
   &-sidebar {
     padding: 20px;
-    width: 10%;
+    width: 15%;
 
     ul {
       list-style: none;

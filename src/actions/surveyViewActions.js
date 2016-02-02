@@ -81,3 +81,11 @@ export const modifySurvey = (token, payload) => {
     });
   };
 };
+
+// Toggle open card
+export const toggleOpenCard = (cardID) => {
+  return {
+    type: 'TOGGLE_OPEN_CARD',
+    cardID
+  };
+};
