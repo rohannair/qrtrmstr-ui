@@ -10,7 +10,7 @@ const NavGrid = (props) => {
     const { name, uri, icon, id } = opt;
 
     return (
-      <a href={ uri } key={ id }>
+      <a href={ uri } key={ id } onClick={ props.onClick }>
         <i className="oi" data-glyph={ icon } />
         { name }
       </a>
