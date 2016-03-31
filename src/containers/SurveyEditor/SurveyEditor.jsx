@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Cookies from 'cookies-js';
 import moment from 'moment';
+import _ from 'lodash';
 
 // Containers
 import { getSingleSurvey, toggleOpenCard, addSlide, modifySurvey } from '../../actions/surveyViewActions';
@@ -20,6 +21,8 @@ import SurveyDetails from '../../components/SurveyDetails';
 import SurveyEditorBody from '../../components/SurveyEditorBody';
 import SurveyEditorSidebar from '../../components/SurveyEditorSidebar';
 
+import SlideIntro from '../../components/SlideIntro';
+import SlideEquipment from '../../components/SlideEquipment';
 
 class SurveyEditor extends Component {
   componentWillMount() {
@@ -28,6 +31,46 @@ class SurveyEditor extends Component {
 
   render() {
     const { survey, openCards } = this.props;
+
+    const surveyDoc = survey.doc && Object.keys(survey.doc).length > 0
+    ? Object.keys(survey.doc).map(val => {
+     const slide = survey.doc[val];
+     switch (slide.type) {
+
+       case 'intro':
+       return (
+          <Card key={val} title={`Section ${parseInt(val) + 1}`}>
+            <SlideIntro key={val} {...slide} />
+          </Card>
+        );
+
+       case 'bio':
+       return (
+        <Card key={val} title={`Section ${parseInt(val) + 1}`}>
+          <div key={val}><h1>Bio</h1></div>
+        </Card>
+       );
+
+       case 'equipment':
+       return (
+        <Card key={val} title={`Section ${parseInt(val) + 1}`}>
+          <SlideEquipment {...slide} />
+        </Card>
+        );
+
+       default:
+       return (
+        <Card key={val} title={`Section ${parseInt(val) + 1}`}>
+          <h1>{slide.heading}</h1>
+          <pre dangerouslySetInnerHTML={{ __html: JSON.stringify(slide.body, null, 4) }} />
+        </Card>
+        );
+     }
+
+   })
+
+    : null;
+
     const selectedSurvey = survey.doc || {};
     const { surveyID } = this.props.params;
 
@@ -35,26 +78,9 @@ class SurveyEditor extends Component {
       ? survey
       : '';
 
-    console.log(JSON.stringify(survey, null, 4));
-
     return (
       <div>
-        <Card><div>Edit Survey</div></Card>
-        <SurveyDetails
-          name={name}
-          surveyID={surveyID}
-          created_at={created_at}
-          updated_at={updated_at}
-        />
-
-        <div className="editSurvey">
-          <SurveyEditorBody
-            survey={ selectedSurvey }
-            onClick={this._toggleOpen}
-            openItems={openCards}
-          />
-          <SurveyEditorSidebar save={this._postSurvey} onClick={this._addNewSlide} />
-        </div>
+        { surveyDoc }
       </div>
     );
   };
@@ -93,6 +119,7 @@ class SurveyEditor extends Component {
 
 function mapStateToProps(state, ownProps) {
   const token = state.accountActions.token || Cookies.get('token');
+
   return {
     openCards: state.surveyAdmin.openCards,
     survey: state.surveyAdmin.survey,

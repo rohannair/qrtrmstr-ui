@@ -11,7 +11,7 @@
   "scripts": {
     "newComp": "babel-node ./scripts/newComponent.js",
     "newCont": "babel-node ./scripts/newContainer.js",
-    "dev": "babel-node server.js",
+    "start": "babel-node server.js",
     "test": "babel-tape-runner ./src/**/*.test.js | tap-spec",
     "lint": "eslint src"
   },
@@ -48,6 +48,7 @@
     "redux-devtools-dock-monitor": "^1.0.1",
     "redux-devtools-log-monitor": "^1.0.1",
     "rucksack": "^0.1.0",
+    "rucksack-css": "^0.8.5",
     "style-loader": "^0.13.0",
     "tap-spec": "^4.1.1",
     "tape": "^4.4.0",
@@ -62,6 +63,7 @@
     "bluebird": "^3.1.1",
     "classnames": "^2.2.3",
     "cookies-js": "^1.2.2",
+    "draft-js": "^0.2.2",
     "isomorphic-fetch": "^2.2.0",
     "lodash": "^3.10.1",
     "moment": "^2.11.1",

@@ -11,14 +11,12 @@ export default function survey(state = defaultState, action) {
   switch (action.type) {
 
   case 'SURVEY_RETRIEVED':
-
     return {
-      survey: action.survey.document.survey,
+      survey: action.survey.doc,
       ...state.selected
     };
 
   case 'SURVEY_SELECTION':
-
     return {
       ...state,
       selected: {

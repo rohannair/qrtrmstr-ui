@@ -2,7 +2,7 @@ const autoprefixer = require('autoprefixer');
 const precss       = require('precss');
 const lost         = require('lost');
 const path         = require('path');
-const rucksack     = require('rucksack');
+const rucksack     = require('rucksack-css');
 const webpack      = require('webpack');
 
 const devFlagPlugin = new webpack.DefinePlugin({
@@ -47,7 +47,7 @@ const config = {
       },
 
       {
-        test  : /\.css$/,
+        test: /\.css$/,
         loader: 'style-loader!css-loader!postcss-loader'
       },
 
@@ -69,7 +69,13 @@ const config = {
   ],
 
   postcss: function() {
-    return [lost, autoprefixer, precss];
+    return [
+      lost,
+      rucksack({
+        autoprefixer: true
+      }),
+      precss
+    ];
   },
 
   resolveLoader: {

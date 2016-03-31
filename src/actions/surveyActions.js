@@ -30,7 +30,7 @@ export const submitSurvey = (choices) => {
 };
 
 
-export const getSurvey = (token, id) => {
+export const getSurvey = (token = '', id) => {
   return dispatch => {
     return fetch(`http://localhost:3000/api/v1/surveys/${id}`, {
       method: 'GET',
