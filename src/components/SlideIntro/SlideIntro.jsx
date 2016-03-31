@@ -26,86 +26,84 @@ class SlideIntro extends Component {
     const { editorState } = this.state;
 
     return (
-      <Card key={id}>
-        <div className="slideIntro">
-          <h2>{ heading }</h2>
-          <div>
-            <ButtonGroup>
-              <Button
-                center={true}
-                classes='inverse'
-                onClick={this._onBoldClick}
-                icon='bold'
-              />
-
-              <Button
-                center={true}
-                classes='inverse'
-                onClick={this._onItalicClick}
-                icon='italic'
-              />
-
-              <Button
-                center={true}
-                classes='inverse'
-                onClick={this._onUnderlineClick}
-                icon='underline'
-              />
-
-              <Button
-                center={true}
-                classes='inverse'
-                onClick={this._onItalicClick}
-                icon='header'
-              />
-
-              <Button
-                center={true}
-                classes='inverse'
-                onClick={this._onItalicClick}
-                icon='align-left'
-              />
-
-              <Button
-                center={true}
-                classes='inverse'
-                onClick={this._onItalicClick}
-                icon='align-center'
-              />
-
-              <Button
-                center={true}
-                classes='inverse'
-                onClick={this._onItalicClick}
-                icon='align-right'
-              />
-
-              <Button
-                center={true}
-                classes='inverse'
-                onClick={this._onItalicClick}
-                icon='double-quote-serif-left'
-              />
-
-              <Button
-                center={true}
-                classes='inverse'
-                onClick={this._onItalicClick}
-                icon='list'
-              />
-
-            </ButtonGroup>
-            <Editor
-              contentEditable={true}
-              suppressContentEditableWarning={true}
-              editorState={editorState}
-              handleKeyCommand={this.handleKeyCommand}
-              onChange={this.onChange}
-              ref="editor"
+      <div className="slideIntro">
+        <h2>{ heading }</h2>
+        <div>
+          <ButtonGroup>
+            <Button
+              center={true}
+              classes='inverse'
+              onClick={this._onBoldClick}
+              icon='bold'
             />
-          </div>
+
+            <Button
+              center={true}
+              classes='inverse'
+              onClick={this._onItalicClick}
+              icon='italic'
+            />
+
+            <Button
+              center={true}
+              classes='inverse'
+              onClick={this._onUnderlineClick}
+              icon='underline'
+            />
+
+            <Button
+              center={true}
+              classes='inverse'
+              onClick={this._onItalicClick}
+              icon='header'
+            />
+
+            <Button
+              center={true}
+              classes='inverse'
+              onClick={this._onItalicClick}
+              icon='align-left'
+            />
+
+            <Button
+              center={true}
+              classes='inverse'
+              onClick={this._onItalicClick}
+              icon='align-center'
+            />
+
+            <Button
+              center={true}
+              classes='inverse'
+              onClick={this._onItalicClick}
+              icon='align-right'
+            />
+
+            <Button
+              center={true}
+              classes='inverse'
+              onClick={this._onItalicClick}
+              icon='double-quote-serif-left'
+            />
+
+            <Button
+              center={true}
+              classes='inverse'
+              onClick={this._onItalicClick}
+              icon='list'
+            />
+
+          </ButtonGroup>
+          <Editor
+            contentEditable={true}
+            suppressContentEditableWarning={true}
+            editorState={editorState}
+            handleKeyCommand={this.handleKeyCommand}
+            onChange={this.onChange}
+            ref="editor"
+          />
         </div>
-      </Card>
+      </div>
     );
   };
 

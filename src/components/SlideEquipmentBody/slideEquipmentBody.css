@@ -1,0 +1,39 @@
+.slideEquipmentBody {
+  margin:  0;
+  background: #ECF5FF;
+  padding: 20px;
+
+  table {
+    background: transparent;
+    width: 100%;
+  }
+
+  tr {
+    background: transparent;
+  }
+
+  .buttonRow {
+    padding-top: 40px;
+    text-align: right;
+  }
+
+  th {
+    text-align: left;
+    padding: 10px 0;
+  }
+
+  td {
+    background: transparent;
+    &.removeButton {
+      text-align: center;
+
+      .btn {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  input {
+    width: 100%;
+  }
+}

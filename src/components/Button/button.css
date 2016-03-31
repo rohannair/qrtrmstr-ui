@@ -84,6 +84,24 @@
     }
   }
 
+  &.transparent {
+    background-color: transparent;
+    border-color: transparent;
+    color: #bbb;
+
+    &:hover {
+      background-color: #transparent;
+      border-color: #transparent;
+      color: #EE6352;
+    }
+
+    &:active {
+      background-color: #transparent;
+      border-color: #transparent;
+      color: #666;
+    }
+  }
+
   &.disabled {
     cursor: not-allowed;
     opacity: 0.2;

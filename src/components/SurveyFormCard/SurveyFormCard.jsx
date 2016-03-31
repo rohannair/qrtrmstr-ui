@@ -6,21 +6,22 @@ import styles from './surveyFormCard.css';
 import Card from '../../components/Card';
 import SurveyCardFooter from '../../components/SurveyCardFooter';
 
-const SurveyFormCard = ({ heading, contents, onClick, selected }) => {
-  const { type, options } = contents;
+const SurveyFormCard = ({ heading, body, onClick, selected }) => {
+  // const { type, options } = contents;
+  let type = 'imageSelector';
   return (
     <Card footer={<SurveyCardFooter />}>
       <h2>{heading}</h2>
       <div className={type}>
-        { FormTypes[type](options, onClick, selected) }
+        { FormTypes.imageSelector(body, onClick, selected) }
       </div>
     </Card>
   );
 };
 
 const FormTypes = {
-  imageSelector: (opts, onClick, selected) => {
-    return opts.map(({id, imageUri, title, body}) => {
+  imageSelector: (opts, onClick = () => {}, selected = null) => {
+    return opts.map(({id, img, title, desc}) => {
 
       const classes = classNames(
         'imageSelector-option',
@@ -34,12 +35,12 @@ const FormTypes = {
           onClick={onClick.bind(this, id)}
         >
           {
-            imageUri
-            ? <img src={imageUri} />
+            img
+            ? <img src={img} />
             : <div className="img-placeholder" />
           }
           <h3>{ title }</h3>
-          <p>{ body }</p>
+          <p>{ desc }</p>
         </a>
       );
     });
