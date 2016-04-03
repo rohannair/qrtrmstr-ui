@@ -39,30 +39,30 @@ class SurveyEditor extends Component {
 
        case 'intro':
        return (
-          <Card key={val} title={`Section ${parseInt(val) + 1}`}>
-            <SlideIntro key={val} {...slide} />
-          </Card>
+        <Card key={val} title={`Section ${parseInt(val) + 1}`}>
+        <SlideIntro key={val} {...slide} />
+        </Card>
         );
 
        case 'bio':
        return (
         <Card key={val} title={`Section ${parseInt(val) + 1}`}>
-          <div key={val}><h1>Bio</h1></div>
+        <div key={val}><h1>Bio</h1></div>
         </Card>
-       );
+        );
 
        case 'equipment':
        return (
         <Card key={val} title={`Section ${parseInt(val) + 1}`}>
-          <SlideEquipment {...slide} />
+        <SlideEquipment {...slide} />
         </Card>
         );
 
        default:
        return (
         <Card key={val} title={`Section ${parseInt(val) + 1}`}>
-          <h1>{slide.heading}</h1>
-          <pre dangerouslySetInnerHTML={{ __html: JSON.stringify(slide.body, null, 4) }} />
+        <h1>{slide.heading}</h1>
+        <pre dangerouslySetInnerHTML={{ __html: JSON.stringify(slide.body, null, 4) }} />
         </Card>
         );
      }
@@ -75,14 +75,14 @@ class SurveyEditor extends Component {
     const { surveyID } = this.props.params;
 
     const { name, created_at, updated_at } = survey
-      ? survey
-      : '';
+    ? survey
+    : '';
 
     return (
       <div>
-        { surveyDoc }
+      { surveyDoc }
       </div>
-    );
+      );
   };
 
   _postSurvey = () => {
