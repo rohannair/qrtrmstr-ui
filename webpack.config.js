@@ -1,28 +1,29 @@
 const autoprefixer = require('autoprefixer');
 const precss       = require('precss');
 const lost         = require('lost');
-const rucksack     = require('rucksack');
+const path         = require('path');
+const rucksack     = require('rucksack-css');
 const webpack      = require('webpack');
 
 const devFlagPlugin = new webpack.DefinePlugin({
   __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false'))
 });
 
-module.exports = {
-  context: __dirname + '/src',
-
+const config = {
   cache: true,
   debug: true,
-  devtool: 'eval-source-map',
+  devtool: 'cheap-module-eval-source-map',
 
-  entry: {
-    javascript: './index.js',
-    html: './index.html'
-  },
+  entry: [
+    'eventsource-polyfill', // necessary for hot reloading with IE
+    'webpack-hot-middleware/client',
+    './src/index.js'
+  ],
 
   output: {
-    path: __dirname + '/public',
+    path: path.join(__dirname, 'public'),
     filename: 'app.js',
+    publicPath: '/static/',
   },
 
   module: {
@@ -46,21 +47,35 @@ module.exports = {
       },
 
       {
-        test  : /\.css$/,
+        test: /\.css$/,
         loader: 'style-loader!css-loader!postcss-loader'
+      },
+
+      {
+        test: /\.(eot|woff|woff2|ttf|svg|png|jpg|otf)$/,
+        loader: 'url-loader?limit=30000&name=[name]-[hash].[ext]'
       }
 
-    ]
+    ],
+
+    noParse: /node_modules\/quill\/dist/
   },
 
   plugins: [
+    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     devFlagPlugin
   ],
 
   postcss: function() {
-    return [lost, autoprefixer, precss];
+    return [
+      lost,
+      rucksack({
+        autoprefixer: true
+      }),
+      precss
+    ];
   },
 
   resolveLoader: {
@@ -79,3 +94,5 @@ module.exports = {
   },
 
 };
+
+module.exports = config;

@@ -37,33 +37,27 @@ test('${componentName}', next => {
 });
 `;
 
-const js = `import React, { Component, PropTypes } from 'react';
+const styleFile = `.${componentNameLC} {
+
+}`;
+
+const componentFile = `import React from 'react';
 import styles from './${componentNameLC}.css';
 
-class ${componentName} extends Component {
-  static propTypes = {
-
-  };
-
-  static defaultProps = {
-
-  };
-
-  state = {
-
-  };
-
-  render() {
-
-    return (
-      <div className="${componentNameLC}">
-      </div>
-    );
-  }
-}
+const ${componentName} = (props) => {
+  return (
+    <div className="${componentNameLC}">
+    </div>
+  );
+};
 
 export default ${componentName};
 `;
+
+const indexFile = `import ${componentName} from './${componentName}';
+export default ${componentName};
+`;
+
 
 if (isDir.sync(dest)) {
   console.error(chalk.red(`Component ${componentName} exists`));
@@ -71,7 +65,8 @@ if (isDir.sync(dest)) {
 }
 
 fs.mkdir(dest);
-fs.writeFileSync(path.join(dest, 'index.jsx'), js);
+fs.writeFileSync(path.join(dest, 'index.jsx'), indexFile);
+fs.writeFileSync(path.join(dest, `${componentName}.jsx`), componentFile);
 fs.writeFileSync(path.join(dest, `${componentNameLC}.test.js`), tests);
-fs.writeFileSync(path.join(dest, `${componentNameLC}.css`));
+fs.writeFileSync(path.join(dest, `${componentNameLC}.css`), styleFile);
 console.log(chalk.green('Component Created'));

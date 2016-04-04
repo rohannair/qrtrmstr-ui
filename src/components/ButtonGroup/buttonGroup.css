@@ -1,0 +1,14 @@
+.buttonGroup {
+
+  .btn {
+    display: inline-block;
+    margin-left: 5px;
+  }
+
+  &-vertical {
+    .btn {
+      display: block;
+      margin: 0 0 10px;
+    }
+  }
+}

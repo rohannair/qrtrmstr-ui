@@ -1,0 +1,176 @@
+.btn {
+  background: #ccc;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  color: #777;
+  display: inline-block;
+  font-weight: bold;
+  padding: 5px 12px;
+  position: relative;
+  vertical-align: middle;
+
+  /*****
+   * Button types
+   *****/
+  &.primary {
+    background-color: #EE6352;
+    border-color: #EE6352;
+    color: #FAFAFF;
+
+    &:hover {
+      background-color: #F1725F;
+      border-color: #F1725F;
+      color: #FFF;
+    }
+
+    &:active {
+      background-color: #bbb;
+      border-color: #bbb;
+      color: #666;
+    }
+  }
+
+  &.secondary {
+    background-color: #2E404E;
+    border-color: #2E404E;
+    color: #FAFAFF;
+
+    &:hover {
+      background-color: #435360;
+      border-color: #435360;
+      color: #FFF;
+    }
+
+    &:active {
+      background-color: #bbb;
+      border-color: #bbb;
+      color: #666;
+    }
+  }
+
+  &.tertiary {
+    background-color: #fff;
+    border-color: #78848D;
+    color: #78848D;
+
+    &:hover {
+      background-color: #78848D;
+      border-color: #78848D;
+      color: #fff;
+    }
+
+    &:active {
+      background-color: #bbb;
+      border-color: #bbb;
+      color: #666;
+    }
+  }
+
+  &.inverse {
+    background-color: #FFF;
+    border-color: #EE6352;
+    color: #EE6352;
+
+    &:hover {
+      background-color: #EE6352;
+      border-color: #EE6352;
+      color: #FAFAFF;
+    }
+
+    &:active {
+      background-color: #bbb;
+      border-color: #bbb;
+      color: #666;
+    }
+  }
+
+  &.transparent {
+    background-color: transparent;
+    border-color: transparent;
+    color: #bbb;
+
+    &:hover {
+      background-color: #transparent;
+      border-color: #transparent;
+      color: #EE6352;
+    }
+
+    &:active {
+      background-color: #transparent;
+      border-color: #transparent;
+      color: #666;
+    }
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+    opacity: 0.2;
+  }
+
+  /*****
+   * Button Sizes
+   *****/
+
+  &.block {
+    display: block;
+    padding: 10px 15px;
+    width: 100%;
+  }
+
+  &.xl {
+    font-size: 1.5rem;
+    padding: 15px 20px;
+  }
+
+  &.lg {
+    font-size: 1rem;
+    padding: 10px 15px;
+  }
+
+  &.lgLong {
+    font-size: 1rem;
+    padding: 10px 40px;
+  }
+
+  &.md {
+    font-size: 0.85rem;
+    padding: 7px 12px;
+  }
+
+  &.sm {
+    font-size: 0.85rem;
+    padding: 5px 10px;
+  }
+
+  &.xs {
+    font-size: 0.75rem;
+    padding: 3px 5px;
+  }
+
+  &-icon {
+    text-align: left;
+  }
+
+  .oi {
+    margin-right: 10px;
+    font-size: 0.65em;
+    position: relative;
+    top: -1px;
+    text-align: center;
+
+    &.right {
+      float: right;
+    }
+
+    &.left {
+      float: left;
+    }
+  }
+
+  &-icon-center {
+    text-align: center;
+    .oi {
+      margin: 0;
+    }
+  }
+}

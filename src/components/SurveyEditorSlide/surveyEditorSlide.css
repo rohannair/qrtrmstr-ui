@@ -1,0 +1,94 @@
+.surveyEditorSlide {
+
+  .slide-heading {
+    cursor: pointer;
+    margin: 0;
+    padding: 20px;
+    position: relative;
+
+    .counter {
+      border: 2px solid #777781;
+      border-radius: 9999px;
+      display: inline-block;
+      height: 2em;
+      margin-right: 20px;
+      text-align: center;
+      padding: 5px;
+      width: 2em;
+    }
+
+    .group {
+      background: #fff;
+      font-size: 0.7em;
+      padding: 10px;
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+
+      .oi {
+        color: #ccc;
+        display: inline-block;
+        padding: 4px;
+        text-align: center;
+        margin-left: 3px;
+
+        &:hover {
+          color: #EE6352;
+          cursor: pointer;
+        }
+
+        &:before {
+          position: relative;
+          left: 1px;
+          top: 1px;
+        }
+      }
+    }
+  }
+
+  .slide-body {
+    max-height: 0;
+    overflow: hidden;
+
+    &.open {
+      max-height: inherit;
+      padding: 20px;
+      border-top: 1px solid #F1F1F1;
+      display: block;
+    }
+  }
+
+
+  label {
+    display: block;
+    margin-bottom: 20px;
+
+    span {
+      display: block;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%
+    }
+  }
+}
+
+.survey-optionContainer, .optionEditor {
+  display: flex;
+  flex-flow: row wrap;
+  align-content: flex-start;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.survey-option {
+  flex-grow: 1;
+  flex-basis: 0;
+  min-width: 20%;
+  margin-bottom: 20px;
+  padding: 20px;
+}
+
+

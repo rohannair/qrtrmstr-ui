@@ -1,0 +1,65 @@
+.navGrid {
+  width: 100%;
+
+  a {
+    display: block;
+    background-color: #EE6352;
+    border-color: #EE6352;
+    color: #FAFAFF;
+    padding: 20px 0;
+    position: relative;
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.2);
+
+    &:first-child {
+      border-top-left-radius: 2px;
+      border-top-right-radius: 2px;
+    }
+
+    &:last-child {
+      border-bottom-left-radius: 2px;
+      border-bottom-right-radius: 2px;
+    }
+
+    &:not(:last-child) {
+      border-bottom: 1px solid #F1725F;
+    }
+
+    &:hover {
+      background-color: #F1725F;
+      border-color: #F1725F;
+      color: #FFF;
+      box-shadow: 0 1 5px #EE6352;
+
+      .oi {
+        box-shadow: 0 1 5px #EE6352;
+      }
+    }
+
+    &:active {
+      background-color: #bbb;
+      border-color: #bbb;
+      color: #666;
+    }
+
+    .oi {
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 7px;
+      height: 2.2rem;
+      line-height: 2.2rem;
+      width: 2.2rem;
+      background: #fff;
+      color: #EE6352;
+      border-radius: 9999px;
+      margin: 0 auto 10px;
+      padding-top: 1px;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+      font-weight: normal;
+      border: 1px solid #fff;
+    }
+  }
+}

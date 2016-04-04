@@ -1,0 +1,53 @@
+.slideEquipmentHeader {
+  display: flex;
+
+  .tab {
+    display: flex;
+    position: relative;
+    border: 1px solid #ECF5FF;
+    overflow: hidden;
+
+    cursor: pointer;
+    margin-right: -1px;
+    align-items: top;
+
+    &:hover {
+      background: #DBEBFE;
+
+      .removeBtn {
+        display: block;
+      }
+    }
+
+    &.active {
+      background: #ECF5FF;
+    }
+
+    .tabText {
+      display: block;
+      padding: 10px 20px;
+
+      &:hover {
+        background: #DBEBFE;
+      }
+    }
+
+    .removeBtn {
+      display: none;
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      padding: 1px 3px;
+    }
+
+    &.newTab {
+      padding: 10px 20px;
+      color: #bbb;
+      font-weight: bold;
+
+      &:hover {
+        color: #444;
+      }
+    }
+  }
+}

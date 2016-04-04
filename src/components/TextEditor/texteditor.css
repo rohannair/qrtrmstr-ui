@@ -1,0 +1,21 @@
+textarea, [role="textbox"], input {
+  padding: 5px;
+  font-family: Georgia, serif;
+}
+
+textarea, [role="textbox"] {
+  box-shadow: inset 0 1px 2px rgba(0,0,0,.39), 0 -1px 1px #FFF, 0 1px 0 #FFF;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+  border-radius: 3px;
+  color: #444;
+  margin-top: 10px;
+  min-height: 100px;
+  padding: 10px;
+  width: 100%;
+
+  &>p {
+    margin-top: 0;
+  }
+}
+

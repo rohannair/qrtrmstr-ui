@@ -1,0 +1,49 @@
+.app {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+
+  &-globals,
+  &-body {
+    display: flex;
+    flew-grow: 1;
+    flex-direction: column;
+  }
+
+  &-globals {
+    background: #2E404E;
+    width: 20%;
+  }
+
+  &-body {
+    width: 80%;
+    padding: 40px;
+  }
+
+  &-header {
+    background: #EE6352;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+
+    .logo {
+      color: #fff;
+      font-size: 1.8em;
+      font-weight: bold;
+    }
+  }
+
+  &-sidebar {
+  }
+
+  &-footer {
+    color: rgba(255,255,255,0.4);
+    font-size: 0.75rem;
+    margin-top: auto;
+    padding: 20px;
+
+    p {
+      line-height: 1.4;
+    }
+  }
+}

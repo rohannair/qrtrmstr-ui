@@ -1,0 +1,132 @@
+html {
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background: #e0e0e0;
+  color: #777781;
+  height: 100vh;
+  overflow-y: scroll;
+
+  font-family: 'Droid Sans', sans-serif;
+  font-feature-settings: normal;
+  font-kerning: normal;
+  font-size: 16px;
+  font-variant-ligatures: normal;
+  line-height: 1.2;
+
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  &:link, &:visited {
+    text-decoration: none;
+  }
+}
+.app-login {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  .app-header {
+    width: 100%;
+    margin-bottom: 40px;
+  }
+
+  .login-box {
+
+  }
+
+  .app-footer {
+    background: #444;
+    margin-top: auto;
+    text-align: center;
+  }
+}
+
+.logout {
+  background: transparent;
+  border: 0;
+  color: #777;
+  font-size: 0.75em;
+  margin: auto 20px auto auto;
+  padding: 10px 15px;
+
+  &:hover {
+    color: #EE6352;
+    background-color: rgba(0,0,0,0.05);
+  }
+}
+
+.sidebar-copy {
+  background-color: rgba(0,0,0,0.15);
+  box-shadow: 0 0 0 1px rgba(255,255,255,.05), inset 0 0 .25em 0 rgba(0,0,0,.25);
+  border-radius: 3px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  margin: 20px 10px 30px;
+  padding: 1.25em;
+  display: none;
+
+  p {
+    margin: 0;
+
+    &+p {
+      margin-top: 1em;
+    }
+  }
+}
+
+.lede {
+  font-weight: bold;
+}
+
+.align-left {
+  text-align: left;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.sidebar-button_link {
+  background: transparent;
+  border: 0;
+  color: #EE6352;
+  font-weight: bold;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+
+  li {
+    color: #7B8C95;
+    cursor: pointer;
+    display: flex;
+    font-size: 0.75em;
+    font-weight: bold;
+    margin: 0;
+    padding: 15px 10px 15px 30px;
+    text-align: middle;
+    text-transform: uppercase;
+
+    .oi {
+      margin-right: 10px;
+    }
+
+    &:hover {
+      background: #435360;
+      color: rgba(255,255,255,0.7);
+    }
+  }
+}
