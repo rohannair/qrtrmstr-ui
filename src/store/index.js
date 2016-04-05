@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware } from 'redux';
 import { browserHistory } from 'react-router';
-import { syncHistory } from 'redux-simple-router';
+import { syncHistory } from 'react-router-redux';
 import thunkMiddleware from 'redux-thunk';
 
 const createStoreWithMiddleware = applyMiddleware(
