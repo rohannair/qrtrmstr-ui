@@ -1,6 +1,11 @@
+// Deps
 import React, { Component } from 'react';
+import { find, findIndex } from 'lodash';
+
+// CSS
 import styles from './slideEquipment.css';
 
+// SubComponents
 import SlideEquipmentHeader from '../SlideEquipmentHeader';
 import SlideEquipmentBody from '../SlideEquipmentBody';
 
@@ -28,6 +33,7 @@ class SlideEquipment extends Component {
           vals={ names }
           onClick={ this._setSelected }
           onNew={ this._newOption }
+          onEdit= { this._editOption }
           onRemove={ this._removeOption }
           selected={ selected[0].id }
         />
@@ -57,6 +63,28 @@ class SlideEquipment extends Component {
         newOptions
       ]
     })
+  };
+
+  _editOption = (key, newName) => {
+    const { options } = this.state;
+
+    const opt = find(options, (o) => o.id === key);
+    const optIndex = findIndex(options, (o) => o.id === key);
+
+    const newOption = {
+      ...opt,
+      name: newName
+    };
+
+    const newOptions = [
+      ...options.slice(0, optIndex),
+      newOption,
+      ...options.slice(optIndex + 1)
+    ];
+
+    this.setState({
+      options: newOptions
+    });
   };
 
   _removeOption = (key) => {

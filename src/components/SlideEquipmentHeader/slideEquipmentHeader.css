@@ -3,6 +3,7 @@
 
   .tab {
     display: flex;
+    flex-direction: row;
     position: relative;
     border: 1px solid #ECF5FF;
     overflow: hidden;
@@ -13,10 +14,6 @@
 
     &:hover {
       background: #DBEBFE;
-
-      .removeBtn {
-        display: block;
-      }
     }
 
     &.active {
@@ -32,14 +29,6 @@
       }
     }
 
-    .removeBtn {
-      display: none;
-      position: absolute;
-      top: -2px;
-      right: -2px;
-      padding: 1px 3px;
-    }
-
     &.newTab {
       padding: 10px 20px;
       color: #bbb;
@@ -47,6 +36,25 @@
 
       &:hover {
         color: #444;
+      }
+    }
+  }
+
+  .actionButtons {
+    display: flex;
+    flex-direction: column;
+
+    .removeBtn, .editBtn {
+      text-align: center;
+      padding: 0 5px;
+      flex-grow: 1;
+
+      .oi {
+        margin-right: 0;
+      }
+
+      &:hover {
+        background: #DBEBFE;
       }
     }
   }
