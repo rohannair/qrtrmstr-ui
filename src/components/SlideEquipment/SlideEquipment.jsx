@@ -42,6 +42,7 @@ class SlideEquipment extends Component {
           opt={ selected }
           newOption={ this._newSubOption }
           deleteOption={ this._removeSubOption }
+          save={this._saveAll}
         />
       </div>
     );
@@ -181,6 +182,10 @@ class SlideEquipment extends Component {
       ...options.slice(selectedIndex + 1),
       ]
     })
+  };
+
+  _saveAll = () => {
+    return this.props.saveSlide(this.state, this.props.slide_number);
   };
 };
 

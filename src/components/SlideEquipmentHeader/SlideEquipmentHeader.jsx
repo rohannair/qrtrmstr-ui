@@ -15,11 +15,27 @@ class SlideEquipmentHeader extends Component {
   render () {
     const { vals, onClick, onNew, selected, onRemove, onEdit } = this.props;
     const { editing } = this.state;
+
     const self = this;
     const opts = vals.map(val => {
       return val.id === editing
-       ? <Editing key={ val.id } onClick={ onClick } onSave={ self._onSave } onRemove={ onRemove } val={val } selected={ selected } />
-       : <Regular key={ val.id } onClick={ onClick } onEdit={ self._onEdit.bind(this, val.id) } onRemove={ onRemove } val={val } selected={ selected }/>;
+       ? <Editing
+          key={ val.id }
+          onClick={ onClick }
+          onSave={ self._onSave }
+          onRemove={ onRemove }
+          val={val }
+          selected={ selected }
+        />
+
+       : <Regular
+          key={ val.id }
+          onClick={ onClick }
+          onEdit={ self._onEdit.bind(this, val.id) }
+          onRemove={ onRemove }
+          val={val }
+          selected={ selected }
+        />;
     });
 
     return (
@@ -46,6 +62,7 @@ class SlideEquipmentHeader extends Component {
 }
 
 export default SlideEquipmentHeader;
+
 
 // SubComponents
 class Editing extends Component {

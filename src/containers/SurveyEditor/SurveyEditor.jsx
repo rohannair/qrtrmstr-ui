@@ -7,7 +7,12 @@ import moment from 'moment';
 import _ from 'lodash';
 
 // Containers
-import { getSingleSurvey, toggleOpenCard, addSlide, modifySurvey } from '../../actions/surveyViewActions';
+import {
+  getSingleSurvey,
+  toggleOpenCard,
+  addSlide,
+  modifySurvey,
+  editSlide } from '../../actions/surveyViewActions';
 
 // Styles
 import styles from './surveyEditor.css';
@@ -54,7 +59,7 @@ class SurveyEditor extends Component {
        case 'equipment':
        return (
         <Card key={val} title={`Section ${parseInt(val) + 1}`}>
-        <SlideEquipment {...slide} />
+          <SlideEquipment {...slide} saveSlide={ this._saveSlide } />
         </Card>
         );
 
@@ -114,6 +119,11 @@ class SurveyEditor extends Component {
     };
 
     return dispatch(addSlide(newID, slideInfo));
+  };
+
+  _saveSlide = ({ options }, slideNumber) => {
+    const { dispatch } = this.props;
+    return dispatch(editSlide(options, slideNumber));
   }
 };
 
