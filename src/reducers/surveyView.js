@@ -37,7 +37,8 @@ export default function surveyView(state = initialState, action) {
     };
 
   case 'TOGGLE_OPEN_CARD':
-    const { openCards } = state;
+    const { openCards } = state.openCards;
+    //const { openCards } = state;
     const isInArray = openCards.indexOf(action.cardID);
 
     if (isInArray > -1) {
@@ -52,7 +53,7 @@ export default function surveyView(state = initialState, action) {
 
     return {
       ...state,
-      openCards: [...openCards].concat(action.cardID)
+      openCards: [...openCards, action.cardID]
     };
 
   default:

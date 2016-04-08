@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import ReactQuill, { Toolbar } from 'react-quill';
+// import ReactQuill, { Toolbar } from 'react-quill';
 
 const Editor = require('react-medium-editor');
 // load theme styles with webpack

@@ -95,7 +95,6 @@ const SurveyCards = (props) => {
         }
         return <a href="#" key={val.id}><i className="material-icons">ondemand_video</i> {val.name}</a>
       });
-      debugger;
       return (
         <Card key={field.id} footer={<div/>}>
           <h2>{field.heading}</h2>
