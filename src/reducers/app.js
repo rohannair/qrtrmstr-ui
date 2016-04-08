@@ -1,5 +1,5 @@
 const initialState = {
-  users: [],
+  users: {},
 };
 
 export default function app(state = initialState, { type, users }) {

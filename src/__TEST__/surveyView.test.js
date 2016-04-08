@@ -5,12 +5,11 @@ import test from 'tape';
 //Reducer
 import surveyView from '../reducers/surveyView';
 
-const store = createStore(surveyView)
+const store = createStore(surveyView);
 
 console.log('Initial state:');
 console.log(store.getState());
 console.log('---------------');
-
 
 test('SurveyView', next => {
 
@@ -32,11 +31,10 @@ test('SurveyView', next => {
       openCards: []
     };
 
-    const surveyViewDefaultWithAction = surveyView(surveyViewDefaultBefore, actionDefault)
+    const surveyViewDefaultWithAction = surveyView(surveyViewDefaultBefore, actionDefault);
 
-    assert.ok(surveyViewDefaultWithAction, surveyViewDefaultAfter, 'Should Return The Initial (Default) State')
+    assert.ok(surveyViewDefaultWithAction, surveyViewDefaultAfter, 'Should Return The Initial (Default) State');
     assert.end();
-
   });
 
   next.test('SURVEYS_RETRIEVED', assert => {
@@ -48,20 +46,21 @@ test('SurveyView', next => {
       surveyList: ["Survey1", "Survey2", "Survey3"] 
     };
 
-
     const surveyViewSurveysRetrievedBefore = {
       list: [],
       survey: {},
       openCards: []
     };
+
     const surveyViewSurveysRetrievedAfter = {
       survey: {},
       openCards: [],
       list: ["Survey1", "Survey2", "Survey3"]
     };
-    const surveyViewSurveysRetrievedAction = surveyView(surveyViewSurveysRetrievedBefore, actionSurveysRetrieved)
 
-    assert.ok(surveyViewSurveysRetrievedAction, surveyViewSurveysRetrievedAfter, 'SURVEYS_RETRIEVED Should Return The State With A Non-Empty list Value')
+    const surveyViewSurveysRetrievedAction = surveyView(surveyViewSurveysRetrievedBefore, actionSurveysRetrieved);
+
+    assert.ok(surveyViewSurveysRetrievedAction, surveyViewSurveysRetrievedAfter, 'SURVEYS_RETRIEVED Should Return The State With A Non-Empty list Value');
     assert.end();
   });
 
@@ -76,7 +75,7 @@ test('SurveyView', next => {
           body: "<h2>Hi Rachel, congratulations (...)"
         }
       }
-    }
+    };
 
     const actionSingleSurveyRetrieved = {
       type: 'SINGLE_SURVEY_RETRIEVED',
@@ -85,20 +84,21 @@ test('SurveyView', next => {
       surveyList: [] 
     };
 
-
     const surveyViewSingleSurveyRetrievedBefore = {
       list: [],
       survey: {},
       openCards: []
     };
+
     const surveyViewSingleSurveyRetrievedAfter = {
       openCards: [],
       list: [],
       survey: surveyVal
     };
-    const surveyViewSingleSurveyRetrievedAction = surveyView(surveyViewSingleSurveyRetrievedBefore, actionSingleSurveyRetrieved)
 
-    assert.ok(surveyViewSingleSurveyRetrievedAction, surveyViewSingleSurveyRetrievedAfter, 'SINGLE_SURVEY_RETRIEVED Should Return The State With A Non-Empty Survey Value')
+    const surveyViewSingleSurveyRetrievedAction = surveyView(surveyViewSingleSurveyRetrievedBefore, actionSingleSurveyRetrieved);
+
+    assert.ok(surveyViewSingleSurveyRetrievedAction, surveyViewSingleSurveyRetrievedAfter, 'SINGLE_SURVEY_RETRIEVED Should Return The State With A Non-Empty Survey Value');
     assert.end();
   });
 
@@ -113,7 +113,7 @@ test('SurveyView', next => {
           body: "<h2>Hi Rachel, congratulations (...)"
         }
       }
-    }
+    };
 
     const surveyValAfter = {
       doc: {
@@ -130,7 +130,7 @@ test('SurveyView', next => {
           slide_number: 1
         }
       }
-    }
+    };
 
     const actionAddSlide = {
       type: 'ADD_SLIDE',
@@ -142,36 +142,31 @@ test('SurveyView', next => {
       }
     };
 
-
     const surveyViewAddSlideBefore = {
       list: [],
       survey: surveyVal,
       openCards: []
     };
+
     const surveyViewAddSlideAfter = {
       openCards: [],
       list: [],
       survey: surveyValAfter
     };
-    const surveyViewAddSlideAction = surveyView(surveyViewAddSlideBefore, actionAddSlide)
 
-    assert.ok(surveyViewAddSlideAction, surveyViewAddSlideAfter, 'ADD_SLIDE Should Return The State With An Updated Survey Value')
+    const surveyViewAddSlideAction = surveyView(surveyViewAddSlideBefore, actionAddSlide);
+
+    assert.ok(surveyViewAddSlideAction, surveyViewAddSlideAfter, 'ADD_SLIDE Should Return The State With An Updated Survey Value');
     assert.end();
   });
 
   next.test('TOGGLE_OPEN_CARD', assert => {
 
-    const surveyVal = {
-      openCards: [1, 2, 3]
-    }
+    const surveyVal = [1, 2, 3];
 
-    const surveyValAfterP1 = {
-      openCards: [1, 2, 3, 4]
-    }
+    const surveyValAfterP1 = [1, 2, 3, 4];
 
-    const surveyValAfterP2 = {
-      openCards: [1, 2, 4]
-    }
+    const surveyValAfterP2 = [1, 2, 4];
 
     const actionToggleOpenCardP1 = {
       type: 'TOGGLE_OPEN_CARD',
@@ -181,36 +176,32 @@ test('SurveyView', next => {
     const actionToggleOpenCardP2 = {
       type: 'TOGGLE_OPEN_CARD',
       cardID: 3
-    }
-
+    };
 
     const surveyViewToggleOpenCardBefore = {
       list: [],
       survey: {},
       openCards: surveyVal
     };
+
     const surveyViewToggleOpenCardAfterP1 = {
       list: [],
       survey: {},
       openCards: surveyValAfterP1
     };
+
     const surveyViewToggleOpenCardAfterP2 = {
       list: [],
       survey: {},
       openCards: surveyValAfterP2
     };
 
-    const surveyViewToggleOpenCardActionP1 = surveyView(surveyViewToggleOpenCardBefore, actionToggleOpenCardP1)
-    const surveyViewToggleOpenCardActionP2 = surveyView(surveyViewToggleOpenCardBefore, actionToggleOpenCardP2)
+    const surveyViewToggleOpenCardActionP1 = surveyView(surveyViewToggleOpenCardBefore, actionToggleOpenCardP1);
+    const surveyViewToggleOpenCardActionP2 = surveyView(surveyViewToggleOpenCardBefore, actionToggleOpenCardP2);
 
-
-    assert.ok(surveyViewToggleOpenCardAfterP1, surveyViewToggleOpenCardActionP1, 'TOGGLE_OPEN_CARD When Given An ID In openCard Array Should Return The State With An openCards Value With The CardID Removed')
-    assert.ok(surveyViewToggleOpenCardAfterP2, surveyViewToggleOpenCardActionP2, 'TOGGLE_OPEN_CARD When Given An ID Not In openCard Array Should Return The State With An openCards Value With The CardID Added')
+    assert.ok(surveyViewToggleOpenCardAfterP1, surveyViewToggleOpenCardActionP1, 'TOGGLE_OPEN_CARD When Given An ID In openCard Array Should Return The State With An openCards Value With The CardID Removed');
+    assert.ok(surveyViewToggleOpenCardAfterP2, surveyViewToggleOpenCardActionP2, 'TOGGLE_OPEN_CARD When Given An ID Not In openCard Array Should Return The State With An openCards Value With The CardID Added');
     assert.end();
   });
-
-  
-
-  
 });
   

@@ -34,22 +34,20 @@ test('App', next => {
 
   });
 
-
-
   next.test('USERS_RETRIEVED', assert => {
 
-    const users = [
-      { id: 1, first_name: "Rohan", last_name: "Nair", email: "r@rohannair.ca", isAdmin: "t" },
-      { id: 2, first_name: "Ron", last_name: "Swanson", email: "rs@parks.rec", isAdmin: "f" },
-      { id: 3, first_name: "Lesley", last_name: "Knope", email: "lk@parks.rec", isAdmin: "f" }
-    ];
+    const users = {
+      1: {first_name: "Rohan", last_name: "Nair", email: "r@rohannair.ca", isAdmin: "t" },
+      2: {first_name: "Ron", last_name: "Swanson", email: "rs@parks.rec", isAdmin: "f" },
+      3: {first_name: "Lesley", last_name: "Knope", email: "lk@parks.rec", isAdmin: "f" }
+    };
 
     const actionUsersRetrieved = {
       type: 'USERS_RETRIEVED',
       users: users
     };
     const appUsersRetrievedBefore = {
-      users: []
+      users: {}
     };
     const appUsersRetrievedAfter = {
       users: users

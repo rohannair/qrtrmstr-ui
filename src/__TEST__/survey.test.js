@@ -5,7 +5,7 @@ import test from 'tape';
 //Reducer
 import survey from '../reducers/survey';
 
-const store = createStore(survey)
+const store = createStore(survey);
 
 console.log('Initial state:');
 console.log(store.getState());
@@ -29,14 +29,11 @@ test('Survey', next => {
       selected: {}
     };
 
-    const surveyDefaultWithAction = survey(surveyDefaultBefore, actionDefault)
+    const surveyDefaultWithAction = survey(surveyDefaultBefore, actionDefault);
 
-    assert.ok(surveyDefaultWithAction, surveyDefaultAfter, 'Should Return The Initial (Default) State')
+    assert.ok(surveyDefaultWithAction, surveyDefaultAfter, 'Should Return The Initial (Default) State');
     assert.end();
-
   });
-
-
 
   next.test('SURVEY_RETRIEVED', assert => {
 
@@ -51,25 +48,26 @@ test('Survey', next => {
           body: "<h2>Hi Rachel, congratulations (...)"
         }
       }
-    }
+    };
 
     const actionSurveyRetrieved = {
       type: 'SURVEY_RETRIEVED',
       survey: surveyVal
     };
 
-
     const surveySurveyRetrievedBefore = {
       survey: {},
       selected: {}
     };
+
     const surveySurveyRetrievedAfter = {
       survey: surveyVal,
       selected: {}
     };
-    const surveySurveyRetrievedAction = survey(surveySurveyRetrievedBefore, actionSurveyRetrieved)
 
-    assert.ok(surveySurveyRetrievedAction, surveySurveyRetrievedAfter, 'SURVEY_RETRIEVED Should Return The State With A Non-Empty Survey Value')
+    const surveySurveyRetrievedAction = survey(surveySurveyRetrievedBefore, actionSurveyRetrieved);
+
+    assert.ok(surveySurveyRetrievedAction, surveySurveyRetrievedAfter, 'SURVEY_RETRIEVED Should Return The State With A Non-Empty Survey Value');
     assert.end();
   });
 
@@ -82,18 +80,19 @@ test('Survey', next => {
       id: selected
     };
 
-
     const surveySurveySelectionBefore = {
       survey: {},
       selected: {}
     };
+
     const surveySurveySelectionAfter = {
       survey: {},
       selected: selected
     };
-    const surveySurveySelectionAction = survey(surveySurveySelectionBefore, actionSurveySelection)
 
-    assert.ok(surveySurveySelectionAction, surveySurveySelectionAfter, 'SURVEY_SELECTION Should Return The State With A Non-Empty Selected Value')
+    const surveySurveySelectionAction = survey(surveySurveySelectionBefore, actionSurveySelection);
+
+    assert.ok(surveySurveySelectionAction, surveySurveySelectionAfter, 'SURVEY_SELECTION Should Return The State With A Non-Empty Selected Value');
     assert.end();
   });
 });
