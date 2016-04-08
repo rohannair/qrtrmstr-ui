@@ -63,7 +63,6 @@ class SlideEquipmentHeader extends Component {
 
 export default SlideEquipmentHeader;
 
-
 // SubComponents
 class Editing extends Component {
   state = {
@@ -93,7 +92,6 @@ class Editing extends Component {
     });
   }
 };
-
 
 const Regular = ({ val, onClick, onEdit, onRemove, selected }) => {
   const classes = val.id === selected ? 'tab active' : 'tab';
