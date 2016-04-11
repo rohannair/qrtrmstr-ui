@@ -1,5 +1,3 @@
-//import { omit } from 'lodash.omit';
-//var omit = require('lodash.omit');
 import _ from 'lodash';
 
 const initialState = {
@@ -41,12 +39,11 @@ export default function surveyView(state = initialState, action) {
     };
 
   case 'REMOVE_SLIDE':
-    const new_doc = _.omit(state.survey.doc, [action.slideID]);
     return {
       ...state,
       survey: {
         ...state.survey,
-        doc: new_doc
+        doc: _.omit(state.survey.doc, [action.slideID]);
       }
     };
 
@@ -55,10 +52,8 @@ export default function surveyView(state = initialState, action) {
     const editKey = action.slideID
     const orgDoc = state.survey.doc
     const slideKeys = orgDoc[editKey]
-
-    const isAKey = editKey in orgDoc;
     
-    if (isAKey) {
+    if (editKey in orgDoc) {
       const newData = action.data
 
       const updatedKeys = (originalData) => {
@@ -81,7 +76,6 @@ export default function surveyView(state = initialState, action) {
     
     };
     return state
-
 
   case 'TOGGLE_OPEN_CARD':
     const { openCards } = state;
