@@ -56,10 +56,6 @@ export default function surveyView(state = initialState, action) {
     if (editKey in orgDoc) {
       const newData = action.data
 
-      const updatedKeys = (originalData) => {
-        return Object.assign({}, originalData, newData)
-      };
-
       const editDoc = {
         ...orgDoc,
         [action.slideID]: { 
