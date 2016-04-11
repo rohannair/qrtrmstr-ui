@@ -315,8 +315,6 @@ test('SurveyView', next => {
       survey: surveyValEdit,
       openCards: []
     };
-    console.log("surveyViewEditSlideBefore")
-    console.log(surveyViewEditSlideBefore.survey)
 
     const surveyViewEditSlideAfterP1 = {
       openCards: [],
@@ -344,7 +342,7 @@ test('SurveyView', next => {
     const surveyVal = [1, 2, 3];
     const surveyValAfterP1 = [1, 2, 3, 4];
     const surveyValAfterP2 = [1, 2, 4];
-    
+
     const actionToggleOpenCardP1 = {
       type: 'TOGGLE_OPEN_CARD',
       cardID: 4
