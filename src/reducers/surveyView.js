@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 const initialState = {
   list: [],
   survey: {},
@@ -35,6 +37,44 @@ export default function surveyView(state = initialState, action) {
         doc
       }
     };
+
+  case 'REMOVE_SLIDE':
+    return {
+      ...state,
+      survey: {
+        ...state.survey,
+        doc: _.omit(state.survey.doc, [action.slideID])
+      }
+    };
+
+  case 'EDIT_SLIDE':
+
+    const editKey = action.slideID
+    const orgDoc = state.survey.doc
+    const slideKeys = orgDoc[editKey]
+    
+    if (editKey in orgDoc) {
+      const newData = action.data
+
+      const editDoc = {
+        ...orgDoc,
+        [action.slideID]: { 
+          ...slideKeys, 
+          ...action.data
+        }
+      };
+
+      const editedState = {
+        ...state,
+        survey: {
+          ...state.survey,
+          doc: editDoc
+        }
+      };
+      return editedState
+    
+    };
+    return state
 
   case 'TOGGLE_OPEN_CARD':
     const { openCards } = state;
