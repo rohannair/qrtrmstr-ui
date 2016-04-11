@@ -48,7 +48,6 @@ test('AccountActions', next => {
     };
     const accountActionsLoginAction = accountActions(accountActionsloginBefore, actionLogin)
 
-
     assert.ok(accountActionsLoginAction, accountActionsLoginAfter, 'LOG_IN Should Return The State With A Non-Null Token Value')
     assert.end();
   });
@@ -67,22 +66,8 @@ test('AccountActions', next => {
     };
     const accountActionsLogoutAction = accountActions(accountActionsLogoutBefore, actionLogout)
 
-
     assert.ok(accountActionsLogoutAction, accountActionsLogoutAfter, 'LOG_OUT Should Return The State With A Token Value Of Null')
     assert.end();
 
   });
-
 });
-
-
-
-
-
-
-
-
-
-
-
-

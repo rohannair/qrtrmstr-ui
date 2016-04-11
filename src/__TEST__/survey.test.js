@@ -96,4 +96,3 @@ test('Survey', next => {
     assert.end();
   });
 });
-  
