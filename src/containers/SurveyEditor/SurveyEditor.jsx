@@ -28,6 +28,7 @@ import SurveyEditorSidebar from '../../components/SurveyEditorSidebar';
 
 import SlideIntro from '../../components/SlideIntro';
 import SlideEquipment from '../../components/SlideEquipment';
+import SlideKnowledgeCenter from '../../components/SlideKnowledgeCenter';
 
 class SurveyEditor extends Component {
   componentWillMount() {
@@ -41,18 +42,17 @@ class SurveyEditor extends Component {
     ? Object.keys(survey.doc).map(val => {
      const slide = survey.doc[val];
      switch (slide.type) {
-
        case 'intro':
        return (
         <Card key={val} title={`Section ${parseInt(val) + 1}`}>
-        <SlideIntro key={val} {...slide} />
+          <SlideIntro key={val} {...slide} />
         </Card>
         );
 
        case 'bio':
        return (
         <Card key={val} title={`Section ${parseInt(val) + 1}`}>
-        <div key={val}><h1>Bio</h1></div>
+          <div key={val}><h1>Bio</h1></div>
         </Card>
         );
 
@@ -63,11 +63,18 @@ class SurveyEditor extends Component {
         </Card>
         );
 
+       case 'knowledgectr':
+       return (
+          <Card key={val} title={`Section ${parseInt(val) + 1}`}>
+            <SlideKnowledgeCenter {...slide.body}/>
+          </Card>
+        );
+
        default:
        return (
         <Card key={val} title={`Section ${parseInt(val) + 1}`}>
-        <h1>{slide.heading}</h1>
-        <pre dangerouslySetInnerHTML={{ __html: JSON.stringify(slide.body, null, 4) }} />
+          <h1>{slide.heading}</h1>
+          <pre>{ JSON.stringify(slide.body, null, 4) }</pre>
         </Card>
         );
      }
