@@ -43,7 +43,7 @@ export default function surveyView(state = initialState, action) {
       ...state,
       survey: {
         ...state.survey,
-        doc: _.omit(state.survey.doc, [action.slideID]);
+        doc: _.omit(state.survey.doc, [action.slideID])
       }
     };
 
@@ -60,19 +60,22 @@ export default function surveyView(state = initialState, action) {
         return Object.assign({}, originalData, newData)
       };
 
-      const edit_doc = {
+      const editDoc = {
         ...orgDoc,
-        [action.slideID]: updatedKeys(slideKeys)
+        [action.slideID]: { 
+          ...slideKeys, 
+          ...action.data
+        }
       };
 
-      const edited_state = {
+      const editedState = {
         ...state,
         survey: {
           ...state.survey,
-          doc: edit_doc
+          doc: editDoc
         }
       };
-      return edited_state
+      return editedState
     
     };
     return state
