@@ -40,47 +40,46 @@ class SurveyEditor extends Component {
 
     const surveyDoc = survey.doc && Object.keys(survey.doc).length > 0
     ? Object.keys(survey.doc).map(val => {
-     const slide = survey.doc[val];
-     switch (slide.type) {
-       case 'intro':
-       return (
-        <Card key={val} title={`Section ${parseInt(val) + 1}`}>
-          <SlideIntro key={val} {...slide} />
-        </Card>
+      const slide = survey.doc[val];
+
+      switch (slide.type) {
+      case 'intro':
+        return (
+          <Card key={val} title={`Section ${parseInt(val) + 1}`}>
+            <SlideIntro key={val} {...slide} />
+          </Card>
         );
 
-       case 'bio':
-       return (
-        <Card key={val} title={`Section ${parseInt(val) + 1}`}>
-          <div key={val}><h1>Bio</h1></div>
-        </Card>
+      case 'bio':
+        return (
+          <Card key={val} title={`Section ${parseInt(val) + 1}`}>
+            <div key={val}><h1>Bio</h1></div>
+          </Card>
         );
 
-       case 'equipment':
-       return (
-        <Card key={val} title={`Section ${parseInt(val) + 1}`}>
-          <SlideEquipment {...slide} saveSlide={ this._saveSlide } />
-        </Card>
+      case 'equipment':
+        return (
+          <Card key={val} title={`Section ${parseInt(val) + 1}`}>
+            <SlideEquipment {...slide} saveSlide={ this._saveSlide } />
+          </Card>
         );
 
-       case 'knowledgectr':
-       return (
+      case 'knowledgectr':
+        return (
           <Card key={val} title={`Section ${parseInt(val) + 1}`}>
             <SlideKnowledgeCenter {...slide.body}/>
           </Card>
         );
 
-       default:
-       return (
-        <Card key={val} title={`Section ${parseInt(val) + 1}`}>
-          <h1>{slide.heading}</h1>
-          <pre>{ JSON.stringify(slide.body, null, 4) }</pre>
-        </Card>
+      default:
+        return (
+          <Card key={val} title={`Section ${parseInt(val) + 1}`}>
+            <h1>{slide.heading}</h1>
+            <pre>{ JSON.stringify(slide.body, null, 4) }</pre>
+          </Card>
         );
-     }
-
-   })
-
+      }
+    })
     : null;
 
     const selectedSurvey = survey.doc || {};
@@ -92,7 +91,7 @@ class SurveyEditor extends Component {
 
     return (
       <div>
-      { surveyDoc }
+        { surveyDoc }
       </div>
       );
   };
@@ -145,4 +144,3 @@ function mapStateToProps(state, ownProps) {
   };
 }
 export default connect(mapStateToProps)(SurveyEditor);
-

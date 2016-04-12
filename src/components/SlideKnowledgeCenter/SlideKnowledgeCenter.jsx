@@ -6,8 +6,6 @@ import ButtonGroup from '../ButtonGroup';
 import Card from '../Card';
 import SlideKnowledgeCenterItem from '../SlideKnowledgeCenterItem';
 
-import { randHex } from '../../utils/coolFunctions';
-
 class SlideKnowledgeCenter extends Component {
   state = {
     options: this.props.options || []
