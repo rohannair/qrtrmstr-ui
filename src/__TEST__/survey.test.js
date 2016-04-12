@@ -1,8 +1,8 @@
 import { createStore } from 'redux';
-import expect from 'expect'
+import expect from 'expect';
 import test from 'tape';
 
-//Reducer
+// Reducer
 import survey from '../reducers/survey';
 
 const store = createStore(survey);
@@ -42,10 +42,10 @@ test('Survey', next => {
     const surveyVal = {
       doc: {
         text1: {
-          slide_number: 0, 
-          type:"text", 
-          heading: "Introduction", 
-          body: "<h2>Hi Rachel, congratulations (...)"
+          slide_number: 0,
+          type: 'text',
+          heading: 'Introduction',
+          body: '<h2>Hi Rachel, congratulations (...)'
         }
       }
     };
@@ -73,7 +73,7 @@ test('Survey', next => {
 
   next.test('SURVEY_SELECTION', assert => {
 
-    const selected = "1e9eddbc-7ede-43fd-9bde-364bba4d84e9";
+    const selected = '1e9eddbc-7ede-43fd-9bde-364bba4d84e9';
 
     const actionSurveySelection = {
       type: 'SURVEY_SELECTION',

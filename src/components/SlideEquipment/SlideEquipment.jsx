@@ -27,7 +27,8 @@ class SlideEquipment extends Component {
       <div className="slideEquipment">
         <div className="slide-input">
           <strong>Heading:</strong> <input defaultValue={this.props.heading} />
-          <strong>Description:</strong><input defaultValue={this.props.body.desc} /></div>
+          <strong>Description:</strong> <input defaultValue={this.props.body.desc} />
+        </div>
 
         <SlideEquipmentHeader
           vals={ names }

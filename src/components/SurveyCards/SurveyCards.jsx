@@ -37,7 +37,7 @@ const SurveyCards = (props) => {
       />);
     case 'bio':
       return (
-        <Card key={field.id} footer={<div/>}>
+        <Card key={ field.id } footer={<div/>}>
           <h2>Fill out your profile</h2>
           <div className="bio">
             <div className="bio-info">
