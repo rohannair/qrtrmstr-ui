@@ -1,0 +1,50 @@
+.slideFirstDay {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+
+  .map {
+    width: 100%;
+  }
+
+  .agenda {
+    width: 100%;
+    margin: 20px 0;
+
+    thead {
+      color: #fff;
+
+      th {
+        background-color: #2E404E;
+        padding: 10px;
+      }
+    }
+
+    tr {
+      &:nth-child(odd) {
+        background-color: #f0f0f0;
+      }
+    }
+
+    td {
+      padding: 14px 20px;
+
+      &:first-child {
+        border-right: 1px solid #2E404E;
+      }
+    }
+
+    .timeInput {
+      text-align: right;
+    }
+
+    input {
+      width: 90%;
+    }
+  }
+
+  .timeInput {
+    width: 20%;
+
+  }
+}

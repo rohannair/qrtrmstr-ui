@@ -12,7 +12,8 @@ import {
   toggleOpenCard,
   addSlide,
   modifySurvey,
-  editSlide } from '../../actions/surveyViewActions';
+  editSlide
+} from '../../actions/surveyViewActions';
 
 // Styles
 import styles from './surveyEditor.css';
@@ -29,6 +30,7 @@ import SurveyEditorSidebar from '../../components/SurveyEditorSidebar';
 import SlideIntro from '../../components/SlideIntro';
 import SlideEquipment from '../../components/SlideEquipment';
 import SlideKnowledgeCenter from '../../components/SlideKnowledgeCenter';
+import SlideFirstDay from '../../components/SlideFirstDay';
 
 class SurveyEditor extends Component {
   componentWillMount() {
@@ -53,7 +55,10 @@ class SurveyEditor extends Component {
       case 'bio':
         return (
           <Card key={val} title={`Section ${parseInt(val) + 1}`}>
-            <div key={val}><h1>Bio</h1></div>
+            <div key={val}>
+              <h1>Bio</h1>
+              <p>Hello, I am a Biography Card</p>
+            </div>
           </Card>
         );
 
@@ -67,7 +72,19 @@ class SurveyEditor extends Component {
       case 'knowledgectr':
         return (
           <Card key={val} title={`Section ${parseInt(val) + 1}`}>
-            <SlideKnowledgeCenter {...slide.body}/>
+            <SlideKnowledgeCenter {...slide.body} />
+          </Card>
+        );
+
+      case 'day1agenda':
+        return (
+          <Card key={val} title={`Section ${parseInt(val) + 1}`}>
+            <h1>{slide.heading}</h1>
+            <SlideFirstDay
+              {...slide}
+              onAdd={this._addNewAgendaItem}
+              onDelete= {this._deleteAgendaItem}
+            />
           </Card>
         );
 
@@ -90,8 +107,11 @@ class SurveyEditor extends Component {
     : '';
 
     return (
-      <div>
-        { surveyDoc }
+      <div className="surveyEditor">
+        <SurveyEditorBody>
+          { surveyDoc }
+        </SurveyEditorBody>
+        <SurveyEditorSidebar />
       </div>
       );
   };
@@ -130,7 +150,16 @@ class SurveyEditor extends Component {
   _saveSlide = ({ options }, slideNumber) => {
     const { dispatch } = this.props;
     return dispatch(editSlide(options, slideNumber));
+  };
+
+  _addNewAgendaItem = (item) => {
+    const { dispatch } = this.props;
+  };
+
+  _deleteAgendaItem = (item) => {
+    const { dispatch } = this.props;
   }
+
 };
 
 function mapStateToProps(state, ownProps) {

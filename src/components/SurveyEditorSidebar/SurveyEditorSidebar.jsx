@@ -10,12 +10,10 @@ const SurveyEditorSidebar = (props) => {
   const opts = [
     { id: 'text', name: 'text', uri: '#', icon: 'copywriting' },
     { id: 'option', name: 'option', uri: '#', icon: 'grid-two-up' },
-    { id: 'check', name: 'checklist', uri: '#', icon: 'task' },
-    { id: 'html', name: 'HTML', uri: '#', icon: 'code' },
   ];
 
   return (
-    <div className="editSurvey-sidebar">
+    <div className="surveyEditor-sidebar">
       <Card>
         <Button
           onClick={ props.save }
