@@ -1,4 +1,5 @@
 import { createStore } from 'redux';
+import assert from 'assert';
 import test from 'tape';
 
 // Reducer
@@ -10,25 +11,21 @@ console.log('Initial state:');
 console.log(store.getState());
 console.log('---------------');
 
-test('SurveyView', next => {
+test('SurveyView', ({ test }) => {
 
-  next.test('Return Current State When No Case Matches', assert => {
+  test('Return Current State When No Case Matches', assert => {
 
     const actionDefault = {
       type: 'DEFAULT'
     };
 
-    const surveyViewDefaultBefore = {
+    const surveyViewDefaultBefore =  {
       list: [],
       survey: {},
       openCards: []
     };
 
-    const surveyViewDefaultAfter = {
-      list: [],
-      survey: {},
-      openCards: []
-    };
+    const surveyViewDefaultAfter = { ...surveyViewDefaultBefore };
 
     const surveyViewDefaultWithAction = surveyView(surveyViewDefaultBefore, actionDefault);
 
@@ -36,7 +33,8 @@ test('SurveyView', next => {
     assert.end();
   });
 
-  next.test('SURVEYS_RETRIEVED', assert => {
+  // SURVEYS_RETRIEVED
+  test('SURVEYS_RETRIEVED', assert => {
 
     const actionSurveysRetrieved = {
       type: 'SURVEYS_RETRIEVED',
@@ -63,7 +61,8 @@ test('SurveyView', next => {
     assert.end();
   });
 
-  next.test('SINGLE_SURVEY_RETRIEVED', assert => {
+  // SINGLE_SURVEY_RETRIEVED
+  test('SINGLE_SURVEY_RETRIEVED', assert => {
 
     const surveyVal = {
       doc: {
@@ -101,7 +100,8 @@ test('SurveyView', next => {
     assert.end();
   });
 
-  next.test('ADD_SLIDE', assert => {
+  // ADD_SLIDE
+  test('ADD_SLIDE', assert => {
 
     const surveyVal = {
       doc: {
@@ -158,7 +158,9 @@ test('SurveyView', next => {
     assert.ok(surveyViewAddSlideAction, surveyViewAddSlideAfter, 'ADD_SLIDE Should Return The State With An Updated Survey Value');
     assert.end();
   });
-  next.test('REMOVE_SLIDE', assert => {
+
+  // REMOVE_SLIDE
+  test('REMOVE_SLIDE', assert => {
 
     const surveyValRem = {
       doc: {
@@ -241,7 +243,8 @@ test('SurveyView', next => {
     assert.end();
   });
 
-  next.test('EDIT_SLIDE', assert => {
+  // EDIT_SLIDE
+  test('EDIT_SLIDE', assert => {
 
     const surveyValEdit = {
       doc: {
@@ -336,7 +339,8 @@ test('SurveyView', next => {
     assert.end();
   });
 
-  next.test('TOGGLE_OPEN_CARD', assert => {
+  // TOGGLE_OPEN_CARD
+  test('TOGGLE_OPEN_CARD', assert => {
 
     const surveyVal = [1, 2, 3];
     const surveyValAfterP1 = [1, 2, 3, 4];
@@ -377,5 +381,6 @@ test('SurveyView', next => {
     assert.ok(surveyViewToggleOpenCardAfterP2, surveyViewToggleOpenCardActionP2, 'TOGGLE_OPEN_CARD When Given An ID Not In openCard Array Should Return The State With An openCards Value With The CardID Added');
     assert.end();
   });
+
 });
 

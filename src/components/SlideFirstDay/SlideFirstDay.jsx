@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styles from './slideFirstDay.css';
-import { omit } from 'lodash';
+import { omit, pullAt } from 'lodash';
 
 import Button from '../../components/Button';
 import ButtonGroup from '../../components/ButtonGroup';
@@ -9,8 +9,8 @@ import FlipMove from 'react-flip-move';
 
 class SlideFirstDay extends Component {
   state = {
-    time: null,
-    desc: null,
+    time: '',
+    desc: '',
     mapDesc: this.props.body.map || ''
   };
 
@@ -18,6 +18,7 @@ class SlideFirstDay extends Component {
     const { onAdd } = this.props;
     const { agenda } =  this.props.body;
     const mapBody = this.props.body.map;
+    const { mapDesc, time, desc } = this.state;
     const self = this;
 
     const items = agenda
@@ -38,10 +39,11 @@ class SlideFirstDay extends Component {
     })
     : null;
 
+
     return (
       <div className="slideFirstDay">
         <div className="map">
-          <textarea value={ this.state.mapDesc } onChange={ this._mapDescChange }/>
+          <textarea value={ mapDesc } onChange={ this._mapDescChange }/>
         </div>
         <divl className="agenda">
 
@@ -50,16 +52,16 @@ class SlideFirstDay extends Component {
             <div className="desc">Description</div>
           </div>
 
-          <FlipMove easing="cubic-bezier(0, 0.7, 0.8, 0.1)">
+          <FlipMove enterAnimation="fade" leaveAnimation="fade">
             { items }
           </FlipMove>
 
           <div className="agenda-footer">
             <div className="timeInput">
-              <input name="time" onChange={ this._inputChange } />
+              <input name="time" value={ time } onChange={ this._inputChange } />
             </div>
             <div className="desc">
-              <input name="desc" onChange={ this._inputChange } />
+              <input name="desc" value={ desc } onChange={ this._inputChange } />
             </div>
             <div className="buttonContainer">
               <Button classes="primary md" icon="plus" onClick={ this._addNew }/>
@@ -78,7 +80,20 @@ class SlideFirstDay extends Component {
   };
 
   _deleteItem = id => {
-    return this.props.onDelete(id);
+    const newData = {
+      heading: this.props.heading,
+      body: {
+        ...this.props.body,
+        agenda: [
+          ...this.props.body.agenda.slice(0, id),
+          ...this.props.body.agenda.slice(id + 1)
+        ]
+      },
+      type: this.props.type,
+      slide_number: this.props.slide_number
+    };
+
+    return this.props.onEdit(newData);
   };
 
   _inputChange = e => {
@@ -91,7 +106,28 @@ class SlideFirstDay extends Component {
 
   _addNew = e => {
     e.preventDefault();
-    return this.props.onAdd(this.state);
+
+    const { desc, time } = this.state;
+    this.setState({
+      ...this.state,
+      desc: '',
+      time: ''
+    });
+
+    const newData = {
+      heading: this.props.heading,
+      body: {
+        ...this.props.body,
+        agenda: [
+          ...this.props.body.agenda,
+          { desc, time }
+        ]
+      },
+      type: this.props.type,
+      slide_number: this.props.slide_number
+    };
+
+    return this.props.onEdit(newData);
   }
 };
 

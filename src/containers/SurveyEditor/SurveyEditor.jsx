@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Cookies from 'cookies-js';
 import moment from 'moment';
-import _ from 'lodash';
 
 // Containers
 import {
@@ -82,6 +81,7 @@ class SurveyEditor extends Component {
             <h1>{slide.heading}</h1>
             <SlideFirstDay
               {...slide}
+              onEdit={this._editSlide}
               onAdd={this._addNewAgendaItem}
               onDelete= {this._deleteAgendaItem}
             />
@@ -147,15 +147,20 @@ class SurveyEditor extends Component {
     return dispatch(addSlide(newID, slideInfo));
   };
 
+  _editSlide = (data) => {
+    const { dispatch } = this.props;
+    return dispatch(editSlide(data));
+  };
+
+  // TODO: Remove this
   _saveSlide = ({ options }, slideNumber) => {
     const { dispatch } = this.props;
     return dispatch(editSlide(options, slideNumber));
   };
 
   _addNewAgendaItem = (item) => {
-    debugger;
     const { dispatch } = this.props;
-    //return dispatch(editSlide())
+    // return dispatch(editSlide())
   };
 
   _deleteAgendaItem = (item) => {
