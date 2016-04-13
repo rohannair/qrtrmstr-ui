@@ -12,15 +12,14 @@ import SurveyTextCard from '../../components/SurveyTextCard';
 const userInfo = {
   firstName: 'Rachel',
   lastName: 'Galaxy'
-}
+};
 
 const SurveyCards = (props) => {
   const { fields, onClick, onSubmit, selected } = props;
-``
   const cardCount = Object.keys(fields).map(val => {
     let field = fields[val];
-    const classes = classnames('progressbar-item', {done: val == 0})
-    return <div className={classes} key={field.id}><span /></div>
+    const classes = classnames('progressbar-item', {done: val == 0});
+    return <div className={classes} key={field.slide_number}><span /></div>;
   });
 
   const cards = Object.keys(fields).map((val) => {
@@ -28,16 +27,16 @@ const SurveyCards = (props) => {
 
     switch (field.type) {
     case 'option':
-      let isSelected = selected ? selected[field.id] : null;
+      let isSelected = selected ? selected[field.slide_number] : null;
       return (<SurveyFormCard
-        key = { field.id }
-        onClick = { clickHandler(field.id, onClick) }
+        key = { field.slide_number }
+        onClick = { clickHandler(field.slide_number, onClick) }
         selected = { isSelected }
         {...field}
       />);
     case 'bio':
       return (
-        <Card key={ field.id } footer={<div/>}>
+        <Card key={ field.slide_number } footer={<div/>}>
           <h2>Fill out your profile</h2>
           <div className="bio">
             <div className="bio-info">
@@ -65,7 +64,7 @@ const SurveyCards = (props) => {
       const opts = field.body.options.map(val => {
 
         const options = val.opts.map((opt, i) => {
-          return <option value={opt} key={opt}>{val.optNames[i]}</option>
+          return <option value={opt} key={opt}>{val.optNames[i]}</option>;
         });
 
         return (
@@ -75,11 +74,11 @@ const SurveyCards = (props) => {
             { options }
             </select>
           </div>
-        )
+        );
       });
 
       return (
-        <Card key={field.id} footer={<div/>}>
+        <Card key={field.slide_number} footer={<div/>}>
           <h2>{field.heading}</h2>
           <p>{field.body.desc}</p>
           <div className="equipment-form">
@@ -91,12 +90,12 @@ const SurveyCards = (props) => {
     case 'knowledgectr':
       const options = field.body.options.map((val, i) => {
         if (i === 1) {
-          return <a className="active" href="#" key={val.id}><i className="material-icons">ondemand_video</i> {val.name}</a>
+          return <a className="active" href="#" key={val.id}><i className="material-icons">ondemand_video</i> {val.name}</a>;
         }
-        return <a href="#" key={val.id}><i className="material-icons">ondemand_video</i> {val.name}</a>
+        return <a href="#" key={val.id}><i className="material-icons">ondemand_video</i> {val.name}</a>;
       });
       return (
-        <Card key={field.id} footer={<div/>}>
+        <Card key={field.slide_number} footer={<div/>}>
           <h2>{field.heading}</h2>
           <p>{field.body.desc}</p>
 
@@ -119,7 +118,7 @@ const SurveyCards = (props) => {
       );
 
     case 'day1agenda':
-      const agenda = field.body.agenda.map( (val, i) => {
+      const agenda = field.body.agenda.map((val, i) => {
         return (
           <div className="agendaItem" key={`agendaItem-${i}`}>
             <span className="agendaItem-time">{val.time}</span>
@@ -135,7 +134,7 @@ const SurveyCards = (props) => {
         .replace('<a href="#">onboarding@scotiabank.com</a>', 'Questions - <a href="#">onboarding@scotiabank.com</a>');
 
       return (
-        <Card key={field.id} footer={<div/>}>
+        <Card key={field.slide_number} footer={<div/>}>
           <h2>{field.heading}</h2>
           <div className="day1-body">
             <div className="day1-map"
@@ -154,10 +153,10 @@ const SurveyCards = (props) => {
       const introFilled = {
         ...field,
         heading: field.heading.replace('\${user}', userInfo.firstName).replace('Scotia Bank', 'Scotiabank')
-      }
-      return <SurveyTextCard key={field.id} {...introFilled} />;
+      };
+      return <SurveyTextCard key={field.slide_number} {...introFilled} />;
     default:
-      return;
+      return null;
     }
   });
 
