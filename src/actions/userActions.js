@@ -8,6 +8,19 @@ function usersRetrieved(users = {}) {
   };
 }
 
+// function toggleNewUserModal() {
+  
+// }
+
+//show Modal to Create New User
+export const newUserModal = () => {
+  return {
+    type: 'TOGGLE_NEW_USER_MODAL'
+  };
+};
+
+
+
 // Get All Users
 export const getUsers = token => {
   return dispatch => {
@@ -48,7 +61,7 @@ export const getSingleUser = (token, id) => {
 export const createUser = (token, payload) => {
   return dispatch => {
     return fetch('http://localhost:3000/api/v1/users', {
-      method: 'PUT',
+      method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Authorization': 'bearer ' + token,
@@ -67,7 +80,7 @@ export const createUser = (token, payload) => {
 export const modifyUser = (token, payload) => {
   return dispatch => {
     return fetch(`http://localhost:3000/api/v1/users/${payload.id}`, {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         'Accept': 'application/json',
         'Authorization': 'bearer ' + token,
