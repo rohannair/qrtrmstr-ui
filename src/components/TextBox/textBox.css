@@ -1,0 +1,17 @@
+.textBox {
+  background: #435360;
+  padding: 10px 2px 2px;
+  border-radius: 2px;
+
+  .public-DraftEditor-content {
+    background: white;
+    padding: 10px;
+    margin-top: 10px;
+    min-height: 250px;
+  }
+
+  .footer {
+    padding: 10px;
+    text-align: right;
+  }
+}
