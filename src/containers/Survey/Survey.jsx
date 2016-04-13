@@ -20,6 +20,7 @@ class Survey extends Component {
 
   render() {
     const { id, fields, selected } = this.props;
+
     return (
       <div className="survey">
         <Header />
@@ -46,7 +47,7 @@ class Survey extends Component {
   _getSurvey = (id = '1e9eddbc-7ede-43fd-9bde-364bba4d84e9') => {
     const { token, dispatch } = this.props;
     return dispatch(getSurvey(token, id));
-  }
+  };
 
 };
 

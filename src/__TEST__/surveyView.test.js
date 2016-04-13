@@ -1,8 +1,8 @@
 import { createStore } from 'redux';
-import expect from 'expect'
+import assert from 'assert';
 import test from 'tape';
 
-//Reducer
+// Reducer
 import surveyView from '../reducers/surveyView';
 
 const store = createStore(surveyView);
@@ -11,25 +11,21 @@ console.log('Initial state:');
 console.log(store.getState());
 console.log('---------------');
 
-test('SurveyView', next => {
+test('SurveyView', ({ test }) => {
 
-  next.test('Return Current State When No Case Matches', assert => {
+  test('Return Current State When No Case Matches', assert => {
 
     const actionDefault = {
       type: 'DEFAULT'
     };
 
-    const surveyViewDefaultBefore = {
+    const surveyViewDefaultBefore =  {
       list: [],
       survey: {},
       openCards: []
     };
 
-    const surveyViewDefaultAfter = {
-      list: [],
-      survey: {},
-      openCards: []
-    };
+    const surveyViewDefaultAfter = { ...surveyViewDefaultBefore };
 
     const surveyViewDefaultWithAction = surveyView(surveyViewDefaultBefore, actionDefault);
 
@@ -37,13 +33,14 @@ test('SurveyView', next => {
     assert.end();
   });
 
-  next.test('SURVEYS_RETRIEVED', assert => {
+  // SURVEYS_RETRIEVED
+  test('SURVEYS_RETRIEVED', assert => {
 
     const actionSurveysRetrieved = {
       type: 'SURVEYS_RETRIEVED',
       survey: {},
       openCards: [],
-      surveyList: ["Survey1", "Survey2", "Survey3"] 
+      surveyList: ['Survey1', 'Survey2', 'Survey3']
     };
 
     const surveyViewSurveysRetrievedBefore = {
@@ -55,7 +52,7 @@ test('SurveyView', next => {
     const surveyViewSurveysRetrievedAfter = {
       survey: {},
       openCards: [],
-      list: ["Survey1", "Survey2", "Survey3"]
+      list: ['Survey1', 'Survey2', 'Survey3']
     };
 
     const surveyViewSurveysRetrievedAction = surveyView(surveyViewSurveysRetrievedBefore, actionSurveysRetrieved);
@@ -64,15 +61,16 @@ test('SurveyView', next => {
     assert.end();
   });
 
-  next.test('SINGLE_SURVEY_RETRIEVED', assert => {
+  // SINGLE_SURVEY_RETRIEVED
+  test('SINGLE_SURVEY_RETRIEVED', assert => {
 
     const surveyVal = {
       doc: {
         text1: {
-          slide_number: 0, 
-          type:"text", 
-          heading: "Introduction", 
-          body: "<h2>Hi Rachel, congratulations (...)"
+          slide_number: 0,
+          type:'text',
+          heading: 'Introduction',
+          body: '<h2>Hi Rachel, congratulations (...)'
         }
       }
     };
@@ -81,7 +79,7 @@ test('SurveyView', next => {
       type: 'SINGLE_SURVEY_RETRIEVED',
       survey: surveyVal,
       openCards: [],
-      surveyList: [] 
+      surveyList: []
     };
 
     const surveyViewSingleSurveyRetrievedBefore = {
@@ -102,15 +100,16 @@ test('SurveyView', next => {
     assert.end();
   });
 
-  next.test('ADD_SLIDE', assert => {
+  // ADD_SLIDE
+  test('ADD_SLIDE', assert => {
 
     const surveyVal = {
       doc: {
         text1: {
-          slide_number: 0, 
-          type:"text", 
-          heading: "Introduction", 
-          body: "<h2>Hi Rachel, congratulations (...)"
+          slide_number: 0,
+          type:'text',
+          heading: 'Introduction',
+          body: '<h2>Hi Rachel, congratulations (...)'
         }
       }
     };
@@ -118,15 +117,15 @@ test('SurveyView', next => {
     const surveyValAfter = {
       doc: {
         text1: {
-          slide_number: 0, 
-          type:"text", 
-          heading: "Introduction", 
-          body: "<h2>Hi Rachel, congratulations (...)"
+          slide_number: 0,
+          type:'text',
+          heading: 'Introduction',
+          body: '<h2>Hi Rachel, congratulations (...)'
         },
         newSlide: {
-          type: "text", 
-          heading: "Introduction", 
-          body: "<h2>Hi Rachel, congratulations (...)",
+          type: 'text',
+          heading: 'Introduction',
+          body: '<h2>Hi Rachel, congratulations (...)',
           slide_number: 1
         }
       }
@@ -134,11 +133,11 @@ test('SurveyView', next => {
 
     const actionAddSlide = {
       type: 'ADD_SLIDE',
-      slideID: "newSlide",
+      slideID: 'newSlide',
       slideInfo: {
-        type: "text", 
-        heading: "Introduction", 
-        body: "<h2>Hi Rachel, congratulations (...)" 
+        type: 'text',
+        heading: 'Introduction',
+        body: '<h2>Hi Rachel, congratulations (...)'
       }
     };
 
@@ -159,20 +158,22 @@ test('SurveyView', next => {
     assert.ok(surveyViewAddSlideAction, surveyViewAddSlideAfter, 'ADD_SLIDE Should Return The State With An Updated Survey Value');
     assert.end();
   });
-  next.test('REMOVE_SLIDE', assert => {
+
+  // REMOVE_SLIDE
+  test('REMOVE_SLIDE', assert => {
 
     const surveyValRem = {
       doc: {
         text1: {
-          slide_number: 0, 
-          type:"text", 
-          heading: "Introduction", 
-          body: "<h2>Hi Rachel, congratulations (...)"
+          slide_number: 0,
+          type:'text',
+          heading: 'Introduction',
+          body: '<h2>Hi Rachel, congratulations (...)'
         },
         newSlide: {
-          type: "text", 
-          heading: "Introduction", 
-          body: "<h2>Hi Rachel, congratulations (...)",
+          type: 'text',
+          heading: 'Introduction',
+          body: '<h2>Hi Rachel, congratulations (...)',
           slide_number: 1
         }
       }
@@ -181,10 +182,10 @@ test('SurveyView', next => {
     const surveyValRemAfterP1 = {
       doc: {
         text1: {
-          slide_number: 0, 
-          type:"text", 
-          heading: "Introduction", 
-          body: "<h2>Hi Rachel, congratulations (...)"
+          slide_number: 0,
+          type:'text',
+          heading: 'Introduction',
+          body: '<h2>Hi Rachel, congratulations (...)'
         }
       }
     };
@@ -192,15 +193,15 @@ test('SurveyView', next => {
     const surveyValRemAfterP2 = {
       doc: {
         text1: {
-          slide_number: 0, 
-          type:"text", 
-          heading: "Introduction", 
-          body: "<h2>Hi Rachel, congratulations (...)"
+          slide_number: 0,
+          type:'text',
+          heading: 'Introduction',
+          body: '<h2>Hi Rachel, congratulations (...)'
         },
         newSlide: {
-          type: "text", 
-          heading: "Introduction", 
-          body: "<h2>Hi Rachel, congratulations (...)",
+          type: 'text',
+          heading: 'Introduction',
+          body: '<h2>Hi Rachel, congratulations (...)',
           slide_number: 1
         }
       }
@@ -208,12 +209,12 @@ test('SurveyView', next => {
 
     const actionRemoveSlideP1 = {
       type: 'REMOVE_SLIDE',
-      slideID: "newSlide"
+      slideID: 'newSlide'
     };
 
     const actionRemoveSlideP2 = {
       type: 'REMOVE_SLIDE',
-      slideID: "notValidSlide"
+      slideID: 'notValidSlide'
     };
 
     const surveyViewRemoveSlideBefore = {
@@ -242,19 +243,20 @@ test('SurveyView', next => {
     assert.end();
   });
 
-  next.test('EDIT_SLIDE', assert => {
+  // EDIT_SLIDE
+  test('EDIT_SLIDE', assert => {
 
     const surveyValEdit = {
       doc: {
         text1: {
-          slide_number: 0, 
-          type:"text", 
-          heading: "Introduction", 
-          body: "<h2>Hi Rachel, congratulations (...)"
+          slide_number: 0,
+          type:'text',
+          heading: 'Introduction',
+          body: '<h2>Hi Rachel, congratulations (...)'
         },
         newSlide: {
-          type: "text", 
-          heading: "Welcome", 
+          type: 'text',
+          heading: 'Welcome',
           slide_number: 1
         }
       }
@@ -263,15 +265,15 @@ test('SurveyView', next => {
     const surveyValEditAfterP1 = {
       doc: {
         text1: {
-          slide_number: 0, 
-          type:"text", 
-          heading: "Introduction", 
-          body: "<h2>Hi Rachel, congratulations (...)"
+          slide_number: 0,
+          type:'text',
+          heading: 'Introduction',
+          body: '<h2>Hi Rachel, congratulations (...)'
         },
         newSlide: {
-          type: "text", 
-          heading: "Introduction", 
-          body: "<h2>Hi Rachel, congratulations (...)",
+          type: 'text',
+          heading: 'Introduction',
+          body: '<h2>Hi Rachel, congratulations (...)',
           slide_number: 1
         }
       }
@@ -280,33 +282,33 @@ test('SurveyView', next => {
     const surveyValEditAfterP2 = {
       doc: {
         text1: {
-          slide_number: 0, 
-          type:"text", 
-          heading: "Introduction", 
-          body: "<h2>Hi Rachel, congratulations (...)"
+          slide_number: 0,
+          type:'text',
+          heading: 'Introduction',
+          body: '<h2>Hi Rachel, congratulations (...)'
         },
         newSlide: {
-          type: "text", 
-          heading: "Welcome", 
+          type: 'text',
+          heading: 'Welcome',
           slide_number: 1
         }
       }
     };
 
     const dataEdit = {
-      heading: "Introduction",
-      body: "<h2>Hi Rachel, congratulations (...)"
-    }
+      heading: 'Introduction',
+      body: '<h2>Hi Rachel, congratulations (...)'
+    };
 
     const actionEditSlideP1 = {
       type: 'EDIT_SLIDE',
-      slideID: "newSlide",
+      slideID: 'newSlide',
       data: dataEdit
     };
 
     const actionEditSlideP2 = {
       type: 'EDIT_SLIDE',
-      slideID: "notValidSlide",
+      slideID: 'notValidSlide',
       data: dataEdit
     };
 
@@ -337,7 +339,8 @@ test('SurveyView', next => {
     assert.end();
   });
 
-  next.test('TOGGLE_OPEN_CARD', assert => {
+  // TOGGLE_OPEN_CARD
+  test('TOGGLE_OPEN_CARD', assert => {
 
     const surveyVal = [1, 2, 3];
     const surveyValAfterP1 = [1, 2, 3, 4];
@@ -378,5 +381,6 @@ test('SurveyView', next => {
     assert.ok(surveyViewToggleOpenCardAfterP2, surveyViewToggleOpenCardActionP2, 'TOGGLE_OPEN_CARD When Given An ID Not In openCard Array Should Return The State With An openCards Value With The CardID Added');
     assert.end();
   });
+
 });
-  
+

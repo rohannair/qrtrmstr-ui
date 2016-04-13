@@ -18,7 +18,7 @@ export default function surveyView(state = initialState, action) {
   case 'SINGLE_SURVEY_RETRIEVED':
     return {
       ...state,
-      survey: action.survey[0]
+      survey: action.survey
     };
 
   case 'ADD_SLIDE':
@@ -48,33 +48,25 @@ export default function surveyView(state = initialState, action) {
     };
 
   case 'EDIT_SLIDE':
+    const { data } = action;
+    const { survey } = state;
 
-    const editKey = action.slideID
-    const orgDoc = state.survey.doc
-    const slideKeys = orgDoc[editKey]
-    
-    if (editKey in orgDoc) {
-      const newData = action.data
+    // If slide doesn't exist (which is weird...)
+    if (!data.slide_number in survey.doc) return state;
 
-      const editDoc = {
-        ...orgDoc,
-        [action.slideID]: { 
-          ...slideKeys, 
-          ...action.data
+    return {
+      ...state,
+      survey: {
+        ...state.survey,
+        doc: {
+          ...survey.doc,
+          [data.slide_number]: {
+            ...survey.doc[data.slide_number],
+            ...action.data
+          }
         }
-      };
-
-      const editedState = {
-        ...state,
-        survey: {
-          ...state.survey,
-          doc: editDoc
-        }
-      };
-      return editedState
-    
+      }
     };
-    return state
 
   case 'TOGGLE_OPEN_CARD':
     const { openCards } = state;

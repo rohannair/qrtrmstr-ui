@@ -27,8 +27,12 @@ export const getSurveys = token => {
         'Content-Type': 'application/json'
       }
     })
-    .then(response => response.json())
-    .then(json => {
+    .then(response => response.json().then(json => ({json, response})))
+    .then(({json, response}) => {
+      if (!response.ok) {
+        return Promise.reject(json);
+      }
+
       return dispatch(surveysRetrieved(json));
     });
   };
@@ -45,8 +49,12 @@ export const getSingleSurvey = (token, id) => {
         'Content-Type': 'application/json'
       }
     })
-    .then(response => response.json())
-    .then(json => {
+    .then(response => response.json().then(json => ({json, response})))
+    .then(({json, response}) => {
+      if (!response.ok) {
+        return Promise.reject(json);
+      }
+
       return dispatch(singleSurveyRetrieved(json));
     });
   };
@@ -64,9 +72,13 @@ export const createSurvey = (token, payload) => {
       },
       body: JSON.stringify(payload)
     })
-    .then(response => response.json())
-    .then(json => {
-      return;
+    .then(response => response.json().then(json => ({json, response})))
+    .then(({json, response}) => {
+      if (!response.ok) {
+        return Promise.reject(json);
+      }
+
+      return console.log(json);
     });
   };
 };
@@ -116,10 +128,9 @@ export const removeSlide = (slideID) => {
 };
 
 // Edit slide
-export const editSlide = (data, slideID ) => {
+export const editSlide = (data) => {
   return {
     type: 'EDIT_SLIDE',
-    slideID,
     data
   };
 };

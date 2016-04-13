@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Cookies from 'cookies-js';
 import moment from 'moment';
-import _ from 'lodash';
 
 // Containers
 import {
@@ -12,7 +11,8 @@ import {
   toggleOpenCard,
   addSlide,
   modifySurvey,
-  editSlide } from '../../actions/surveyViewActions';
+  editSlide
+} from '../../actions/surveyViewActions';
 
 // Styles
 import styles from './surveyEditor.css';
@@ -28,6 +28,8 @@ import SurveyEditorSidebar from '../../components/SurveyEditorSidebar';
 
 import SlideIntro from '../../components/SlideIntro';
 import SlideEquipment from '../../components/SlideEquipment';
+import SlideKnowledgeCenter from '../../components/SlideKnowledgeCenter';
+import SlideFirstDay from '../../components/SlideFirstDay';
 
 class SurveyEditor extends Component {
   componentWillMount() {
@@ -39,41 +41,62 @@ class SurveyEditor extends Component {
 
     const surveyDoc = survey.doc && Object.keys(survey.doc).length > 0
     ? Object.keys(survey.doc).map(val => {
-     const slide = survey.doc[val];
-     switch (slide.type) {
+      const slide = survey.doc[val];
 
-       case 'intro':
-       return (
-        <Card key={val} title={`Section ${parseInt(val) + 1}`}>
-        <SlideIntro key={val} {...slide} />
-        </Card>
+      switch (slide.type) {
+      case 'intro':
+        return (
+          <Card key={val} title={`Section ${parseInt(val) + 1}`}>
+            <SlideIntro key={val} {...slide} />
+          </Card>
         );
 
-       case 'bio':
-       return (
-        <Card key={val} title={`Section ${parseInt(val) + 1}`}>
-        <div key={val}><h1>Bio</h1></div>
-        </Card>
+      case 'bio':
+        return (
+          <Card key={val} title={`Section ${parseInt(val) + 1}`}>
+            <div key={val}>
+              <h1>Bio</h1>
+              <p>Hello, I am a Biography Card</p>
+            </div>
+          </Card>
         );
 
-       case 'equipment':
-       return (
-        <Card key={val} title={`Section ${parseInt(val) + 1}`}>
-          <SlideEquipment {...slide} saveSlide={ this._saveSlide } />
-        </Card>
+      case 'equipment':
+        return (
+          <Card key={val} title={`Section ${parseInt(val) + 1}`}>
+            <SlideEquipment {...slide} saveSlide={ this._saveSlide } />
+          </Card>
         );
 
-       default:
-       return (
-        <Card key={val} title={`Section ${parseInt(val) + 1}`}>
-        <h1>{slide.heading}</h1>
-        <pre dangerouslySetInnerHTML={{ __html: JSON.stringify(slide.body, null, 4) }} />
-        </Card>
+      case 'knowledgectr':
+        return (
+          <Card key={val} title={`Section ${parseInt(val) + 1}`}>
+            <SlideKnowledgeCenter {...slide.body} />
+          </Card>
         );
-     }
 
-   })
+      case 'day1agenda':
+        return (
+          <Card key={val} title={`Section ${parseInt(val) + 1}`}>
+            <h1>{slide.heading}</h1>
+            <SlideFirstDay
+              {...slide}
+              onEdit={this._editSlide}
+              onAdd={this._addNewAgendaItem}
+              onDelete= {this._deleteAgendaItem}
+            />
+          </Card>
+        );
 
+      default:
+        return (
+          <Card key={val} title={`Section ${parseInt(val) + 1}`}>
+            <h1>{slide.heading}</h1>
+            <pre>{ JSON.stringify(slide.body, null, 4) }</pre>
+          </Card>
+        );
+      }
+    })
     : null;
 
     const selectedSurvey = survey.doc || {};
@@ -84,8 +107,11 @@ class SurveyEditor extends Component {
     : '';
 
     return (
-      <div>
-      { surveyDoc }
+      <div className="surveyEditor">
+        <SurveyEditorBody>
+          { surveyDoc }
+        </SurveyEditorBody>
+        <SurveyEditorSidebar />
       </div>
       );
   };
@@ -121,10 +147,26 @@ class SurveyEditor extends Component {
     return dispatch(addSlide(newID, slideInfo));
   };
 
+  _editSlide = (data) => {
+    const { dispatch } = this.props;
+    return dispatch(editSlide(data));
+  };
+
+  // TODO: Remove this
   _saveSlide = ({ options }, slideNumber) => {
     const { dispatch } = this.props;
     return dispatch(editSlide(options, slideNumber));
-  }
+  };
+
+  _addNewAgendaItem = (item) => {
+    const { dispatch } = this.props;
+    // return dispatch(editSlide())
+  };
+
+  _deleteAgendaItem = (item) => {
+    const { dispatch } = this.props;
+  };
+
 };
 
 function mapStateToProps(state, ownProps) {
@@ -138,4 +180,3 @@ function mapStateToProps(state, ownProps) {
   };
 }
 export default connect(mapStateToProps)(SurveyEditor);
-

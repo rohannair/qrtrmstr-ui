@@ -1,0 +1,57 @@
+.slideFirstDay {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+
+  .map {
+    width: 100%;
+  }
+
+  .agenda {
+    width: 100%;
+    margin: 20px 0;
+
+    > *, .agenda-item {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      width: 100%;
+      align-items: center;
+    }
+
+    &-header {
+      color: #fff;
+      background-color: #2E404E;
+      font-weight: bold;
+    }
+
+    &-item {
+      &:nth-child(odd) {
+        background-color: #f0f0f0;
+      }
+    }
+
+    .timeInput,
+    .desc {
+      padding: 14px 20px;
+    }
+
+    .timeInput {
+      width: 15%;
+      text-align: right;
+    }
+
+    .desc {
+      flex-grow: 1;
+      width: auto;
+    }
+
+    .buttonContainer {
+      margin-left: auto;
+    }
+
+    input {
+      width: 100%;
+    }
+  }
+}

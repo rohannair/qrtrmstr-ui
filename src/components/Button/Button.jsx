@@ -5,12 +5,20 @@ import styles from './button.css';
 import Tooltip from '../../components/Tooltip';
 
 const Button = ({center = false, children, classes = null, text, toolTipText, onClick, icon, iconPos = null }) => {
-  const buttonClasses = classNames('btn', classes, {'btn-icon': icon}, {'btn-icon-center': center});
+
+  const buttonClasses = classNames(
+    'btn',
+    classes,
+    { 'btn-icon': icon },
+    { 'btn-icon-center': center || !children }
+  );
+
   const tooltip = (toolTipText)
     ? <Tooltip>{toolTipText}</Tooltip>
     : null;
+
   const iconEl = icon
-    ? <i className={`oi ${iconPos}`} data-glyph={icon} />
+    ? <i className={`oi ${iconPos || '' }`} data-glyph={icon} />
     : null;
 
   return (
