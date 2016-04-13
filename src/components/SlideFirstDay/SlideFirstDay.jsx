@@ -5,6 +5,8 @@ import { omit } from 'lodash';
 import Button from '../../components/Button';
 import ButtonGroup from '../../components/ButtonGroup';
 
+import FlipMove from 'react-flip-move';
+
 class SlideFirstDay extends Component {
   state = {
     time: null,
@@ -18,53 +20,52 @@ class SlideFirstDay extends Component {
     const mapBody = this.props.body.map;
     const self = this;
 
-    const items = [].concat(agenda).map((val, i) => {
+    const items = agenda
+    ? agenda.map((val, i) => {
       return (
-        <tr key={`agendaItem-${i}`}>
-          <td className="timeInput">{val.time}</td>
-          <td className="desc">{val.desc}</td>
-          <td>
+        <div className="agenda-item" key={`agendaItem-${i}`}>
+          <div className="timeInput">{val.time}</div>
+          <div className="desc">{val.desc}</div>
+          <div className="buttonContainer">
             <Button
               classes="transparent"
               icon="x"
               onClick={ self._deleteItem.bind(this, i) }
             />
-          </td>
-        </tr>
+          </div>
+        </div>
       );
-    });
+    })
+    : null;
 
     return (
       <div className="slideFirstDay">
         <div className="map">
           <textarea value={ this.state.mapDesc } onChange={ this._mapDescChange }/>
         </div>
+        <divl className="agenda">
 
-        <table className="agenda">
-          <thead className="header">
-            <tr>
-              <th className="timeInput">Time</th>
-              <th>Description</th>
-              <th />
-            </tr>
-          </thead>
-          <tbody>
+          <div className="agenda-header">
+            <div className="timeInput">Time</div>
+            <div className="desc">Description</div>
+          </div>
+
+          <FlipMove easing="cubic-bezier(0, 0.7, 0.8, 0.1)">
             { items }
-          </tbody>
-          <tfoot>
-            <tr>
-            <td className="timeInput">
-                <input name="time" onChange={ this._inputChange } />
-              </td>
-              <td className="desc">
-                <input name="desc" onChange={ this._inputChange } />
-              </td>
-              <td>
-                <Button classes="primary md" icon="plus" onClick={ this._addNew }/>
-              </td>
-            </tr>
-          </tfoot>
-        </table>
+          </FlipMove>
+
+          <div className="agenda-footer">
+            <div className="timeInput">
+              <input name="time" onChange={ this._inputChange } />
+            </div>
+            <div className="desc">
+              <input name="desc" onChange={ this._inputChange } />
+            </div>
+            <div className="buttonContainer">
+              <Button classes="primary md" icon="plus" onClick={ this._addNew }/>
+            </div>
+          </div>
+        </divl>
       </div>
     );
   };

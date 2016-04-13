@@ -116,7 +116,7 @@ export const removeSlide = (slideID) => {
 };
 
 // Edit slide
-export const editSlide = (data, slideID ) => {
+export const editSlide = (data, slideID) => {
   return {
     type: 'EDIT_SLIDE',
     slideID,

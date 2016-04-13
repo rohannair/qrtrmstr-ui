@@ -153,12 +153,14 @@ class SurveyEditor extends Component {
   };
 
   _addNewAgendaItem = (item) => {
+    debugger;
     const { dispatch } = this.props;
+    //return dispatch(editSlide())
   };
 
   _deleteAgendaItem = (item) => {
     const { dispatch } = this.props;
-  }
+  };
 
 };
 

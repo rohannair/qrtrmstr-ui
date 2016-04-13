@@ -11,40 +11,47 @@
     width: 100%;
     margin: 20px 0;
 
-    thead {
-      color: #fff;
-
-      th {
-        background-color: #2E404E;
-        padding: 10px;
-      }
+    > *, .agenda-item {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      width: 100%;
+      align-items: center;
     }
 
-    tr {
+    &-header {
+      color: #fff;
+      background-color: #2E404E;
+      font-weight: bold;
+    }
+
+    &-item {
       &:nth-child(odd) {
         background-color: #f0f0f0;
       }
     }
 
-    td {
+    .timeInput,
+    .desc {
       padding: 14px 20px;
-
-      &:first-child {
-        border-right: 1px solid #2E404E;
-      }
     }
 
     .timeInput {
+      width: 15%;
       text-align: right;
     }
 
-    input {
-      width: 90%;
+    .desc {
+      flex-grow: 1;
+      width: auto;
     }
-  }
 
-  .timeInput {
-    width: 20%;
+    .buttonContainer {
+      margin-left: auto;
+    }
 
+    input {
+      width: 100%;
+    }
   }
 }

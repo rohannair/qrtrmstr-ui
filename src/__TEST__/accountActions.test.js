@@ -1,11 +1,10 @@
 import { createStore } from 'redux';
-import expect from 'expect'
 import test from 'tape';
 
-//Reducer
+// Reducer
 import accountActions from '../reducers/login';
 
-const store = createStore(accountActions)
+const store = createStore(accountActions);
 
 console.log('Initial state:');
 console.log(store.getState());
@@ -25,14 +24,14 @@ test('AccountActions', next => {
 
     const accountActionsDefaultAfter = {
       token: null
-    }
+    };
 
-    const accountActionsDefaultWithAction = accountActions(accountActionsDefaultBefore, actionDefault)
+    const accountActionsDefaultWithAction = accountActions(accountActionsDefaultBefore, actionDefault);
 
-    assert.ok(accountActionsDefaultWithAction, accountActionsDefaultAfter, 'Should Return The Initial (Default) State')
+    assert.ok(accountActionsDefaultWithAction, accountActionsDefaultAfter, 'Should Return The Initial (Default) State');
     assert.end();
 
-  })
+  });
 
   next.test('LOG_IN', assert => {
 
@@ -46,9 +45,9 @@ test('AccountActions', next => {
     const accountActionsLoginAfter = {
       token: 'auth_token'
     };
-    const accountActionsLoginAction = accountActions(accountActionsloginBefore, actionLogin)
+    const accountActionsLoginAction = accountActions(accountActionsloginBefore, actionLogin);
 
-    assert.ok(accountActionsLoginAction, accountActionsLoginAfter, 'LOG_IN Should Return The State With A Non-Null Token Value')
+    assert.ok(accountActionsLoginAction, accountActionsLoginAfter, 'LOG_IN Should Return The State With A Non-Null Token Value');
     assert.end();
   });
 
@@ -64,9 +63,9 @@ test('AccountActions', next => {
     const accountActionsLogoutAfter = {
       token: null
     };
-    const accountActionsLogoutAction = accountActions(accountActionsLogoutBefore, actionLogout)
+    const accountActionsLogoutAction = accountActions(accountActionsLogoutBefore, actionLogout);
 
-    assert.ok(accountActionsLogoutAction, accountActionsLogoutAfter, 'LOG_OUT Should Return The State With A Token Value Of Null')
+    assert.ok(accountActionsLogoutAction, accountActionsLogoutAfter, 'LOG_OUT Should Return The State With A Token Value Of Null');
     assert.end();
 
   });

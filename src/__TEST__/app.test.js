@@ -1,11 +1,10 @@
 import { createStore } from 'redux';
-import expect from 'expect'
 import test from 'tape';
 
-//Reducer
+// Reducer
 import app from '../reducers/app';
 
-const store = createStore(app)
+const store = createStore(app);
 
 console.log('Initial state:');
 console.log(store.getState());
@@ -25,11 +24,11 @@ test('App', next => {
 
     const appDefaultAfter = {
       users: {}
-    }
+    };
 
-    const appDefaultWithAction = app(appDefaultBefore, actionDefault)
+    const appDefaultWithAction = app(appDefaultBefore, actionDefault);
 
-    assert.ok(appDefaultWithAction, appDefaultAfter, 'Should Return The Initial (Default) State')
+    assert.ok(appDefaultWithAction, appDefaultAfter, 'Should Return The Initial (Default) State');
     assert.end();
 
   });
@@ -37,9 +36,9 @@ test('App', next => {
   next.test('USERS_RETRIEVED', assert => {
 
     const users = {
-      1: {first_name: "Rohan", last_name: "Nair", email: "r@rohannair.ca", isAdmin: "t" },
-      2: {first_name: "Ron", last_name: "Swanson", email: "rs@parks.rec", isAdmin: "f" },
-      3: {first_name: "Lesley", last_name: "Knope", email: "lk@parks.rec", isAdmin: "f" }
+      1: {first_name: 'Rohan', last_name: 'Nair', email: 'r@rohannair.ca', isAdmin: 't' },
+      2: {first_name: 'Ron', last_name: 'Swanson', email: 'rs@parks.rec', isAdmin: 'f' },
+      3: {first_name: 'Lesley', last_name: 'Knope', email: 'lk@parks.rec', isAdmin: 'f' }
     };
 
     const actionUsersRetrieved = {
@@ -52,10 +51,10 @@ test('App', next => {
     const appUsersRetrievedAfter = {
       users: users
     };
-    const appUsersRetrievedAction = app(appUsersRetrievedBefore, actionUsersRetrieved)
+    const appUsersRetrievedAction = app(appUsersRetrievedBefore, actionUsersRetrieved);
 
-    assert.ok(appUsersRetrievedAction, appUsersRetrievedAfter, 'USERS_RETRIEVED Should Return The State With A Non-Empty Users Value')
+    assert.ok(appUsersRetrievedAction, appUsersRetrievedAfter, 'USERS_RETRIEVED Should Return The State With A Non-Empty Users Value');
     assert.end();
   });
 });
-  
+

@@ -21,7 +21,7 @@ export const submitSurvey = (choices) => {
       })
     })
     .then(response => response.json())
-    .then(json=> {
+    .then(json => {
       return {
         type: 'SURVEY_SUBMITTED'
       };

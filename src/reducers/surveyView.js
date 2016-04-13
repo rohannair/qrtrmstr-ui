@@ -48,18 +48,19 @@ export default function surveyView(state = initialState, action) {
     };
 
   case 'EDIT_SLIDE':
+    const { slideId, data } = action;
 
-    const editKey = action.slideID
-    const orgDoc = state.survey.doc
-    const slideKeys = orgDoc[editKey]
-    
-    if (editKey in orgDoc) {
-      const newData = action.data
+    const editKey = action.slideID;
+    const orgDoc = state.survey.doc;
+    const slideKeys = orgDoc[slideId];
+
+    if (slideId in orgDoc) {
+      const newData = data;
 
       const editDoc = {
         ...orgDoc,
-        [action.slideID]: { 
-          ...slideKeys, 
+        [slideId]: {
+          ...slideKeys,
           ...action.data
         }
       };
@@ -71,10 +72,11 @@ export default function surveyView(state = initialState, action) {
           doc: editDoc
         }
       };
-      return editedState
-    
+
+      return editedState;
     };
-    return state
+
+    return state;
 
   case 'TOGGLE_OPEN_CARD':
     const { openCards } = state;
