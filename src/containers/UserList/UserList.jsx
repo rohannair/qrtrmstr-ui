@@ -2,14 +2,21 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import styles from './userList.css';
 import Cookies from 'cookies-js';
+import { Modal } from 'react-bootstrap';
 
 import Card from '../../components/Card';
 import Button from '../../components/Button';
 import ButtonGroup from '../../components/ButtonGroup';
+import NewUserModal from '../../components/NewUserModal';
 
-import { getUsers } from '../../actions/userActions';
+import { getUsers, newUserModal, createUser } from '../../actions/userActions';
 
 class UserList extends Component {
+
+  state = {
+    newUser: this.props.newUser || {}
+  };
+
   static propTypes = {
     data: PropTypes.oneOfType([
       PropTypes.object,
@@ -22,7 +29,8 @@ class UserList extends Component {
   };
 
   render() {
-    const userData = [...this.props.users].map(val => {
+    const userData = Object.keys(this.props.users).map(value => {
+      let val = this.props.users[value];
       const adminIcon = val.isAdmin
         ? <i className="oi" data-glyph="key" />
         : null;
@@ -101,10 +109,11 @@ class UserList extends Component {
 
         <Card>
           <div className="userList-actionBar">
-            <Button classes="primary md">New user +</Button>
+            <Button onClick={this._renderNewUserModal} classes="primary md">New user +</Button>
           </div>
         </Card>
-      </div>
+        <NewUserModal val={this.state.newUser} showModal={this.props.showModal} toggleModal={this._renderNewUserModal} submitNewUser={this._addNewUser} onChange={this._changeUserParams} />
+        </div>
     );
   };
 
@@ -112,11 +121,39 @@ class UserList extends Component {
     const { token, dispatch } = this.props;
     return dispatch(getUsers(token));
   };
+
+  _renderNewUserModal = () => {
+    const { token, dispatch } = this.props;
+    const { newUser } = this.state;
+    this.setState({
+      newUser: {}
+    });
+    return dispatch(newUserModal());
+  };
+
+
+  _changeUserParams = (key, val) => {
+    const { newUser } = this.state;
+    this.setState({
+      newUser: {
+        ...newUser,
+        [key]: val
+      }
+    });
+  };
+
+  _addNewUser = () => {
+    this._renderNewUserModal();
+    const { token, dispatch } = this.props;
+    const { newUser } = this.state;
+    return dispatch(createUser(token, newUser))
+  };
 }
 
 function mapStateToProps(state) {
   const token = state.accountActions.token || Cookies.get('token');
   return {
+    showModal: state.app.showModal,
     token,
     users: state.app.users
   };
