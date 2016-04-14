@@ -2,15 +2,21 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import styles from './userList.css';
 import Cookies from 'cookies-js';
-import { Modal, OverlayTrigger, Popover, Tooltip } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 
 import Card from '../../components/Card';
 import Button from '../../components/Button';
 import ButtonGroup from '../../components/ButtonGroup';
+import NewUserModal from '../../components/NewUserModal';
 
-import { getUsers, newUserModal } from '../../actions/userActions';
+import { getUsers, newUserModal, createUser } from '../../actions/userActions';
 
 class UserList extends Component {
+
+  state = {
+    newUser: this.props.newUser || {}
+  };
+
   static propTypes = {
     data: PropTypes.oneOfType([
       PropTypes.object,
@@ -22,18 +28,9 @@ class UserList extends Component {
     this._renderUserList();
   };
 
-  // open() {
-  //   this.setState({ showModal: true });
-  // };
-
-  // close() {
-  //   this.setState({ showModal: false });
-  // };
-
   render() {
-    let popover = <Popover title="popover">very popover. such engagement</Popover>;
-    let tooltip = <Tooltip>wow.</Tooltip>;
-    const userData = [...this.props.users].map(val => {
+    const userData = Object.keys(this.props.users).map(value => {
+      let val = this.props.users[value];
       const adminIcon = val.isAdmin
         ? <i className="oi" data-glyph="key" />
         : null;
@@ -115,32 +112,7 @@ class UserList extends Component {
             <Button onClick={this._renderNewUserModal} classes="primary md">New user +</Button>
           </div>
         </Card>
-          <Modal animation={true} show={this.props.showModal} onHide={this._renderNewUserModal}>
-            <Card className="modal">
-              <Modal.Header closeButton>
-                <Modal.Title>Add a new user</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <h4>Text in a modal</h4>
-                <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
-
-                <h4>Popover in a modal</h4>
-                <p>there is a <OverlayTrigger overlay={popover}><a href="#">popover</a></OverlayTrigger> here</p>
-
-                <h4>Tooltips in a modal</h4>
-                <p>there is a <OverlayTrigger overlay={tooltip}><a href="#">tooltip</a></OverlayTrigger> here</p>
-
-                <hr />
-
-                <h4>Overflowing text to show scroll behavior</h4>
-                <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-                
-              </Modal.Body>
-              <Modal.Footer>
-                <Button onClick={this._renderNewUserModal}>Close</Button>
-              </Modal.Footer>
-            </Card>
-          </Modal>
+        <NewUserModal val={this.state.newUser} showModal={this.props.showModal} toggleModal={this._renderNewUserModal} submitNewUser={this._addNewUser} onChange={this._changeUserParams} />
         </div>
     );
   };
@@ -152,7 +124,29 @@ class UserList extends Component {
 
   _renderNewUserModal = () => {
     const { token, dispatch } = this.props;
+    const { newUser } = this.state;
+    this.setState({
+      newUser: {}
+    });
     return dispatch(newUserModal());
+  };
+
+
+  _changeUserParams = (key, val) => {
+    const { newUser } = this.state;
+    this.setState({
+      newUser: {
+        ...newUser,
+        [key]: val
+      }
+    });
+  };
+
+  _addNewUser = () => {
+    this._renderNewUserModal();
+    const { token, dispatch } = this.props;
+    const { newUser } = this.state;
+    return dispatch(createUser(token, newUser))
   };
 }
 

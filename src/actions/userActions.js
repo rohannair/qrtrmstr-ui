@@ -8,9 +8,13 @@ function usersRetrieved(users = {}) {
   };
 }
 
-// function toggleNewUserModal() {
-  
-// }
+// New User successfully created and retrieved
+function newUserCreated(new_user = {}) {
+  return {
+    type: 'NEW_USER_CREATED',
+    new_user
+  };
+}
 
 //show Modal to Create New User
 export const newUserModal = () => {
@@ -18,8 +22,6 @@ export const newUserModal = () => {
     type: 'TOGGLE_NEW_USER_MODAL'
   };
 };
-
-
 
 // Get All Users
 export const getUsers = token => {
@@ -71,7 +73,7 @@ export const createUser = (token, payload) => {
     })
     .then(response => response.json())
     .then(json => {
-      return;
+      return dispatch(newUserCreated(json));
     });
   };
 };
