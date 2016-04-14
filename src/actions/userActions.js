@@ -1,4 +1,7 @@
 import fetch from 'isomorphic-fetch';
+import utils from './utils';
+const getDomain = utils.getDomain;
+console.log(utils.getDomain);
 
 // Users Retrieved action
 function usersRetrieved(users = {}) {
@@ -10,8 +13,9 @@ function usersRetrieved(users = {}) {
 
 // Get All Users
 export const getUsers = token => {
+  const url = getDomain();
   return dispatch => {
-    return fetch('http://localhost:3000/api/v1/users', {
+    return fetch(`${url}/api/v1/users`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -28,8 +32,9 @@ export const getUsers = token => {
 
 // Single User Call
 export const getSingleUser = (token, id) => {
+  const url = getDomain();
   return dispatch => {
-    return fetch(`http://localhost:3000/api/v1/users/${id}`, {
+    return fetch(`${url}/api/v1/users/${id}`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -46,8 +51,9 @@ export const getSingleUser = (token, id) => {
 
 // Create new User
 export const createUser = (token, payload) => {
+  const url = getDomain();
   return dispatch => {
-    return fetch('http://localhost:3000/api/v1/users', {
+    return fetch(`${url}/api/v1/users`, {
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
@@ -65,8 +71,9 @@ export const createUser = (token, payload) => {
 
 // Modify existing User
 export const modifyUser = (token, payload) => {
+  const url = getDomain();
   return dispatch => {
-    return fetch(`http://localhost:3000/api/v1/users/${payload.id}`, {
+    return fetch(`${url}/api/v1/users/${payload.id}`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
