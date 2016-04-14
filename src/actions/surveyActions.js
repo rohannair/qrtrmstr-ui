@@ -41,7 +41,7 @@ export const getSurvey = (token = '', id) => {
     })
     .then(response => response.json())
     .then(survey => {
-      return dispatch(surveyRetrieved(survey[0]));
+      return dispatch(surveyRetrieved(survey));
     });
   };
 };
