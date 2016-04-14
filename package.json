@@ -12,6 +12,7 @@
     "newComp": "babel-node ./scripts/newComponent.js",
     "newCont": "babel-node ./scripts/newContainer.js",
     "start": "babel-node server.js",
+    "build": "webpack -p --progress --config webpack.config.prod.js",
     "test": "babel-tape-runner ./src/**/*.test.js | tap-spec",
     "lint": "eslint src"
   },
