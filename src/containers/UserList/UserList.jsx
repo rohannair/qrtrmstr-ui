@@ -102,6 +102,7 @@ class UserList extends Component {
               </tr>
             </thead>
             <tbody>
+              {console.log("userData", userData)}
               {userData}
             </tbody>
           </table>

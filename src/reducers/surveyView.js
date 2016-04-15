@@ -1,6 +1,7 @@
 import _ from 'lodash';
 
 const initialState = {
+  showModal: false,
   list: [],
   survey: {},
   openCards: []
@@ -85,6 +86,12 @@ export default function surveyView(state = initialState, action) {
     return {
       ...state,
       openCards: [...openCards].concat(action.cardID)
+    };
+
+  case 'TOGGLE_SEND_SURVEY_MODAL':
+    return {
+      ...state,
+      showModal: !state.showModal
     };
 
   default:

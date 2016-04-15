@@ -16,6 +16,37 @@ function singleSurveyRetrieved(survey = {}) {
   };
 }
 
+//show Modal to send a survey to a user
+export const sendSurveyModal = () => {
+  return {
+    type: 'TOGGLE_SEND_SURVEY_MODAL'
+  };
+};
+
+//Send Survey To User
+export const sendSurvey = (token, payload) => {
+  console.log(payload)
+  return dispatch => {
+    return fetch('http://localhost:3001/api/v1/survey/send', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': 'bearer ' + token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+    .then(response => response.json().then(json => ({json, response})))
+    .then(({json, response}) => {
+      if (!response.ok) {
+        return Promise.reject(json);
+      }
+
+      return console.log(json);
+    });
+  };
+};
+
 // Get All Surveys
 export const getSurveys = token => {
   return dispatch => {
