@@ -14,22 +14,22 @@ import ButtonGroup from '../ButtonGroup';
 class SendSurveyModal extends Component {
 
   componentWillMount() {
-    const latestPerson = this.props.users[(this.props.users.length)-1];
-    const latestPersonInfo = { 
-      id: latestPerson.id, 
-      first_name: latestPerson.first_name, 
-      last_name: latestPerson.last_name, 
-      email: latestPerson.email, 
+    const latestPerson = this.props.users[(this.props.users.length) - 1];
+    const latestPersonInfo = {
+      id: latestPerson.id,
+      first_name: latestPerson.first_name,
+      last_name: latestPerson.last_name,
+      email: latestPerson.email,
       surveyID: this.props.surveyID };
     this.props.onChange(latestPersonInfo);
-    const defaultValue = JSON.stringify(latestPersonInfo);    
+    const defaultValue = JSON.stringify(latestPersonInfo);
   };
 
   render() {
-    const { latestUser, surveyName, surveyID, users, showModal, closeModal, sendSurvey, onChange } = this.props; 
-    let defaultUser = null; 
-    let selectedUser = { 
-      id: latestUser.userId, 
+    const { latestUser, surveyName, surveyID, users, showModal, closeModal, sendSurvey, onChange } = this.props;
+    let defaultUser = null;
+    let selectedUser = {
+      id: latestUser.userId,
       first_name: latestUser.firstName,
       last_name: latestUser.lastName,
       email: latestUser.email,
@@ -39,11 +39,11 @@ class SendSurveyModal extends Component {
     const userOptions = Object.keys(users).map(index => {
       let user = users[index];
       let userInfo = { id: user.id, first_name: user.first_name, last_name: user.last_name, email: user.email, surveyID };
-      if (index == (users.length)-1) {
-        defaultUser = latestUser.userId === undefined ? JSON.stringify(userInfo) : JSON.stringify(selectedUser); 
-        return <option value={ JSON.stringify(userInfo) } key={user.id}>{user.first_name + " " + user.last_name}</option>
+      if (index === users.length - 1) {
+        defaultUser = latestUser.userId === undefined ? JSON.stringify(userInfo) : JSON.stringify(selectedUser);
+        return <option value={ JSON.stringify(userInfo) } key={user.id}>{user.first_name + ' ' + user.last_name}</option>;
       } else {
-        return <option value={ JSON.stringify(userInfo) } key={user.id}>{user.first_name + " " + user.last_name}</option>
+        return <option value={ JSON.stringify(userInfo) } key={user.id}>{user.first_name + ' ' + user.last_name}</option>;
       };
     });
 
@@ -51,7 +51,7 @@ class SendSurveyModal extends Component {
       <Modal animation={true} show={showModal} onHide={closeModal}>
         <Card className="modal">
           <Modal.Header closeButton>
-            <Modal.Title>Send survey {surveyName} to user </Modal.Title> 
+            <Modal.Title>Send survey {surveyName} to user </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className="formField">
@@ -59,7 +59,7 @@ class SendSurveyModal extends Component {
               <select value={ defaultUser } onChange={e => onChange(JSON.parse(e.target.value)) }>
                 { userOptions }
               </select>
-            </div>          
+            </div>
           </Modal.Body>
           <Modal.Footer>
             <ButtonGroup>

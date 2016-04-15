@@ -123,6 +123,7 @@ class SurveyView extends Component {
 function mapStateToProps(state) {
   const token = state.accountActions.token || Cookies.get('token');
   return {
+    showModal: state.surveyAdmin.showModal,
     token,
     surveyList: state.surveyAdmin.list,
     users: state.app.users
