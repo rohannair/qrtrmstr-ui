@@ -32,7 +32,6 @@ export const submitSurvey = (choices) => {
   };
 };
 
-
 export const getSurvey = (token = '', id) => {
   const url = getDomain();
   return dispatch => {

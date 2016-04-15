@@ -5,6 +5,8 @@ import { omit, pullAt } from 'lodash';
 import Button from '../../components/Button';
 import ButtonGroup from '../../components/ButtonGroup';
 
+import TextBox from '../TextBox';
+
 import FlipMove from 'react-flip-move';
 
 class SlideFirstDay extends Component {
@@ -43,10 +45,10 @@ class SlideFirstDay extends Component {
     return (
       <div className="slideFirstDay">
         <div className="map">
-          <textarea value={ mapDesc } onChange={ this._mapDescChange }/>
+          <TextBox body={mapDesc}/>
         </div>
-        <divl className="agenda">
 
+        <divl className="agenda">
           <div className="agenda-header">
             <div className="timeInput">Time</div>
             <div className="desc">Description</div>

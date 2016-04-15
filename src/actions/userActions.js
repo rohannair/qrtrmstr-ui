@@ -11,6 +11,21 @@ function usersRetrieved(users = {}) {
   };
 }
 
+// New User successfully created and retrieved
+function newUserCreated(new_user = {}) {
+  return {
+    type: 'NEW_USER_CREATED',
+    new_user
+  };
+}
+
+//show Modal to Create New User
+export const newUserModal = () => {
+  return {
+    type: 'TOGGLE_NEW_USER_MODAL'
+  };
+};
+
 // Get All Users
 export const getUsers = token => {
   const url = getDomain();
@@ -54,7 +69,7 @@ export const createUser = (token, payload) => {
   const url = getDomain();
   return dispatch => {
     return fetch(`${url}/api/v1/users`, {
-      method: 'PUT',
+      method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Authorization': 'bearer ' + token,
@@ -64,7 +79,7 @@ export const createUser = (token, payload) => {
     })
     .then(response => response.json())
     .then(json => {
-      return;
+      return dispatch(newUserCreated(json));
     });
   };
 };
@@ -74,7 +89,7 @@ export const modifyUser = (token, payload) => {
   const url = getDomain();
   return dispatch => {
     return fetch(`${url}/api/v1/users/${payload.id}`, {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         'Accept': 'application/json',
         'Authorization': 'bearer ' + token,

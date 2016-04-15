@@ -18,7 +18,6 @@ const Home = ({children}) => {
       <div className="app-globals">
         <Header />
         <Sidebar />
-        <Footer />
       </div>
       <div className="app-body">
         {children}
