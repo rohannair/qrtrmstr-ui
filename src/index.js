@@ -6,7 +6,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 
 import { IndexRoute, Router, Route, Link, browserHistory } from 'react-router';
-import { syncHistory, routeReducer } from 'react-router-redux';
+import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 
 // Utils
 import { merge } from 'lodash';
@@ -29,6 +29,7 @@ import reducers from './reducers';
 // Create store
 import configure from './store';
 const store = configure(reducers);
+const history = syncHistoryWithStore(browserHistory, store);
 
 // Helpers
 function requireAuth(nextState, replace) {
