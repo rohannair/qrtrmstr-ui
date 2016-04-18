@@ -17,15 +17,25 @@ function singleSurveyRetrieved(survey = {}) {
 }
 
 //show Modal to send a survey to a user
-export const sendSurveyModal = () => {
+export const toggleSurveyModal = () => {
   return {
     type: 'TOGGLE_SEND_SURVEY_MODAL'
   };
 };
 
+
+//update chosenUser to send Survey to
+//  export const updateChosenUser = (updatedChosenUser) => {
+//   return {
+//     type: 'UPDATE_CHOSEN_USER',
+//     updatedChosenUser
+//   };
+// }
+
 //Send Survey To User
 export const sendSurvey = (token, payload) => {
   console.log(payload)
+  
   return dispatch => {
     return fetch('http://localhost:3001/api/v1/survey/send', {
       method: 'POST',

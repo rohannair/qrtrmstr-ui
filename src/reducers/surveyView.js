@@ -2,6 +2,7 @@ import _ from 'lodash';
 
 const initialState = {
   showModal: false,
+  chosenUser: {},
   list: [],
   survey: {},
   openCards: []
@@ -93,6 +94,11 @@ export default function surveyView(state = initialState, action) {
       ...state,
       showModal: !state.showModal
     };
+  // case 'UPDATE_CHOSEN_USER':
+  //   return {
+  //     ...state,
+  //     chosenUser: action.updatedChosenUser
+  //   }
 
   default:
     return state;
