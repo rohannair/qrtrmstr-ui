@@ -39,16 +39,13 @@ class UserList extends Component {
         ? (
             <Button
               classes="inverse sm"
-              toolTipText="View survey results">
-              <i className="oi" data-glyph="list-rich" />
-            </Button>
+              // toolTipText="View survey results"
+              icon="list-rich" />
           )
         : (
             <Button
               classes="primary sm"
-              toolTipText="Send survey to user">
-              <i className="oi" data-glyph="share-boxed" />
-            </Button>
+              icon="share-boxed" />
           );
 
       const deactivateClasses = val.isAdmin
@@ -65,14 +62,12 @@ class UserList extends Component {
             <ButtonGroup>
               { resultsIcon }
               <Button
-                classes='sm tertiary'>
-                <i className="oi" data-glyph="pencil" />
-              </Button>
+                classes='sm tertiary'
+                icon="pencil" />
               <Button
                 classes= { `sm tertiary ${deactivateClasses}` }
-                disabled={val.isAdmin}>
-                <i className="oi" data-glyph="x" />
-              </Button>
+                disabled={val.isAdmin}
+                icon="x"/>
             </ButtonGroup>
           </td>
         </tr>
@@ -147,7 +142,7 @@ class UserList extends Component {
     this._renderNewUserModal();
     const { token, dispatch } = this.props;
     const { newUser } = this.state;
-    return dispatch(createUser(token, newUser))
+    return dispatch(createUser(token, newUser));
   };
 }
 
