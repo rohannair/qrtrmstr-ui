@@ -19,14 +19,14 @@ function singleSurveyRetrieved(survey = {}) {
   };
 }
 
-//show Modal to send a survey to a user
+// Show Modal to send a survey to a user
 export const sendSurveyModal = () => {
   return {
     type: 'TOGGLE_SEND_SURVEY_MODAL'
   };
 };
 
-//Send Survey To User
+// Send Survey To User
 export const sendSurvey = (token, payload) => {
   const url = getDomainEmail();
   return dispatch => {
