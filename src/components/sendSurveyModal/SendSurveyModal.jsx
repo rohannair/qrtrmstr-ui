@@ -7,7 +7,7 @@ import Button from '../../components/Button';
 import ButtonGroup from '../../components/ButtonGroup';
 
 class SendSurveyModal extends Component {
-  this.state = {
+  state = {
     selectedPerson: {},
     value
   }
@@ -47,7 +47,7 @@ class SendSurveyModal extends Component {
           <Modal.Body>
             <div className="formField">
               <label>User: </label>
-              <select onChange={ this._onChange } value={/* value */}>
+              <select onChange={ this._onChange }>// value={/* value */}>
                 { userOptions }
               </select>
             </div>          

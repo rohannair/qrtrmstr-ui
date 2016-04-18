@@ -16,7 +16,7 @@ function singleSurveyRetrieved(survey = {}) {
   };
 }
 
-//show Modal to send a survey to a user
+// show Modal to send a survey to a user
 export const toggleSurveyModal = () => {
   return {
     type: 'TOGGLE_SEND_SURVEY_MODAL'
@@ -24,7 +24,7 @@ export const toggleSurveyModal = () => {
 };
 
 
-//update chosenUser to send Survey to
+// update chosenUser to send Survey to
 //  export const updateChosenUser = (updatedChosenUser) => {
 //   return {
 //     type: 'UPDATE_CHOSEN_USER',
@@ -32,10 +32,9 @@ export const toggleSurveyModal = () => {
 //   };
 // }
 
-//Send Survey To User
+// Send Survey To User
 export const sendSurvey = (token, payload) => {
-  console.log(payload)
-  
+  console.log(payload);
   return dispatch => {
     return fetch('http://localhost:3001/api/v1/survey/send', {
       method: 'POST',

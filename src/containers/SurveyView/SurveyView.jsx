@@ -32,13 +32,13 @@ class SurveyView extends Component {
     this._renderUserList();
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.users.length > 0) {
-      const latestUserProps = nextProps.users[(nextProps.users.length)-1]
-      const latestUser = [latestUserProps.id, latestUserProps.first_name, latestUserProps.last_name, latestUserProps.email]
-      this._changeUserParams(latestUser);
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   if (this.props.users.length > 0) {
+  //     const latestUserProps = nextProps.users[(nextProps.users.length)-1]
+  //     const latestUser = [latestUserProps.id, latestUserProps.first_name, latestUserProps.last_name, latestUserProps.email]
+  //     this._changeUserParams(latestUser);
+  //   }
+  // }
 
   render() {
     const surveyModal = Object.keys(this.state.chosenSurvey).length > 0
