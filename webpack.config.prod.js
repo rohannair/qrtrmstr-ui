@@ -5,25 +5,17 @@ const path         = require('path');
 const rucksack     = require('rucksack-css');
 const webpack      = require('webpack');
 
-const devFlagPlugin = new webpack.DefinePlugin({
-  __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false'))
-});
-
 const config = {
-  cache: true,
-  debug: true,
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'cheap-source-map',
 
   entry: [
-    'eventsource-polyfill', // necessary for hot reloading with IE
-    'webpack-hot-middleware/client',
     './src/index.js'
   ],
 
   output: {
     path: path.join(__dirname, 'public'),
     filename: 'app.js',
-    publicPath: '/public/',
+    sourceMapFilename: '[file].map'
   },
 
   module: {
@@ -32,13 +24,13 @@ const config = {
 
       {
         test: /\.jsx$/,
-        loaders: ['react-hot', 'babel-loader'],
+        loaders: ['babel-loader'],
       },
 
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loaders: ['react-hot', 'babel-loader'],
+        loaders: ['babel-loader'],
       },
 
       {
@@ -63,9 +55,15 @@ const config = {
 
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
-    devFlagPlugin
+    new webpack.optimize.UglifyJsPlugin(),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production'),
+        'ENV': JSON.stringify('production')
+      }
+    })
   ],
 
   postcss: function() {

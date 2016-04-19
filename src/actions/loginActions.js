@@ -1,5 +1,7 @@
 import fetch from 'isomorphic-fetch';
 import Cookies from 'cookies-js';
+import utils from './utils';
+const getDomain = utils.getDomain;
 
 // Set Token
 export const login = (token = null, hasCookie) => {
@@ -28,8 +30,9 @@ export const logout = () => {
 
 // Login API call
 export const tryLogin = credentials => {
+  const url = getDomain();
   return dispatch => {
-    return fetch('http://localhost:3000/api/v1/login', {
+    return fetch(`${url}/api/v1/login`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

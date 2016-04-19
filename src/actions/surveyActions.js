@@ -1,4 +1,6 @@
 import fetch from 'isomorphic-fetch';
+import utils from './utils';
+const getDomain = utils.getDomain;
 
 export const setSelection = id => {
   return {
@@ -8,8 +10,9 @@ export const setSelection = id => {
 };
 
 export const submitSurvey = (choices) => {
+  const url = getDomain();
   return dispatch => {
-    return fetch('http://localhost:3000/api/v1/submitSurvey', {
+    return fetch(`${url}/api/v1/submitSurvey`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -30,8 +33,9 @@ export const submitSurvey = (choices) => {
 };
 
 export const getSurvey = (token = '', id) => {
+  const url = getDomain();
   return dispatch => {
-    return fetch(`http://localhost:3000/api/v1/surveys/${id}`, {
+    return fetch(`${url}/api/v1/surveys/${id}`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',

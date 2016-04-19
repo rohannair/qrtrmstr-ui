@@ -1,4 +1,6 @@
 import fetch from 'isomorphic-fetch';
+import utils from './utils';
+const getDomain = utils.getDomain;
 
 // Surveys Retrieved action
 function surveysRetrieved(surveyList = {}) {
@@ -41,8 +43,9 @@ export const sendSurvey = (token, payload) => {
 
 // Get All Surveys
 export const getSurveys = token => {
+  const url = getDomain();
   return dispatch => {
-    return fetch('http://localhost:3000/api/v1/surveys', {
+    return fetch(`${url}/api/v1/surveys`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -63,8 +66,9 @@ export const getSurveys = token => {
 
 // Single Survey Call
 export const getSingleSurvey = (token, id) => {
+  const url = getDomain();
   return dispatch => {
-    return fetch(`http://localhost:3000/api/v1/surveys/${id}`, {
+    return fetch(`${url}/api/v1/surveys/${id}`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -85,8 +89,9 @@ export const getSingleSurvey = (token, id) => {
 
 // Create new Survey
 export const createSurvey = (token, payload) => {
+  const url = getDomain();
   return dispatch => {
-    return fetch('http://localhost:3000/api/v1/surveys', {
+    return fetch(`${url}/api/v1/surveys`, {
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
@@ -108,8 +113,9 @@ export const createSurvey = (token, payload) => {
 
 // Modify existing Survey
 export const modifySurvey = (token, payload) => {
+  const url = getDomain();
   return dispatch => {
-    return fetch(`http://localhost:3000/api/v1/surveys/${payload.id}`, {
+    return fetch(`${url}/api/v1/surveys/${payload.id}`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
