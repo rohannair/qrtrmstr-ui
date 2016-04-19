@@ -6,13 +6,13 @@
   "description": "",
   "main": "index.js",
   "engines": {
-    "node": "4.2.3"
+    "node": "4.4.3"
   },
   "scripts": {
     "newComp": "babel-node ./scripts/newComponent.js",
     "newCont": "babel-node ./scripts/newContainer.js",
     "start": "babel-node server.js",
-    "build": "webpack -p --progress --config webpack.config.prod.js",
+    "build": "NODE_ENV=production webpack -p --progress --config webpack.config.prod.js",
     "test": "babel-tape-runner ./src/**/*.test.js | tap-spec",
     "lint": "eslint src"
   },
