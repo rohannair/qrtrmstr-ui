@@ -23,7 +23,7 @@ const config = {
   output: {
     path: path.join(__dirname, 'public'),
     filename: 'app.js',
-    publicPath: '/static/',
+    publicPath: '/public/',
   },
 
   module: {
