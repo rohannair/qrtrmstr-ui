@@ -18,7 +18,6 @@ function singleSurveyRetrieved(survey = {}) {
 
 // Send Survey To User
 export const sendSurvey = (token, payload) => {
-  console.log(payload);
   return dispatch => {
     return fetch('http://localhost:3001/api/v1/survey/send', {
       method: 'POST',
