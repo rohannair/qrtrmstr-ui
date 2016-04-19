@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './surveyViewItem.css';
-
 import { Link } from 'react-router';
 import moment from 'moment';
 import Button from '../../components/Button';
@@ -18,9 +17,7 @@ const SurveyViewItem = (props) => {
         </Link>
       </td>
       <td>
-        <div className="userList-actionBar">
-          { <Button onClick={ props.onShowModal.bind(this, { id: props.id, name: props.name}) } classes="primary md">Send To User</Button> }
-        </div>
+        <Button onClick={ props.onShowModal.bind(this, { id: props.id, name: props.name}) } classes="primary md">Send To User</Button>
       </td>
     </tr>
   );

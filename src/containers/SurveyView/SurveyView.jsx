@@ -4,14 +4,12 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Cookies from 'cookies-js';
 
-
 // Styles
 import styles from '../UserList/userList.css';
 
 // Containers
-import { getSurveys, toggleSurveyModal, sendSurvey } from '../../actions/surveyViewActions';
+import { getSurveys, sendSurvey } from '../../actions/surveyViewActions';
 import { getUsers } from '../../actions/userActions';
-
 
 // Components
 import Card from '../../components/Card';
@@ -32,14 +30,6 @@ class SurveyView extends Component {
     this._renderUserList();
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   if (this.props.users.length > 0) {
-  //     const latestUserProps = nextProps.users[(nextProps.users.length)-1]
-  //     const latestUser = [latestUserProps.id, latestUserProps.first_name, latestUserProps.last_name, latestUserProps.email]
-  //     this._changeUserParams(latestUser);
-  //   }
-  // }
-
   render() {
     const surveyModal = Object.keys(this.state.chosenSurvey).length > 0
     ? <SendSurveyModal 
@@ -47,9 +37,10 @@ class SurveyView extends Component {
         surveyID={this.state.chosenSurvey.id} 
         users={this.props.users} 
         showModal={true} 
-        toggleModal={this._renderSendSurveyModal} 
+        closeModal={this._closeSendSurveyModal} 
         sendSurvey={this._sendSurvey} 
         onChange={this._changeUserParams} 
+        latestUser={this.state.chosenUser}
       />
     : null;
 
@@ -100,59 +91,39 @@ class SurveyView extends Component {
     return dispatch(getUsers(token));
   };
 
-  _renderSendSurveyModal = () => {
-    const { token, dispatch } = this.props;
-    return dispatch(toggleSurveyModal());
+  _closeSendSurveyModal = () => {
+    this.setState({
+      chosenSurvey: {}
+    })
   };
 
   _sendSurvey = () => {
-    this._renderSendSurveyModal();
+    this._closeSendSurveyModal();
     const { token, dispatch } = this.props;
     const { chosenUser } = this.state;
-
     return dispatch(sendSurvey(token, chosenUser))
   };
 
-  _processValue = (value) => {
-    console.log("VALUE", value, typeof value)
-    let userInfo = null
-    if (typeof value == 'string') {
-      userInfo = value.split(",");
-      console.log(userInfo)
-      return userInfo
-    } else {
-      userInfo = value
-      console.log(userInfo)
-      return userInfo
-    }
-  }
-
   _changeUserParams = (value) => {
-    console.log("VALUEEEEEEEE", value, typeof value)
-    const user = this._processValue(value);
-    console.log(user);
+    this.setState({
+      chosenUser: {
+        userId: value.id,
+        token: null,
+        firstName: value.first_name,
+        lastName: value.last_name,
+        email: value.email,
+        companyName: "Scotiabank",
+        surveyId: value.surveyID, 
+        emailTemplate: "welcomeEmail"
+      }
+    });
     const { chosenUser } = this.state;
-    // this.setState({
-    //   chosenUser: {
-    //     userId: user[0],
-    //     token: null,
-    //     firstName: user[1],
-    //     lastName: user[2],
-    //     email: user[3],
-    //     companyName: "Scotiabank",
-    //     surveyId: user[4], 
-    //     // || "1e9eddbc-7ede-43fd-9bde-364bba4d84e9",
-    //     emailTemplate: "welcomeEmail"
-    //   }
-    // });
-    console.log(chosenUser)
   }
 }
 
 function mapStateToProps(state) {
   const token = state.accountActions.token || Cookies.get('token');
   return {
-    showModal: state.surveyAdmin.showModal,
     token,
     surveyList: state.surveyAdmin.list,
     users: state.app.users

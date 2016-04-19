@@ -89,17 +89,6 @@ export default function surveyView(state = initialState, action) {
       openCards: [...openCards].concat(action.cardID)
     };
 
-  case 'TOGGLE_SEND_SURVEY_MODAL':
-    return {
-      ...state,
-      showModal: !state.showModal
-    };
-  // case 'UPDATE_CHOSEN_USER':
-  //   return {
-  //     ...state,
-  //     chosenUser: action.updatedChosenUser
-  //   }
-
   default:
     return state;
   }
