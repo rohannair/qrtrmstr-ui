@@ -14,22 +14,28 @@ import ButtonGroup from '../../components/ButtonGroup';
 class SendSurveyModal extends Component {
 
   componentWillMount() {
-    const latestPerson = this.props.users[(this.props.users.length)-1]
-    const latestPersonInfo = { id: latestPerson.id, first_name: latestPerson.first_name, last_name: latestPerson.last_name, email: latestPerson.email, surveyID: this.props.surveyID }
-    this.props.onChange(latestPersonInfo)    
-  }
+    const latestPerson = this.props.latestUser;
+    const latestPersonInfo = { 
+      id: latestPerson.id, 
+      first_name: latestPerson.first_name, 
+      last_name: latestPerson.last_name, 
+      email: latestPerson.email, 
+      surveyID: this.props.surveyID };
+    this.props.onChange(latestPersonInfo);
+    const defaultValue = JSON.stringify(latestPersonInfo)    
+  };
 
   render() {
     const { latestUser, surveyName, surveyID, users, showModal, closeModal, sendSurvey, onChange } = this.props;
     const userOptions = Object.keys(users).map(index => {
       let user = users[index];
-      let userInfo = { id: user.id, first_name: user.first_name, last_name: user.last_name, email: user.email, surveyID }
+      let userInfo = { id: user.id, first_name: user.first_name, last_name: user.last_name, email: user.email, surveyID };
       if (index == (users.length)-1) {
         return <option selected="selected" value={ JSON.stringify(userInfo) } key={user.id}>{user.first_name + " " + user.last_name}</option>
       } else {
         return <option value={ JSON.stringify(userInfo) } key={user.id}>{user.first_name + " " + user.last_name}</option>
-      }
-    })
+      };
+    });
 
     return (
       <Modal animation={true} show={showModal} onHide={closeModal}>
@@ -40,7 +46,7 @@ class SendSurveyModal extends Component {
           <Modal.Body>
             <div className="formField">
               <label>User: </label>
-              <select onChange={e => onChange(JSON.parse(e.target.value)) }>
+              <select defaultValue={} onChange={e => onChange(JSON.parse(e.target.value)) }>
                 { userOptions }
               </select>
             </div>          

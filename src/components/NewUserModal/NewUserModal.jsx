@@ -17,16 +17,18 @@ const NewUserModal = ({val, showModal, toggleModal, submitNewUser, onChange }) =
           <div className="formField">
             <label>First Name:</label>
             <input
+              type="text"
               name="first_name"
-              value= { val.first_name }
+              value= { val.first_name == null ? '' : val.first_name }
               onChange={ e => onChange(e.target.name, e.target.value) }
             />
           </div>
           <div className="formField">
             <label>Last Name:</label>
             <input
+              type="text"
               name="last_name"
-              value= { val.last_name }
+              value= { val.last_name == null ? '' : val.last_name }
               onChange={ e => onChange(e.target.name, e.target.value) }
             />
           </div>
@@ -34,8 +36,9 @@ const NewUserModal = ({val, showModal, toggleModal, submitNewUser, onChange }) =
           <div className="formField">
             <label>Email:</label>
             <input
+              type="text"
               name="email"
-              value= { val.email }
+              value= { val.email == null ? '' : val.email }
               onChange={ e => onChange(e.target.name, e.target.value) }
             />
           </div>
@@ -43,8 +46,9 @@ const NewUserModal = ({val, showModal, toggleModal, submitNewUser, onChange }) =
           <div className="formField">
             <label>Work Email:</label>
             <input
+              type="text"
               name="work_email"
-              value= { val.work_email }
+              value= { val.work_email == null ? '' : val.work_email }
               onChange={ e => onChange(e.target.name, e.target.value) }
             />
           </div>

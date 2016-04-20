@@ -14,7 +14,12 @@ import { getUsers, newUserModal, createUser } from '../../actions/userActions';
 class UserList extends Component {
 
   state = {
-    newUser: this.props.newUser || {}
+    newUser: {
+      first_name: null,
+      last_name: null,
+      email: null,
+      work_email: null
+    }
   };
 
   static propTypes = {
@@ -74,7 +79,7 @@ class UserList extends Component {
       );
     });
 
-    const userCount = [...this.props.users].length;
+    const userCount = Object.keys(this.props.users).length;
 
     return (
       <div className="userList">
@@ -97,7 +102,6 @@ class UserList extends Component {
               </tr>
             </thead>
             <tbody>
-              {console.log("userData", userData)}
               {userData}
             </tbody>
           </table>

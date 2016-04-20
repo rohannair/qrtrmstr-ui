@@ -3,6 +3,7 @@ import styles from './surveyViewItem.css';
 import { Link } from 'react-router';
 import moment from 'moment';
 import Button from '../../components/Button';
+import ButtonGroup from '../../components/ButtonGroup';
 
 const SurveyViewItem = (props) => {
   return (
@@ -12,12 +13,12 @@ const SurveyViewItem = (props) => {
       <td>{ moment(props.created_at).fromNow() }</td>
       <td>{ moment(props.updated_at).fromNow() }</td>
       <td>
-        <Link to={`/dashboard/surveys/edit/${props.id}`}>
-          <Button classes='inverse sm'>Edit</Button>
-        </Link>
-      </td>
-      <td>
-        <Button onClick={ props.onShowModal.bind(this, { id: props.id, name: props.name}) } classes="primary md">Send To User</Button>
+        <ButtonGroup>
+          <Link to={`/dashboard/surveys/edit/${props.id}`}>
+            <Button classes='inverse sm'>Edit</Button>
+          </Link>
+          <Button onClick={ props.onShowModal.bind(this, { id: props.id, name: props.name}) } classes="primary md">Send To User</Button>
+        </ButtonGroup>
       </td>
     </tr>
   );

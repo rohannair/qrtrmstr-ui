@@ -28,7 +28,7 @@ class SurveyView extends Component {
   componentWillMount() {
     this._renderSurveyList();
     this._renderUserList();
-  }
+  };
 
   render() {
     const surveyModal = Object.keys(this.state.chosenSurvey).length > 0
@@ -72,13 +72,13 @@ class SurveyView extends Component {
         { surveyModal }
       </div>
     );
-  }
+  };
 
   _selectSurveyForSending = (val) => {
-    const chosenSurvey = ([...this.props.surveyList].filter(item => item.id === val.id))[0]
+    const chosenSurvey = ([...this.props.surveyList].filter(item => item.id === val.id))[0];
     this.setState({
       chosenSurvey
-    })
+    });
   };
 
   _renderSurveyList = () => {
@@ -94,14 +94,14 @@ class SurveyView extends Component {
   _closeSendSurveyModal = () => {
     this.setState({
       chosenSurvey: {}
-    })
+    });
   };
 
   _sendSurvey = () => {
     this._closeSendSurveyModal();
     const { token, dispatch } = this.props;
     const { chosenUser } = this.state;
-    return dispatch(sendSurvey(token, chosenUser))
+    return dispatch(sendSurvey(token, chosenUser));
   };
 
   _changeUserParams = (value) => {
@@ -118,8 +118,8 @@ class SurveyView extends Component {
       }
     });
     const { chosenUser } = this.state;
-  }
-}
+  };
+};
 
 function mapStateToProps(state) {
   const token = state.accountActions.token || Cookies.get('token');
@@ -128,6 +128,6 @@ function mapStateToProps(state) {
     surveyList: state.surveyAdmin.list,
     users: state.app.users
   };
-}
+};
 export default connect(mapStateToProps)(SurveyView);
 

@@ -1,7 +1,6 @@
 import fetch from 'isomorphic-fetch';
 import utils from './utils';
 const getDomain = utils.getDomain;
-console.log(utils.getDomain);
 
 // Users Retrieved action
 function usersRetrieved(users = {}) {
