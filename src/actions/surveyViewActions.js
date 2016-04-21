@@ -1,6 +1,7 @@
 import fetch from 'isomorphic-fetch';
 import utils from './utils';
 const getDomain = utils.getDomain;
+const getDomainEmail = utils.getDomainEmail;
 
 // Surveys Retrieved action
 function surveysRetrieved(surveyList = {}) {
@@ -17,6 +18,30 @@ function singleSurveyRetrieved(survey = {}) {
     survey
   };
 }
+
+// Send Survey To User
+export const sendSurvey = (token, payload) => {
+  const url = getDomainEmail();
+  return dispatch => {
+    return fetch(`${url}/api/v1/survey/send`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': 'bearer ' + token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+    .then(response => response.json().then(json => ({json, response})))
+    .then(({json, response}) => {
+      if (!response.ok) {
+        return Promise.reject(json);
+      }
+
+      return console.log(json);
+    });
+  };
+};
 
 // Get All Surveys
 export const getSurveys = token => {
@@ -58,7 +83,7 @@ export const getSingleSurvey = (token, id) => {
       if (!response.ok) {
         return Promise.reject(json);
       }
-
+      console.log(json);
       return dispatch(singleSurveyRetrieved(json));
     });
   };

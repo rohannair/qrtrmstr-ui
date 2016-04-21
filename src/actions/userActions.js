@@ -1,7 +1,6 @@
 import fetch from 'isomorphic-fetch';
 import utils from './utils';
 const getDomain = utils.getDomain;
-console.log(utils.getDomain);
 
 // Users Retrieved action
 function usersRetrieved(users = {}) {
@@ -18,13 +17,6 @@ function newUserCreated(new_user = {}) {
     new_user
   };
 }
-
-// show Modal to Create New User
-export const newUserModal = () => {
-  return {
-    type: 'TOGGLE_NEW_USER_MODAL'
-  };
-};
 
 // Get All Users
 export const getUsers = token => {
