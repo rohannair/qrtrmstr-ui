@@ -11,7 +11,6 @@ html, body {
 }
 
 body {
-  background: #e0e0e0;
   color: #777781;
   height: 100vh;
   overflow-y: scroll;
@@ -32,6 +31,7 @@ a {
     text-decoration: none;
   }
 }
+
 .app-login {
   display: flex;
   flex-direction: column;

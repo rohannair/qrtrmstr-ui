@@ -1,40 +1,17 @@
 .app {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   min-height: 100vh;
 
-  &-globals,
   &-body {
     display: flex;
     flew-grow: 1;
     flex-direction: column;
   }
 
-  &-globals {
-    background: #2E404E;
-    /* width: 20%; */
-  }
-
   &-body {
-    /* width: 80%; */
     flex-grow: 1;
     padding: 40px;
-  }
-
-  &-header {
-    background: #EE6352;
-    padding: 20px;
-    text-align: center;
-    width: 100%;
-
-    .logo {
-      color: #fff;
-      font-size: 1.8em;
-      font-weight: bold;
-    }
-  }
-
-  &-sidebar {
   }
 
   &-footer {
@@ -45,6 +22,59 @@
 
     p {
       line-height: 1.4;
+    }
+  }
+}
+
+.appHeader {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  background: #EE6352;
+  width: 100%;
+
+  &-section {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+
+    & + & {
+      margin-left: 5px;
+    }
+  }
+
+  &-logo {
+    color: #fff;
+    font-size: 1.125rem;
+    font-weight: bold;
+  }
+
+  &-item {
+    height: 100%;
+  }
+
+  a {
+    display: block;
+    padding: 20px;
+
+    &:link, &:visited {
+      color: #fff;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+  }
+
+  .header-menu {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+
+    >* {
+      margin-left: 20px;
     }
   }
 }

@@ -52,11 +52,11 @@ class SlideEquipment extends Component {
   _setSelected = (key) => {
     this.setState({
       selected: key
-    })
+    });
   };
 
   _newOption = () => {
-    const newOptions = { name: 'New' };
+    const newOptions = { name: 'New', id: Math.random() };
     const options = this.state.options;
 
     this.setState({
@@ -64,7 +64,7 @@ class SlideEquipment extends Component {
         ...options,
         newOptions
       ]
-    })
+    });
   };
 
   _editOption = (key, newName) => {
