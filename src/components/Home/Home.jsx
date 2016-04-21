@@ -10,18 +10,20 @@ import UserList from '../../containers/UserList';
 // Components
 import Header from '../../components/Global/Header';
 import Footer from '../../components/Global/Footer';
-import Sidebar from '../../components/Global/Sidebar';
+import Menu from '../../components/Global/Menu';
 
 const Home = ({children}) => {
   return (
     <div className="app">
-      <div className="app-globals">
-        <Header />
-        <Sidebar />
-      </div>
+      <Header>
+        <Menu />
+      </Header>
+
       <div className="app-body">
         {children}
       </div>
+
+      <Footer />
     </div>
   );
 };

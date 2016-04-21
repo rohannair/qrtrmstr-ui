@@ -10,19 +10,12 @@ import styles from './global.css';
 const AppContainer = props => {
   return (
     <div className="app">
-
-      <div className="app-globals">
-          <Header {...props} />
-          <Sidebar />
-          <Footer />
+      <Header {...props} />
+      <Sidebar />
+      <div className="container container-app">
+        { props.children }
       </div>
-
-      <div className="app-body">
-        <div className="container container-app">
-          { props.children }
-        </div>
-      </div>
-
+      <Footer />
     </div>
   );
 };

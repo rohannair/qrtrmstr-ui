@@ -1,6 +1,9 @@
 .card {
-  background: #FFF;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, .2), 0 1px 0 rgba(255,255,255,0.9) inset;
+  display: flex;
+  flex-direction: column;
+
+  background: #fff;
+  border: 1px solid #CAD0D2;
   border-radius: 3px;
   margin: 0 0 20px;
   overflow: hidden;
@@ -8,11 +11,16 @@
   &-header:not(:empty),
   &-body:not(:empty),
   &-footer:not(:empty) {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
     padding: 20px;
   }
 
   &-header {
-    border-bottom: 1px solid #f1f1f1;
+    background: #EEF3F5;
+    border-bottom: 1px solid #D7DBDD;
+    color: #57727C;
     font-size: 1.2em;
     font-weight: bold;
   }

@@ -1,10 +1,20 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+
 const Header = props => {
-  // <button className="logout" onClick={props.logout}>Log out</button>
   return (
-    <header className="app-header">
-      <Link to="/dashboard"><span className="logo">QRTR<br/>MSTR</span></Link>
+    <header className="appHeader">
+      <div className="appHeader-section">
+        <div className="appHeader-item appHeader-logo">
+          <Link to="/dashboard">
+            Quartermaster
+          </Link>
+        </div>
+        <div className="appHeader-item">
+          { props.children }
+        </div>
+      </div>
+      <div className="appHeader-section"></div>
     </header>
   );
 };
