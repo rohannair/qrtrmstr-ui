@@ -1,6 +1,7 @@
 import fetch from 'isomorphic-fetch';
 import utils from './utils';
 const getDomain = utils.getDomain;
+const getDomainEmail = utils.getDomainEmail;
 
 // Surveys Retrieved action
 function surveysRetrieved(surveyList = {}) {
@@ -20,7 +21,7 @@ function singleSurveyRetrieved(survey = {}) {
 
 // Send Survey To User
 export const sendSurvey = (token, payload) => {
-  const url = getDomain();
+  const url = getDomainEmail();
   return dispatch => {
     return fetch(`${url}/api/v1/survey/send`, {
       method: 'POST',

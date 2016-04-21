@@ -17,11 +17,10 @@ import Button from '../../components/Button';
 import SendSurveyModal from '../../components/SendSurveyModal';
 import SurveyViewItem from '../../components/SurveyViewItem';
 
-
 class SurveyView extends Component {
 
   state = {
-    chosenUser: this.props.users[(this.props.users.length)-1] || {},
+    chosenUser: {},
     chosenSurvey: {}
   };
 

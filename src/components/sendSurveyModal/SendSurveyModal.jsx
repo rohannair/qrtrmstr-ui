@@ -4,17 +4,17 @@ import { Modal } from 'react-bootstrap';
 
 // Styles
 import classNames from 'classnames';
-import styles from './sendSurveyModal.css';
+import styles from '../NewUserModal/newUserModal.css';
 
 // Components
-import Card from '../../components/Card';
-import Button from '../../components/Button';
-import ButtonGroup from '../../components/ButtonGroup';
+import Card from '../Card';
+import Button from '../Button';
+import ButtonGroup from '../ButtonGroup';
 
 class SendSurveyModal extends Component {
 
   componentWillMount() {
-    const latestPerson = this.props.latestUser;
+    const latestPerson = this.props.users[(this.props.users.length)-1];
     const latestPersonInfo = { 
       id: latestPerson.id, 
       first_name: latestPerson.first_name, 
@@ -22,16 +22,26 @@ class SendSurveyModal extends Component {
       email: latestPerson.email, 
       surveyID: this.props.surveyID };
     this.props.onChange(latestPersonInfo);
-    const defaultValue = JSON.stringify(latestPersonInfo)    
+    const defaultValue = JSON.stringify(latestPersonInfo);    
   };
 
   render() {
-    const { latestUser, surveyName, surveyID, users, showModal, closeModal, sendSurvey, onChange } = this.props;
+    const { latestUser, surveyName, surveyID, users, showModal, closeModal, sendSurvey, onChange } = this.props; 
+    let defaultUser = null; 
+    let selectedUser = { 
+      id: latestUser.userId, 
+      first_name: latestUser.firstName,
+      last_name: latestUser.lastName,
+      email: latestUser.email,
+      surveyID: latestUser.surveyId
+    };
+
     const userOptions = Object.keys(users).map(index => {
       let user = users[index];
       let userInfo = { id: user.id, first_name: user.first_name, last_name: user.last_name, email: user.email, surveyID };
       if (index == (users.length)-1) {
-        return <option selected="selected" value={ JSON.stringify(userInfo) } key={user.id}>{user.first_name + " " + user.last_name}</option>
+        defaultUser = latestUser.userId == undefined ? JSON.stringify(userInfo) : JSON.stringify(selectedUser); 
+        return <option value={ JSON.stringify(userInfo) } key={user.id}>{user.first_name + " " + user.last_name}</option>
       } else {
         return <option value={ JSON.stringify(userInfo) } key={user.id}>{user.first_name + " " + user.last_name}</option>
       };
@@ -46,7 +56,7 @@ class SendSurveyModal extends Component {
           <Modal.Body>
             <div className="formField">
               <label>User: </label>
-              <select defaultValue={} onChange={e => onChange(JSON.parse(e.target.value)) }>
+              <select value={ defaultUser } onChange={e => onChange(JSON.parse(e.target.value)) }>
                 { userOptions }
               </select>
             </div>          
