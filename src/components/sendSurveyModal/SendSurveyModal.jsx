@@ -40,7 +40,7 @@ class SendSurveyModal extends Component {
       let user = users[index];
       let userInfo = { id: user.id, first_name: user.first_name, last_name: user.last_name, email: user.email, surveyID };
       if (index == (users.length)-1) {
-        defaultUser = latestUser.userId == undefined ? JSON.stringify(userInfo) : JSON.stringify(selectedUser); 
+        defaultUser = latestUser.userId === undefined ? JSON.stringify(userInfo) : JSON.stringify(selectedUser); 
         return <option value={ JSON.stringify(userInfo) } key={user.id}>{user.first_name + " " + user.last_name}</option>
       } else {
         return <option value={ JSON.stringify(userInfo) } key={user.id}>{user.first_name + " " + user.last_name}</option>

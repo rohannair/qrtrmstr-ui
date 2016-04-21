@@ -14,12 +14,7 @@ import { getUsers, newUserModal, createUser } from '../../actions/userActions';
 class UserList extends Component {
 
   state = {
-    newUser: {
-      first_name: null,
-      last_name: null,
-      email: null,
-      work_email: null
-    }
+    newUser: this.props.newUser || {}
   };
 
   static propTypes = {

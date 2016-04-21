@@ -83,7 +83,7 @@ export const getSingleSurvey = (token, id) => {
       if (!response.ok) {
         return Promise.reject(json);
       }
-
+      console.log(json);
       return dispatch(singleSurveyRetrieved(json));
     });
   };
