@@ -1,3 +1,2 @@
-
-  import NewUserModal from './NewUserModal';
-  export default NewUserModal;
+import NewUserModal from './NewUserModal';
+export default NewUserModal;

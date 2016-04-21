@@ -1,6 +1,8 @@
 import _ from 'lodash';
 
 const initialState = {
+  showModal: false,
+  chosenUser: {},
   list: [],
   survey: {},
   openCards: []

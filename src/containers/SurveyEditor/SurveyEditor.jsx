@@ -38,10 +38,13 @@ class SurveyEditor extends Component {
 
   render() {
     const { survey, openCards } = this.props;
+    debugger
+    console.log(survey.doc)
 
     const surveyDoc = survey.doc && Object.keys(survey.doc).length > 0
     ? Object.keys(survey.doc).map(val => {
       const slide = survey.doc[val];
+      console.log(slide)
 
       switch (slide.type) {
       case 'intro':

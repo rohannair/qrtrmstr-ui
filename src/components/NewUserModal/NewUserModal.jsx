@@ -2,9 +2,9 @@ import React from 'react';
 import classNames from 'classnames';
 import styles from './newUserModal.css';
 import { Modal } from 'react-bootstrap';
-import Card from '../../components/Card';
-import Button from '../../components/Button';
-import ButtonGroup from '../../components/ButtonGroup';
+import Card from '../Card';
+import Button from '../Button';
+import ButtonGroup from '../ButtonGroup';
 
 const NewUserModal = ({val, showModal, toggleModal, submitNewUser, onChange }) => {
   return (

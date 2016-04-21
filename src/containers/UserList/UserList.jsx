@@ -74,7 +74,7 @@ class UserList extends Component {
       );
     });
 
-    const userCount = [...this.props.users].length;
+    const userCount = Object.keys(this.props.users).length;
 
     return (
       <div className="userList">
