@@ -14,6 +14,7 @@ class TextBox extends Component {
     super(props);
 
     this.state = {
+      slideNum: props.slide_number,
       editorState: EditorState.createWithContent(stateFromHTML(props.body))
     };
 
