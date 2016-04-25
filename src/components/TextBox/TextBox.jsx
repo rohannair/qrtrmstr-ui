@@ -6,6 +6,9 @@ import { Editor, EditorState, RichUtils, ContentState, convertToRaw } from 'draf
 import { stateFromHTML } from 'draft-js-import-html';
 import { stateToHTML } from 'draft-js-export-html';
 
+// updateSurveyState(slide_number = null, data = {})
+import { updateSurveyState } from '../../actions/surveyViewActions';
+
 import Button from '../../components/Button';
 import ButtonGroup from '../../components/ButtonGroup';
 
@@ -14,12 +17,21 @@ class TextBox extends Component {
     super(props);
 
     this.state = {
-      slideNum: props.slide_number,
+      slideNum: props.slideNum,
       editorState: EditorState.createWithContent(stateFromHTML(props.body))
     };
 
     this.focus = () => this.refs.editor.focus();
-    this.onChange = (editorState) => this.setState({ editorState });
+    this.onChange = (editorState) => {
+      this.setState({ editorState });
+      const updatedSlide = {
+        body: this._outputHtml()
+      };
+      const { dispatch } = props;
+      console.log("slideNum", this.state.slideNum);
+      // console.log("updatedSlide", updatedSlide);
+      return dispatch(updateSurveyState(this.state.slideNum, updatedSlide));
+    };
 
     this.handleKeyCommand = (command) => this._handleKeyCommand(command);
   };
@@ -116,7 +128,9 @@ class TextBox extends Component {
 
   _outputHtml = () => {
     const html = stateToHTML(this.state.editorState.getCurrentContent());
-    console.log(JSON.stringify(html.toString()));
+    // const htmlProc = JSON.stringify(html.toString());
+    const htmlProc = html.toString();
+    return htmlProc;
   };
 
   _onBoldClick = () => {

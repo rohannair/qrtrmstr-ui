@@ -42,12 +42,7 @@ class SurveyEditor extends Component {
   };
 
   render() {
-    const { survey, openCards } = this.props;
-
-    // this.setState({
-    //   editedSurveyDoc: survey.doc
-    // });
-
+    const { survey, openCards, dispatch } = this.props;
 
     const surveyDoc = survey.doc && Object.keys(survey.doc).length > 0
     ? Object.keys(survey.doc).map(val => {
@@ -57,7 +52,7 @@ class SurveyEditor extends Component {
       case 'intro':
         return (
           <Card key={val} title={`Section ${parseInt(val) + 1}`}>
-            <SlideIntro key={val} {...slide} />
+            <SlideIntro dispatch={ dispatch } key={val} {...slide} />
           </Card>
         );
 
@@ -127,7 +122,8 @@ class SurveyEditor extends Component {
   };
 
   _saveSurvey = () => {
-    // const { token, dispatch, survey } = this.props;
+    const { token, dispatch, survey, params } = this.props;
+    return dispatch(modifySurvey(token, {doc: survey.doc}, params.surveyID));
 
   };
 
@@ -183,15 +179,15 @@ class SurveyEditor extends Component {
     const { dispatch } = this.props;
   };
 
-  // _changeUserParams = (key, val) => {
-  //   const { editedSurveyDoc } = this.state;
-  //   this.setState({
-  //     editedSurveyDoc: {
-  //       ...editedSurveyDoc,
-  //       [key]: val
-  //     }
-  //   });
-  // };
+  _updateSurveyState = (key, val) => {
+    const { editedSurveyDoc } = this.state;
+    this.setState({
+      editedSurveyDoc: {
+        ...editedSurveyDoc,
+        [key]: val
+      }
+    });
+  };
 };
 
 function mapStateToProps(state, ownProps) {
