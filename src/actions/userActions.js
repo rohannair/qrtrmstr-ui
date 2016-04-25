@@ -18,13 +18,6 @@ function newUserCreated(new_user = {}) {
   };
 }
 
-// show Modal to Create New User
-export const newUserModal = () => {
-  return {
-    type: 'TOGGLE_NEW_USER_MODAL'
-  };
-};
-
 // Get All Users
 export const getUsers = token => {
   const url = getDomain();

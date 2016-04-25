@@ -9,7 +9,7 @@ import Button from '../../components/Button';
 import ButtonGroup from '../../components/ButtonGroup';
 import NewUserModal from '../../components/NewUserModal';
 
-import { getUsers, newUserModal, createUser } from '../../actions/userActions';
+import { getUsers, createUser } from '../../actions/userActions';
 
 class UserList extends Component {
 
@@ -29,6 +29,18 @@ class UserList extends Component {
   };
 
   render() {
+    const newUserForm = Object.keys(this.state.newUser).length > 0
+    ? <NewUserModal 
+        val={this.state.newUser} 
+        showModal={true} 
+        renderModal={this._renderNewUserModal} 
+        submitNewUser={this._addNewUser} 
+        onChange={this._changeUserParams}
+        closeModal={this._closeSurveyModal}
+        
+      />
+    : null;
+
     const userData = Object.keys(this.props.users).map(value => {
       let val = this.props.users[value];
       const adminIcon = val.isAdmin
@@ -107,9 +119,15 @@ class UserList extends Component {
             <Button onClick={this._renderNewUserModal} classes="primary md">New user +</Button>
           </div>
         </Card>
-        <NewUserModal val={this.state.newUser} showModal={this.props.showModal} toggleModal={this._renderNewUserModal} submitNewUser={this._addNewUser} onChange={this._changeUserParams} />
+          { newUserForm }
         </div>
     );
+  };
+
+  _closeSurveyModal = () => {
+    this.setState({
+      newUser: {}
+    });
   };
 
   _renderUserList = () => {
@@ -121,9 +139,13 @@ class UserList extends Component {
     const { token, dispatch } = this.props;
     const { newUser } = this.state;
     this.setState({
-      newUser: {}
+      newUser: {
+        first_name: '',
+        last_name: '',
+        email: '',
+        work_email: ''
+      }
     });
-    return dispatch(newUserModal());
   };
 
 
@@ -138,7 +160,7 @@ class UserList extends Component {
   };
 
   _addNewUser = () => {
-    this._renderNewUserModal();
+    this._closeSurveyModal();
     const { token, dispatch } = this.props;
     const { newUser } = this.state;
     return dispatch(createUser(token, newUser));
@@ -148,7 +170,6 @@ class UserList extends Component {
 function mapStateToProps(state) {
   const token = state.accountActions.token || Cookies.get('token');
   return {
-    showModal: state.app.showModal,
     token,
     users: state.app.users
   };

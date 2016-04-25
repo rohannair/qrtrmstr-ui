@@ -31,14 +31,14 @@ class SurveyView extends Component {
 
   render() {
     const surveyModal = Object.keys(this.state.chosenSurvey).length > 0
-    ? <SendSurveyModal 
-        surveyName={this.state.chosenSurvey.name} 
-        surveyID={this.state.chosenSurvey.id} 
-        users={this.props.users} 
-        showModal={true} 
-        closeModal={this._closeSendSurveyModal} 
-        sendSurvey={this._sendSurvey} 
-        onChange={this._changeUserParams} 
+    ? <SendSurveyModal
+        surveyName={this.state.chosenSurvey.name}
+        surveyID={this.state.chosenSurvey.id}
+        users={this.props.users}
+        showModal={true}
+        closeModal={this._closeSendSurveyModal}
+        sendSurvey={this._sendSurvey}
+        onChange={this._changeUserParams}
         latestUser={this.state.chosenUser}
       />
     : null;
@@ -111,9 +111,9 @@ class SurveyView extends Component {
         firstName: value.first_name,
         lastName: value.last_name,
         email: value.email,
-        companyName: "Scotiabank",
-        surveyId: value.surveyID, 
-        emailTemplate: "welcomeEmail"
+        companyName: 'Scotiabank',
+        surveyId: value.surveyID,
+        emailTemplate: 'welcomeEmail'
       }
     });
     const { chosenUser } = this.state;

@@ -6,10 +6,11 @@ import Button from '../../components/Button';
 import ButtonGroup from '../../components/ButtonGroup';
 
 const SurveyViewItem = (props) => {
+  const href = `/survey?surveyId=${props.id}`;
   return (
     <tr key={ props.id } className="userList-option">
       <td className="checkbox"><input type="checkbox" /></td>
-      <td>{ props.name } <a href="/survey" target="_blank">(Preview)</a></td>
+      <td>{ props.name } <a href={href} target="_blank">(Preview)</a></td>
       <td>{ moment(props.created_at).fromNow() }</td>
       <td>{ moment(props.updated_at).fromNow() }</td>
       <td>
@@ -25,4 +26,4 @@ const SurveyViewItem = (props) => {
 };
 
 export default SurveyViewItem;
-    
+

@@ -48,6 +48,7 @@ class SurveyEditor extends Component {
       editedSurveyDoc: survey.doc
     });
 
+
     const surveyDoc = survey.doc && Object.keys(survey.doc).length > 0
     ? Object.keys(survey.doc).map(val => {
       const slide = survey.doc[val];
@@ -120,9 +121,14 @@ class SurveyEditor extends Component {
         <SurveyEditorBody>
           { surveyDoc }
         </SurveyEditorBody>
-        <SurveyEditorSidebar />
+        <SurveyEditorSidebar save={this._saveSurvey}/>
       </div>
       );
+  };
+
+  _saveSurvey = () => {
+    // const { token, dispatch, survey } = this.props;
+
   };
 
   _postSurvey = () => {

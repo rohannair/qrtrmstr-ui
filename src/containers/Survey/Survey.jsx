@@ -44,7 +44,7 @@ class Survey extends Component {
     return this.props.dispatch(submitSurvey(selected));
   };
 
-  _getSurvey = (id = (this.props.location.query.surveyId || '1e9eddbc-7ede-43fd-9bde-364bba4d84e9')) => {
+  _getSurvey = (id = (this.props.location.query.surveyId)) => {
     const { token, dispatch } = this.props;
     return dispatch(getSurvey(token, id));
   };
