@@ -44,9 +44,9 @@ class SurveyEditor extends Component {
   render() {
     const { survey, openCards } = this.props;
 
-    this.setState({
-      editedSurveyDoc: survey.doc
-    });
+    // this.setState({
+    //   editedSurveyDoc: survey.doc
+    // });
 
 
     const surveyDoc = survey.doc && Object.keys(survey.doc).length > 0
@@ -183,6 +183,15 @@ class SurveyEditor extends Component {
     const { dispatch } = this.props;
   };
 
+  // _changeUserParams = (key, val) => {
+  //   const { editedSurveyDoc } = this.state;
+  //   this.setState({
+  //     editedSurveyDoc: {
+  //       ...editedSurveyDoc,
+  //       [key]: val
+  //     }
+  //   });
+  // };
 };
 
 function mapStateToProps(state, ownProps) {

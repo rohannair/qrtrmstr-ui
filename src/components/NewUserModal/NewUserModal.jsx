@@ -8,7 +8,6 @@ import ButtonGroup from '../ButtonGroup';
 
 class NewUserModal extends Component {
 
-// const NewUserModal = ({val, showModal, toggleModal, submitNewUser, onChange }) => {
   render() {
     const {val, showModal, renderModal, submitNewUser, onChange, closeModal } = this.props;
     return (
@@ -19,6 +18,22 @@ class NewUserModal extends Component {
           </Modal.Header>
           <Modal.Body>
             <div className="formField">
+              <label>Username:</label>
+              <input
+                name="username"
+                value= { val.username }
+                onChange={ e => onChange(e.target.name, e.target.value) }
+              />
+            </div>
+            <div className="formField">
+              <label>Password:</label>
+              <input
+                name="password"
+                value= { val.password }
+                onChange={ e => onChange(e.target.name, e.target.value) }
+              />
+            </div>
+            <div className="formField">  
               <label>First Name:</label>
               <input
                 name="first_name"
@@ -45,10 +60,10 @@ class NewUserModal extends Component {
             </div>
 
             <div className="formField">
-              <label>Work Email:</label>
+              <label>Personal Email:</label>
               <input
-                name="work_email"
-                value= { val.work_email }
+                name="personal_email"
+                value= { val.personal_email }
                 onChange={ e => onChange(e.target.name, e.target.value) }
               />
             </div>
