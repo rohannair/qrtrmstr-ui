@@ -33,10 +33,6 @@ import SlideFirstDay from '../../components/SlideFirstDay';
 
 class SurveyEditor extends Component {
 
-  state = {
-    editedSurveyDoc: {}
-  };
-
   componentWillMount() {
     this._renderSurvey();
   };
@@ -69,7 +65,7 @@ class SurveyEditor extends Component {
       case 'equipment':
         return (
           <Card key={val} title={`Section ${parseInt(val) + 1}`}>
-            <SlideEquipment {...slide} saveSlide={ this._saveSlide } />
+            <SlideEquipment dispatch={ dispatch } {...slide} saveSlide={ this._saveSlide } />
           </Card>
         );
 

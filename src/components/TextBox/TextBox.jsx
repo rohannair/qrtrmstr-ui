@@ -28,8 +28,6 @@ class TextBox extends Component {
         body: this._outputHtml()
       };
       const { dispatch } = props;
-      console.log("slideNum", this.state.slideNum);
-      // console.log("updatedSlide", updatedSlide);
       return dispatch(updateSurveyState(this.state.slideNum, updatedSlide));
     };
 

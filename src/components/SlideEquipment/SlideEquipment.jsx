@@ -8,6 +8,8 @@ import styles from './slideEquipment.css';
 // SubComponents
 import SlideEquipmentHeader from '../SlideEquipmentHeader';
 import SlideEquipmentBody from '../SlideEquipmentBody';
+import { updateSurveyState } from '../../actions/surveyViewActions';
+
 
 class SlideEquipment extends Component {
   state = {
@@ -26,8 +28,18 @@ class SlideEquipment extends Component {
     return (
       <div className="slideEquipment">
         <div className="slide-input">
-          <strong>Heading:</strong> <input defaultValue={this.props.heading} />
-          <strong>Description:</strong> <input defaultValue={this.props.body.desc} />
+          <strong>Heading:</strong>
+          <input
+            name="heading"
+            value={this.props.heading}
+            onChange={ e => this._updateEquipmentState(e.target.name, e.target.value) }
+          />
+          <strong>Description:</strong>
+          <input
+            name="desc"
+            value={this.props.body.desc}
+            onChange={ e => this._updateEquipmentState(e.target.name, e.target.value) }
+          />
         </div>
 
         <SlideEquipmentHeader
@@ -49,10 +61,30 @@ class SlideEquipment extends Component {
     );
   };
 
+  _updateEquipmentState = (key, value) => {
+    const { dispatch, body, slide_number } = this.props;
+    const updatedSlide = Object.keys(this.props).indexOf(key) > -1
+    ? {[key]: value}
+    : {body: {
+        ...body,
+        [key]: value}
+      };
+    console.log(updatedSlide);
+    return dispatch(updateSurveyState(slide_number, updatedSlide));
+  };
+
+  // _updateEquipmentOptionHeaders = (newHeaders) => {
+  //   const { dispatch, body, slide_number } = this.props;
+  //   const updatedOptions = {
+  //     options: newHeaders
+  //   };
+  //   return dispatch(updateSurveyState(slide_number, updatedOptions));
+  // };
+
   _setSelected = (key) => {
     this.setState({
       selected: key
-    })
+    });
   };
 
   _newOption = () => {
@@ -87,6 +119,8 @@ class SlideEquipment extends Component {
     this.setState({
       options: newOptions
     });
+    debugger;
+    this._updateEquipmentState("options", newOptions);
   };
 
   _removeOption = (key) => {
