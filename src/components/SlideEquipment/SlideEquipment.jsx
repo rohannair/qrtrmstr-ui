@@ -133,6 +133,8 @@ class SlideEquipment extends Component {
       options
     })
 
+    this._updateEquipmentState("options", options);
+
     if (this.state.selected === key) {
       this.setState({
         selected: null
@@ -178,6 +180,7 @@ class SlideEquipment extends Component {
       ...options.slice(selectedIdIndex + 1),
       ]
     });
+    debugger;
   };
 
   _newSubOption = (ind) => {
