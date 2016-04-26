@@ -21,9 +21,10 @@ class SlideEquipment extends Component {
     const names = this.state.options.map( val => ({ id: val.id, name: val.name }));
 
     const selected = this.state.selected
-      ? this.state.options
-        .filter(val => val.id === this.state.selected)
-      : this.state.options;
+      ? (this.state.options
+        .filter(val => val.id === this.state.selected))[0]
+      : this.state.options[0];
+    debugger;
 
     return (
       <div className="slideEquipment">
@@ -48,7 +49,7 @@ class SlideEquipment extends Component {
           onNew={ this._newOption }
           onEdit= { this._editOption }
           onRemove={ this._removeOption }
-          selected={ selected[0].id }
+          selected={ selected.id }
         />
 
         <SlideEquipmentBody
@@ -72,14 +73,6 @@ class SlideEquipment extends Component {
     console.log(updatedSlide);
     return dispatch(updateSurveyState(slide_number, updatedSlide));
   };
-
-  // _updateEquipmentOptionHeaders = (newHeaders) => {
-  //   const { dispatch, body, slide_number } = this.props;
-  //   const updatedOptions = {
-  //     options: newHeaders
-  //   };
-  //   return dispatch(updateSurveyState(slide_number, updatedOptions));
-  // };
 
   _setSelected = (key) => {
     this.setState({

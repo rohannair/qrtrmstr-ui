@@ -9,20 +9,20 @@ const SlideEquipmentBody = ({ opt, newOption, deleteOption, save }) => {
   const onRemove = (key) => deleteOption(opt[0].id, key);
   const onSave = save;
 
-  const options = opt[0].opts.map((val, i) => {
+  const options = opt.opts.map((val, i) => {
     return (
       <tr key={val}>
         <td>
           <input defaultValue={val} />
         </td>
         <td>
-          <input defaultValue={ opt[0].optNames[i] }/>
+          <input defaultValue={ opt.optNames[i] }/>
         </td>
         <td className="removeButton">
           <Button classes="transparent sm" onClick={ onRemove.bind(this, val) }>&times;</Button>
         </td>
       </tr>
-    )
+    );
   });
 
 
