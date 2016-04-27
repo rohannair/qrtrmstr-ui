@@ -11,7 +11,6 @@ html, body {
 }
 
 body {
-  background: #e0e0e0;
   color: #777781;
   height: 100vh;
   overflow-y: scroll;
@@ -28,10 +27,17 @@ body {
 }
 
 a {
+  color: #EE6352;
+
   &:link, &:visited {
     text-decoration: none;
   }
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
+
 .app-login {
   display: flex;
   flex-direction: column;

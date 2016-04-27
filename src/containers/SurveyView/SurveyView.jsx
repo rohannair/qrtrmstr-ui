@@ -59,8 +59,7 @@ class SurveyView extends Component {
                 <th>Name</th>
                 <th>Created</th>
                 <th>Last Modified</th>
-                <th> </th>
-                <th> </th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
