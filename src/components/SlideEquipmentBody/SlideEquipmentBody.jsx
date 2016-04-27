@@ -8,7 +8,6 @@ const SlideEquipmentBody = ({ opt, newOption, editOption, deleteOption, save }) 
   const onClick = () => newOption(opt.id);
   const onRemove = (key) => deleteOption(opt.id, key);
   const onSave = save;
-  debugger;
 
   const options = opt.opts.map((val, i) => {
     return (
@@ -46,6 +45,6 @@ const SlideEquipmentBody = ({ opt, newOption, editOption, deleteOption, save }) 
     </div>
   );
 
-}
+};
 
 export default SlideEquipmentBody;

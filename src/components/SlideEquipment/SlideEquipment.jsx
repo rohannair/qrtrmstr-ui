@@ -26,7 +26,7 @@ class SlideEquipment extends Component {
       ? (options
         .filter(val => val.id === this.state.selected))[0]
       : this.state.options[0];
-    debugger;
+
     return (
       <div className="slideEquipment">
         <div className="slide-input">
@@ -92,7 +92,7 @@ class SlideEquipment extends Component {
         ...options,
         newOptions
       ]
-    })
+    });
   };
 
   _editOption = (key, newName) => {
@@ -126,14 +126,14 @@ class SlideEquipment extends Component {
 
     this.setState({
       options
-    })
+    });
 
     this._updateEquipmentState("options", options);
 
     if (this.state.selected === key) {
       this.setState({
         selected: null
-      })
+      });
     }
   };
 
@@ -143,8 +143,7 @@ class SlideEquipment extends Component {
       ? (options
         .filter(val => val.id === this.state.selected))[0]
       : this.state.options[0];
-    const pos = options.indexOf(selected)  
-    debugger;
+    const pos = options.indexOf(selected);
     const newOption = {
       ...selected,
       [key]: [
@@ -178,7 +177,7 @@ class SlideEquipment extends Component {
         mergeable = val;
       }
 
-      return { ...prev, ...mergeable }
+      return { ...prev, ...mergeable };
     });
 
     const opts = [...optToChange.opts].filter((val, i) => {
@@ -202,7 +201,6 @@ class SlideEquipment extends Component {
       newOpt,
       ...options.slice(selectedIdIndex + 1),
     ];
-    debugger
 
     this.setState({
       options: newRemOpt
@@ -223,17 +221,17 @@ class SlideEquipment extends Component {
         mergeable = val;
       }
 
-      return { ...prev, ...mergeable }
+      return { ...prev, ...mergeable };
     });
 
     const optNames = [
-    ...optToChange.optNames,
-    'New Option'
+      ...optToChange.optNames,
+      'New Option'
     ];
 
     const opts = [
-    ...optToChange.opts,
-    `opt-${Math.random()}`
+      ...optToChange.opts,
+      `opt-${Math.random()}`
     ];
 
     const newOpt = {
@@ -242,13 +240,17 @@ class SlideEquipment extends Component {
       opts
     };
 
-    this.setState({
-      options: [
+    const newAddOption = [
       ...options.slice(0, selectedIndex),
       newOpt,
       ...options.slice(selectedIndex + 1),
-      ]
-    })
+    ];
+
+    this.setState({
+      options: newAddOption
+    });
+
+    this._updateEquipmentState("options", newAddOption);
   };
 
   _saveAll = () => {
