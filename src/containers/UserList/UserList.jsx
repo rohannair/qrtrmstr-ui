@@ -30,14 +30,14 @@ class UserList extends Component {
 
   render() {
     const newUserForm = Object.keys(this.state.newUser).length > 0
-    ? <NewUserModal 
-        val={this.state.newUser} 
-        showModal={true} 
-        renderModal={this._renderNewUserModal} 
-        submitNewUser={this._addNewUser} 
+    ? <NewUserModal
+        val={this.state.newUser}
+        showModal={true}
+        renderModal={this._renderNewUserModal}
+        submitNewUser={this._addNewUser}
         onChange={this._changeUserParams}
         closeModal={this._closeSurveyModal}
-        
+
       />
     : null;
 
@@ -68,8 +68,8 @@ class UserList extends Component {
         <tr key={val.id} className="userList-option">
           <td className="checkbox"><input type="checkbox" /></td>
           <td className="name">{ `${val.first_name} ${val.last_name}` }{ adminIcon }</td>
-          <td>{ val.email }</td>
-          <td>{ val.department_name }</td>
+          <td>{ val.username }</td>
+          <td>{ val.rolename }</td>
           <td className="actions">
             <ButtonGroup>
               { resultsIcon }
@@ -104,7 +104,7 @@ class UserList extends Component {
                 <th className="checkbox"><input type="checkbox" /></th>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Department</th>
+                <th>Role</th>
                 <th></th>
               </tr>
             </thead>
