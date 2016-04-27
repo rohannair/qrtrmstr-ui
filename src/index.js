@@ -64,7 +64,7 @@ render(
         </Route>
         <Route path="login" component={Login} onEnter={checkAuth} />
         <Route path="logout" component={Login} />
-        <Route path="survey" component={Survey} />
+        <Route path="survey/:surveyID" component={Survey} />
         <Route path="*" component={NotFound} />
       </Route>
     </Router>

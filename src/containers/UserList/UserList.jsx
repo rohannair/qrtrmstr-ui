@@ -70,6 +70,7 @@ class UserList extends Component {
           <td className="name">{ `${val.first_name} ${val.last_name}` }{ adminIcon }</td>
           <td>{ val.username }</td>
           <td>{ val.rolename }</td>
+
           <td className="actions">
             <ButtonGroup>
               { resultsIcon }
