@@ -49,7 +49,7 @@ class SurveyEditor extends Component {
       case 'intro':
         return (
           <Card key={val} title={`Section ${parseInt(val) + 1}`}>
-            <SlideIntro dispatch={ dispatch } key={val} {...slide} />
+            <SlideIntro dispatch={ dispatch } key={ val } {...slide} onChange={ this._updateSlideIntro } />
           </Card>
         );
 
@@ -117,6 +117,14 @@ class SurveyEditor extends Component {
         <SurveyEditorSidebar save={this._saveSurvey}/>
       </div>
       );
+  };
+
+  _updateSlideIntro = (key, value) => {
+    const { dispatch, survey } = this.props;
+    const updatedSlide = {
+      [key]: value
+    };
+    return dispatch(updateSurveyState(0, updatedSlide));
   };
 
   _saveSurvey = () => {

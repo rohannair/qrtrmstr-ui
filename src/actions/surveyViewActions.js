@@ -20,7 +20,6 @@ function singleSurveyRetrieved(survey = {}) {
 };
 
 export const updateSurveyState = (slide_number, data) => {
-// function updateSurveyState(slide_number = null, data = {}) {
   return {
     type: 'EDIT_SLIDE',
     slide_number,
