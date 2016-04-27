@@ -27,8 +27,14 @@ body {
 }
 
 a {
+  color: #EE6352;
+
   &:link, &:visited {
     text-decoration: none;
+  }
+
+  &:hover {
+    text-decoration: underline;
   }
 }
 
