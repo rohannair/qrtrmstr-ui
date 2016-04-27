@@ -5,8 +5,8 @@ import Button from '../Button';
 import ButtonGroup from '../ButtonGroup';
 
 const SlideEquipmentBody = ({ opt, newOption, editOption, deleteOption, save }) => {
-  const onClick = () => newOption(opt[0].id);
-  const onRemove = (key) => deleteOption(opt[0].id, key);
+  const onClick = () => newOption(opt.id);
+  const onRemove = (key) => deleteOption(opt.id, key);
   const onSave = save;
   debugger;
 

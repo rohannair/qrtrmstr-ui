@@ -197,14 +197,19 @@ class SlideEquipment extends Component {
       optNames
     };
 
-    this.setState({
-      options: [
+    const newRemOpt = [
       ...options.slice(0, selectedIdIndex),
       newOpt,
       ...options.slice(selectedIdIndex + 1),
-      ]
+    ];
+    debugger
+
+    this.setState({
+      options: newRemOpt
     });
-    debugger;
+
+    this._updateEquipmentState("options", newRemOpt);
+
   };
 
   _newSubOption = (ind) => {
