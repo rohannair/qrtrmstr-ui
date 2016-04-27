@@ -16,19 +16,24 @@ class TextBox extends Component {
   constructor(props) {
     super(props);
 
+    const body = props.bodyKey ? props.body[props.bodyKey] : props.body;
     this.state = {
       slideNum: props.slideNum,
-      editorState: EditorState.createWithContent(stateFromHTML(props.body))
+      editorState: EditorState.createWithContent(stateFromHTML(body))
     };
 
     this.focus = () => this.refs.editor.focus();
     this.onChange = (editorState) => {
       this.setState({ editorState });
-      const updatedSlide = {
-        body: this._outputHtml()
-      };
+      const updatedIntro = props.bodyKey
+        ? {body: {
+          ...props.body,
+          [props.bodyKey]: this._outputHtml()}
+          }
+        : {body: this._outputHtml()};
+
       const { dispatch } = props;
-      return dispatch(updateSurveyState(this.state.slideNum, updatedSlide));
+      return dispatch(updateSurveyState(this.state.slideNum, updatedIntro));
     };
 
     this.handleKeyCommand = (command) => this._handleKeyCommand(command);
@@ -113,12 +118,6 @@ class TextBox extends Component {
           ref="editor"
         />
         <div className="footer">
-          <Button
-            classes="inverse md"
-            onClick={this._outputHtml}
-          >
-            Save
-          </Button>
         </div>
       </div>
     );

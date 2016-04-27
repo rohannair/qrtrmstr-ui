@@ -1,6 +1,10 @@
 .knowledgeCenterItem {
   .formField {
     margin: 10px 0;
+  }
 
+  .buttonGroup {
+    margin-top: 10px;
+    text-align: right;
   }
 }

@@ -4,6 +4,7 @@ import { omit, pullAt } from 'lodash';
 
 import Button from '../../components/Button';
 import ButtonGroup from '../../components/ButtonGroup';
+import { updateSurveyState } from '../../actions/surveyViewActions';
 
 import TextBox from '../TextBox';
 
@@ -17,7 +18,7 @@ class SlideFirstDay extends Component {
   };
 
   render() {
-    const { onAdd } = this.props;
+    const { onAdd, slide_number, body, dispatch } = this.props;
     const { agenda } =  this.props.body;
     const mapBody = this.props.body.map;
     const { mapDesc, time, desc } = this.state;
@@ -45,7 +46,7 @@ class SlideFirstDay extends Component {
     return (
       <div className="slideFirstDay">
         <div className="map">
-          <TextBox body={mapDesc}/>
+          <TextBox body={ body } bodyKey="map"/>
         </div>
 
         <divl className="agenda">
@@ -98,9 +99,21 @@ class SlideFirstDay extends Component {
     return this.props.onEdit(newData);
   };
 
-  _inputChange = e => {
-    const { name, value } = e.target;
+  _updateFirstDayState = (key, value) => {
+    const { dispatch, body, slide_number } = this.props;
+    const updatedSlide = Object.keys(this.props).indexOf(key) > -1
+    ? {[key]: value}
+    : {body: {
+        ...body,
+        [key]: value}
+      };
+    console.log(updatedSlide);
+    return dispatch(updateSurveyState(slide_number, updatedSlide));
+  };
 
+  _inputChange = e => {
+    const { agenda } =  this.props.body;
+    const { name, value } = e.target;
     this.setState({
       [name]: value
     });
@@ -108,7 +121,7 @@ class SlideFirstDay extends Component {
 
   _addNew = e => {
     e.preventDefault();
-
+    const { agenda } =  this.props.body;
     const { desc, time } = this.state;
     this.setState({
       ...this.state,
@@ -116,21 +129,13 @@ class SlideFirstDay extends Component {
       time: ''
     });
 
-    const newData = {
-      heading: this.props.heading,
-      body: {
-        ...this.props.body,
-        agenda: [
-          ...this.props.body.agenda,
-          { desc, time }
-        ]
-      },
-      type: this.props.type,
-      slide_number: this.props.slide_number
-    };
+    const newAgenda = [
+      ...agenda,
+      { desc, time }
+    ];
 
-    return this.props.onEdit(newData);
-  }
+    return this._updateFirstDayState("agenda", newAgenda);
+  };
 };
 
 export default SlideFirstDay;

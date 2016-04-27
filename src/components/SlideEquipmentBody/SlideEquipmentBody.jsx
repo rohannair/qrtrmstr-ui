@@ -38,7 +38,6 @@ const SlideEquipmentBody = ({ opt, newOption, editOption, deleteOption, save }) 
       </table>
       <div className="buttonRow">
         <ButtonGroup>
-          <Button classes="inverse md" onClick={ onSave }>Save</Button>
           <Button classes="primary md" onClick={ onClick }>+</Button>
         </ButtonGroup>
       </div>

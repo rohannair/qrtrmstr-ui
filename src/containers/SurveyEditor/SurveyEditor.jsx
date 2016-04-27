@@ -7,6 +7,7 @@ import moment from 'moment';
 
 // Containers
 import {
+  updateSurveyState,
   getSingleSurvey,
   toggleOpenCard,
   addSlide,
@@ -72,7 +73,7 @@ class SurveyEditor extends Component {
       case 'knowledgectr':
         return (
           <Card key={val} title={`Section ${parseInt(val) + 1}`}>
-            <SlideKnowledgeCenter {...slide.body} />
+            <SlideKnowledgeCenter dispatch={ dispatch } {...slide} />
           </Card>
         );
 
@@ -82,6 +83,7 @@ class SurveyEditor extends Component {
             <h1>{slide.heading}</h1>
             <SlideFirstDay
               {...slide}
+              dispatch={ dispatch }
               onEdit={this._editSlide}
               onAdd={this._addNewAgendaItem}
               onDelete= {this._deleteAgendaItem}
