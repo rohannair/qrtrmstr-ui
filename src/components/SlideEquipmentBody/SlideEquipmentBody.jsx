@@ -4,19 +4,20 @@ import styles from './slideEquipmentBody.css';
 import Button from '../Button';
 import ButtonGroup from '../ButtonGroup';
 
-const SlideEquipmentBody = ({ opt, newOption, deleteOption, save }) => {
+const SlideEquipmentBody = ({ opt, newOption, editOption, deleteOption, save }) => {
   const onClick = () => newOption(opt[0].id);
   const onRemove = (key) => deleteOption(opt[0].id, key);
   const onSave = save;
+  debugger;
 
   const options = opt.opts.map((val, i) => {
     return (
       <tr key={val}>
         <td>
-          <input defaultValue={val} />
+          <input name="opts" onChange={e => editOption(e.target.name, e.target.value, i) } value={val} />
         </td>
         <td>
-          <input defaultValue={ opt.optNames[i] }/>
+          <input name="optNames" onChange={e => editOption(e.target.name, e.target.value, i) } value={ opt.optNames[i] }/>
         </td>
         <td className="removeButton">
           <Button classes="transparent sm" onClick={ onRemove.bind(this, val) }>&times;</Button>

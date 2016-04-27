@@ -18,14 +18,15 @@ class SlideEquipment extends Component {
   };
 
   render() {
-    const names = this.state.options.map( val => ({ id: val.id, name: val.name }));
+    const { options } = this.state;
+
+    const names = options.map( val => ({ id: val.id, name: val.name }));
 
     const selected = this.state.selected
-      ? (this.state.options
+      ? (options
         .filter(val => val.id === this.state.selected))[0]
       : this.state.options[0];
     debugger;
-
     return (
       <div className="slideEquipment">
         <div className="slide-input">
@@ -47,14 +48,16 @@ class SlideEquipment extends Component {
           vals={ names }
           onClick={ this._setSelected }
           onNew={ this._newOption }
-          onEdit= { this._editOption }
+          onEdit={ this._editOption }
           onRemove={ this._removeOption }
           selected={ selected.id }
         />
 
         <SlideEquipmentBody
           opt={ selected }
+          // selectedId={ options.indexOf(selected) }
           newOption={ this._newSubOption }
+          editOption={ this._editSubOption }
           deleteOption={ this._removeSubOption }
           save={this._saveAll}
         />
@@ -112,7 +115,6 @@ class SlideEquipment extends Component {
     this.setState({
       options: newOptions
     });
-    debugger;
     this._updateEquipmentState("options", newOptions);
   };
 
@@ -133,6 +135,35 @@ class SlideEquipment extends Component {
         selected: null
       })
     }
+  };
+
+  _editSubOption = (key, value, ind) => {
+    const { options } = this.state;
+    const selected = this.state.selected
+      ? (options
+        .filter(val => val.id === this.state.selected))[0]
+      : this.state.options[0];
+    const pos = options.indexOf(selected)  
+    debugger;
+    const newOption = {
+      ...selected,
+      [key]: [
+        ...selected[key].slice(0, ind),
+        value,
+        ...selected[key].slice(ind + 1)
+      ]
+    };
+
+    const newOptions = [
+      ...options.slice(0, pos),
+      newOption,
+      ...options.slice(pos + 1)
+    ];
+
+    this.setState({
+      options: newOptions
+    });
+    this._updateEquipmentState("options", newOptions);
   };
 
   _removeSubOption = (ind, key) => {
