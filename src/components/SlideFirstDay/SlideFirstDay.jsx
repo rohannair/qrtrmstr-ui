@@ -107,7 +107,6 @@ class SlideFirstDay extends Component {
         ...body,
         [key]: value}
       };
-    console.log(updatedSlide);
     return dispatch(updateSurveyState(slide_number, updatedSlide));
   };
 
