@@ -27,6 +27,13 @@ export const updateSurveyState = (slide_number, data) => {
   };
 };
 
+// Show Modal to send a survey to a user
+export const sendSurveyModal = () => {
+  return {
+    type: 'TOGGLE_SEND_SURVEY_MODAL'
+  };
+};
+
 // Send Survey To User
 export const sendSurvey = (token, payload) => {
   const url = getDomainEmail();

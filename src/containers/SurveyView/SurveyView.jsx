@@ -60,8 +60,7 @@ class SurveyView extends Component {
                 <th>Name</th>
                 <th>Created</th>
                 <th>Last Modified</th>
-                <th> </th>
-                <th> </th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -127,6 +126,7 @@ class SurveyView extends Component {
 function mapStateToProps(state) {
   const token = state.accountActions.token || Cookies.get('token');
   return {
+    showModal: state.surveyAdmin.showModal,
     token,
     surveyList: state.surveyAdmin.list,
     users: state.app.users

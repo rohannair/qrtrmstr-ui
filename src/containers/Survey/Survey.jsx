@@ -15,7 +15,8 @@ import { setSelection, submitSurvey, getSurvey } from '../../actions/surveyActio
 
 class Survey extends Component {
   componentWillMount() {
-    this._getSurvey();
+    const id = this.props.routeParams.surveyID || this.props.location.query.surveyId;
+    this._getSurvey(id);
   };
 
   render() {
@@ -44,7 +45,7 @@ class Survey extends Component {
     return this.props.dispatch(submitSurvey(selected));
   };
 
-  _getSurvey = (id = (this.props.location.query.surveyId)) => {
+  _getSurvey = id => {
     const { token, dispatch } = this.props;
     return dispatch(getSurvey(token, id));
   };

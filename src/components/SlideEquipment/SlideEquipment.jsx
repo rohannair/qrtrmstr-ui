@@ -100,7 +100,7 @@ class SlideEquipment extends Component {
         newOptions
       ]
     });
-
+    
     const newAddOptions = [
       ...options,
       newOptions

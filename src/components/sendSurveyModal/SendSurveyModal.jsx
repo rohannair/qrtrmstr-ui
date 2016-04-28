@@ -14,7 +14,7 @@ import ButtonGroup from '../ButtonGroup';
 class SendSurveyModal extends Component {
 
   componentWillMount() {
-    const latestPerson = this.props.users[(this.props.users.length)-1];
+    const latestPerson = this.props.users[(this.props.users.length) - 1];
     const latestPersonInfo = {
       id: latestPerson.id,
       first_name: latestPerson.first_name,
