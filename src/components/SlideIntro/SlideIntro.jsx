@@ -18,7 +18,7 @@ const SlideIntro = (props) => {
           <input
             name="heading"
             value={ heading }
-            onChange={ e => onChange(e.target.name, e.target.value) }
+            onChange={ e => onChange(e.target.name, e.target.value, slide_number) }
           />
         </div>
       </div>
@@ -28,5 +28,3 @@ const SlideIntro = (props) => {
 };
 
 export default SlideIntro;
-
-// <div dangerouslySetInnerHTML={{ __html: body }} />

@@ -133,7 +133,7 @@ class SlideFirstDay extends Component {
       { desc, time }
     ];
 
-    return this._updateFirstDayState("agenda", newAgenda);
+    return this._updateFirstDayState('agenda', newAgenda);
   };
 };
 

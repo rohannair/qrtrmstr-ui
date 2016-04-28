@@ -10,7 +10,6 @@ import SlideEquipmentHeader from '../SlideEquipmentHeader';
 import SlideEquipmentBody from '../SlideEquipmentBody';
 import { updateSurveyState } from '../../actions/surveyViewActions';
 
-
 class SlideEquipment extends Component {
   state = {
     options: this.props.body.options || [],
@@ -20,7 +19,7 @@ class SlideEquipment extends Component {
   render() {
     const { options } = this.state;
 
-    const names = options.map( val => ({ id: val.id, name: val.name }));
+    const names = options.map(val => ({ id: val.id, name: val.name }));
 
     const selected = this.state.selected
       ? (options
@@ -55,7 +54,6 @@ class SlideEquipment extends Component {
 
         <SlideEquipmentBody
           opt={ selected }
-          // selectedId={ options.indexOf(selected) }
           newOption={ this._newSubOption }
           editOption={ this._editSubOption }
           deleteOption={ this._removeSubOption }
@@ -83,8 +81,18 @@ class SlideEquipment extends Component {
   };
 
   _newOption = () => {
-    const newOptions = { name: 'New' };
-    const options = this.state.options;
+    const newOptionID = 'xxx' + Math.floor(Math.random() * (99999 - 10000)) + 10000;
+    const newOptions = {
+      name: 'New',
+      id: newOptionID,
+      opts: [
+        'New Id'
+      ],
+      optNames: [
+        'New Label'
+      ]
+    };
+    const { options } = this.state;
 
     this.setState({
       options:  [
@@ -92,6 +100,12 @@ class SlideEquipment extends Component {
         newOptions
       ]
     });
+
+    const newAddOptions = [
+      ...options,
+      newOptions
+    ];
+    this._updateEquipmentState('options', newAddOptions);
   };
 
   _editOption = (key, newName) => {
@@ -114,7 +128,7 @@ class SlideEquipment extends Component {
     this.setState({
       options: newOptions
     });
-    this._updateEquipmentState("options", newOptions);
+    this._updateEquipmentState('options', newOptions);
   };
 
   _removeOption = (key) => {
@@ -127,13 +141,13 @@ class SlideEquipment extends Component {
       options
     });
 
-    this._updateEquipmentState("options", options);
+    this._updateEquipmentState('options', options);
 
     if (this.state.selected === key) {
       this.setState({
         selected: null
       });
-    }
+    };
   };
 
   _editSubOption = (key, value, ind) => {
@@ -161,7 +175,7 @@ class SlideEquipment extends Component {
     this.setState({
       options: newOptions
     });
-    this._updateEquipmentState("options", newOptions);
+    this._updateEquipmentState('options', newOptions);
   };
 
   _removeSubOption = (ind, key) => {
@@ -174,7 +188,7 @@ class SlideEquipment extends Component {
       if (val.id === ind) {
         selectedIdIndex = i;
         mergeable = val;
-      }
+      };
 
       return { ...prev, ...mergeable };
     });
@@ -205,8 +219,7 @@ class SlideEquipment extends Component {
       options: newRemOpt
     });
 
-    this._updateEquipmentState("options", newRemOpt);
-
+    this._updateEquipmentState('options', newRemOpt);
   };
 
   _newSubOption = (ind) => {
@@ -219,7 +232,6 @@ class SlideEquipment extends Component {
         selectedIndex = i;
         mergeable = val;
       }
-
       return { ...prev, ...mergeable };
     });
 
@@ -249,7 +261,7 @@ class SlideEquipment extends Component {
       options: newAddOption
     });
 
-    this._updateEquipmentState("options", newAddOption);
+    this._updateEquipmentState('options', newAddOption);
   };
 
   _saveAll = () => {
@@ -258,5 +270,3 @@ class SlideEquipment extends Component {
 };
 
 export default SlideEquipment;
-
-

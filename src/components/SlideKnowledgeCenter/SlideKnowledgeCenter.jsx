@@ -69,7 +69,7 @@ class SlideKnowledgeCenter extends Component {
       options: editedVideoParams
     });
 
-    this._updateKnowledgeCenterState("options", editedVideoParams);
+    this._updateKnowledgeCenterState('options', editedVideoParams);
   };
 
   _deleteVideo = (id) => {
@@ -85,7 +85,7 @@ class SlideKnowledgeCenter extends Component {
       options: newDeletedOptions
     });
 
-    this._updateKnowledgeCenterState("options", newDeletedOptions);
+    this._updateKnowledgeCenterState('options', newDeletedOptions);
   };
 
   _newVideo = () => {
@@ -101,7 +101,7 @@ class SlideKnowledgeCenter extends Component {
       options: newItem
     });
 
-    this._updateKnowledgeCenterState("options", newItem);
+    this._updateKnowledgeCenterState('options', newItem);
   };
 
   _saveSection = (id) => {

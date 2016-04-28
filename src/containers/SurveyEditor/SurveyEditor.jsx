@@ -28,6 +28,7 @@ import SurveyEditorBody from '../../components/SurveyEditorBody';
 import SurveyEditorSidebar from '../../components/SurveyEditorSidebar';
 
 import SlideIntro from '../../components/SlideIntro';
+import SlideBio from '../../components/SlideBio';
 import SlideEquipment from '../../components/SlideEquipment';
 import SlideKnowledgeCenter from '../../components/SlideKnowledgeCenter';
 import SlideFirstDay from '../../components/SlideFirstDay';
@@ -48,38 +49,35 @@ class SurveyEditor extends Component {
       switch (slide.type) {
       case 'intro':
         return (
-          <Card key={val} title={`Section ${parseInt(val) + 1}`}>
+          <Card key={val} title={`Section ${parseInt(val) + 1}: Introduction`}>
             <SlideIntro dispatch={ dispatch } key={ val } {...slide} onChange={ this._updateSlideIntro } />
           </Card>
         );
 
       case 'bio':
         return (
-          <Card key={val} title={`Section ${parseInt(val) + 1}`}>
-            <div key={val}>
-              <h1>Bio</h1>
-              <p>Hello, I am a Biography Card</p>
-            </div>
+          <Card key={val} title={`Section ${parseInt(val) + 1}: Biography`}>
+            <SlideBio dispatch={ dispatch } key={ val } {...slide} onChange={ this._updateSlideIntro } />
           </Card>
         );
 
       case 'equipment':
         return (
-          <Card key={val} title={`Section ${parseInt(val) + 1}`}>
+          <Card key={val} title={`Section ${parseInt(val) + 1}: Equipment`}>
             <SlideEquipment dispatch={ dispatch } {...slide} saveSlide={ this._saveSlide } />
           </Card>
         );
 
       case 'knowledgectr':
         return (
-          <Card key={val} title={`Section ${parseInt(val) + 1}`}>
+          <Card key={val} title={`Section ${parseInt(val) + 1}: Knowledge Center`}>
             <SlideKnowledgeCenter dispatch={ dispatch } {...slide} />
           </Card>
         );
 
       case 'day1agenda':
         return (
-          <Card key={val} title={`Section ${parseInt(val) + 1}`}>
+          <Card key={val} title={`Section ${parseInt(val) + 1}: Day One Agenda`}>
             <h1>{slide.heading}</h1>
             <SlideFirstDay
               {...slide}
@@ -119,12 +117,19 @@ class SurveyEditor extends Component {
       );
   };
 
-  _updateSlideIntro = (key, value) => {
+
+  _renderSurvey = () => {
+    const { token, dispatch } = this.props;
+    const { surveyID } = this.props.params;
+    return dispatch(getSingleSurvey(token, surveyID));
+  };
+
+  _updateSlideIntro = (key, value, ind) => {
     const { dispatch, survey } = this.props;
     const updatedSlide = {
       [key]: value
     };
-    return dispatch(updateSurveyState(0, updatedSlide));
+    return dispatch(updateSurveyState(ind, updatedSlide));
   };
 
   _saveSurvey = () => {
@@ -133,20 +138,9 @@ class SurveyEditor extends Component {
 
   };
 
-  _postSurvey = () => {
-    const { token, dispatch, survey } = this.props;
-    return dispatch(modifySurvey(token, survey));
-  };
-
   _toggleOpen = (e) => {
     const { dispatch } = this.props;
     return dispatch(toggleOpenCard(e.target.id));
-  };
-
-  _renderSurvey = () => {
-    const { token, dispatch } = this.props;
-    const { surveyID } = this.props.params;
-    return dispatch(getSingleSurvey(token, surveyID));
   };
 
   _addNewSlide = (e) => {
@@ -162,37 +156,6 @@ class SurveyEditor extends Component {
     };
 
     return dispatch(addSlide(newID, slideInfo));
-  };
-
-  _editSlide = (data) => {
-    const { dispatch } = this.props;
-    return dispatch(editSlide(data));
-  };
-
-  // TODO: Remove this
-  _saveSlide = ({ options }, slideNumber) => {
-    const { token, dispatch } = this.props;
-    const { surveyID } = this.props.params;
-    return dispatch(editSlide(options, slideNumber));
-  };
-
-  _addNewAgendaItem = (item) => {
-    const { dispatch } = this.props;
-    // return dispatch(editSlide())
-  };
-
-  _deleteAgendaItem = (item) => {
-    const { dispatch } = this.props;
-  };
-
-  _updateSurveyState = (key, val) => {
-    const { editedSurveyDoc } = this.state;
-    this.setState({
-      editedSurveyDoc: {
-        ...editedSurveyDoc,
-        [key]: val
-      }
-    });
   };
 };
 
