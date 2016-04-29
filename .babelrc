@@ -6,7 +6,8 @@
       "presets": ["react-hmre"]
     },
     "production": {
-      "plugins": ["transform-remove-console"]
+      "presets": ["es2015", "react", "react-optimize"],
+      "plugins": ["transform-object-rest-spread", "syntax-object-rest-spread", "transform-remove-console"]
     }
   }
 }
