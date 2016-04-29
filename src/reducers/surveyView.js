@@ -23,6 +23,15 @@ export default function surveyView(state = initialState, action) {
       survey: action.survey
     };
 
+  case  'ADD_NEW_SURVEY':
+    return {
+      ...state,
+      list: [
+        ...state.list,
+        action.survey
+      ]
+    };
+
   case 'ADD_SLIDE':
     const doc = {
       ...state.survey.doc,

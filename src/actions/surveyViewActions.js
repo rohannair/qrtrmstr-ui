@@ -27,6 +27,13 @@ export const updateSurveyState = (slide_number, data) => {
   };
 };
 
+function addNewSurvey(survey = {}) {
+  return {
+    type: 'ADD_NEW_SURVEY',
+    survey
+  };
+}
+
 // Show Modal to send a survey to a user
 export const sendSurveyModal = () => {
   return {
@@ -56,6 +63,27 @@ export const sendSurvey = (token, payload) => {
       return console.log(json);
     });
   };
+};
+
+export const duplicatePlaybook = (token, id) => {
+  const url = getDomain();
+  return dispatch => fetch(`${url}/api/v1/surveys/duplicate`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Authorization': 'bearer ' + token,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({id})
+  })
+  .then(response => response.json().then(json => ({json, response})))
+  .then(({json, response}) => {
+    if (!response.ok) {
+      return Promise.reject(json);
+    }
+
+    return dispatch(addNewSurvey(json));
+  });
 };
 
 // Get All Surveys

@@ -8,7 +8,7 @@ import Cookies from 'cookies-js';
 import styles from '../UserList/userList.css';
 
 // Containers
-import { getSurveys, sendSurvey } from '../../actions/surveyViewActions';
+import { getSurveys, sendSurvey, duplicatePlaybook } from '../../actions/surveyViewActions';
 import { getUsers } from '../../actions/userActions';
 
 // Components
@@ -44,7 +44,7 @@ class SurveyView extends Component {
       />
     : null;
 
-    const items = [...this.props.surveyList].map(val => <SurveyViewItem key={val.id} {...val} onShowModal={ this._selectSurveyForSending } />);
+    const items = [...this.props.surveyList].map(val => <SurveyViewItem key={val.id} {...val} onShowModal={ this._selectSurveyForSending } duplicate={ this._duplicatePlaybook } />);
 
     return (
       <div className="userList">
@@ -102,6 +102,11 @@ class SurveyView extends Component {
     const { chosenUser } = this.state;
     return dispatch(sendSurvey(token, chosenUser));
   };
+
+  _duplicatePlaybook = (id) => {
+    const { token, dispatch } = this.props;
+    return dispatch(duplicatePlaybook(token, id));
+  }
 
   _changeUserParams = (value) => {
     this.setState({
