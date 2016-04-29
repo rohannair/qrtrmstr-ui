@@ -70,8 +70,6 @@ export default function surveyView(state = initialState, action) {
       }
     };
 
-    console.log("newState", newState);
-
     return {
       ...state,
       survey: {

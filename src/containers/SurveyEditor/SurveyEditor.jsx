@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Cookies from 'cookies-js';
 import moment from 'moment';
+import { StickyContainer } from 'react-sticky';
+
 
 // Containers
 import {
@@ -111,7 +113,9 @@ class SurveyEditor extends Component {
         <SurveyEditorBody>
           { surveyDoc }
         </SurveyEditorBody>
-        <SurveyEditorSidebar save={this._saveSurvey}/>
+        <StickyContainer className="sidebarBuffer" >
+            <SurveyEditorSidebar save={this._saveSurvey}/>
+        </StickyContainer>
       </div>
       );
   };

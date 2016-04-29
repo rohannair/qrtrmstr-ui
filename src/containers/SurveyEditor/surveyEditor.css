@@ -29,4 +29,11 @@
       }
     }
   }
+  .sidebarBuffer {
+    padding-top: 20px;
+    padding-left: 20px;
+    width: 17% !important;
+    float: right !important;
+  }
 }
+

@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import Card from '../Card';
 import Button from '../Button';
 import ButtonGroup from '../ButtonGroup';
+import { StickyContainer, Sticky } from 'react-sticky';
 
 import NavGrid from '../NavGrid';
 
@@ -13,7 +14,7 @@ const SurveyEditorSidebar = (props) => {
   ];
 
   return (
-    <div className="surveyEditor-sidebar">
+    <Sticky className={'newSticky'}>
       <Card>
         <Button
           onClick={ props.save }
@@ -26,7 +27,7 @@ const SurveyEditorSidebar = (props) => {
           <NavGrid opts={ opts } onClick={ props.onClick }/>
         </ButtonGroup>
       </Card>
-    </div>
+    </Sticky>
   );
 };
 
