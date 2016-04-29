@@ -8,16 +8,23 @@ import TextBox from '../TextBox';
 
 const SlideIntro = (props) => {
 
-  const { heading, body, slide_number, id } = props;
+  const { heading, body, slide_number, id, onChange } = props;
 
   return (
     <div className="slideIntro">
-      <h2>{ heading }</h2>
-      <TextBox body={ body } />
+      <div className="slideEquipment">
+        <div className="slide-input">
+          <strong>Heading:</strong>
+          <input
+            name="heading"
+            value={ heading }
+            onChange={ e => onChange(e.target.name, e.target.value, slide_number) }
+          />
+        </div>
+      </div>
+      <TextBox slideNum={ slide_number } body={ body } updateSlide={ onChange } />
     </div>
   );
 };
 
 export default SlideIntro;
-
-// <div dangerouslySetInnerHTML={{ __html: body }} />

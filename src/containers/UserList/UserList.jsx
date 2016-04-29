@@ -37,7 +37,6 @@ class UserList extends Component {
         submitNewUser={this._addNewUser}
         onChange={this._changeUserParams}
         closeModal={this._closeSurveyModal}
-
       />
     : null;
 
@@ -140,10 +139,12 @@ class UserList extends Component {
     const { newUser } = this.state;
     this.setState({
       newUser: {
+        username: '',
+        password: '',
         first_name: '',
         last_name: '',
         email: '',
-        work_email: ''
+        personal_email: ''
       }
     });
   };

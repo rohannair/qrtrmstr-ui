@@ -7,6 +7,8 @@ import styles from './slideEquipmentHeader.css';
 // SubComponents
 import Button from '../Button';
 
+import { updateSurveyState } from '../../actions/surveyViewActions';
+
 class SlideEquipmentHeader extends Component {
   state = {
     editing: false
@@ -24,7 +26,7 @@ class SlideEquipmentHeader extends Component {
           onClick={ onClick }
           onSave={ self._onSave }
           onRemove={ onRemove }
-          val={val }
+          val={ val }
           selected={ selected }
         />
 
@@ -49,14 +51,13 @@ class SlideEquipmentHeader extends Component {
   _onEdit = (id) => {
     this.setState({
       editing: id
-    })
+    });
   };
 
   _onSave = (id, newName) => {
     this.setState({
       editing: false
     });
-
     return this.props.onEdit(id, newName);
   }
 }

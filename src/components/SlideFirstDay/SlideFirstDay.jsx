@@ -4,6 +4,7 @@ import { omit, pullAt } from 'lodash';
 
 import Button from '../../components/Button';
 import ButtonGroup from '../../components/ButtonGroup';
+import { updateSurveyState } from '../../actions/surveyViewActions';
 
 import TextBox from '../TextBox';
 
@@ -11,13 +12,13 @@ import FlipMove from 'react-flip-move';
 
 class SlideFirstDay extends Component {
   state = {
-    time: '',
+    time: '00:00',
     desc: '',
     mapDesc: this.props.body.map || ''
   };
 
   render() {
-    const { onAdd } = this.props;
+    const { onAdd, slide_number, body, onChange, heading } = this.props;
     const { agenda } =  this.props.body;
     const mapBody = this.props.body.map;
     const { mapDesc, time, desc } = this.state;
@@ -44,8 +45,18 @@ class SlideFirstDay extends Component {
 
     return (
       <div className="slideFirstDay">
+        <div className="slideEquipment">
+          <div className="slide-input">
+            <strong>Heading:</strong>
+            <input
+              name="heading"
+              value={ heading }
+              onChange={ e => this._updateFirstDayState(e.target.name, e.target.value) }
+            />
+          </div>
+        </div>
         <div className="map">
-          <TextBox body={mapDesc}/>
+          <TextBox body={ body } bodyKey="map"/>
         </div>
 
         <divl className="agenda">
@@ -60,7 +71,7 @@ class SlideFirstDay extends Component {
 
           <div className="agenda-footer">
             <div className="timeInput">
-              <input name="time" value={ time } onChange={ this._inputChange } />
+              <input name="time" value={ time } type="time" max='12:00' defaultValue='00:00' onChange={ this._inputChange } />
             </div>
             <div className="desc">
               <input name="desc" value={ desc } onChange={ this._inputChange } />
@@ -82,25 +93,34 @@ class SlideFirstDay extends Component {
   };
 
   _deleteItem = id => {
-    const newData = {
-      heading: this.props.heading,
-      body: {
-        ...this.props.body,
-        agenda: [
-          ...this.props.body.agenda.slice(0, id),
-          ...this.props.body.agenda.slice(id + 1)
-        ]
-      },
-      type: this.props.type,
-      slide_number: this.props.slide_number
-    };
+    const newAgenda = [
+      ...this.props.body.agenda.slice(0, id),
+      ...this.props.body.agenda.slice(id + 1)
+    ];
 
-    return this.props.onEdit(newData);
+    return this._updateFirstDayState('agenda', newAgenda);
+  };
+
+  _updateFirstDayState = (key, value) => {
+    const { onChange, body, slide_number } = this.props;
+    let updatedSlide = null;
+    let slideKey = null;
+    if (Object.keys(this.props).indexOf(key) > -1) {
+      updatedSlide = value;
+      slideKey = key;
+    } else {
+      updatedSlide = {
+        ...body,
+        [key]: value
+      };
+      slideKey = 'body';
+    }
+    return onChange(slideKey, updatedSlide, slide_number);
   };
 
   _inputChange = e => {
+    const { agenda } =  this.props.body;
     const { name, value } = e.target;
-
     this.setState({
       [name]: value
     });
@@ -108,29 +128,41 @@ class SlideFirstDay extends Component {
 
   _addNew = e => {
     e.preventDefault();
-
+    const { agenda } =  this.props.body;
     const { desc, time } = this.state;
+    let initialHour = (time.split(':'))[0];
+    const minutesAm = ':' + (time.split(':'))[1] + 'am';
+    const minutesPm = ':' + (time.split(':'))[1] + 'pm';
+    let newValue = '';
+    if (initialHour > 11) {
+      if (Number(initialHour) === 12) {
+        newValue = initialHour + minutesPm;
+      } else {
+        newValue = initialHour - 12 + minutesPm;
+      }
+    } if (initialHour > 9 && initialHour < 12) {
+      newValue = initialHour + minutesAm;
+    } if (initialHour < 10) {
+      if (Number(initialHour) === 0) {
+        newValue = '12' + minutesAm;
+      } else {
+        newValue = initialHour[1] + minutesAm;
+      }
+    }
+
     this.setState({
       ...this.state,
       desc: '',
-      time: ''
+      time: '00:00'
     });
 
-    const newData = {
-      heading: this.props.heading,
-      body: {
-        ...this.props.body,
-        agenda: [
-          ...this.props.body.agenda,
-          { desc, time }
-        ]
-      },
-      type: this.props.type,
-      slide_number: this.props.slide_number
-    };
+    const newAgenda = [
+      ...agenda,
+      { desc, time: newValue }
+    ];
 
-    return this.props.onEdit(newData);
-  }
+    return this._updateFirstDayState('agenda', newAgenda);
+  };
 };
 
 export default SlideFirstDay;

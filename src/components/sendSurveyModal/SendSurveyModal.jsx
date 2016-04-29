@@ -19,15 +19,13 @@ class SendSurveyModal extends Component {
       id: latestPerson.id,
       first_name: latestPerson.first_name,
       last_name: latestPerson.last_name,
-      email: latestPerson.email,
+      email: latestPerson.username,
       surveyID: this.props.surveyID };
     this.props.onChange(latestPersonInfo);
-    const defaultValue = JSON.stringify(latestPersonInfo);
   };
 
   render() {
     const { latestUser, surveyName, surveyID, users, showModal, closeModal, sendSurvey, onChange } = this.props;
-    let defaultUser = null;
     let selectedUser = {
       id: latestUser.userId,
       first_name: latestUser.firstName,
@@ -35,16 +33,11 @@ class SendSurveyModal extends Component {
       email: latestUser.email,
       surveyID: latestUser.surveyId
     };
-
+    let defaultUser = JSON.stringify(selectedUser);
     const userOptions = Object.keys(users).map(index => {
       let user = users[index];
-      let userInfo = { id: user.id, first_name: user.first_name, last_name: user.last_name, email: user.email, surveyID };
-      if (index === users.length - 1) {
-        defaultUser = latestUser.userId === undefined ? JSON.stringify(userInfo) : JSON.stringify(selectedUser);
-        return <option value={ JSON.stringify(userInfo) } key={user.id}>{user.first_name + ' ' + user.last_name}</option>;
-      } else {
-        return <option value={ JSON.stringify(userInfo) } key={user.id}>{user.first_name + ' ' + user.last_name}</option>;
-      };
+      let userInfo = { id: user.id, first_name: user.first_name, last_name: user.last_name, email: user.username, surveyID };
+      return <option value={ JSON.stringify(userInfo) } key={user.id}>{user.first_name+ " " +user.last_name}</option>
     });
 
     return (

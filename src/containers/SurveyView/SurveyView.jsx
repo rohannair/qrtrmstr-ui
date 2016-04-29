@@ -21,7 +21,8 @@ class SurveyView extends Component {
 
   state = {
     chosenUser: {},
-    chosenSurvey: {}
+    chosenSurvey: {},
+    editedSurvey: {}
   };
 
   componentWillMount() {
@@ -117,6 +118,9 @@ class SurveyView extends Component {
     });
     const { chosenUser } = this.state;
   };
+
+  // _changeEdited
+
 };
 
 function mapStateToProps(state) {

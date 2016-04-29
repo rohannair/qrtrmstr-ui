@@ -50,11 +50,27 @@ export default function surveyView(state = initialState, action) {
     };
 
   case 'EDIT_SLIDE':
-    const { data } = action;
+    const { slide_number, data } = action;
     const { survey } = state;
 
     // If slide doesn't exist (which is weird...)
-    if (!data.slide_number in survey.doc) return state;
+    if (!slide_number in survey.doc) return state;
+
+    let newState = {
+      ...state,
+      survey: {
+        ...state.survey,
+        doc: {
+          ...survey.doc,
+          [slide_number]: {
+            ...survey.doc[slide_number],
+            ...action.data
+          }
+        }
+      }
+    };
+
+    console.log("newState", newState);
 
     return {
       ...state,
@@ -62,8 +78,8 @@ export default function surveyView(state = initialState, action) {
         ...state.survey,
         doc: {
           ...survey.doc,
-          [data.slide_number]: {
-            ...survey.doc[data.slide_number],
+          [slide_number]: {
+            ...survey.doc[slide_number],
             ...action.data
           }
         }

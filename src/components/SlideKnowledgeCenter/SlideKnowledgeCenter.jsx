@@ -5,30 +5,32 @@ import Button from '../Button';
 import ButtonGroup from '../ButtonGroup';
 import Card from '../Card';
 import SlideKnowledgeCenterItem from '../SlideKnowledgeCenterItem';
+import { updateSurveyState } from '../../actions/surveyViewActions';
+import TextBox from '../TextBox';
 
 class SlideKnowledgeCenter extends Component {
   state = {
-    options: this.props.options || []
+    options: this.props.body.options || []
   };
 
   render() {
+
+    const { slide_number, heading, body } = this.props;
     const opts = this.state.options.map((val, i) => <SlideKnowledgeCenterItem i={i} val={ val } deleteVideo={this._deleteVideo} key={i} onChange={this._changeVideoParams} />);
 
     return (
       <div className="slideKnowledgeCenter">
+
+        <div className="slideKnowledgeCenterIntro">
+          <TextBox slideNum={ slide_number } body={ body } bodyKey="desc" updateSlide={ this._updateKnowledgeCenterState  } />
+        </div>
+
         <div className="videos">
           { opts }
         </div>
 
         <div className="addVideo">
           <ButtonGroup>
-            <Button
-            classes="inverse sm"
-            onClick={ this._saveVideo }
-            icon="check">
-              &nbsp;&nbsp;Save
-            </Button>
-
             <Button
             classes="primary sm"
             onClick={ this._newVideo }
@@ -41,43 +43,64 @@ class SlideKnowledgeCenter extends Component {
     );
   };
 
+  _updateKnowledgeCenterState = (key, value) => {
+    const { body, slide_number, onChange } = this.props;
+    const updatedSlide = {
+      ...body,
+      [key]: value
+    };
+    return onChange('body', updatedSlide, slide_number);
+  };
+
   _changeVideoParams = (ind, key, val) => {
     const { options } = this.state;
 
+    const editedVideoParams = [
+      ...options.slice(0, ind),
+      {
+        ...options[ind],
+        [key]: val
+      },
+      ...options.slice(ind + 1),
+    ];
+
     this.setState({
-      options: [
-        ...options.slice(0, ind),
-        {
-          ...options[ind],
-          [key]: val
-        },
-        ...options.slice(ind + 1),
-      ]
+      options: editedVideoParams
     });
+
+    this._updateKnowledgeCenterState('options', editedVideoParams);
   };
 
   _deleteVideo = (id) => {
     // Needs a dialog
     const { options } = this.state;
 
+    const newDeletedOptions = [
+      ...options.slice(0, id),
+      ...options.slice(id + 1)
+    ];
+
     this.setState({
-      options: [
-        ...options.slice(0, id),
-        ...options.slice(id + 1)
-      ]
+      options: newDeletedOptions
     });
+
+    this._updateKnowledgeCenterState('options', newDeletedOptions);
   };
 
   _newVideo = () => {
+    const newItem = [
+      ...this.state.options,
+      {
+        id: 'Enter YouTube ID',
+        name: 'Enter title'
+      }
+    ];
+
     this.setState({
-      options: [
-        ...this.state.options,
-        {
-          id: 'Enter YouTube ID',
-          name: 'Enter title'
-        }
-      ]
+      options: newItem
     });
+
+    this._updateKnowledgeCenterState('options', newItem);
   };
 
   _saveSection = (id) => {

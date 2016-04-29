@@ -8,6 +8,7 @@ import styles from './slideEquipment.css';
 // SubComponents
 import SlideEquipmentHeader from '../SlideEquipmentHeader';
 import SlideEquipmentBody from '../SlideEquipmentBody';
+import { updateSurveyState } from '../../actions/surveyViewActions';
 
 class SlideEquipment extends Component {
   state = {
@@ -16,37 +17,66 @@ class SlideEquipment extends Component {
   };
 
   render() {
-    const names = this.state.options.map( val => ({ id: val.id, name: val.name }));
+    const { options } = this.state;
+
+    const names = options.map(val => ({ id: val.id, name: val.name }));
 
     const selected = this.state.selected
-      ? this.state.options
-        .filter(val => val.id === this.state.selected)
-      : this.state.options;
+      ? (options
+        .filter(val => val.id === this.state.selected))[0]
+      : this.state.options[0];
 
     return (
       <div className="slideEquipment">
         <div className="slide-input">
-          <strong>Heading:</strong> <input defaultValue={this.props.heading} />
-          <strong>Description:</strong> <input defaultValue={this.props.body.desc} />
+          <strong>Heading:</strong>
+          <input
+            name="heading"
+            value={this.props.heading}
+            onChange={ e => this._updateEquipmentState(e.target.name, e.target.value) }
+          />
+          <strong>Description:</strong>
+          <input
+            name="desc"
+            value={this.props.body.desc}
+            onChange={ e => this._updateEquipmentState(e.target.name, e.target.value) }
+          />
         </div>
 
         <SlideEquipmentHeader
           vals={ names }
           onClick={ this._setSelected }
           onNew={ this._newOption }
-          onEdit= { this._editOption }
+          onEdit={ this._editOption }
           onRemove={ this._removeOption }
-          selected={ selected[0].id }
+          selected={ selected.id }
         />
 
         <SlideEquipmentBody
           opt={ selected }
           newOption={ this._newSubOption }
+          editOption={ this._editSubOption }
           deleteOption={ this._removeSubOption }
-          save={this._saveAll}
         />
       </div>
     );
+  };
+
+  _updateEquipmentState = (key, value) => {
+    const { body, slide_number, onChange } = this.props;
+    let updatedSlide = null;
+    let slideKey = null;
+    if (Object.keys(this.props).indexOf(key) > -1) {
+      updatedSlide = value;
+      slideKey = key;
+    } else {
+      updatedSlide = {
+        ...body,
+        [key]: value
+      };
+      slideKey = 'body';
+    }
+    return onChange(slideKey, updatedSlide, slide_number);
   };
 
   _setSelected = (key) => {
@@ -56,8 +86,18 @@ class SlideEquipment extends Component {
   };
 
   _newOption = () => {
-    const newOptions = { name: 'New', id: Math.random() };
-    const options = this.state.options;
+    const newOptionID = 'xxx' + Math.floor(Math.random() * (99999 - 10000)) + 10000;
+    const newOptions = {
+      name: 'New',
+      id: newOptionID,
+      opts: [
+        'New Id'
+      ],
+      optNames: [
+        'New Label'
+      ]
+    };
+    const { options } = this.state;
 
     this.setState({
       options:  [
@@ -65,6 +105,12 @@ class SlideEquipment extends Component {
         newOptions
       ]
     });
+
+    const newAddOptions = [
+      ...options,
+      newOptions
+    ];
+    this._updateEquipmentState('options', newAddOptions);
   };
 
   _editOption = (key, newName) => {
@@ -87,6 +133,7 @@ class SlideEquipment extends Component {
     this.setState({
       options: newOptions
     });
+    this._updateEquipmentState('options', newOptions);
   };
 
   _removeOption = (key) => {
@@ -97,13 +144,43 @@ class SlideEquipment extends Component {
 
     this.setState({
       options
-    })
+    });
+
+    this._updateEquipmentState('options', options);
 
     if (this.state.selected === key) {
       this.setState({
         selected: null
-      })
-    }
+      });
+    };
+  };
+
+  _editSubOption = (key, value, ind) => {
+    const { options } = this.state;
+    const selected = this.state.selected
+      ? (options
+        .filter(val => val.id === this.state.selected))[0]
+      : this.state.options[0];
+    const pos = options.indexOf(selected);
+    const newOption = {
+      ...selected,
+      [key]: [
+        ...selected[key].slice(0, ind),
+        value,
+        ...selected[key].slice(ind + 1)
+      ]
+    };
+
+    const newOptions = [
+      ...options.slice(0, pos),
+      newOption,
+      ...options.slice(pos + 1)
+    ];
+
+    this.setState({
+      options: newOptions
+    });
+    this._updateEquipmentState('options', newOptions);
   };
 
   _removeSubOption = (ind, key) => {
@@ -116,9 +193,9 @@ class SlideEquipment extends Component {
       if (val.id === ind) {
         selectedIdIndex = i;
         mergeable = val;
-      }
+      };
 
-      return { ...prev, ...mergeable }
+      return { ...prev, ...mergeable };
     });
 
     const opts = [...optToChange.opts].filter((val, i) => {
@@ -137,13 +214,17 @@ class SlideEquipment extends Component {
       optNames
     };
 
-    this.setState({
-      options: [
+    const newRemOpt = [
       ...options.slice(0, selectedIdIndex),
       newOpt,
       ...options.slice(selectedIdIndex + 1),
-      ]
+    ];
+
+    this.setState({
+      options: newRemOpt
     });
+
+    this._updateEquipmentState('options', newRemOpt);
   };
 
   _newSubOption = (ind) => {
@@ -156,18 +237,17 @@ class SlideEquipment extends Component {
         selectedIndex = i;
         mergeable = val;
       }
-
-      return { ...prev, ...mergeable }
+      return { ...prev, ...mergeable };
     });
 
     const optNames = [
-    ...optToChange.optNames,
-    'New Option'
+      ...optToChange.optNames,
+      'New Option'
     ];
 
     const opts = [
-    ...optToChange.opts,
-    `opt-${Math.random()}`
+      ...optToChange.opts,
+      `opt-${Math.random()}`
     ];
 
     const newOpt = {
@@ -176,20 +256,18 @@ class SlideEquipment extends Component {
       opts
     };
 
-    this.setState({
-      options: [
+    const newAddOption = [
       ...options.slice(0, selectedIndex),
       newOpt,
       ...options.slice(selectedIndex + 1),
-      ]
-    })
-  };
+    ];
 
-  _saveAll = () => {
-    return this.props.saveSlide(this.state, this.props.slide_number);
+    this.setState({
+      options: newAddOption
+    });
+
+    this._updateEquipmentState('options', newAddOption);
   };
 };
 
 export default SlideEquipment;
-
-
