@@ -71,7 +71,7 @@ class SlideFirstDay extends Component {
 
           <div className="agenda-footer">
             <div className="timeInput">
-              <input name="time" type="time" value={ time } onChange={ this._inputChange } />
+              <input name="time" value='00:00' type="time" max='12:00' defaultValue='00:00' onChange={ this._inputChange } />
             </div>
             <div className="desc">
               <input name="desc" value={ desc } onChange={ this._inputChange } />
@@ -121,7 +121,6 @@ class SlideFirstDay extends Component {
   _inputChange = e => {
     const { agenda } =  this.props.body;
     const { name, value } = e.target;
-    debugger;
     this.setState({
       [name]: value
     });
@@ -131,6 +130,21 @@ class SlideFirstDay extends Component {
     e.preventDefault();
     const { agenda } =  this.props.body;
     const { desc, time } = this.state;
+    let initialHour = (time.split(':'))[0];
+    const minutes = ':' + (time.split(':'))[1];
+    let newValue = '';
+    if (initialHour > 11) {
+      newValue = initialHour - 12 + minutes + 'pm';
+    } if (initialHour == 12) {
+      newValue = initialHour + minutes + 'pm';
+    } if (initialHour > 9 && initialHour < 12) {
+      newValue = initialHour + minutes + 'am';
+    } if (initialHour < 10) {
+      newValue = initialHour[1] + minutes + 'am';
+    } if (initialHour == 0) {
+      newValue = '12' + minutes + 'am';
+    }
+
     this.setState({
       ...this.state,
       desc: '',
@@ -139,7 +153,7 @@ class SlideFirstDay extends Component {
 
     const newAgenda = [
       ...agenda,
-      { desc, time }
+      { desc, time: newValue }
     ];
 
     return this._updateFirstDayState('agenda', newAgenda);
