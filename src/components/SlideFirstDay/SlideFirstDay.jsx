@@ -131,18 +131,19 @@ class SlideFirstDay extends Component {
     const { agenda } =  this.props.body;
     const { desc, time } = this.state;
     let initialHour = (time.split(':'))[0];
-    const minutes = ':' + (time.split(':'))[1];
+    const minutesAm = ':' + (time.split(':'))[1] + 'am';
+    const minutesPm = ':' + (time.split(':'))[1] + 'pm';
     let newValue = '';
     if (initialHour > 11) {
-      newValue = initialHour - 12 + minutes + 'pm';
-    } if (initialHour == 12) {
-      newValue = initialHour + minutes + 'pm';
+      newValue = initialHour - 12 + minutesPm;
+    } if (initialHour === 12) {
+      newValue = initialHour + minutesPm;
     } if (initialHour > 9 && initialHour < 12) {
-      newValue = initialHour + minutes + 'am';
+      newValue = initialHour + minutesAm;
     } if (initialHour < 10) {
-      newValue = initialHour[1] + minutes + 'am';
-    } if (initialHour == 0) {
-      newValue = '12' + minutes + 'am';
+      newValue = initialHour[1] + minutesAm;
+    } if (initialHour === 0) {
+      newValue = '12' + minutesAm;
     }
 
     this.setState({
