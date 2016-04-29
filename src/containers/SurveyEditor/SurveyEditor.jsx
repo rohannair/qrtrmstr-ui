@@ -50,41 +50,40 @@ class SurveyEditor extends Component {
       case 'intro':
         return (
           <Card key={val} title={`Section ${parseInt(val) + 1}: Introduction`}>
-            <SlideIntro dispatch={ dispatch } key={ val } {...slide} onChange={ this._updateSlideIntro } />
+            <SlideIntro key={ val } {...slide} onChange={ this._updateSlide } />
           </Card>
         );
 
       case 'bio':
         return (
           <Card key={val} title={`Section ${parseInt(val) + 1}: Biography`}>
-            <SlideBio dispatch={ dispatch } key={ val } {...slide} onChange={ this._updateSlideIntro } />
+            <SlideBio key={ val } {...slide} onChange={ this._updateSlide } />
           </Card>
         );
 
       case 'equipment':
         return (
           <Card key={val} title={`Section ${parseInt(val) + 1}: Equipment`}>
-            <SlideEquipment dispatch={ dispatch } {...slide} saveSlide={ this._saveSlide } />
+            <SlideEquipment {...slide} saveSlide={ this._saveSlide } onChange={ this._updateSlide } />
           </Card>
         );
 
       case 'knowledgectr':
         return (
           <Card key={val} title={`Section ${parseInt(val) + 1}: Knowledge Center`}>
-            <SlideKnowledgeCenter dispatch={ dispatch } {...slide} />
+            <SlideKnowledgeCenter {...slide} onChange={ this._updateSlide } />
           </Card>
         );
 
       case 'day1agenda':
         return (
           <Card key={val} title={`Section ${parseInt(val) + 1}: Day One Agenda`}>
-            <h1>{slide.heading}</h1>
             <SlideFirstDay
               {...slide}
-              dispatch={ dispatch }
               onEdit={this._editSlide}
               onAdd={this._addNewAgendaItem}
               onDelete= {this._deleteAgendaItem}
+              onChange={ this._updateSlide }
             />
           </Card>
         );
@@ -117,19 +116,18 @@ class SurveyEditor extends Component {
       );
   };
 
-
   _renderSurvey = () => {
     const { token, dispatch } = this.props;
     const { surveyID } = this.props.params;
     return dispatch(getSingleSurvey(token, surveyID));
   };
 
-  _updateSlideIntro = (key, value, ind) => {
+  _updateSlide = (key, value, slideNum) => {
     const { dispatch, survey } = this.props;
     const updatedSlide = {
       [key]: value
     };
-    return dispatch(updateSurveyState(ind, updatedSlide));
+    return dispatch(updateSurveyState(slideNum, updatedSlide));
   };
 
   _saveSurvey = () => {

@@ -18,7 +18,7 @@ class SlideFirstDay extends Component {
   };
 
   render() {
-    const { onAdd, slide_number, body, dispatch } = this.props;
+    const { onAdd, slide_number, body, onChange, heading } = this.props;
     const { agenda } =  this.props.body;
     const mapBody = this.props.body.map;
     const { mapDesc, time, desc } = this.state;
@@ -45,6 +45,16 @@ class SlideFirstDay extends Component {
 
     return (
       <div className="slideFirstDay">
+        <div className="slideEquipment">
+          <div className="slide-input">
+            <strong>Heading:</strong>
+            <input
+              name="heading"
+              value={ heading }
+              onChange={ e => this._updateFirstDayState(e.target.name, e.target.value) }
+            />
+          </div>
+        </div>
         <div className="map">
           <TextBox body={ body } bodyKey="map"/>
         </div>
@@ -61,7 +71,7 @@ class SlideFirstDay extends Component {
 
           <div className="agenda-footer">
             <div className="timeInput">
-              <input name="time" value={ time } onChange={ this._inputChange } />
+              <input name="time" type="time" value={ time } onChange={ this._inputChange } />
             </div>
             <div className="desc">
               <input name="desc" value={ desc } onChange={ this._inputChange } />
@@ -83,36 +93,35 @@ class SlideFirstDay extends Component {
   };
 
   _deleteItem = id => {
-    const newData = {
-      heading: this.props.heading,
-      body: {
-        ...this.props.body,
-        agenda: [
-          ...this.props.body.agenda.slice(0, id),
-          ...this.props.body.agenda.slice(id + 1)
-        ]
-      },
-      type: this.props.type,
-      slide_number: this.props.slide_number
-    };
+    const newAgenda = [
+      ...this.props.body.agenda.slice(0, id),
+      ...this.props.body.agenda.slice(id + 1)
+    ];
 
-    return this.props.onEdit(newData);
+    return this._updateFirstDayState('agenda', newAgenda);
   };
 
   _updateFirstDayState = (key, value) => {
-    const { dispatch, body, slide_number } = this.props;
-    const updatedSlide = Object.keys(this.props).indexOf(key) > -1
-    ? {[key]: value}
-    : {body: {
+    const { onChange, body, slide_number } = this.props;
+    let updatedSlide = null;
+    let slideKey = null;
+    if (Object.keys(this.props).indexOf(key) > -1) {
+      updatedSlide = value;
+      slideKey = key;
+    } else {
+      updatedSlide = {
         ...body,
-        [key]: value}
+        [key]: value
       };
-    return dispatch(updateSurveyState(slide_number, updatedSlide));
+      slideKey = 'body';
+    }
+    return onChange(slideKey, updatedSlide, slide_number);
   };
 
   _inputChange = e => {
     const { agenda } =  this.props.body;
     const { name, value } = e.target;
+    debugger;
     this.setState({
       [name]: value
     });

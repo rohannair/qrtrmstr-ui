@@ -61,7 +61,6 @@ const SurveyCards = (props) => {
         </Card>
       );
     case 'equipment':
-      debugger;
       const opts = field.body.options.map(val => {
 
         const options = val.opts.map((opt, i) => {

@@ -15,14 +15,14 @@ class SlideKnowledgeCenter extends Component {
 
   render() {
 
-    const { slide_number, dispatch, heading, body } = this.props;
+    const { slide_number, heading, body } = this.props;
     const opts = this.state.options.map((val, i) => <SlideKnowledgeCenterItem i={i} val={ val } deleteVideo={this._deleteVideo} key={i} onChange={this._changeVideoParams} />);
 
     return (
       <div className="slideKnowledgeCenter">
 
         <div className="slideKnowledgeCenterIntro">
-          <TextBox dispatch={ dispatch } slideNum={ slide_number } body={ body } bodyKey="desc" />
+          <TextBox slideNum={ slide_number } body={ body } bodyKey="desc" updateSlide={ this._updateKnowledgeCenterState  } />
         </div>
 
         <div className="videos">
@@ -44,13 +44,12 @@ class SlideKnowledgeCenter extends Component {
   };
 
   _updateKnowledgeCenterState = (key, value) => {
-    const { dispatch, body, slide_number } = this.props;
+    const { body, slide_number, onChange } = this.props;
     const updatedSlide = {
-      body: {
-        ...body,
-        [key]: value}
+      ...body,
+      [key]: value
     };
-    return dispatch(updateSurveyState(slide_number, updatedSlide));
+    return onChange('body', updatedSlide, slide_number);
   };
 
   _changeVideoParams = (ind, key, val) => {

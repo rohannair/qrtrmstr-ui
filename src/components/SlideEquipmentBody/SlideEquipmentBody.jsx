@@ -4,10 +4,9 @@ import styles from './slideEquipmentBody.css';
 import Button from '../Button';
 import ButtonGroup from '../ButtonGroup';
 
-const SlideEquipmentBody = ({ opt, newOption, editOption, deleteOption, save }) => {
+const SlideEquipmentBody = ({ opt, newOption, editOption, deleteOption }) => {
   const onClick = () => newOption(opt.id);
   const onRemove = (key) => deleteOption(opt.id, key);
-  const onSave = save;
 
   const options = opt.opts.map((val, i) => {
     return (

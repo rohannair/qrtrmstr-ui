@@ -6,9 +6,6 @@ import { Editor, EditorState, RichUtils, ContentState, convertToRaw } from 'draf
 import { stateFromHTML } from 'draft-js-import-html';
 import { stateToHTML } from 'draft-js-export-html';
 
-// updateSurveyState(slide_number = null, data = {})
-import { updateSurveyState } from '../../actions/surveyViewActions';
-
 import Button from '../../components/Button';
 import ButtonGroup from '../../components/ButtonGroup';
 
@@ -19,21 +16,19 @@ class TextBox extends Component {
     const body = props.bodyKey ? props.body[props.bodyKey] : props.body;
     this.state = {
       slideNum: props.slideNum,
+      slideBody: props.body,
       editorState: EditorState.createWithContent(stateFromHTML(body))
     };
 
     this.focus = () => this.refs.editor.focus();
     this.onChange = (editorState) => {
       this.setState({ editorState });
-      const updatedIntro = props.bodyKey
-        ? {body: {
-          ...props.body,
-          [props.bodyKey]: this._outputHtml()}
-          }
-        : {body: this._outputHtml()};
-
-      const { dispatch } = props;
-      return dispatch(updateSurveyState(this.state.slideNum, updatedIntro));
+      const updatedIntro = this._outputHtml();
+      if (props.bodyKey) {
+        return props.updateSlide(props.bodyKey, updatedIntro);
+      } else {
+        return props.updateSlide('body', updatedIntro, this.state.slideNum);
+      }
     };
 
     this.handleKeyCommand = (command) => this._handleKeyCommand(command);

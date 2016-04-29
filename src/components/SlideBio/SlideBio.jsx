@@ -14,7 +14,7 @@ class SlideBio extends Component {
   };
 
   render() {
-    const { slide_number, id, dispatch, onChange, body } = this.props;
+    const { slide_number, id, onChange } = this.props;
     const { heading, desc } = this.state;
     return (
       <div className="slideBio">
@@ -28,25 +28,23 @@ class SlideBio extends Component {
             />
           </div>
         </div>
-        <TextBox dispatch={ dispatch } slideNum={ slide_number } body={ body } bodyKey="desc" onChange={ this._updateBioState } />
+        <TextBox slideNum={ slide_number } body={ this.state } bodyKey="desc" updateSlide={ this._updateBioState } />
       </div>
     );
   };
 
   _updateBioState = (key, value) => {
-    const { dispatch, slide_number, body } = this.props;
+    const { slide_number, onChange, body } = this.props;
     const updatedSlide = {
-      body: {
-        ...body,
-        [key]: value
-      }
+      ...body,
+      [key]: value
     };
+
     this.setState({
       ...this.state,
       [key]: value
     });
-
-    return dispatch(updateSurveyState(slide_number, updatedSlide));
+    return onChange('body', updatedSlide, slide_number);
   };
 };
 

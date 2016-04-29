@@ -29,11 +29,12 @@ class NewUserModal extends Component {
               <label>Password:</label>
               <input
                 name="password"
+                type="password"
                 value= { val.password }
                 onChange={ e => onChange(e.target.name, e.target.value) }
               />
             </div>
-            <div className="formField">  
+            <div className="formField">
               <label>First Name:</label>
               <input
                 name="first_name"

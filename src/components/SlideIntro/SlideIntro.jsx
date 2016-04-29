@@ -8,7 +8,7 @@ import TextBox from '../TextBox';
 
 const SlideIntro = (props) => {
 
-  const { heading, body, slide_number, id, dispatch, onChange } = props;
+  const { heading, body, slide_number, id, onChange } = props;
 
   return (
     <div className="slideIntro">
@@ -22,7 +22,7 @@ const SlideIntro = (props) => {
           />
         </div>
       </div>
-      <TextBox dispatch={ dispatch } slideNum={ slide_number } body={ body } />
+      <TextBox slideNum={ slide_number } body={ body } updateSlide={ onChange } />
     </div>
   );
 };

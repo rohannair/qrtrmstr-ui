@@ -57,21 +57,26 @@ class SlideEquipment extends Component {
           newOption={ this._newSubOption }
           editOption={ this._editSubOption }
           deleteOption={ this._removeSubOption }
-          save={this._saveAll}
         />
       </div>
     );
   };
 
   _updateEquipmentState = (key, value) => {
-    const { dispatch, body, slide_number } = this.props;
-    const updatedSlide = Object.keys(this.props).indexOf(key) > -1
-    ? {[key]: value}
-    : {body: {
+    const { body, slide_number, onChange } = this.props;
+    let updatedSlide = null;
+    let slideKey = null;
+    if (Object.keys(this.props).indexOf(key) > -1) {
+      updatedSlide = value;
+      slideKey = key;
+    } else {
+      updatedSlide = {
         ...body,
-        [key]: value}
+        [key]: value
       };
-    return dispatch(updateSurveyState(slide_number, updatedSlide));
+      slideKey = 'body';
+    }
+    return onChange(slideKey, updatedSlide, slide_number);
   };
 
   _setSelected = (key) => {
@@ -100,7 +105,7 @@ class SlideEquipment extends Component {
         newOptions
       ]
     });
-    
+
     const newAddOptions = [
       ...options,
       newOptions
@@ -262,10 +267,6 @@ class SlideEquipment extends Component {
     });
 
     this._updateEquipmentState('options', newAddOption);
-  };
-
-  _saveAll = () => {
-    return this.props.saveSlide(this.state, this.props.slide_number);
   };
 };
 
