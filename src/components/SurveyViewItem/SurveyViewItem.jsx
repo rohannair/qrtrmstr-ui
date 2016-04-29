@@ -7,6 +7,7 @@ import ButtonGroup from '../../components/ButtonGroup';
 
 const SurveyViewItem = (props) => {
   const href = `/survey/${props.id}`;
+
   return (
     <tr key={ props.id } className="userList-option">
       <td className="checkbox"><input type="checkbox" /></td>
@@ -18,6 +19,7 @@ const SurveyViewItem = (props) => {
           <Link to={`/dashboard/surveys/edit/${props.id}`}>
             <Button classes='inverse sm'>Edit</Button>
           </Link>
+          <Button onClick={ props.duplicate.bind(this, props.id) } classes="inverse md">Duplicate</Button>
           <Button onClick={ props.onShowModal.bind(this, { id: props.id, name: props.name}) } classes="primary md">Send To User</Button>
         </ButtonGroup>
       </td>
