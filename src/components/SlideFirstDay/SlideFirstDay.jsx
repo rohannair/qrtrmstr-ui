@@ -12,7 +12,7 @@ import FlipMove from 'react-flip-move';
 
 class SlideFirstDay extends Component {
   state = {
-    time: '',
+    time: '00:00',
     desc: '',
     mapDesc: this.props.body.map || ''
   };
@@ -71,7 +71,7 @@ class SlideFirstDay extends Component {
 
           <div className="agenda-footer">
             <div className="timeInput">
-              <input name="time" value='00:00' type="time" max='12:00' defaultValue='00:00' onChange={ this._inputChange } />
+              <input name="time" value={ time } type="time" max='12:00' defaultValue='00:00' onChange={ this._inputChange } />
             </div>
             <div className="desc">
               <input name="desc" value={ desc } onChange={ this._inputChange } />
@@ -135,21 +135,25 @@ class SlideFirstDay extends Component {
     const minutesPm = ':' + (time.split(':'))[1] + 'pm';
     let newValue = '';
     if (initialHour > 11) {
-      newValue = initialHour - 12 + minutesPm;
-    } if (initialHour === 12) {
-      newValue = initialHour + minutesPm;
+      if (Number(initialHour) === 12) {
+        newValue = initialHour + minutesPm;
+      } else {
+        newValue = initialHour - 12 + minutesPm;
+      }
     } if (initialHour > 9 && initialHour < 12) {
       newValue = initialHour + minutesAm;
     } if (initialHour < 10) {
-      newValue = initialHour[1] + minutesAm;
-    } if (initialHour === 0) {
-      newValue = '12' + minutesAm;
+      if (Number(initialHour) === 0) {
+        newValue = '12' + minutesAm;
+      } else {
+        newValue = initialHour[1] + minutesAm;
+      }
     }
 
     this.setState({
       ...this.state,
       desc: '',
-      time: ''
+      time: '00:00'
     });
 
     const newAgenda = [
