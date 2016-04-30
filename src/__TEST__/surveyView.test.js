@@ -100,6 +100,37 @@ test('SurveyView', ({ test }) => {
     assert.end();
   });
 
+  // ADD_NEW_SURVEY
+  test('ADD_NEW_SURVEY', assert => {
+    assert.plan(1);
+
+    const firstState = {
+      name: 'My first state',
+      list: [
+        { id: 0, name: 'Object 0'}
+      ]
+    };
+
+    const action = {
+      type: 'ADD_NEW_SURVEY',
+      survey: {
+        id: 1,
+        name: 'Object 1'
+      }
+    };
+
+    const finalAction = {
+      ...firstState,
+      list: [
+        ...firstState.list,
+        action.survey
+      ]
+    };
+
+    assert.deepEqual(surveyView(firstState, action), finalAction);
+    assert.end();
+  });
+
   // ADD_SLIDE
   test('ADD_SLIDE', assert => {
 
@@ -381,6 +412,8 @@ test('SurveyView', ({ test }) => {
     assert.ok(surveyViewToggleOpenCardAfterP2, surveyViewToggleOpenCardActionP2, 'TOGGLE_OPEN_CARD When Given An ID Not In openCard Array Should Return The State With An openCards Value With The CardID Added');
     assert.end();
   });
+
+
 
 });
 
