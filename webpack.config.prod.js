@@ -68,8 +68,9 @@ const config = {
     function() {
       this.plugin('done', function(stats) {
         require('fs').writeFileSync(
-          path.join(__dirname, '...', 'stats.json'),
-          JSON.stringify(stats.toJson()));
+          path.join(__dirname, 'stats.json'),
+          stats.toJson().hash
+        );
       });
     }
   ],
