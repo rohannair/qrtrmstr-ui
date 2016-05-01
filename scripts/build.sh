@@ -1,5 +1,14 @@
 #!/bin/bash -e
 
+ARTIFACT_FILE=$1
+
+if [ x == x$ARTIFACT_FILE ]
+then
+  echo Usage: $0 artifact_file
+  echo e.g. $0 qrtrmstr-ui-2016-05-01_02:16:11-081f50931d7326ce94c1ccc9152c26f10a902825.tar.bz2
+  exit 1
+fi
+
 umask 0002
 
 export PATH=/usr/local/bin:$PATH
@@ -27,5 +36,3 @@ chmod ugo+r ${LATEST_FILE_TMP}
 mv ${LATEST_FILE_TMP} ${ARTIFACT_DIR}/${LATEST_FILE}
 
 rm -rf ${FILES_TO_DELETE}
-
-sudo /opt/ops/scripts/deploy.sh qrtrmstr-ui ${ARTIFACT_FILE}
