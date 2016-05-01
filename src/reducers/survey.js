@@ -1,4 +1,3 @@
-import { default as stateMock } from '../../mocks/surveyMock';
 import { find } from 'lodash';
 
 const defaultState = {
@@ -12,8 +11,8 @@ export default function survey(state = defaultState, action) {
 
   case 'SURVEY_RETRIEVED':
     return {
-      survey: action.survey.doc,
-      ...state
+      ...state,
+      survey: action.survey.doc
     };
 
   case 'SURVEY_SELECTION':
