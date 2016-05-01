@@ -23,7 +23,6 @@ npm run test
 
 npm run build
 
-ARTIFACT_FILE=qrtrmstr-ui-$(date +%Y-%m-%d_%H:%M:%S)-${GIT_COMMIT}.tar.bz2
 ARTIFACT_PATH=${ARTIFACT_DIR}/${ARTIFACT_FILE}
 
 # Pack and copy the artifact somewhere
