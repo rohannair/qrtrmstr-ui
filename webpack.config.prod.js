@@ -15,7 +15,7 @@ const config = {
 
   output: {
     path: path.join(__dirname, 'public'),
-    filename: 'app.js',
+    filename: 'app.[hash].js',
     sourceMapFilename: '[file].map'
   },
 
@@ -64,7 +64,14 @@ const config = {
         'NODE_ENV': JSON.stringify('production'),
         'ENV': JSON.stringify('production')
       }
-    })
+    }),
+    function() {
+      this.plugin('done', function(stats) {
+        require('fs').writeFileSync(
+          path.join(__dirname, '...', 'stats.json'),
+          JSON.stringify(stats.toJson()));
+      });
+    }
   ],
 
   postcss: function() {
