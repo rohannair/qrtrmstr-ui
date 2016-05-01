@@ -68,7 +68,7 @@ ARTIFACT_PATH=${ARTIFACT_DIR}/${ARTIFACT_FILE}
 echo
 echo "Creating artifact at ${ARTIFACT_PATH}, including everything inside ${PUBLIC_DIR} there"
 cd ${PUBLIC_DIR}
-tar cjf ${ARTIFACT_PATH}
+tar cjf ${ARTIFACT_PATH} .
 
 # Keep a record of what the latest artifact is:
 echo
