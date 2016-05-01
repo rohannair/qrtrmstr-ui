@@ -6,7 +6,7 @@ export PATH=/usr/local/bin:$PATH
 PROJECT=qrtrmstr-ui
 ARTIFACT_DIR=/opt/artifacts
 LATEST_FILE=${PROJECT}-latest
-FILES_TO_INCLUDE="index.html public/"
+PUBLIC_DIR=public/
 FILES_TO_DELETE="node_modules public"
 
 usage () {
@@ -64,10 +64,11 @@ fi
 
 ARTIFACT_PATH=${ARTIFACT_DIR}/${ARTIFACT_FILE}
 
-# Pack FILES_TO_INCLUDE and copy the artifact somewhere
+# Pack PUBLIC_DIR and copy the artifact somewhere
 echo
-echo "Creating artifact at ${ARTIFACT_PATH}, including ${FILES_TO_INCLUDE} there"
-tar cjf ${ARTIFACT_PATH} ${FILES_TO_INCLUDE}
+echo "Creating artifact at ${ARTIFACT_PATH}, including everything inside ${PUBLIC_DIR} there"
+cd ${PUBLIC_DIR}
+tar cjf ${ARTIFACT_PATH}
 
 # Keep a record of what the latest artifact is:
 echo
