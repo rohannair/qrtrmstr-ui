@@ -1,6 +1,4 @@
-import fetch from 'isomorphic-fetch';
 import utils from './utils';
-
 import { get, post, put, API_ROOT } from '../utils/request';
 
 const getDomain = utils.getDomain;
