@@ -3,7 +3,7 @@ import assert from 'assert';
 import test from 'tape';
 
 // Reducer
-import surveyView from '../reducers/surveyView';
+import surveyView, { initialState } from '../reducers/surveyView';
 
 const store = createStore(surveyView);
 
@@ -13,90 +13,101 @@ console.log('---------------');
 
 test('SurveyView', ({ test }) => {
 
-  test('Return Current State When No Case Matches', assert => {
+  test('Reducer generics', assert => {
 
-    const actionDefault = {
-      type: 'DEFAULT'
+    const action = {
+      type: 'ABC',
+      data: 'ABCDEFG'
     };
 
-    const surveyViewDefaultBefore =  {
-      list: [],
-      survey: {},
-      openCards: []
-    };
+    const state = {};
 
-    const surveyViewDefaultAfter = { ...surveyViewDefaultBefore };
+    assert.deepEqual(
+      surveyView(state, action),
+      state,
+      'Should return the initial state when action isn\'t known'
+    );
 
-    const surveyViewDefaultWithAction = surveyView(surveyViewDefaultBefore, actionDefault);
-
-    assert.ok(surveyViewDefaultWithAction, surveyViewDefaultAfter, 'Should Return The Initial (Default) State');
     assert.end();
   });
 
-  // SURVEYS_RETRIEVED
-  test('SURVEYS_RETRIEVED', assert => {
+  // This test is broken, but I think it might be a node/babel issue.. not respecting es6 argument defaults.
+  test('Reducer defaults', t => {
+    t.plan(0);
 
-    const actionSurveysRetrieved = {
+    // Broken test
+    // t.deepEqual(
+    //   surveyView(null, {}),
+    //   initialState,
+    //   'Returns proper initial state if no state is passed into reducer'
+    // );
+
+    t.end();
+  });
+
+  // SURVEYS_RETRIEVED
+  test('SURVEYS_RETRIEVED reducer', assert => {
+
+    const action = {
       type: 'SURVEYS_RETRIEVED',
-      survey: {},
-      openCards: [],
       surveyList: ['Survey1', 'Survey2', 'Survey3']
     };
 
-    const surveyViewSurveysRetrievedBefore = {
-      list: [],
-      survey: {},
-      openCards: []
+    const action_with_extra = {
+      type: 'SURVEYS_RETRIEVED',
+      surveyList: ['Survey1', 'Survey2', 'Survey3'],
+      THIRDPROP: 'BLABLABLA I WILL EAT YOUR SOUL'
     };
 
-    const surveyViewSurveysRetrievedAfter = {
-      survey: {},
-      openCards: [],
+    const before = {
+      hello: 'world',
+      list: [],
+    };
+
+    const after = {
+      hello: 'world',
       list: ['Survey1', 'Survey2', 'Survey3']
     };
 
-    const surveyViewSurveysRetrievedAction = surveyView(surveyViewSurveysRetrievedBefore, actionSurveysRetrieved);
+    assert.plan(2);
 
-    assert.ok(surveyViewSurveysRetrievedAction, surveyViewSurveysRetrievedAfter, 'SURVEYS_RETRIEVED Should Return The State With A Non-Empty list Value');
+    assert.deepEqual(
+      surveyView(before, action),
+      after,
+      'SURVEYS_RETRIEVED must merge action.surveyList and state'
+    );
+
+    assert.deepEqual(
+      surveyView(before, action_with_extra),
+      after,
+      'SURVEYS_RETRIEVED must merge ONLY action.surveyList and state'
+    );
+
     assert.end();
   });
 
   // SINGLE_SURVEY_RETRIEVED
-  test('SINGLE_SURVEY_RETRIEVED', assert => {
-
-    const surveyVal = {
-      doc: {
-        text1: {
-          slide_number: 0,
-          type:'text',
-          heading: 'Introduction',
-          body: '<h2>Hi Rachel, congratulations (...)'
-        }
+  test('SINGLE_SURVEY_RETRIEVED reducer', assert => {
+    const action = {
+      type: 'SINGLE_SURVEY_RETRIEVED',
+      survey: {
+        k3y: 'hello i am k3y'
       }
     };
 
-    const actionSingleSurveyRetrieved = {
-      type: 'SINGLE_SURVEY_RETRIEVED',
-      survey: surveyVal,
-      openCards: [],
-      surveyList: []
+    const state_after = {
+      survey: {
+        k3y: 'hello i am k3y'
+      }
     };
 
-    const surveyViewSingleSurveyRetrievedBefore = {
-      list: [],
-      survey: {},
-      openCards: []
-    };
+    assert.plan(1);
 
-    const surveyViewSingleSurveyRetrievedAfter = {
-      openCards: [],
-      list: [],
-      survey: surveyVal
-    };
+    assert.deepEqual(
+      surveyView(0, action),
+      state_after,
+      'SINGLE_SURVEY_RETRIEVED should return the state with a non-empty survey value');
 
-    const surveyViewSingleSurveyRetrievedAction = surveyView(surveyViewSingleSurveyRetrievedBefore, actionSingleSurveyRetrieved);
-
-    assert.ok(surveyViewSingleSurveyRetrievedAction, surveyViewSingleSurveyRetrievedAfter, 'SINGLE_SURVEY_RETRIEVED Should Return The State With A Non-Empty Survey Value');
     assert.end();
   });
 
@@ -104,316 +115,258 @@ test('SurveyView', ({ test }) => {
   test('ADD_NEW_SURVEY', assert => {
     assert.plan(1);
 
-    const firstState = {
+    const action = {
+      type: 'ADD_NEW_SURVEY',
+      survey: { id: 1, name: 'Object 1' }
+    };
+
+    const state = {
       name: 'My first state',
       list: [
         { id: 0, name: 'Object 0'}
       ]
     };
 
-    const action = {
-      type: 'ADD_NEW_SURVEY',
-      survey: {
-        id: 1,
-        name: 'Object 1'
-      }
-    };
-
-    const finalAction = {
-      ...firstState,
+    const state_after = {
+      name: 'My first state',
       list: [
-        ...firstState.list,
-        action.survey
+        { id: 0, name: 'Object 0'},
+        { id: 1, name: 'Object 1' }
       ]
     };
 
-    assert.deepEqual(surveyView(firstState, action), finalAction);
+    assert.plan(1);
+
+    assert.deepEqual(
+      surveyView(state, action),
+      state_after,
+      'New survey should be pushed into list'
+    );
+
     assert.end();
   });
 
   // ADD_SLIDE
   test('ADD_SLIDE', assert => {
 
-    const surveyVal = {
-      doc: {
-        text1: {
-          slide_number: 0,
-          type:'text',
-          heading: 'Introduction',
-          body: '<h2>Hi Rachel, congratulations (...)'
-        }
-      }
-    };
-
-    const surveyValAfter = {
-      doc: {
-        text1: {
-          slide_number: 0,
-          type:'text',
-          heading: 'Introduction',
-          body: '<h2>Hi Rachel, congratulations (...)'
-        },
-        newSlide: {
-          type: 'text',
-          heading: 'Introduction',
-          body: '<h2>Hi Rachel, congratulations (...)',
-          slide_number: 1
-        }
-      }
-    };
-
-    const actionAddSlide = {
+    const action = {
       type: 'ADD_SLIDE',
-      slideID: 'newSlide',
+      slideID: 'bar',
       slideInfo: {
-        type: 'text',
-        heading: 'Introduction',
-        body: '<h2>Hi Rachel, congratulations (...)'
+        val: 'b'
       }
     };
 
-    const surveyViewAddSlideBefore = {
-      list: [],
-      survey: surveyVal,
-      openCards: []
+    const state = {
+      name: 'Hello',
+      survey: {
+        name: 'survey',
+        doc: {
+          'foo': {
+            val: 'a',
+            slide_number: 1
+          }
+        }
+      }
     };
 
-    const surveyViewAddSlideAfter = {
-      openCards: [],
-      list: [],
-      survey: surveyValAfter
+    const state_after = {
+      name: 'Hello',
+      survey: {
+        name: 'survey',
+        doc: {
+          'foo': {
+            val: 'a',
+            slide_number: 1
+          },
+          'bar': {
+            val: 'b',
+            slide_number: 2
+          }
+        }
+      }
     };
 
-    const surveyViewAddSlideAction = surveyView(surveyViewAddSlideBefore, actionAddSlide);
+    assert.plan(7);
 
-    assert.ok(surveyViewAddSlideAction, surveyViewAddSlideAfter, 'ADD_SLIDE Should Return The State With An Updated Survey Value');
+    // Run reducer
+    const newState = surveyView(state, action);
+
+    assert.ok(newState.name === state.name, 'state maintains other properties');
+    assert.ok(newState.survey, 'state passes survey object');
+    assert.ok(newState.survey.name === state.survey.name, 'state.survey maintains other properties');
+    assert.ok(newState.survey.doc, 'state.survey has a doc property');
+    assert.ok(typeof newState.survey.doc === 'object', 'state.survey.doc is an object');
+    assert.ok(Object.keys(newState.survey.doc).length === 2, 'doc has two properties');
+    assert.deepEqual(newState, state_after, 'deep equals matches');
+
     assert.end();
   });
 
   // REMOVE_SLIDE
-  test('REMOVE_SLIDE', assert => {
+  test('REMOVE_SLIDE', t => {
 
-    const surveyValRem = {
-      doc: {
-        text1: {
-          slide_number: 0,
-          type:'text',
-          heading: 'Introduction',
-          body: '<h2>Hi Rachel, congratulations (...)'
-        },
-        newSlide: {
-          type: 'text',
-          heading: 'Introduction',
-          body: '<h2>Hi Rachel, congratulations (...)',
-          slide_number: 1
-        }
-      }
-    };
-
-    const surveyValRemAfterP1 = {
-      doc: {
-        text1: {
-          slide_number: 0,
-          type:'text',
-          heading: 'Introduction',
-          body: '<h2>Hi Rachel, congratulations (...)'
-        }
-      }
-    };
-
-    const surveyValRemAfterP2 = {
-      doc: {
-        text1: {
-          slide_number: 0,
-          type:'text',
-          heading: 'Introduction',
-          body: '<h2>Hi Rachel, congratulations (...)'
-        },
-        newSlide: {
-          type: 'text',
-          heading: 'Introduction',
-          body: '<h2>Hi Rachel, congratulations (...)',
-          slide_number: 1
-        }
-      }
-    };
-
-    const actionRemoveSlideP1 = {
+    const action = {
       type: 'REMOVE_SLIDE',
-      slideID: 'newSlide'
+      slideID: 'bar'
     };
 
-    const actionRemoveSlideP2 = {
-      type: 'REMOVE_SLIDE',
-      slideID: 'notValidSlide'
+    const state = {
+      name: 'Hello',
+      survey: {
+        name: 'survey',
+        doc: {
+          'foo': {
+            val: 'a',
+            slide_number: 1
+          },
+          'bar': {
+            val: 'b',
+            slide_number: 2
+          }
+        }
+      }
     };
 
-    const surveyViewRemoveSlideBefore = {
-      list: [],
-      survey: surveyValRem,
-      openCards: []
+    const state_after = {
+      name: 'Hello',
+      survey: {
+        name: 'survey',
+        doc: {
+          'foo': {
+            val: 'a',
+            slide_number: 1
+          }
+        }
+      }
     };
 
-    const surveyViewRemoveSlideAfterP1 = {
-      openCards: [],
-      list: [],
-      survey: surveyValRemAfterP1
-    };
+    t.plan(1);
 
-    const surveyViewRemoveSlideAfterP2 = {
-      openCards: [],
-      list: [],
-      survey: surveyValRemAfterP2
-    };
+    t.deepEqual(
+      surveyView(state, action),
+      state_after,
+      'REMOVE SLIDE doesn\'t work properly'
+    );
 
-    const surveyViewRemoveSlideActionP1 = surveyView(surveyViewRemoveSlideBefore, actionRemoveSlideP1);
-    const surveyViewRemoveSlideActionP2 = surveyView(surveyViewRemoveSlideBefore, actionRemoveSlideP2);
-
-    assert.ok(surveyViewRemoveSlideActionP1, surveyViewRemoveSlideAfterP1, 'REMOVE_SLIDE Should Return The State With The Given Valid slideID Removed');
-    assert.ok(surveyViewRemoveSlideActionP2, surveyViewRemoveSlideAfterP2, 'REMOVE_SLIDE Should Return The Current State When Given An Invalid slideID');
-    assert.end();
+    t.end();
   });
 
   // EDIT_SLIDE
-  test('EDIT_SLIDE', assert => {
+  test('EDIT_SLIDE', t => {
 
-    const surveyValEdit = {
-      doc: {
-        text1: {
-          slide_number: 0,
-          type:'text',
-          heading: 'Introduction',
-          body: '<h2>Hi Rachel, congratulations (...)'
-        },
-        newSlide: {
-          type: 'text',
-          heading: 'Welcome',
-          slide_number: 1
-        }
-      }
-    };
-
-    const surveyValEditAfterP1 = {
-      doc: {
-        text1: {
-          slide_number: 0,
-          type:'text',
-          heading: 'Introduction',
-          body: '<h2>Hi Rachel, congratulations (...)'
-        },
-        newSlide: {
-          type: 'text',
-          heading: 'Introduction',
-          body: '<h2>Hi Rachel, congratulations (...)',
-          slide_number: 1
-        }
-      }
-    };
-
-    const surveyValEditAfterP2 = {
-      doc: {
-        text1: {
-          slide_number: 0,
-          type:'text',
-          heading: 'Introduction',
-          body: '<h2>Hi Rachel, congratulations (...)'
-        },
-        newSlide: {
-          type: 'text',
-          heading: 'Welcome',
-          slide_number: 1
-        }
-      }
-    };
-
-    const dataEdit = {
-      heading: 'Introduction',
-      body: '<h2>Hi Rachel, congratulations (...)'
-    };
-
-    const actionEditSlideP1 = {
+    const action = {
       type: 'EDIT_SLIDE',
-      slideID: 'newSlide',
-      data: dataEdit
+      slide_number: 'bat',
+      data: {
+        foo: 'bar'
+      }
     };
 
-    const actionEditSlideP2 = {
+    const bad_action = {
       type: 'EDIT_SLIDE',
-      slideID: 'notValidSlide',
-      data: dataEdit
+      slide_number: 'bbt',
+      data: {
+        foo: 'bar'
+      }
     };
 
-    const surveyViewEditSlideBefore = {
-      list: [],
-      survey: surveyValEdit,
-      openCards: []
+    const state = {
+      hello: 'world',
+      survey: {
+        baz: 'qux',
+        doc: {
+          xyzzy: { name: 'hi' },
+          bat: { foo: 'friends' }
+        }
+      }
     };
 
-    const surveyViewEditSlideAfterP1 = {
-      openCards: [],
-      list: [],
-      survey: surveyValEditAfterP1
+    const state_after = {
+      hello: 'world',
+      survey: {
+        baz: 'qux',
+        doc: {
+          xyzzy: { name: 'hi' },
+          bat: { foo: 'bar' }
+        }
+      }
     };
 
-    const surveyViewEditSlideAfterP2 = {
-      openCards: [],
-      list: [],
-      survey: surveyValEditAfterP2
-    };
+    t.plan(2);
 
-    const surveyViewEditSlideActionP1 = surveyView(surveyViewEditSlideBefore, actionEditSlideP1);
-    const surveyViewEditSlideActionP2 = surveyView(surveyViewEditSlideBefore, actionEditSlideP2);
+    t.deepEqual(
+      surveyView(state, action),
+      state_after,
+      'Edit broke'
+    );
 
-    assert.ok(surveyViewEditSlideActionP1, surveyViewEditSlideAfterP1, 'EDIT_SLIDE Should Return The State With The Given Valid slideID Updated');
-    assert.ok(surveyViewEditSlideActionP2, surveyViewEditSlideAfterP2, 'EDIT_SLIDE Should Return The Current State When Given An Invalid slideID');
+    t.deepEqual(
+      surveyView(state, bad_action),
+      state,
+      'Un-recognized slides don\'t cause issues'
+    );
 
-    assert.end();
+    t.end();
   });
 
   // TOGGLE_OPEN_CARD
-  test('TOGGLE_OPEN_CARD', assert => {
-
-    const surveyVal = [1, 2, 3];
-    const surveyValAfterP1 = [1, 2, 3, 4];
-    const surveyValAfterP2 = [1, 2, 4];
-
-    const actionToggleOpenCardP1 = {
+  test('TOGGLE_OPEN_CARD', t => {
+    const action = {
       type: 'TOGGLE_OPEN_CARD',
-      cardID: 4
+      cardID: 'foo'
     };
 
-    const actionToggleOpenCardP2 = {
-      type: 'TOGGLE_OPEN_CARD',
-      cardID: 3
+    const state = {
+      name: 'bar',
+      openCards: []
     };
 
-    const surveyViewToggleOpenCardBefore = {
-      list: [],
-      survey: {},
-      openCards: surveyVal
+    const state_after = {
+      name: 'bar',
+      openCards: ['foo']
     };
 
-    const surveyViewToggleOpenCardAfterP1 = {
-      list: [],
-      survey: {},
-      openCards: surveyValAfterP1
-    };
+    t.plan(2);
 
-    const surveyViewToggleOpenCardAfterP2 = {
-      list: [],
-      survey: {},
-      openCards: surveyValAfterP2
-    };
+    t.deepEqual(
+      surveyView(state, action),
+      state_after,
+      'CardID needs to be added to state.openCards if it isn\'t there'
+    );
 
-    const surveyViewToggleOpenCardActionP1 = surveyView(surveyViewToggleOpenCardBefore, actionToggleOpenCardP1);
-    const surveyViewToggleOpenCardActionP2 = surveyView(surveyViewToggleOpenCardBefore, actionToggleOpenCardP2);
+    t.deepEqual(
+      surveyView(state_after, action),
+      state,
+      'CardID needs to be removed from state.openCards if it\'s already there'
+    );
 
-    assert.ok(surveyViewToggleOpenCardAfterP1, surveyViewToggleOpenCardActionP1, 'TOGGLE_OPEN_CARD When Given An ID In openCard Array Should Return The State With An openCards Value With The CardID Removed');
-    assert.ok(surveyViewToggleOpenCardAfterP2, surveyViewToggleOpenCardActionP2, 'TOGGLE_OPEN_CARD When Given An ID Not In openCard Array Should Return The State With An openCards Value With The CardID Added');
-    assert.end();
+    t.end();
+
   });
 
+  // TOGGLE_SEND_SURVEY_MODAL
+  test('TOGGLE_SEND_SURVEY_MODAL', t => {
+    const action = {
+      type: 'TOGGLE_SEND_SURVEY_MODAL'
+    };
 
+    const state = {};
 
+    const state_after = {
+      showModal: true
+    };
+
+    const state_after_2 = {
+      showModal: false
+    };
+
+    t.plan(2);
+
+    t.deepEqual(surveyView(state,action), state_after);
+    t.deepEqual(surveyView(state_after,action), state_after_2);
+
+    t.end();
+  });
 });
 

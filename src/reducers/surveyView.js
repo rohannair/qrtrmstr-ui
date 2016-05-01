@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const initialState = {
+export const initialState = {
   showModal: false,
   chosenUser: {},
   list: [],
@@ -37,7 +37,7 @@ export default function surveyView(state = initialState, action) {
       ...state.survey.doc,
       [action.slideID]: {
         ...action.slideInfo,
-        slide_number: Object.keys(state.survey.doc).length
+        slide_number: Object.keys(state.survey.doc).length + 1
       }
     };
 
@@ -63,7 +63,7 @@ export default function surveyView(state = initialState, action) {
     const { survey } = state;
 
     // If slide doesn't exist (which is weird...)
-    if (!slide_number in survey.doc) return state;
+    if (!(slide_number in survey.doc)) return state;
 
     let newState = {
       ...state,
@@ -78,8 +78,6 @@ export default function surveyView(state = initialState, action) {
         }
       }
     };
-
-    console.log("newState", newState);
 
     return {
       ...state,
