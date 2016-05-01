@@ -1,15 +1,7 @@
-import { createStore } from 'redux';
-import assert from 'assert';
 import test from 'tape';
 
 // Reducer
 import surveyView, { initialState } from '../reducers/surveyView';
-
-const store = createStore(surveyView);
-
-console.log('Initial state:');
-console.log(store.getState());
-console.log('---------------');
 
 test('SurveyView', ({ test }) => {
 
@@ -298,7 +290,7 @@ test('SurveyView', ({ test }) => {
     t.deepEqual(
       surveyView(state, action),
       state_after,
-      'Edit broke'
+      'Edit the proper slide object on input'
     );
 
     t.deepEqual(
@@ -363,8 +355,16 @@ test('SurveyView', ({ test }) => {
 
     t.plan(2);
 
-    t.deepEqual(surveyView(state,action), state_after);
-    t.deepEqual(surveyView(state_after,action), state_after_2);
+    t.deepEqual(
+      surveyView(state,action),
+      state_after,
+      'If modal isn\'t open, toggle showModal to true'
+    );
+    t.deepEqual(
+      surveyView(state_after, action),
+      state_after_2,
+      'If modal ist open, toggle showModal to false'
+    );
 
     t.end();
   });

@@ -1,14 +1,7 @@
-import { createStore } from 'redux';
 import test from 'tape';
 
 // Reducer
 import app from '../reducers/app';
-
-const store = createStore(app);
-
-console.log('Initial state:');
-console.log(store.getState());
-console.log('---------------');
 
 test('App reducer', next => {
 

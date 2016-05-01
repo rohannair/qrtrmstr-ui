@@ -1,14 +1,7 @@
-import { createStore } from 'redux';
 import test from 'tape';
 
 // Reducer
 import accountActions from '../reducers/login';
-
-const store = createStore(accountActions);
-
-console.log('Initial state:');
-console.log(store.getState());
-console.log('---------------');
 
 test('AccountActions', t => {
   t.plan(3);
@@ -38,8 +31,6 @@ test('AccountActions', t => {
     { token: null },
     'Null the token on logout and kill the state'
   );
-
-
 
   t.end();
 });
