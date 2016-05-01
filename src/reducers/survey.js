@@ -13,7 +13,7 @@ export default function survey(state = defaultState, action) {
   case 'SURVEY_RETRIEVED':
     return {
       survey: action.survey.doc,
-      ...state.selected
+      ...state
     };
 
   case 'SURVEY_SELECTION':
