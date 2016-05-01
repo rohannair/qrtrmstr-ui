@@ -37,7 +37,7 @@ class SendSurveyModal extends Component {
     const userOptions = Object.keys(users).map(index => {
       let user = users[index];
       let userInfo = { id: user.id, first_name: user.first_name, last_name: user.last_name, email: user.username, surveyID };
-      return <option value={ JSON.stringify(userInfo) } key={user.id}>{user.first_name+ " " +user.last_name}</option>
+      return <option value={ JSON.stringify(userInfo) } key={user.id}>{user.first_name + ' ' + user.last_name}</option>;
     });
 
     return (
