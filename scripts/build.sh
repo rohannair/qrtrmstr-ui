@@ -1,37 +1,80 @@
 #!/bin/bash -e
 
-ARTIFACT_FILE=$1
-
-if [ x == x$ARTIFACT_FILE ]
-then
-  echo Usage: $0 artifact_file
-  echo e.g. $0 qrtrmstr-ui-2016-05-01_02:16:11-081f50931d7326ce94c1ccc9152c26f10a902825.tar.bz2
-  exit 1
-fi
-
 umask 0002
-
 export PATH=/usr/local/bin:$PATH
+
+PROJECT=qrtrmstr-ui
 ARTIFACT_DIR=/opt/artifacts
-LATEST_FILE=qrtrmstr-ui-latest
+LATEST_FILE=${PROJECT}-latest
 FILES_TO_INCLUDE="index.html public/"
 FILES_TO_DELETE="node_modules public"
 
+usage () {
+  echo "Usage: $0 options (-bt) -a artifact_file -h for help";
+  echo "E.g. $0 -b -t -a ${PROJECT}-2016-05-01_02:16:11-081f50931d7326ce94c1ccc9152c26f10a902825.tar.bz2"
+  echo
+}
+
+if ( ! getopts "bta:h" opt )
+then
+  usage
+  exit 1;
+fi
+
+TEST=no
+BUILD=no
+while getopts "bta:h" opt; do
+  case $opt in
+    b) BUILD=yes;;
+    t) TEST=yes;;
+    a) ARTIFACT_FILE=$OPTARG;;
+    h) usage ; exit 0 ;;
+  esac
+done
+
+if [ x$ARTIFACT_FILE == x ]
+then
+  usage
+  exit 2
+fi
+
 npm cache clean
 npm install
-npm run test
 
-npm run build
+if [ x$BUILD == xyes ]
+then
+  npm run test
+else
+  echo
+  echo "We were told to skip testing this project."
+  echo
+fi
+
+if [ x$BUILD == xyes ]
+then
+  npm run build
+else
+  echo
+  echo "We were told to skip building this project."
+  echo
+fi
 
 ARTIFACT_PATH=${ARTIFACT_DIR}/${ARTIFACT_FILE}
 
-# Pack and copy the artifact somewhere
-tar -cjvf ${ARTIFACT_PATH} ${FILES_TO_INCLUDE}
+# Pack FILES_TO_INCLUDE and copy the artifact somewhere
+echo
+echo "Creating artifact at ${ARTIFACT_PATH}, including ${FILES_TO_INCLUDE} there"
+tar cjf ${ARTIFACT_PATH} ${FILES_TO_INCLUDE}
 
-# Tell deployment system what the latest artifact is:
+# Keep a record of what the latest artifact is:
+echo
+echo "Depositing latest artifact name into ${ARTIFACT_DIR}/${LATEST_FILE}"
 LATEST_FILE_TMP=$(mktemp)
 echo ${ARTIFACT_FILE} > ${LATEST_FILE_TMP}
 chmod ugo+r ${LATEST_FILE_TMP}
 mv ${LATEST_FILE_TMP} ${ARTIFACT_DIR}/${LATEST_FILE}
 
+# Clean up FILES_TO_DELETE
+echo
+echo "Cleaning up ${FILES_TO_DELETE}"
 rm -rf ${FILES_TO_DELETE}
