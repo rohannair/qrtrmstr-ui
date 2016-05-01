@@ -7,6 +7,7 @@ const webpack      = require('webpack');
 
 const config = {
   devtool: 'cheap-source-map',
+  bail: true,
 
   entry: [
     './src/index.js'
