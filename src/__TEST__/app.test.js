@@ -10,51 +10,85 @@ console.log('Initial state:');
 console.log(store.getState());
 console.log('---------------');
 
-test('App', next => {
+test('App reducer', next => {
 
-  next.test('Return Current State When No Case Matches', assert => {
+  next.test('Defaults', t => {
 
-    const actionDefault = {
-      type: 'DEFAULT'
+    const action = {
+      type: 'BLABLA',
+      users: 'abc'
     };
 
-    const appDefaultBefore = {
-      users: {}
+    const state = {
+      users: []
     };
 
-    const appDefaultAfter = {
-      users: {}
-    };
+    t.plan(2);
 
-    const appDefaultWithAction = app(appDefaultBefore, actionDefault);
+    t.ok(Array.isArray(state.users), 'Users property is an array');
+    t.deepEqual(app(state, action), state, 'No mutation if action type is unrecognized');
 
-    assert.ok(appDefaultWithAction, appDefaultAfter, 'Should Return The Initial (Default) State');
-    assert.end();
+    t.end();
 
   });
 
-  next.test('USERS_RETRIEVED', assert => {
+  next.test('USERS_RETRIEVED', t => {
 
-    const users = {
-      1: {first_name: 'Rohan', last_name: 'Nair', email: 'r@rohannair.ca', isAdmin: 't' },
-      2: {first_name: 'Ron', last_name: 'Swanson', email: 'rs@parks.rec', isAdmin: 'f' },
-      3: {first_name: 'Lesley', last_name: 'Knope', email: 'lk@parks.rec', isAdmin: 'f' }
-    };
-
-    const actionUsersRetrieved = {
+    const action = {
       type: 'USERS_RETRIEVED',
-      users: users
+      users: ['foo', 'bar']
     };
-    const appUsersRetrievedBefore = {
-      users: {}
-    };
-    const appUsersRetrievedAfter = {
-      users: users
-    };
-    const appUsersRetrievedAction = app(appUsersRetrievedBefore, actionUsersRetrieved);
 
-    assert.ok(appUsersRetrievedAction, appUsersRetrievedAfter, 'USERS_RETRIEVED Should Return The State With A Non-Empty Users Value');
-    assert.end();
+    const state = {};
+
+    const new_state = {
+      users: ['foo', 'bar']
+    };
+
+    t.plan(1);
+    t.deepEqual(app(state,action), new_state, 'USERS_RETRIEVED should return the state with a non-empty users value');
+    t.end();
   });
+
+  next.test('TOGGLE_NEW_USER_MODAL', t => {
+
+    const action = {
+      type: 'TOGGLE_NEW_USER_MODAL'
+    };
+
+    const state = {};
+    const state_after = { showModal: true };
+    const state_after_2 = { showModal: false };
+
+    t.plan(2);
+
+    t.deepEqual(app(state, action), state_after, 'Open modal');
+    t.deepEqual(app(state_after, action), state_after_2, 'Close modal');
+
+    t.end();
+  });
+
+  next.test('NEW_USER_CREATED', t => {
+    const action = {
+      type: 'NEW_USER_CREATED',
+      new_user: 'Rohan'
+    };
+
+    const state = {
+      users: [
+        'Kobe'
+      ]
+    };
+
+    const state_after = {
+      users: ['Kobe', 'Rohan']
+    };
+
+    t.plan(1);
+    t.deepEqual(app(state, action), state_after, 'Insert new user');
+    t.end();
+
+  });
+
 });
 
