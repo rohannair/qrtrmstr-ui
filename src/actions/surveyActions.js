@@ -1,5 +1,5 @@
 import utils from './utils';
-import request, { get, API_ROOT } from '../utils/request';
+import request, { get, post, API_ROOT } from '../utils/request';
 
 const getDomain = utils.getDomain;
 const LOCATION_ROOT = getDomain() + API_ROOT;
@@ -11,20 +11,13 @@ export const setSelection = id => {
   };
 };
 
-export const submitSurvey = (choices) => {
-  const url = getDomain();
-  return dispath => request(
-    'POST',
-    `${LOCATION_ROOT}submitSurvey`,
-    { id: 3, survey_results: choices }
-  )
+export const submitSurvey = (choices) =>
+  dispatch => post(`${LOCATION_ROOT}submitSurvey`, { id: 3, survey_results: choices })
   .then(json => ({ type: 'SURVEY_SUBMITTED' }));
-};
 
-export const getSurvey = (token = '', id) => {
-  return dispatch => get(`${LOCATION_ROOT}surveys/${id}`, token)
+export const getSurvey = (token = '', id) =>
+  dispatch => get(`${LOCATION_ROOT}surveys/${id}`, token)
   .then(survey => dispatch(surveyRetrieved(survey)));
-};
 
 function surveyRetrieved(survey = {}) {
   return {
