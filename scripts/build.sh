@@ -14,11 +14,11 @@ npm run test
 
 npm run build
 
-ARTIFACT_FILE=${ARTIFACT_DIR}/qrtrmstr-ui-$(date +%Y-%m-%d_%H:%M:%S)-${GIT_COMMIT}.tar.bz2
+ARTIFACT_FILE=qrtrmstr-ui-$(date +%Y-%m-%d_%H:%M:%S)-${GIT_COMMIT}.tar.bz2
 ARTIFACT_PATH=${ARTIFACT_DIR}/${ARTIFACT_FILE}
 
 # Pack and copy the artifact somewhere
-tar -cjvf ${ARTIFACT_FILE} ${FILES_TO_INCLUDE}
+tar -cjvf ${ARTIFACT_PATH} ${FILES_TO_INCLUDE}
 
 # Tell deployment system what the latest artifact is:
 LATEST_FILE_TMP=$(mktemp)
