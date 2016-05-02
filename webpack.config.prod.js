@@ -45,8 +45,33 @@ const config = {
       },
 
       {
-        test: /\.(eot|woff|woff2|ttf|svg|png|jpg|otf)$/,
-        loader: 'url-loader?limit=30000&name=[name]-[hash].[ext]'
+        test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?limit=10000&mimetype=application/font-woff'
+      },
+
+      {
+        test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?limit=10000&mimetype=application/font-woff'
+      },
+
+      {
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?limit=10000&mimetype=application/octet-stream'
+      },
+
+      {
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'file'
+      },
+
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?limit=10000&mimetype=image/svg+xml'
+      },
+
+      {
+        test: /\.(png|jpg|otf)$/,
+        loader: 'file-loader'
       }
 
     ],
