@@ -13,14 +13,20 @@ const SurveyEditorSidebar = (props) => {
     { id: 'option', name: 'option', uri: '#', icon: 'grid-two-up' },
   ];
 
+  const customStyle = {
+    top: '20px'
+  }
+
   return (
-    <Sticky className={'newSticky'}>
-      <Card>
-        <Button
-          onClick={ props.save }
-          classes='inverse block xl'
-        >Save</Button>
-      </Card>
+    <Sticky stickyStyle={customStyle}>
+      <div className={'topBuffer'}>
+        <Card>
+          <Button
+            onClick={ props.save }
+            classes='inverse block xl'
+          >Save</Button>
+        </Card>
+      </div>
       <Card>
         <h3>Add slides</h3>
         <ButtonGroup vertical={ true }>
