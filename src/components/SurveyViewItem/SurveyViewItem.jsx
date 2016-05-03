@@ -5,25 +5,66 @@ import moment from 'moment';
 import Button from '../../components/Button';
 import ButtonGroup from '../../components/ButtonGroup';
 
-const SurveyViewItem = (props) => {
+const SurveyViewItem = props => {
   const href = `/survey/${props.id}`;
 
   return (
-    <tr key={ props.id } className="userList-option">
-      <td className="checkbox"><input type="checkbox" /></td>
-      <td>{ props.name } <a href={ href } target="_blank"><i className="oi" data-glyph="external-link"></i></a></td>
-      <td>{ moment(props.created_at).fromNow() }</td>
-      <td>{ moment(props.updated_at).fromNow() }</td>
-      <td>
+    <div key={ props.id } className="surveyView-option">
+      <div className="cell checkbox"><input type="checkbox" /></div>
+
+      <div className="cell name">
+        { `${props.name}  `}
+
+        <a href={ href } target="_blank">
+          <i className="fa fa-external-link"></i>
+        </a>
+      </div>
+
+      <div className="cell modified">
+        { moment(props.updated_at).format('MMMM DD YYYY, h:mma') }
+      </div>
+
+      <div className="cell collaborators">
+      </div>
+
+      <div className="cell status">
+      </div>
+
+      <div className="cell actions">
         <ButtonGroup>
+
+          <Button
+            classes="primary sm"
+            icon="cog"
+            toolTipText="Edit Playbook Details"
+          />
+
           <Link to={`/dashboard/surveys/edit/${props.id}`}>
-            <Button classes='inverse sm'>Edit</Button>
+            <Button
+              classes='inverse sm'
+              icon="pencil"
+              toolTipText="Edit Playbook"
+            />
           </Link>
-          <Button onClick={ props.duplicate.bind(this, props.id) } classes="inverse md">Duplicate</Button>
-          <Button onClick={ props.onShowModal.bind(this, { id: props.id, name: props.name}) } classes="primary md">Send To User</Button>
+
+          <Button
+            onClick={ props.duplicate.bind(this, props.id) }
+            classes="inverse sm"
+            icon="copy"
+            toolTipText="Duplicate Playbook"
+          />
+
+          <Button
+            onClick={ props.onShowModal.bind(this,
+              { id: props.id, name: props.name}
+            ) }
+            classes="secondary sm"
+            icon="paper-plane"
+            toolTipText="Send to User"
+          />
         </ButtonGroup>
-      </td>
-    </tr>
+      </div>
+    </div>
   );
 };
 

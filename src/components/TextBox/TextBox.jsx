@@ -93,7 +93,7 @@ class TextBox extends Component {
             center={true}
             classes='secondary'
             onClick={this._onItalicClick}
-            icon='double-quote-serif-left'
+            icon='quote-left'
           />
 
           <Button
