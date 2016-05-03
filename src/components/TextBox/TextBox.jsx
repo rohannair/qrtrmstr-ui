@@ -13,12 +13,23 @@ class TextBox extends Component {
   constructor(props) {
     super(props);
 
+    const body = props.bodyKey ? props.body[props.bodyKey] : props.body;
     this.state = {
-      editorState: EditorState.createWithContent(stateFromHTML(props.body))
+      slideNum: props.slideNum,
+      slideBody: props.body,
+      editorState: EditorState.createWithContent(stateFromHTML(body))
     };
 
     this.focus = () => this.refs.editor.focus();
-    this.onChange = (editorState) => this.setState({ editorState });
+    this.onChange = (editorState) => {
+      this.setState({ editorState });
+      const updatedIntro = this._outputHtml();
+      if (props.bodyKey) {
+        return props.updateSlide(props.bodyKey, updatedIntro);
+      } else {
+        return props.updateSlide('body', updatedIntro, this.state.slideNum);
+      }
+    };
 
     this.handleKeyCommand = (command) => this._handleKeyCommand(command);
   };
@@ -82,7 +93,7 @@ class TextBox extends Component {
             center={true}
             classes='secondary'
             onClick={this._onItalicClick}
-            icon='double-quote-serif-left'
+            icon='quote-left'
           />
 
           <Button
@@ -102,12 +113,6 @@ class TextBox extends Component {
           ref="editor"
         />
         <div className="footer">
-          <Button
-            classes="inverse md"
-            onClick={this._outputHtml}
-          >
-            Save
-          </Button>
         </div>
       </div>
     );
@@ -115,7 +120,9 @@ class TextBox extends Component {
 
   _outputHtml = () => {
     const html = stateToHTML(this.state.editorState.getCurrentContent());
-    console.log(JSON.stringify(html.toString()));
+    // const htmlProc = JSON.stringify(html.toString());
+    const htmlProc = html.toString();
+    return htmlProc;
   };
 
   _onBoldClick = () => {

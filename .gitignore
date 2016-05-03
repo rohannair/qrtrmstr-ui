@@ -1,6 +1,7 @@
 ### Local ###
 node_modules/
 public/
+stats.json
 
 ### SublimeText ###
 # cache files for sublime text

@@ -5,6 +5,7 @@ import Sidebar from './Sidebar';
 
 import reset from 'normalize.css';
 import icons from '../../assets/font/css/open-iconic.css';
+import fontAwesome from '../../assets/font/css/font-awesome.min.css';
 import styles from './global.css';
 
 const AppContainer = props => {

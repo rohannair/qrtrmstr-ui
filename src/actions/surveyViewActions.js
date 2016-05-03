@@ -9,12 +9,27 @@ function surveysRetrieved(surveyList = {}) {
     type: 'SURVEYS_RETRIEVED',
     surveyList
   };
-}
+};
 
 // Single survey retrieved for editing
 function singleSurveyRetrieved(survey = {}) {
   return {
     type: 'SINGLE_SURVEY_RETRIEVED',
+    survey
+  };
+};
+
+export const updateSurveyState = (slide_number, data) => {
+  return {
+    type: 'EDIT_SLIDE',
+    slide_number,
+    data
+  };
+};
+
+function addNewSurvey(survey = {}) {
+  return {
+    type: 'ADD_NEW_SURVEY',
     survey
   };
 }
@@ -148,11 +163,11 @@ export const createSurvey = (token, payload) => {
 };
 
 // Modify existing Survey
-export const modifySurvey = (token, payload) => {
+export const modifySurvey = (token, payload, id) => {
   const url = getDomain();
   return dispatch => {
-    return fetch(`${url}/api/v1/surveys/${payload.id}`, {
-      method: 'POST',
+    return fetch(`${url}/api/v1/surveys/${id}`, {
+      method: 'PUT',
       headers: {
         'Accept': 'application/json',
         'Authorization': 'bearer ' + token,

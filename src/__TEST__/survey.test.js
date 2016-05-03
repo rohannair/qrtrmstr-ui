@@ -1,98 +1,70 @@
-import { createStore } from 'redux';
-import expect from 'expect';
 import test from 'tape';
 
 // Reducer
 import survey from '../reducers/survey';
 
-const store = createStore(survey);
-
-console.log('Initial state:');
-console.log(store.getState());
-console.log('---------------');
-
 test('Survey', next => {
 
-  next.test('Return Current State When No Case Matches', assert => {
+  next.test('SURVEY_RETRIEVED', t => {
 
-    const actionDefault = {
-      type: 'DEFAULT'
-    };
-
-    const surveyDefaultBefore = {
-      survey: {},
-      selected: {}
-    };
-
-    const surveyDefaultAfter = {
-      survey: {},
-      selected: {}
-    };
-
-    const surveyDefaultWithAction = survey(surveyDefaultBefore, actionDefault);
-
-    assert.ok(surveyDefaultWithAction, surveyDefaultAfter, 'Should Return The Initial (Default) State');
-    assert.end();
-  });
-
-  next.test('SURVEY_RETRIEVED', assert => {
-
-    const selected = {};
-
-    const surveyVal = {
-      doc: {
-        text1: {
-          slide_number: 0,
-          type: 'text',
-          heading: 'Introduction',
-          body: '<h2>Hi Rachel, congratulations (...)'
+    const action = {
+      type: 'SURVEY_RETRIEVED',
+      survey: {
+        doc: {
+          foo: 'bar'
         }
+      },
+      selected: 'blabla'
+    };
+
+    const state = {
+      baz: 'qux',
+      selected: {
+        obj: 'nonono'
       }
     };
 
-    const actionSurveyRetrieved = {
-      type: 'SURVEY_RETRIEVED',
-      survey: surveyVal
+    const state_after = {
+      baz: 'qux',
+      survey: {
+        foo: 'bar'
+      },
+      selected: {
+        obj: 'nonono'
+      }
     };
 
-    const surveySurveyRetrievedBefore = {
-      survey: {},
-      selected: {}
-    };
-
-    const surveySurveyRetrievedAfter = {
-      survey: surveyVal,
-      selected: {}
-    };
-
-    const surveySurveyRetrievedAction = survey(surveySurveyRetrievedBefore, actionSurveyRetrieved);
-
-    assert.ok(surveySurveyRetrievedAction, surveySurveyRetrievedAfter, 'SURVEY_RETRIEVED Should Return The State With A Non-Empty Survey Value');
-    assert.end();
+    t.plan(1);
+    t.deepEqual(
+      survey(state, action),
+      state_after,
+      'Add survey object to state on retrieval'
+    );
+    t.end();
   });
 
-  next.test('SURVEY_SELECTION', assert => {
-
-    const selected = '1e9eddbc-7ede-43fd-9bde-364bba4d84e9';
-
-    const actionSurveySelection = {
+  next.test('SURVEY_SELECTION', t => {
+    const action = {
       type: 'SURVEY_SELECTION',
-      id: selected
+      id: {
+        key: 'foo',
+        val: 'bar'
+      }
     };
 
-    const surveySurveySelectionBefore = {
-      survey: {},
-      selected: {}
+    const state = {};
+    const state_after = {
+      selected: {
+        foo: 'bar'
+      }
     };
 
-    const surveySurveySelectionAfter = {
-      survey: {},
-      selected: selected
-    };
-
-    const surveySurveySelectionAction = survey(surveySurveySelectionBefore, actionSurveySelection);
-
-    assert.ok(surveySurveySelectionAction, surveySurveySelectionAfter, 'SURVEY_SELECTION Should Return The State With A Non-Empty Selected Value');
-    assert.end();
+    t.plan(1);
+    t.deepEqual(
+      survey(state, action),
+      state_after,
+      'Add selected object to state on selection within survey'
+    );
+    t.end();
   });
 });

@@ -9,11 +9,12 @@ export default function accountActions(state = initialState, { type, token }) {
       ...state,
       token
     };
+
   case 'LOG_OUT':
     return {
-      ...state,
       token: null
     };
+
   default:
     return state;
   }

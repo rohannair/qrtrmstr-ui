@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 import Cookies from 'cookies-js';
 
 // Styles
-import styles from '../UserList/userList.css';
+import styles from './surveyView.css';
 
 // Containers
 import { getSurveys, sendSurvey, duplicatePlaybook } from '../../actions/surveyViewActions';
@@ -21,7 +21,8 @@ class SurveyView extends Component {
 
   state = {
     chosenUser: {},
-    chosenSurvey: {}
+    chosenSurvey: {},
+    editedSurvey: {}
   };
 
   componentWillMount() {
@@ -46,27 +47,17 @@ class SurveyView extends Component {
     const items = [...this.props.surveyList].map(val => <SurveyViewItem key={val.id} {...val} onShowModal={ this._selectSurveyForSending } duplicate={ this._duplicatePlaybook } />);
 
     return (
-      <div className="userList">
-        <Card>
-          <div>Search</div>
-        </Card>
+      <div className="surveyView">
+        <div className="surveyView-header">
+          <div className="cell checkbox"><input type="checkbox" /></div>
+          <div className="cell name">Name</div>
+          <div className="cell modified">Last Modified</div>
+          <div className="cell collaborators">Collaborators</div>
+          <div className="cell status">Status</div>
+          <div className="cell actions">Actions</div>
+        </div>
 
-        <Card noPadding={true}>
-          <table>
-            <thead>
-              <tr className="userList-header">
-                <th className="checkbox"><input type="checkbox" /></th>
-                <th>Name</th>
-                <th>Created</th>
-                <th>Last Modified</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              { items }
-            </tbody>
-          </table>
-        </Card>
+        { items }
         { surveyModal }
       </div>
     );
@@ -122,6 +113,9 @@ class SurveyView extends Component {
     });
     const { chosenUser } = this.state;
   };
+
+  // _changeEdited
+
 };
 
 function mapStateToProps(state) {

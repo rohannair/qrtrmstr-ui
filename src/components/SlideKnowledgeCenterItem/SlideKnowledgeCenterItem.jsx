@@ -12,7 +12,7 @@ const SlideKnowledgeCenterItem = ({ val, i, deleteVideo, onChange }) => {
       <div className="formField">
         <label>Title:</label>
         <input
-          name="title"
+          name="name"
           value={ val.name }
           onChange={ e => onChange(i, e.target.name, e.target.value) }
         />
@@ -27,7 +27,7 @@ const SlideKnowledgeCenterItem = ({ val, i, deleteVideo, onChange }) => {
         />
       </div>
 
-      <ButtonGroup>
+      <ButtonGroup className="deleteVideo" >
         <Button
           classes="tertiary sm"
           onClick={ deleteVideo.bind(this, i) }

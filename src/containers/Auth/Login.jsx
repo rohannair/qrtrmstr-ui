@@ -26,7 +26,6 @@ class App extends Component {
   componentDidMount() {
     const { token, dispatch } = this.props;
     if (token) {
-      debugger;
     }
 
     if (Cookies.get('token')) {

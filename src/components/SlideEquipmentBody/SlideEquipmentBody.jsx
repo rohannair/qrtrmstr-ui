@@ -4,25 +4,24 @@ import styles from './slideEquipmentBody.css';
 import Button from '../Button';
 import ButtonGroup from '../ButtonGroup';
 
-const SlideEquipmentBody = ({ opt, newOption, deleteOption, save }) => {
-  const onClick = () => newOption(opt[0].id);
-  const onRemove = (key) => deleteOption(opt[0].id, key);
-  const onSave = save;
+const SlideEquipmentBody = ({ opt, newOption, editOption, deleteOption }) => {
+  const onClick = () => newOption(opt.id);
+  const onRemove = (key) => deleteOption(opt.id, key);
 
-  const options = opt[0].opts.map((val, i) => {
+  const options = opt.opts.map((val, i) => {
     return (
       <tr key={val}>
         <td>
-          <input defaultValue={val} />
+          <input name="opts" onChange={e => editOption(e.target.name, e.target.value, i) } value={val} />
         </td>
         <td>
-          <input defaultValue={ opt[0].optNames[i] }/>
+          <input name="optNames" onChange={e => editOption(e.target.name, e.target.value, i) } value={ opt.optNames[i] }/>
         </td>
         <td className="removeButton">
           <Button classes="transparent sm" onClick={ onRemove.bind(this, val) }>&times;</Button>
         </td>
       </tr>
-    )
+    );
   });
 
 
@@ -38,13 +37,12 @@ const SlideEquipmentBody = ({ opt, newOption, deleteOption, save }) => {
       </table>
       <div className="buttonRow">
         <ButtonGroup>
-          <Button classes="inverse md" onClick={ onSave }>Save</Button>
           <Button classes="primary md" onClick={ onClick }>+</Button>
         </ButtonGroup>
       </div>
     </div>
   );
 
-}
+};
 
 export default SlideEquipmentBody;
