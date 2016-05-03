@@ -4,7 +4,9 @@
   flex-wrap: nowrap;
   justify-content: space-between;
 
-  border: 1px solid #000;
+  border: 1px solid #DBDCE2;
+  border-radius: 3px;
+  overflow: hidden;
 
   &-header, &-option {
     display: flex;
@@ -12,11 +14,16 @@
     align-items: baseline;
 
     padding: 10px 0;
+    border-bottom: 1px solid #DBDCE2;
+
+    &:last-child {
+      border-bottom: 0;
+    }
   }
 
   &-header {
     background: #F2F3F6;
-    border: 1px solid #DBDCE2;
+
     border-left: 0;
     border-right: 0;
 
@@ -27,6 +34,10 @@
     .actions {
       text-align: left;
     }
+  }
+
+  &-option {
+    padding: 20px 0;
   }
 
   &-body {
