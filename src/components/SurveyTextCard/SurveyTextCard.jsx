@@ -9,7 +9,7 @@ const SurveyTextCard = (props) => {
     <Card key={props.type} footer={<div/>}>
       <h2>{ props.heading }</h2>
       <div
-        className = {props.className || ''}
+        className = {props.textAlign || ''}
         dangerouslySetInnerHTML={{__html: props.body}}
       />
     </Card>

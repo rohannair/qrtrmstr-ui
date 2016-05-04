@@ -15,7 +15,7 @@ const SurveyEditorSidebar = (props) => {
 
   const customStyle = {
     top: '20px'
-  }
+  };
 
   return (
     <Sticky stickyStyle={customStyle}>

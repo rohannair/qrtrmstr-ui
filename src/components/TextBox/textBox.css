@@ -3,6 +3,10 @@
   padding: 10px 2px 2px;
   border-radius: 2px;
 
+  .buttonGroup {
+    overflow: hidden;
+  }
+
   .public-DraftEditor-content {
     background: white;
     padding: 10px;
@@ -10,8 +14,739 @@
     min-height: 250px;
   }
 
+  .secondary {
+    float: left;
+  }
+
   .footer {
     padding: 10px;
     text-align: right;
   }
 }
+
+div.DraftEditor-root.DraftEditor-alignCenter {
+  text-align: center;
+
+  ul {
+    list-style-position: inside;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    text-align: center;
+  }
+
+  ol {
+    list-style-position: inside;
+    margin: 0;
+    padding: 0;
+  }
+}
+div.DraftEditor-root.DraftEditor-alignRight {
+  text-align: right;
+
+  ul {
+    list-style-position: inside;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    text-align: right;
+  }
+
+  ol {
+    list-style-position: inside;
+    margin: 0;
+    padding: 0;
+  }
+}
+div.DraftEditor-root.DraftEditor-alignLeft {
+  text-align: left;
+}
+
+.RichEditor-root {
+  background: #fff;
+  border: 1px solid #ddd;
+  font-family: 'Georgia', serif;
+  font-size: 14px;
+}
+
+.RichEditor-editor {
+  border-top: 1px solid #ddd;
+  cursor: text;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.RichEditor-editor .public-DraftEditorPlaceholder-root,
+.RichEditor-editor .public-DraftEditor-content {
+  margin: 0 -15px -15px;
+}
+
+.RichEditor-editor .public-DraftEditor-content {
+  min-height: 100px;
+}
+
+.RichEditor-hidePlaceholder .public-DraftEditorPlaceholder-root {
+  display: none;
+}
+
+.RichEditor-editor .RichEditor-blockquote {
+  border-left: 5px solid #eee;
+  color: #666;
+  font-family: 'Hoefler Text', 'Georgia', serif;
+  font-style: italic;
+  margin: 16px 0;
+}
+
+.RichEditor-editor .public-DraftStyleDefault-pre {
+  background-color: rgba(0, 0, 0, 0.05);
+  font-family: 'Inconsolata', 'Menlo', 'Consolas', monospace;
+  font-size: 16px;
+}
+
+.RichEditor-controls {
+  font-family: 'Helvetica', sans-serif;
+  font-size: 14px;
+  margin-bottom: 5px;
+  user-select: none;
+}
+
+.RichEditor-styleButton {
+  color: #2E404E;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.RichEditor-activeButton {
+  color: #5890ff;
+  
+}
+
+.subOptions {
+  padding: 3px;
+}
+
+.dropup .dropdown-menu, .navbar-fixed-bottom .dropdown .dropdown-menu {
+    top: auto;
+    bottom: 100%;
+    margin-bottom: 2px;
+}
+.open>.dropdown-menu {
+    display: block;
+}
+.dropdown-menu {
+    position: absolute;
+    left: 30px;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 10px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    list-style: none;
+    font-size: 14px;
+    text-align: left;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 4px;
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    background-clip: padding-box;
+}
+ol, ul {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+*, :after, :before {
+    box-sizing: border-box;
+}
+
+*, :after, :before {
+    box-sizing: border-box;
+}
+
+.btn-toolbar .btn, .btn-toolbar .btn-group, .btn-toolbar .input-group {
+    float: left;
+}
+
+*, :after, :before {
+    box-sizing: border-box;
+}
+
+.btn-group>.btn:first-child:not(:last-child):not(.dropdown-toggle) {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
+.btn-group>.btn:first-child {
+    margin-left: 5px;
+}
+.btn-toolbar .btn, .btn-toolbar .btn-group, .btn-toolbar .input-group {
+    float: left;
+}
+.btn-group-vertical>.btn, .btn-group>.btn {
+    position: relative;
+    float: left;
+}
+.btn-default {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+.btn {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+button, input, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+button, html input[type=button], input[type=reset], input[type=submit] {
+    -webkit-appearance: button;
+    cursor: pointer;
+}
+button, select {
+    text-transform: none;
+}
+button {
+    overflow: visible;
+}
+button, input, optgroup, select, textarea {
+    color: inherit;
+    font: inherit;
+    margin: 0;
+}
+*, :after, :before {
+    box-sizing: border-box;
+}
+
+.btn-group>.btn+.dropdown-toggle {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+.btn-group>.btn:last-child:not(:first-child), .btn-group>.dropdown-toggle:not(:first-child) {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+.btn-group .btn+.btn, .btn-group .btn+.btn-group, .btn-group .btn-group+.btn, .btn-group .btn-group+.btn-group {
+    margin-left: -1px;
+}
+.btn-toolbar .btn, .btn-toolbar .btn-group, .btn-toolbar .input-group {
+    float: left;
+}
+.btn-group-vertical>.btn, .btn-group>.btn {
+    position: relative;
+    float: left;
+}
+.btn-default {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+.btn {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+[role=button] {
+    cursor: pointer;
+}
+button, input, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+button, html input[type=button], input[type=reset], input[type=submit] {
+    -webkit-appearance: button;
+    cursor: pointer;
+}
+button, select {
+    text-transform: none;
+}
+button {
+    overflow: visible;
+}
+button, input, optgroup, select, textarea {
+    color: inherit;
+    font: inherit;
+    margin: 0;
+}
+*, :after, :before {
+    box-sizing: border-box;
+}
+
+
+
+.dropdown-menu>li>a {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: 400;
+    line-height: 1.42857143;
+    color: #333;
+    white-space: nowrap;
+}
+a {
+    color: #337ab7;
+    text-decoration: none;
+}
+a {
+    background-color: transparent;
+}
+*, :after, :before {
+    box-sizing: border-box;
+}
+
+
+.btn-group>.btn:first-child {
+    margin-left: 5px;
+}
+
+.btn-group-vertical>.btn, .btn-group>.btn {
+    position: relative;
+    float: left;
+}
+
+.btn-toolbar .btn, .btn-toolbar .btn-group, .btn-toolbar .input-group {
+    float: left;
+}
+
+.btn-group-vertical>.btn, .btn-group>.btn {
+    position: relative;
+    float: left;
+}
+
+.btn-toolbar .btn, .btn-toolbar .btn-group, .btn-toolbar .input-group {
+    float: left;
+}
+
+.btn-toolbar .btn, .btn-toolbar .btn-group, .btn-toolbar .input-group {
+    float: left;
+}
+
+.buttonGroup .btn {
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.btn {
+    background: #ccc;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    color: #777;
+    display: inline-block;
+    padding: 5px 12px;
+    position: relative;
+    vertical-align: middle;
+}
+
+.btn {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.btn-default {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+.btn {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.btn-default {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+.btn {
+    background: #ccc;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    color: #777;
+    display: inline-block;
+    padding: 5px 12px;
+    position: relative;
+    vertical-align: middle;
+}
+
+button, input, optgroup, select, textarea {
+    color: inherit;
+    font: inherit;
+    margin: 0;
+}
+
+button {
+    overflow: visible;
+}
+
+button, select {
+    text-transform: none;
+}
+
+button, html input[type=button], input[type=reset], input[type=submit] {
+    -webkit-appearance: button;
+    cursor: pointer;
+}
+
+button, input, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+button, input, optgroup, select, textarea {
+    color: inherit;
+    font: inherit;
+    margin: 0;
+}
+
+button {
+    overflow: visible;
+}
+
+button, select {
+    text-transform: none;
+}
+
+button, html input[type=button], input[type=reset], input[type=submit] {
+    -webkit-appearance: button;
+    cursor: pointer;
+}
+
+button, input, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+button, html input[type="button"], input[type="reset"], input[type="submit"] {
+    -webkit-appearance: button;
+    cursor: pointer;
+}
+
+button, select {
+    text-transform: none;
+}
+
+button {
+    overflow: visible;
+}
+
+button, input, optgroup, select, textarea {
+    color: inherit;
+    font: inherit;
+    margin: 0;
+}
+
+*, :after, :before {
+    box-sizing: border-box;
+}
+
+*, :after, :before {
+    box-sizing: border-box;
+}
+
+*, :after, :before {
+    box-sizing: border-box;
+}
+
+*, :after, :before {
+    box-sizing: border-box;
+}
+
+*, :after, :before {
+    box-sizing: border-box;
+}
+
+*, :after, :before {
+    box-sizing: border-box;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+#dropdown-no-caret {
+  background-color: #2E404E;
+  border-color: #2E404E;
+  color: #FAFAFF;
+}
+
+.glyphicon-header:before {
+  content: "\E075";
+}
+
+.glyphicon-list:before {
+  content: '\E088';
+}
+
+.glyphicon {
+    position: relative;
+    display: inline-block;
+    font-family: 'Icons';
+    font-size: 9px;
+    bottom: 1px;
+}
+
+
+.btn {
+  background: #ccc;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  color: #777;
+  display: inline-block;
+
+  padding: 5px 12px;
+  position: relative;
+  vertical-align: middle;
+
+  /*****
+   * Button types
+   *****/
+  &.primary {
+    background-color: #EE6352;
+    border-color: #EE6352;
+    color: #FAFAFF;
+
+    &:hover {
+      background-color: #F1725F;
+      border-color: #F1725F;
+      color: #FFF;
+    }
+
+    &:active {
+      background-color: #bbb;
+      border-color: #bbb;
+      color: #666;
+    }
+  }
+
+  &.secondary {
+    background-color: #2E404E;
+    border-color: #2E404E;
+    color: #FAFAFF;
+
+    &:hover {
+      background-color: #435360;
+      border-color: #435360;
+      color: #FFF;
+    }
+
+    &:active {
+      background-color: #bbb;
+      border-color: #bbb;
+      color: #666;
+    }
+  }
+
+  &.tertiary {
+    background-color: #fff;
+    border-color: #78848D;
+    color: #78848D;
+
+    &:hover {
+      background-color: #78848D;
+      border-color: #78848D;
+      color: #fff;
+    }
+
+    &:active {
+      background-color: #bbb;
+      border-color: #bbb;
+      color: #666;
+    }
+  }
+
+  &.inverse {
+    background-color: #FFF;
+    border-color: #EE6352;
+    color: #EE6352;
+
+    &:hover {
+      background-color: #EE6352;
+      border-color: #EE6352;
+      color: #FAFAFF;
+    }
+
+    &:active {
+      background-color: #bbb;
+      border-color: #bbb;
+      color: #666;
+    }
+  }
+
+  &.transparent {
+    background-color: transparent;
+    border-color: transparent;
+    color: #bbb;
+
+    &:hover {
+      background-color: #transparent;
+      border-color: #transparent;
+      color: #EE6352;
+    }
+
+    &:active {
+      background-color: #transparent;
+      border-color: #transparent;
+      color: #666;
+    }
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+    opacity: 0.2;
+  }
+
+  /*****
+   * Button Sizes
+   *****/
+
+  &.block {
+    display: block;
+    padding: 10px 15px;
+    width: 100%;
+  }
+
+  &.xl {
+    font-size: 1.5rem;
+    padding: 15px 20px;
+  }
+
+  &.lg {
+    font-size: 1rem;
+    padding: 10px 15px;
+  }
+
+  &.lgLong {
+    font-size: 1rem;
+    padding: 10px 40px;
+  }
+
+  &.md {
+    font-size: 0.85rem;
+    padding: 7px 12px;
+  }
+
+  &.sm {
+    font-size: 0.85rem;
+    padding: 5px 10px;
+  }
+
+  &.xs {
+    font-size: 0.75rem;
+    padding: 3px 5px;
+  }
+
+  &-icon {
+    text-align: left;
+  }
+
+  .oi {
+    margin-right: 10px;
+    font-size: 0.65em;
+    position: relative;
+    top: -1px;
+    text-align: center;
+
+    &.right {
+      float: right;
+    }
+
+    &.left {
+      float: left;
+    }
+  }
+
+  &-icon-center {
+    text-align: center;
+    .oi {
+      margin: 0;
+    }
+  }
+}
+
+
+
+
+

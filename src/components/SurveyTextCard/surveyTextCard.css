@@ -1,0 +1,57 @@
+.center {
+  text-align: center;
+
+  ul {
+    list-style-position: inside;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    text-align: center;
+  }
+
+  ol {
+    list-style-position: inside;
+    margin: 0;
+    padding: 0;
+  }
+}
+.right {
+  text-align: right;
+
+  ul {
+    list-style-position: inside;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    text-align: right;
+  }
+
+  ol {
+    list-style-position: inside;
+    margin: 0;
+    padding: 0;
+  }
+}
+.left {
+  text-align: left;
+
+  ul {
+    list-style-position: inside;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    text-align: left;
+  }
+
+  ol {
+    list-style-position: inside;
+    margin: 0;
+    padding: 0;
+  }
+}
