@@ -4,8 +4,8 @@ import { routerReducer } from 'react-router-redux';
 // Reducers
 import accountActions from './login';
 import app from './app';
-import survey from './survey';
-import surveyView from './surveyView';
+import playbook from './playbook';
+import playbookView from './playbookView';
 
-const reducers = combineReducers({ accountActions, app, survey, routing: routerReducer, surveyAdmin: surveyView });
+const reducers = combineReducers({ accountActions, app, playbook, routing: routerReducer, playbookAdmin: playbookView });
 export default reducers;

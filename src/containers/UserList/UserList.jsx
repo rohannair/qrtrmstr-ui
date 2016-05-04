@@ -36,7 +36,7 @@ class UserList extends Component {
         renderModal={this._renderNewUserModal}
         submitNewUser={this._addNewUser}
         onChange={this._changeUserParams}
-        closeModal={this._closeSurveyModal}
+        closeModal={this._closePlaybookModal}
       />
     : null;
 
@@ -46,11 +46,11 @@ class UserList extends Component {
         ? <i className="oi" data-glyph="key" />
         : null;
 
-      const resultsIcon = val.survey_results
+      const resultsIcon = val.playbook_results
         ? (
             <Button
               classes="inverse sm"
-              // toolTipText="View survey results"
+              // toolTipText="View playbook results"
               icon="list-rich" />
           )
         : (
@@ -123,7 +123,7 @@ class UserList extends Component {
     );
   };
 
-  _closeSurveyModal = () => {
+  _closePlaybookModal = () => {
     this.setState({
       newUser: {}
     });
@@ -161,7 +161,7 @@ class UserList extends Component {
   };
 
   _addNewUser = () => {
-    this._closeSurveyModal();
+    this._closePlaybookModal();
     const { token, dispatch } = this.props;
     const { newUser } = this.state;
     return dispatch(createUser(token, newUser));
