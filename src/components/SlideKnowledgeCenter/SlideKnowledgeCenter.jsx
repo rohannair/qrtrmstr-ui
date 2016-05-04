@@ -5,7 +5,7 @@ import Button from '../Button';
 import ButtonGroup from '../ButtonGroup';
 import Card from '../Card';
 import SlideKnowledgeCenterItem from '../SlideKnowledgeCenterItem';
-import { updateSurveyState } from '../../actions/surveyViewActions';
+import { updatePlaybookState } from '../../actions/playbookViewActions';
 import TextBox from '../TextBox';
 
 class SlideKnowledgeCenter extends Component {

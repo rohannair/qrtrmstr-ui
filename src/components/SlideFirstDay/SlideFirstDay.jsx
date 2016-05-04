@@ -4,7 +4,7 @@ import { omit, pullAt } from 'lodash';
 
 import Button from '../../components/Button';
 import ButtonGroup from '../../components/ButtonGroup';
-import { updateSurveyState } from '../../actions/surveyViewActions';
+import { updatePlaybookState } from '../../actions/playbookViewActions';
 
 import TextBox from '../TextBox';
 

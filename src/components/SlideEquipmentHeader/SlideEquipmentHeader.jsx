@@ -7,7 +7,7 @@ import styles from './slideEquipmentHeader.css';
 // SubComponents
 import Button from '../Button';
 
-import { updateSurveyState } from '../../actions/surveyViewActions';
+import { updatePlaybookState } from '../../actions/playbookViewActions';
 
 class SlideEquipmentHeader extends Component {
   state = {
