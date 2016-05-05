@@ -80,7 +80,7 @@ const PlaybookCards = (props) => {
       return (
         <Card key={field.slide_number} footer={<div/>}>
           <h2>{field.heading}</h2>
-          <p>{field.body.desc}</p>
+          <p className = {field.body.textAlign || ''}>{field.body.desc}</p>
           <div className="equipment-form">
             { opts }
           </div>
@@ -97,7 +97,7 @@ const PlaybookCards = (props) => {
       return (
         <Card key={field.slide_number} footer={<div/>}>
           <h2>{field.heading}</h2>
-          <p>{field.body.desc}</p>
+          <p className = {field.body.textAlign || ''}>{field.body.desc}</p>
 
           <div className="playlist">
             <div className="playlist-menu">

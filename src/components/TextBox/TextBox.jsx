@@ -21,10 +21,9 @@ class TextBox extends Component {
     const body = props.bodyKey ? props.body[props.bodyKey] : props.body;
     this.state = {
       slideNum: props.slideNum,
-      textAlign: props.textAlign,
+      textAlign: props.textAlign || 'left',
       editorState: EditorState.createWithContent(stateFromHTML(body))
     };
-
     this.focus = () => this.refs.editor.focus();
     this.onChange = (editorState) => {
       this.setState({ editorState });
@@ -64,7 +63,11 @@ class TextBox extends Component {
     this.setState({
       textAlign: block
     });
-    this.props.updateSlide('textAlign', block, this.state.slideNum);
+    if (this.props.bodyKey) {
+      return this.props.updateSlide('textAlign', block);
+    } else {
+      return this.props.updateSlide('textAlign', block, this.state.slideNum);
+    }
   };
 
   render() {

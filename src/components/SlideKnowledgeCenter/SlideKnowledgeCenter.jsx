@@ -10,7 +10,8 @@ import TextBox from '../TextBox';
 
 class SlideKnowledgeCenter extends Component {
   state = {
-    options: this.props.body.options || []
+    options: this.props.body.options || [],
+    textAlign: this.props.body.textAlign || 'left'
   };
 
   render() {
@@ -22,7 +23,7 @@ class SlideKnowledgeCenter extends Component {
       <div className="slideKnowledgeCenter">
 
         <div className="slideKnowledgeCenterIntro">
-          <TextBox slideNum={ slide_number } body={ body } bodyKey="desc" updateSlide={ this._updateKnowledgeCenterState  } />
+          <TextBox slideNum={ slide_number } body={ body } textAlign={ this.state.textAlign } bodyKey="desc" updateSlide={ this._updateKnowledgeCenterState  } />
         </div>
 
         <div className="videos">

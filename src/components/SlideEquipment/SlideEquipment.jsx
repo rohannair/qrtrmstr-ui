@@ -9,15 +9,18 @@ import styles from './slideEquipment.css';
 import SlideEquipmentHeader from '../SlideEquipmentHeader';
 import SlideEquipmentBody from '../SlideEquipmentBody';
 import { updatePlaybookState } from '../../actions/playbookViewActions';
+import TextBox from '../TextBox';
 
 class SlideEquipment extends Component {
   state = {
     options: this.props.body.options || [],
-    selected: null
+    selected: null,
+    textAlign: this.props.body.textAlign || 'left'
   };
 
   render() {
-    const { options } = this.state;
+    const { options, textAlign } = this.state;
+    const { slide_number, body } = this.props;
 
     const names = options.map(val => ({ id: val.id, name: val.name }));
 
@@ -35,13 +38,8 @@ class SlideEquipment extends Component {
             value={this.props.heading}
             onChange={ e => this._updateEquipmentState(e.target.name, e.target.value) }
           />
-          <strong>Description:</strong>
-          <input
-            name="desc"
-            value={this.props.body.desc}
-            onChange={ e => this._updateEquipmentState(e.target.name, e.target.value) }
-          />
         </div>
+        <TextBox slideNum={ slide_number } body={ body } textAlign={ this.state.textAlign } bodyKey="desc" updateSlide={ this._updateEquipmentState } />
 
         <SlideEquipmentHeader
           vals={ names }

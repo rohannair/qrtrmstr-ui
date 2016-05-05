@@ -1,0 +1,23 @@
+ul, ol {
+  list-style-position: inside;
+  margin: 0;
+  padding: 0;
+}
+
+.center {
+  text-align: center;
+
+  li {
+    text-align: center;
+  }
+}
+.right {
+  text-align: right;
+
+  li {
+    text-align: right;
+  }
+}
+.left {
+  text-align: left;
+}

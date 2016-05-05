@@ -10,7 +10,8 @@ import { updatePlaybookState } from '../../actions/playbookViewActions';
 class SlideBio extends Component {
   state = {
     heading: this.props.body.heading,
-    desc: this.props.body.desc
+    desc: this.props.body.desc,
+    textAlign: this.props.body.textAlign || 'left'
   };
 
   render() {
@@ -28,7 +29,7 @@ class SlideBio extends Component {
             />
           </div>
         </div>
-        <TextBox slideNum={ slide_number } body={ this.state } bodyKey="desc" updateSlide={ this._updateBioState } />
+        <TextBox slideNum={ slide_number } body={ this.state } textAlign={ this.state.textAlign } bodyKey="desc" updateSlide={ this._updateBioState } />
       </div>
     );
   };
