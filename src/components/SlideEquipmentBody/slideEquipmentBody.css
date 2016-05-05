@@ -2,6 +2,7 @@
   margin:  0;
   background: #ECF5FF;
   padding: 20px;
+  overflow: hidden;
 
   table {
     background: transparent;

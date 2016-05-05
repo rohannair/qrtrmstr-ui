@@ -204,7 +204,7 @@ class StyleButton extends React.Component {
 };
 
 const BLOCK_TYPES = [
-  {label: 'Blockquote', style: 'blockquote', icon: 'double-quote-serif-left'},
+  {label: 'Blockquote', style: 'blockquote', icon: 'quote-left'},
   {label: 'Code Block', style: 'code-block', icon: 'code'}
 ];
 

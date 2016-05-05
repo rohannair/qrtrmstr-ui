@@ -31,7 +31,7 @@ const SlideKnowledgeCenterItem = ({ val, i, deleteVideo, onChange }) => {
         <Button
           classes="tertiary sm"
           onClick={ deleteVideo.bind(this, i) }
-          icon="x"
+          icon="times"
         />
       </ButtonGroup>
     </div>

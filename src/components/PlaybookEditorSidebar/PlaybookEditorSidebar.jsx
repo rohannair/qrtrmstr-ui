@@ -19,7 +19,7 @@ const PlaybookEditorSidebar = (props) => {
 
   return (
     <Sticky stickyStyle={customStyle}>
-      <div className={'topBuffer playbookEditor-sidebar'}>
+      <div className={'topBuffer'}>
         <Card>
           <Button
             onClick={ props.save }
