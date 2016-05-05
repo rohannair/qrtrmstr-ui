@@ -3,6 +3,7 @@ import Card from '../Card';
 import Button from '../Button';
 import ButtonGroup from '../ButtonGroup';
 import { StickyContainer, Sticky } from 'react-sticky';
+import styles from './playbookEditorSidebar.css';
 
 import NavGrid from '../NavGrid';
 
