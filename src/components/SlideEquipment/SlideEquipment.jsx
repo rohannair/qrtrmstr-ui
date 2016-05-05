@@ -39,8 +39,9 @@ class SlideEquipment extends Component {
             onChange={ e => this._updateEquipmentState(e.target.name, e.target.value) }
           />
         </div>
-        <TextBox slideNum={ slide_number } body={ body } textAlign={ this.state.textAlign } bodyKey="desc" updateSlide={ this._updateEquipmentState } />
-
+        <div className="equipmentTextBox">
+          <TextBox slideNum={ slide_number } body={ body } textAlign={ this.state.textAlign } bodyKey="desc" updateSlide={ this._updateEquipmentState } />
+        </div>
         <SlideEquipmentHeader
           vals={ names }
           onClick={ this._setSelected }
