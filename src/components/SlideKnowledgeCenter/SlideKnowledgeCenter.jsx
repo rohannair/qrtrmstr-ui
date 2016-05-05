@@ -108,7 +108,6 @@ class SlideKnowledgeCenter extends Component {
     // call save here
   };
 
-
 }
 
 export default SlideKnowledgeCenter;

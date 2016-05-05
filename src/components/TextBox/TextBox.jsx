@@ -232,6 +232,12 @@ const TEXT_ALIGN_TYPES = [
   {label: 'align-right', style: 'right', icon: 'align-right'}
 ];
 
+const INLINE_STYLES = [
+  {label: 'Bold', style: 'BOLD', icon: 'bold'},
+  {label: 'Italic', style: 'ITALIC', icon: 'italic'},
+  {label: 'Underline', style: 'UNDERLINE', icon: 'underline'}
+];
+
 const TextAlignStyleControls = (props) => {
   const {editorState} = props;
   const selection = editorState.getSelection();
@@ -325,12 +331,6 @@ const BlockStyleControls = (props) => {
     </div>
   );
 };
-
-const INLINE_STYLES = [
-  {label: 'Bold', style: 'BOLD', icon: 'bold'},
-  {label: 'Italic', style: 'ITALIC', icon: 'italic'},
-  {label: 'Underline', style: 'UNDERLINE', icon: 'underline'}
-];
 
 const InlineStyleControls = (props) => {
   var currentStyle = props.editorState.getCurrentInlineStyle();
