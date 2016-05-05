@@ -111,7 +111,7 @@ class PlaybookEditor extends Component {
     return (
       <div className="surveyEditor playbookEditor">
         <PlaybookEditorBody>
-          { surveyDoc }
+          { playbookDoc}
         </PlaybookEditorBody>
         <StickyContainer className="sidebarBuffer" >
           <PlaybookEditorSidebar save={this._savePlaybook}/>
