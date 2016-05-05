@@ -5,7 +5,7 @@ import Button from '../Button';
 import ButtonGroup from '../ButtonGroup';
 import Card from '../Card';
 import TextBox from '../TextBox';
-import { updateSurveyState } from '../../actions/surveyViewActions';
+import { updatePlaybookState } from '../../actions/playbookViewActions';
 
 class SlideBio extends Component {
   state = {

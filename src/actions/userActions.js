@@ -1,6 +1,8 @@
-import fetch from 'isomorphic-fetch';
 import utils from './utils';
+import { get, post, put, API_ROOT } from '../utils/request';
+
 const getDomain = utils.getDomain;
+const LOCATION_ROOT = getDomain() + API_ROOT;
 
 // Users Retrieved action
 function usersRetrieved(users = {}) {
@@ -19,79 +21,21 @@ function newUserCreated(new_user = {}) {
 }
 
 // Get All Users
-export const getUsers = token => {
-  const url = getDomain();
-  return dispatch => {
-    return fetch(`${url}/api/v1/users`, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Authorization': 'bearer ' + token,
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(response => response.json())
-    .then(json => {
-      return dispatch(usersRetrieved(json));
-    });
-  };
-};
+export const getUsers = token =>
+  dispatch => get(LOCATION_ROOT + 'users', token)
+  .then(json => dispatch(usersRetrieved(json)));
 
 // Single User Call
-export const getSingleUser = (token, id) => {
-  const url = getDomain();
-  return dispatch => {
-    return fetch(`${url}/api/v1/users/${id}`, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Authorization': 'bearer ' + token,
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(response => response.json())
-    .then(json => {
-      return dispatch(usersRetrieved(json));
-    });
-  };
-};
+export const getSingleUser = (token, id) =>
+  dispatch => get(`${LOCATION_ROOT}users/${id}`, token)
+  .then(json => dispatch(usersRetrieved(json)));
 
 // Create new User
-export const createUser = (token, payload) => {
-  const url = getDomain();
-  return dispatch => {
-    return fetch(`${url}/api/v1/users`, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Authorization': 'bearer ' + token,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    })
-    .then(response => response.json())
-    .then(json => {
-      return dispatch(newUserCreated(json));
-    });
-  };
-};
+export const createUser = (token, payload) =>
+  dispatch => post(`${LOCATION_ROOT}users`, token, payload)
+  .then(json => dispatch(newUserCreated(json)));
 
 // Modify existing User
-export const modifyUser = (token, payload) => {
-  const url = getDomain();
-  return dispatch => {
-    return fetch(`${url}/api/v1/users/${payload.id}`, {
-      method: 'PUT',
-      headers: {
-        'Accept': 'application/json',
-        'Authorization': 'bearer ' + token,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    })
-    .then(response => response.json())
-    .then(json => {
-      return;
-    });
-  };
-};
+export const modifyUser = (token, payload) =>
+  dispatch => put(`${LOCATION_ROOT}users/${payload.id}`, token, payload)
+  .then(json => console.log(json));

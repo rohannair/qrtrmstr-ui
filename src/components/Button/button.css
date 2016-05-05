@@ -8,6 +8,7 @@
   padding: 5px 12px;
   position: relative;
   vertical-align: middle;
+  cursor: pointer;
 
   /*****
    * Button types

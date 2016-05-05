@@ -1,72 +1,36 @@
-import { createStore } from 'redux';
 import test from 'tape';
 
 // Reducer
 import accountActions from '../reducers/login';
 
-const store = createStore(accountActions);
+test('AccountActions', t => {
+  t.plan(3);
 
-console.log('Initial state:');
-console.log(store.getState());
-console.log('---------------');
+  t.deepEqual(
+    accountActions({}, { type: 'LOG_IN', token: 'ABC123'}),
+    { token: 'ABC123' },
+    'Set the token'
+  );
 
-test('AccountActions', next => {
+  t.deepEqual(
+    accountActions({ foo: 'bar' }, { type: 'LOG_IN', token: 'ABC123'}),
+    { foo: 'bar', token: 'ABC123' },
+    'If state existed before login, maintain it'
+  );
 
-  next.test('Return Current State When No Case Matches', assert => {
+  t.deepEqual(
+    accountActions(
+      {
+        token: 'ABC123',
+        state: 'HELLO I AM STATE',
+        extra: { name: 'HELLO I AM EXTRA'}
+      }, {
+        type: 'LOG_OUT', token: 'ABC123'
+      }
+    ),
+    { token: null },
+    'Null the token on logout and kill the state'
+  );
 
-    const actionDefault = {
-      type: 'DEFAULT'
-    };
-
-    const accountActionsDefaultBefore = {
-      token: null
-    };
-
-    const accountActionsDefaultAfter = {
-      token: null
-    };
-
-    const accountActionsDefaultWithAction = accountActions(accountActionsDefaultBefore, actionDefault);
-
-    assert.ok(accountActionsDefaultWithAction, accountActionsDefaultAfter, 'Should Return The Initial (Default) State');
-    assert.end();
-
-  });
-
-  next.test('LOG_IN', assert => {
-
-    const actionLogin = {
-      type: 'LOG_IN',
-      token: 'auth_token'
-    };
-    const accountActionsloginBefore = {
-      token: null
-    };
-    const accountActionsLoginAfter = {
-      token: 'auth_token'
-    };
-    const accountActionsLoginAction = accountActions(accountActionsloginBefore, actionLogin);
-
-    assert.ok(accountActionsLoginAction, accountActionsLoginAfter, 'LOG_IN Should Return The State With A Non-Null Token Value');
-    assert.end();
-  });
-
-  next.test('LOG_OUT', assert => {
-
-    const actionLogout = {
-      type: 'LOG_OUT',
-      token: null
-    };
-    const accountActionsLogoutBefore = {
-      token: 'auth_token'
-    };
-    const accountActionsLogoutAfter = {
-      token: null
-    };
-    const accountActionsLogoutAction = accountActions(accountActionsLogoutBefore, actionLogout);
-
-    assert.ok(accountActionsLogoutAction, accountActionsLogoutAfter, 'LOG_OUT Should Return The State With A Token Value Of Null');
-    assert.end();
-
-  });
+  t.end();
 });

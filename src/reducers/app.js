@@ -1,5 +1,5 @@
 const initialState = {
-  users: {},
+  users: [],
   showModal: false
 };
 
@@ -20,10 +20,10 @@ export default function app(state = initialState, { type, users, new_user }) {
   case 'NEW_USER_CREATED':
     return {
       ...state,
-      users: {
+      users: [
         ...state.users,
-        [state.users.length]: new_user
-      }
+        new_user
+      ]
     };
 
   default:
