@@ -29,4 +29,9 @@
       }
     }
   }
+  .sidebarBuffer {
+    padding-top: 20px;
+    padding-left: 20px;
+    width: 13%;
+  }
 }

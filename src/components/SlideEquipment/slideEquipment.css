@@ -19,8 +19,9 @@
       padding: 10px;
       margin-bottom: 10px;
     }
-
   }
 
-
+  .equipmentTextBox {
+    margin-bottom: 20px;
+  }
 }

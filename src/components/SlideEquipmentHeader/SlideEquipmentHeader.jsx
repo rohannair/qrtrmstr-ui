@@ -70,7 +70,7 @@ class Editing extends Component {
     val: this.props.val.name || null
   }
 
-  render () {
+  render() {
     const { val, onClick, onSave, onRemove, selected } = this.props;
     const classes = val.id === selected ? 'tab active' : 'tab';
 
@@ -81,14 +81,14 @@ class Editing extends Component {
         </div>
         <div className="actionButtons">
           <Button classes="editBtn transparent xs" onClick={ onSave.bind(this, val.id, this.state.val) } icon="check" />
-          <Button classes="removeBtn transparent xs" onClick={ onRemove.bind(this, val.id) } icon="x" />
+          <Button classes="removeBtn transparent xs" onClick={ onRemove.bind(this, val.id) } icon="times" />
         </div>
       </div>
     );
   };
 
   _onChangeName = (e) => {
-    this.setState( {
+    this.setState({
       val: e.target.value
     });
   }

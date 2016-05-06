@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Cookies from 'cookies-js';
 import moment from 'moment';
+import { StickyContainer } from 'react-sticky';
 
 // Containers
 import {
@@ -109,9 +110,11 @@ class PlaybookEditor extends Component {
     return (
       <div className="playbookEditor">
         <PlaybookEditorBody>
-          { playbookDoc }
+          { playbookDoc}
         </PlaybookEditorBody>
-        <PlaybookEditorSidebar save={this._savePlaybook}/>
+        <StickyContainer className="sidebarBuffer" >
+          <PlaybookEditorSidebar save={this._savePlaybook}/>
+        </StickyContainer>
       </div>
       );
   };

@@ -1,7 +1,9 @@
 .buttonGroup {
 
+  display: flex;
+  flex-direction: row;
+
   .btn {
-    display: inline-block;
     margin-left: 5px;
   }
 

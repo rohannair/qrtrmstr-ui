@@ -3,6 +3,10 @@
   padding: 10px 2px 2px;
   border-radius: 2px;
 
+  .buttonGroup {
+    overflow: hidden;
+  }
+
   .public-DraftEditor-content {
     background: white;
     padding: 10px;
@@ -10,8 +14,111 @@
     min-height: 250px;
   }
 
+  .secondary {
+    float: left;
+  }
+
   .footer {
     padding: 10px;
     text-align: right;
   }
+}
+
+div.DraftEditor-root {
+  ul, ol {
+    list-style-position: inside;
+    margin: 0;
+    padding: 0;
+  }
+
+  &.DraftEditor-alignCenter {
+    text-align: center;
+
+    li {
+      text-align: center;
+    }
+  }
+
+  &.DraftEditor-alignRight {
+    text-align: right;
+
+    li {
+      text-align: right;
+    }
+  }
+
+  &.DraftEditor-alignLeft {
+    text-align: left;
+
+    li {
+      text-align: left;
+    }
+  }
+}
+
+.super-colors.dropdown-menu {
+  background-color: #2E404E;
+  color: #FFF;
+
+  .subOptions {
+    padding: 3px;
+
+    &:hover {
+      background-color: #FFF;
+      border-color: #F1725F;
+      color: #2E404E;
+      font-weight: 700;
+    }
+  }
+}
+
+#dropdown-no-caret {
+  background-color: #2E404E;
+  border-color: #2E404E;
+  color: #FAFAFF;
+
+  &:hover {
+    background-color: #435360;
+    border-color: #435360;
+    color: #FFF;
+    font-weight: 700;
+  }
+
+  &.RichEditor-styleButton {
+    color: #FFF;
+    cursor: pointer;
+    display: inline-block;
+    background-color: #2E404E;
+  }
+}
+
+.RichEditor-activeButton {
+  color: #5890ff;
+}
+
+.open>.dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu {
+  position: absolute;
+  left: 30px;
+  z-index: 1000;
+  display: none;
+  float: left;
+  min-width: 10px;
+  padding: 5px 0;
+  margin: 2px 0 0;
+  font-size: 14px;
+  text-align: left;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: 4px;
+  box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  background-clip: padding-box;
+}
+
+ol, ul {
+  margin-top: 0;
+  margin-bottom: 10px;
 }

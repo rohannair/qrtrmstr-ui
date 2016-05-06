@@ -33,7 +33,7 @@ class SlideFirstDay extends Component {
           <div className="buttonContainer">
             <Button
               classes="transparent"
-              icon="x"
+              icon="times"
               onClick={ self._deleteItem.bind(this, i) }
             />
           </div>
