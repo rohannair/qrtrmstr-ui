@@ -212,8 +212,8 @@ const BLOCK_TYPES = [
 ];
 
 const LIST_TYPES = [
-  {label: 'UL', style: 'unordered-list-item'},
-  {label: 'OL', style: 'ordered-list-item'}
+  {label: 'UL', style: 'unordered-list-item', icon: 'list-ol'},
+  {label: 'OL', style: 'ordered-list-item', icon: 'list-ul'}
 ];
 
 const HEADER_TYPES = [
