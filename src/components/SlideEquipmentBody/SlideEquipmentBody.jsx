@@ -10,7 +10,7 @@ const SlideEquipmentBody = ({ opt, newOption, editOption, deleteOption }) => {
 
   const options = opt.opts.map((val, i) => {
     return (
-      <tr key={val}>
+      <tr key={ `option-${i}` }>
         <td>
           <input name="opts" onChange={e => editOption(e.target.name, e.target.value, i) } value={val} />
         </td>

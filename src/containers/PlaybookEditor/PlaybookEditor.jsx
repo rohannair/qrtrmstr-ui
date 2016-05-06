@@ -6,7 +6,6 @@ import Cookies from 'cookies-js';
 import moment from 'moment';
 import { StickyContainer } from 'react-sticky';
 
-
 // Containers
 import {
   updatePlaybookState,
@@ -109,7 +108,7 @@ class PlaybookEditor extends Component {
     : '';
 
     return (
-      <div className="surveyEditor playbookEditor">
+      <div className="playbookEditor">
         <PlaybookEditorBody>
           { playbookDoc}
         </PlaybookEditorBody>

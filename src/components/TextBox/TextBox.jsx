@@ -5,7 +5,7 @@ import styles from './textBox.css';
 import { Editor, EditorState, RichUtils, ContentState, convertToRaw } from 'draft-js';
 import { stateFromHTML } from 'draft-js-import-html';
 import { stateToHTML } from 'draft-js-export-html';
-import { ButtonToolbar, MenuItem, DropdownButton, Glyphicon, Dropdown, Toggle } from 'react-bootstrap';
+import { ButtonToolbar, MenuItem, Dropdown } from 'react-bootstrap';
 
 import Button from '../../components/Button';
 import ButtonGroup from '../../components/ButtonGroup';
@@ -24,15 +24,13 @@ class TextBox extends Component {
       textAlign: props.textAlign || 'left',
       editorState: EditorState.createWithContent(stateFromHTML(body))
     };
+
     this.focus = () => this.refs.editor.focus();
     this.onChange = (editorState) => {
       this.setState({ editorState });
       const updatedIntro = this._outputHtml();
-      if (props.bodyKey) {
-        return props.updateSlide(props.bodyKey, updatedIntro);
-      } else {
-        return props.updateSlide('body', updatedIntro, this.state.slideNum);
-      }
+      if (props.bodyKey) return props.updateSlide(props.bodyKey, updatedIntro);
+      return props.updateSlide('body', updatedIntro, this.state.slideNum);
     };
 
     this.handleKeyCommand = (command) => this._handleKeyCommand(command);
@@ -63,11 +61,8 @@ class TextBox extends Component {
     this.setState({
       textAlign: block
     });
-    if (this.props.bodyKey) {
-      return this.props.updateSlide('textAlign', block);
-    } else {
-      return this.props.updateSlide('textAlign', block, this.state.slideNum);
-    }
+    if (this.props.bodyKey) return this.props.updateSlide('textAlign', block);
+    return this.props.updateSlide('textAlign', block, this.state.slideNum);
   };
 
   render() {
@@ -79,7 +74,7 @@ class TextBox extends Component {
           <ButtonToolbar>
             <Dropdown id="dropdown-no-caret">
               <Dropdown.Toggle>
-                <Glyphicon glyph="header" />
+                <i className={'fa fa-header'} />
               </Dropdown.Toggle>
               <Dropdown.Menu className="super-colors">
                 <HeaderStyleControls
@@ -94,7 +89,7 @@ class TextBox extends Component {
           <ButtonToolbar>
             <Dropdown id="dropdown-no-caret">
               <Dropdown.Toggle>
-                <Glyphicon glyph="list" />
+                <i className={'fa fa-list'} />
               </Dropdown.Toggle>
               <Dropdown.Menu className="super-colors">
                 <ListStyleControls
@@ -246,18 +241,20 @@ const TextAlignStyleControls = (props) => {
     .getBlockForKey(selection.getStartKey())
     .getType();
 
+  const textAlignTypes = TEXT_ALIGN_TYPES.map((type) =>
+    <StyleButton
+      key={type.label}
+      active={type.style === blockType}
+      label={type.label}
+      onToggle={props.onToggle}
+      style={type.style}
+      icon={type.icon}
+    />
+  );
+
   return (
     <div classes='secondary'>
-      {TEXT_ALIGN_TYPES.map((type) =>
-        <StyleButton
-          key={type.label}
-          active={type.style === blockType}
-          label={type.label}
-          onToggle={props.onToggle}
-          style={type.style}
-          icon={type.icon}
-        />
-      )}
+      { textAlignTypes }
     </div>
   );
 };
@@ -270,17 +267,19 @@ const ListStyleControls = (props) => {
     .getBlockForKey(selection.getStartKey())
     .getType();
 
+  const listTypes = LIST_TYPES.map((type) =>
+    <StyleButton
+      key={type.label}
+      active={type.style === blockType}
+      label={type.label}
+      onToggle={props.onToggle}
+      style={type.style}
+    />
+  );
+
   return (
     <div classes='secondary'>
-      {LIST_TYPES.map((type) =>
-        <StyleButton
-          key={type.label}
-          active={type.style === blockType}
-          label={type.label}
-          onToggle={props.onToggle}
-          style={type.style}
-        />
-      )}
+      { listTypes }
     </div>
   );
 };
@@ -293,17 +292,19 @@ const HeaderStyleControls = (props) => {
     .getBlockForKey(selection.getStartKey())
     .getType();
 
+  const headerTypes = HEADER_TYPES.map((type) =>
+    <StyleButton
+      key={type.label}
+      active={type.style === blockType}
+      label={type.label}
+      onToggle={props.onToggle}
+      style={type.style}
+    />
+  );
+
   return (
     <div classes='secondary'>
-      {HEADER_TYPES.map((type) =>
-        <StyleButton
-          key={type.label}
-          active={type.style === blockType}
-          label={type.label}
-          onToggle={props.onToggle}
-          style={type.style}
-        />
-      )}
+      { headerTypes }
     </div>
   );
 };
@@ -316,36 +317,41 @@ const BlockStyleControls = (props) => {
     .getBlockForKey(selection.getStartKey())
     .getType();
 
+  const blockTypes = BLOCK_TYPES.map((type) =>
+    <StyleButton
+      key={type.label}
+      active={type.style === blockType}
+      label={type.label}
+      onToggle={props.onToggle}
+      style={type.style}
+      icon={type.icon}
+    />
+  );
+
   return (
     <div classes='secondary'>
-      {BLOCK_TYPES.map((type) =>
-        <StyleButton
-          key={type.label}
-          active={type.style === blockType}
-          label={type.label}
-          onToggle={props.onToggle}
-          style={type.style}
-          icon={type.icon}
-        />
-      )}
+      { blockTypes }
     </div>
   );
 };
 
 const InlineStyleControls = (props) => {
   var currentStyle = props.editorState.getCurrentInlineStyle();
+
+  const inlineTypes = INLINE_STYLES.map(type =>
+    <StyleButton
+      key={type.label}
+      active={currentStyle.has(type.style)}
+      label={type.label}
+      onToggle={props.onToggle}
+      style={type.style}
+      icon={type.icon}
+    />
+  );
+
   return (
     <div classes='secondary'>
-      {INLINE_STYLES.map(type =>
-        <StyleButton
-          key={type.label}
-          active={currentStyle.has(type.style)}
-          label={type.label}
-          onToggle={props.onToggle}
-          style={type.style}
-          icon={type.icon}
-        />
-      )}
+      { inlineTypes }
     </div>
   );
 };

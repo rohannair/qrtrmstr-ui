@@ -2,6 +2,7 @@
 node_modules/
 public/
 stats.json
+npm-debug.log
 
 ### SublimeText ###
 # cache files for sublime text
