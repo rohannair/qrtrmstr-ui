@@ -9,12 +9,14 @@ import Button from '../../components/Button';
 import ButtonGroup from '../../components/ButtonGroup';
 import NewUserModal from '../../components/NewUserModal';
 
-import { getUsers, createUser } from '../../actions/userActions';
+import { getUsers, createUser, newUserErrors, getRoles } from '../../actions/userActions';
 
 class UserList extends Component {
 
   state = {
-    newUser: this.props.newUser || {}
+    newUser: {},
+    loading: false,
+    errorMessage: this.props.errorMessage || null
   };
 
   static propTypes = {
@@ -26,10 +28,20 @@ class UserList extends Component {
 
   componentWillMount() {
     this._renderUserList();
+    this._renderRolesList();
   };
 
+  componentWillReceiveProps(nextProps) {
+    const { newUser, errorMessage } = this.state;
+    this.setState({
+      loading: false,
+      newUser: nextProps.errorMessage ? newUser : {},
+      errorMessage: nextProps.errorMessage
+    });
+  }
+
   render() {
-    const newUserForm = Object.keys(this.state.newUser).length > 0
+    const newUserForm = Object.keys(this.state.newUser).length > 0 || this.state.errorMessage
     ? <NewUserModal
         val={this.state.newUser}
         showModal={true}
@@ -37,6 +49,8 @@ class UserList extends Component {
         submitNewUser={this._addNewUser}
         onChange={this._changeUserParams}
         closeModal={this._closePlaybookModal}
+        loading={this.state.loading}
+        errorMessage={this.state.errorMessage}
       />
     : null;
 
@@ -45,19 +59,6 @@ class UserList extends Component {
       const adminIcon = val.isAdmin
         ? <i className="oi" data-glyph="key" />
         : null;
-
-      const resultsIcon = val.playbook_results
-        ? (
-            <Button
-              classes="inverse sm"
-              // toolTipText="View playbook results"
-              icon="list-rich" />
-          )
-        : (
-            <Button
-              classes="primary sm"
-              icon="share-boxed" />
-          );
 
       const deactivateClasses = val.isAdmin
         ? 'disabled'
@@ -71,7 +72,6 @@ class UserList extends Component {
           <td>{ val.rolename }</td>
           <td className="actions">
             <ButtonGroup>
-              { resultsIcon }
               <Button
                 classes='sm tertiary'
                 icon="pencil" />
@@ -79,6 +79,9 @@ class UserList extends Component {
                 classes= { `sm tertiary ${deactivateClasses}` }
                 disabled={val.isAdmin}
                 icon="times"/>
+              <Button
+                classes='secondary sm'
+                icon="paper-plane"/>
             </ButtonGroup>
           </td>
         </tr>
@@ -123,10 +126,16 @@ class UserList extends Component {
     );
   };
 
+  _clearUserErrors = () => {
+    const { dispatch } = this.props;
+    dispatch(newUserErrors(null));
+  };
+
   _closePlaybookModal = () => {
     this.setState({
       newUser: {}
     });
+    this._clearUserErrors();
   };
 
   _renderUserList = () => {
@@ -134,37 +143,52 @@ class UserList extends Component {
     return dispatch(getUsers(token));
   };
 
+  _renderRolesList = () => {
+    const { token, dispatch } = this.props;
+    return dispatch(getRoles(token));
+  };
+
   _renderNewUserModal = () => {
     const { token, dispatch } = this.props;
     const { newUser } = this.state;
     this.setState({
       newUser: {
-        username: '',
-        password: '',
+        password: 'password',
         first_name: '',
         last_name: '',
-        email: '',
         personal_email: ''
-      }
+      },
+      errorMessage: null
     });
   };
-
 
   _changeUserParams = (key, val) => {
     const { newUser } = this.state;
-    this.setState({
-      newUser: {
-        ...newUser,
-        [key]: val
-      }
-    });
+    if (key === 'personal_email') {
+      this.setState({
+        newUser: {
+          ...newUser,
+          [key]: val,
+          username: val
+        }
+      });
+    } else {
+      this.setState({
+        newUser: {
+          ...newUser,
+          [key]: val
+        }
+      });
+    }
   };
 
   _addNewUser = () => {
-    this._closePlaybookModal();
     const { token, dispatch } = this.props;
     const { newUser } = this.state;
-    return dispatch(createUser(token, newUser));
+    this.setState({
+      loading: true
+    });
+    dispatch(createUser(token, newUser));
   };
 }
 
@@ -172,7 +196,8 @@ function mapStateToProps(state) {
   const token = state.accountActions.token || Cookies.get('token');
   return {
     token,
-    users: state.app.users
+    users: state.app.users,
+    errorMessage: state.app.errorMessage
   };
 }
 export default connect(mapStateToProps)(UserList);

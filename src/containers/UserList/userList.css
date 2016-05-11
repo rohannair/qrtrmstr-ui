@@ -75,7 +75,7 @@
 
   &-actionBar {
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
 
     button {
       margin-left: auto;

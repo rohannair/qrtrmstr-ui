@@ -194,7 +194,7 @@ class StyleButton extends React.Component {
 
     return (
       <span className={className} onMouseDown={this.onToggle}>
-       { this.props.icon ? <Button center={true} classes='secondary' icon={this.props.icon}/>
+       { this.props.icon ? <Button center={true} classes='secondary subList' icon={this.props.icon}/>
         : <span className="subOptions">{this.props.label}</span> }
       </span>
     );
@@ -274,6 +274,7 @@ const ListStyleControls = (props) => {
       label={type.label}
       onToggle={props.onToggle}
       style={type.style}
+      icon={type.icon}
     />
   );
 

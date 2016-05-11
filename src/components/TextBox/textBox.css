@@ -59,15 +59,16 @@ div.DraftEditor-root {
 .super-colors.dropdown-menu {
   background-color: #2E404E;
   color: #FFF;
+  font-weight: 700;
 
   .subOptions {
     padding: 3px;
+    font-size: 18px;
 
     &:hover {
-      background-color: #FFF;
+      background-color: #435360;
       border-color: #F1725F;
-      color: #2E404E;
-      font-weight: 700;
+      color: #FFF;
     }
   }
 }
@@ -107,7 +108,7 @@ div.DraftEditor-root {
   display: none;
   float: left;
   min-width: 10px;
-  padding: 5px 0;
+  padding: 5px;
   margin: 2px 0 0;
   font-size: 14px;
   text-align: left;
@@ -116,6 +117,10 @@ div.DraftEditor-root {
   border-radius: 4px;
   box-shadow: 0 6px 12px rgba(0,0,0,.175);
   background-clip: padding-box;
+
+  .subList {
+    margin-left: 0px;
+  }
 }
 
 ol, ul {
