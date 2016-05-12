@@ -198,7 +198,7 @@ h1, h2, h3, h4, h5, h6, strong {
 .errorContainer {
   display: inline-block;
   width: 45%;
-  
+
   .errorText {
     height: 50px;
     display: inline-block;
@@ -262,7 +262,7 @@ h1, h2, h3, h4, h5, h6, strong {
 }
 
 .selectArrow {
-  width: 10%;
+  width: 8%;
   display: inline-block;
   padding: 6px;
   border: 1px solid #435360;
@@ -272,7 +272,7 @@ h1, h2, h3, h4, h5, h6, strong {
 }
 
 .selectInput {
-  width: 75%;
+  width: 77%;
   border-right: none;
   border-radius: 0px;
 }
