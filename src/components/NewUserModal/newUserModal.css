@@ -198,33 +198,32 @@ h1, h2, h3, h4, h5, h6, strong {
 .errorContainer {
   display: inline-block;
   width: 45%;
-}
-
-.errorText {
-  height: 50px;
-  display: inline-block;
-  width: 95%;
-  overflow: auto;
-  margin-left: 25px;
-  background-color: rgba(238, 99, 82, 0.24);
-  border: 1px solid rgba(67, 83, 96, 0.26);
-  border-radius: 3px;
-  font-size: 11px;
-  font-weight: bold;
-  padding: 6px;
-  color: rgba(0, 0, 0, 0.63);
-
-  i {
-    float: left;
-    margin-bottom: 30px;
-    margin-right: 10px;
-  }
-
-  .visibleError {
+  
+  .errorText {
+    height: 50px;
     display: inline-block;
+    width: 95%;
+    overflow: auto;
+    margin-left: 25px;
+    background-color: rgba(238, 99, 82, 0.24);
+    border: 1px solid rgba(67, 83, 96, 0.26);
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 6px;
+    color: rgba(0, 0, 0, 0.63);
+
+    i {
+      float: left;
+      margin-bottom: 30px;
+      margin-right: 10px;
+    }
+
+    .visibleError {
+      display: inline-block;
+    }
   }
 }
-
 .spinnerContainer {
   height: 28px;
   padding: 4px;
