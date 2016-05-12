@@ -1,9 +1,10 @@
 const initialState = {
   users: [],
-  errorMessage: null
+  errorMessage: null,
+  roles: []
 };
 
-export default function app(state = initialState, { type, users, new_user, error_msg }) {
+export default function app(state = initialState, { type, users, new_user, error_msg, roles }) {
   switch (type) {
   case 'USERS_RETRIEVED':
     return {
@@ -27,6 +28,12 @@ export default function app(state = initialState, { type, users, new_user, error
         new_user
       ],
       errorMessage: null
+    };
+
+  case 'ROLES_RETRIEVED':
+    return {
+      ...state,
+      roles: roles
     };
 
   default:

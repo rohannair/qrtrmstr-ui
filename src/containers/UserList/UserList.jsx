@@ -51,6 +51,8 @@ class UserList extends Component {
         closeModal={this._closePlaybookModal}
         loading={this.state.loading}
         errorMessage={this.state.errorMessage}
+        roles={this.props.roles}
+        chosenRole={this.state.newUser.role_id}
       />
     : null;
 
@@ -149,14 +151,15 @@ class UserList extends Component {
   };
 
   _renderNewUserModal = () => {
-    const { token, dispatch } = this.props;
+    const { token, dispatch, roles } = this.props;
     const { newUser } = this.state;
     this.setState({
       newUser: {
         password: 'password',
         first_name: '',
         last_name: '',
-        personal_email: ''
+        personal_email: '',
+        role_id: 'Choose A Role'
       },
       errorMessage: null
     });
@@ -197,7 +200,8 @@ function mapStateToProps(state) {
   return {
     token,
     users: state.app.users,
-    errorMessage: state.app.errorMessage
+    errorMessage: state.app.errorMessage,
+    roles: state.app.roles
   };
 }
 export default connect(mapStateToProps)(UserList);

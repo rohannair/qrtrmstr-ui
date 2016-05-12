@@ -20,9 +20,12 @@ function newUserCreated(new_user = {}) {
   };
 }
 
-// function rolesRetrieved(roles = {}) {
-
-// }
+function rolesRetrieved(roles = {}) {
+  return {
+    type: 'ROLES_RETRIEVED',
+    roles
+  };
+}
 
 // New User contains errors
 export const newUserErrors = (error_msg) => {

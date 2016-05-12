@@ -8,15 +8,15 @@ import ButtonGroup from '../ButtonGroup';
 
 class NewUserModal extends Component {
 
-  state = {
-    loading: this.props.loading || false,
-    errorMessage: this.props.errorMessage || null
-  };
-
   render() {
-    const {val, showModal, renderModal, submitNewUser, onChange, closeModal, loading, errorMessage } = this.props;
+    const {val, showModal, renderModal, submitNewUser, onChange, closeModal, loading, errorMessage, roles, chosenRole } = this.props;
     const loadingIcon = loading ? <i className="fa fa-cog fa-lg fa-spin spinner"></i> : null;
-    const errorText = errorMessage ? <div className="visibleError"><i className="fa fa-exclamation-circle"></i><ul><li>{errorMessage}</li></ul></div> : null;
+    const errorText = errorMessage ? <div className="errorText"><i className="fa fa-exclamation-circle"></i><ul><li>{errorMessage}</li></ul></div> : null;
+    const rolesOptions = Object.keys(roles).map(index => {
+      let role = roles[index];
+      return <option value={ JSON.stringify(Number(role.id)) } key={role.id}>{role.name}</option>;
+    });
+
     return (
       <Modal animation={true} show={showModal} onHide={closeModal}>
         <Card className="modal">
@@ -61,21 +61,21 @@ class NewUserModal extends Component {
               />
             </div>
             <div className="formField">
-              <div className="iconContainer">
+              <div className="iconContainer select">
                 <i className="fa fa-envelope iconInfo"></i>
               </div>
-              <input
-                className="inputIcon"
-                name="personal_email"
-                placeholder="Role"
-                value= { val.personal_email }
-                onChange={ e => onChange(e.target.name, e.target.value) }
-              />
+              <select className="inputIcon selectInput" name="role_id" value={ chosenRole } onChange={e => onChange(e.target.name, JSON.parse(e.target.value)) }>
+                <option value="Choose A Role">Choose A Role</option><i className="fa fa-user iconInfo"></i>
+                { rolesOptions }
+              </select>
+              <div className="selectArrow">
+                <i className="fa fa-chevron-down"></i>
+              </div>
             </div>
 
           </Modal.Body>
           <Modal.Footer>
-            <div className="errorText">
+            <div className="errorContainer">
               { errorText }
             </div>
             <div className="userButtonGroup">
