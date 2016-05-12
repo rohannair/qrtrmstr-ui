@@ -3,6 +3,10 @@
   padding: 10px 2px 2px;
   border-radius: 2px;
 
+  .textBoxLink {
+    color: #EE6352;
+  }
+
   .buttonGroup {
     overflow: hidden;
   }
