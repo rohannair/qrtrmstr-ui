@@ -63,15 +63,15 @@ class NewUserModal extends Component {
           <Modal.Footer>
             <div className="userButtonGroup">
               <ButtonGroup>
-                <div className="spinnerContainer">
-                  { loadingIcon }
-                </div>
                 <Button classes="inverse sm" onClick={closeModal}>Cancel</Button>
                 <Button classes="primary sm" onClick={submitNewUser}>Add</Button>
               </ButtonGroup>
             </div>
             <div className="errorContainer">
               { errorText }
+            </div>
+            <div className="spinnerContainer">
+              { loadingIcon }
             </div>
           </Modal.Footer>
         </Card>
