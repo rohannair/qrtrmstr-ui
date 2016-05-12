@@ -159,7 +159,7 @@ class UserList extends Component {
         first_name: '',
         last_name: '',
         personal_email: '',
-        role_id: 'Choose A Role'
+        role_id: ''
       },
       errorMessage: null
     });
@@ -191,7 +191,17 @@ class UserList extends Component {
     this.setState({
       loading: true
     });
-    dispatch(createUser(token, newUser));
+    let formErrors = '';
+    for (let val in newUser) {
+      if (newUser[val].length === 0) {
+        if (val === 'role_id') {
+          val = 'role';
+        }
+        let valProc = val.replace(/_/g, ' ');
+        formErrors += `${valProc}, `;
+      }
+    };
+    formErrors.length > 0 ? dispatch(newUserErrors(`The fields: ${formErrors}cannot be blank.`)) : dispatch(createUser(token, newUser));
   };
 }
 
