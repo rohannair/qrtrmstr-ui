@@ -203,7 +203,6 @@ class UserList extends Component {
         let valProc = val.replace(/_/g, ' ');
         formErrors += `${valProc}, `;
       }
-      debugger;
       if (val === 'personal_email') {
         allErrors += (/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/).test(newUser[val]) ? ''
         : 'Please enter a valid email address.';
