@@ -5,7 +5,7 @@
   right: 0;
   bottom: 0;
   left: 0;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.48);
   z-index: 99999;
   -webkit-animation: mymove 0.4s;  /* Chrome, Safari, Opera */
   -webkit-animation-iteration-count: 2;  /* Chrome, Safari, Opera */
@@ -25,7 +25,7 @@
     to {top: 0px; opacity: 1;}
 }
 
-.modal-content .card-body {
+.modal .card-body {
   padding: 10px;
 }
 
@@ -75,11 +75,13 @@ h1, h2, h3, h4, h5, h6, strong {
 .h4, .h5, .h6, h4, h5, h6 {
   margin-top: 10px;
   margin-bottom: 10px;
+}
 
 .modalDialog > div {
-  width: 400px;
+  max-width: 543px;
   position: relative;
   margin: 10% auto;
+  width: 65%;
 }
 
 *, *::before, *::after {
@@ -148,7 +150,7 @@ h1, h2, h3, h4, h5, h6, strong {
 
 .inputIcon {
   height: 33px;
-  width: 65%;
+  width: 53%;
   padding: 6px 12px;
   border: 1px solid #435360;
   z-index: 900;
