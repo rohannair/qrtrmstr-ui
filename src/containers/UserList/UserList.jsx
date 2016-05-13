@@ -158,10 +158,11 @@ class UserList extends Component {
     this.setState({
       newUser: {
         password: 'password',
+        is_admin: false,
         first_name: '',
         last_name: '',
         personal_email: '',
-        role_id: 'Choose A Role'
+        role_id: ''
       },
       errorMessage: null
     });
@@ -193,7 +194,25 @@ class UserList extends Component {
     this.setState({
       loading: true
     });
-    dispatch(createUser(token, newUser));
+    let allErrors = '';
+    let formErrors = '';
+    for (let val in newUser) {
+      if (newUser[val].length === 0) {
+        if (val === 'role_id') {
+          val = 'role';
+        } if (val === 'personal_email') {
+          val = 'email';
+        }
+        let valProc = val.replace(/_/g, ' ');
+        formErrors += `${valProc}, `;
+      }
+      if (val === 'personal_email') {
+        allErrors += (/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/).test(newUser[val]) ? ''
+        : 'Please enter a valid email address.';
+      }
+    };
+    allErrors += formErrors ? `The fields: ${formErrors}cannot be blank. ` : '';
+    allErrors.length > 0 ? dispatch(newUserErrors(allErrors)) : dispatch(createUser(token, newUser));
   };
 }
 
