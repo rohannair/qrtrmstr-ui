@@ -33,6 +33,7 @@ class SendPlaybookModal extends Component {
       email: latestUser.email,
       playbookID: latestUser.playbookId
     };
+
     let defaultUser = JSON.stringify(selectedUser);
     const userOptions = Object.keys(users).map(index => {
       let user = users[index];

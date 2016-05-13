@@ -194,7 +194,7 @@ class StyleButton extends React.Component {
 
     return (
       <span className={className} onMouseDown={this.onToggle}>
-       { this.props.icon ? <Button center={true} classes='secondary' icon={this.props.icon}/>
+       { this.props.icon ? <Button center={true} classes='secondary subList' icon={this.props.icon}/>
         : <span className="subOptions">{this.props.label}</span> }
       </span>
     );
@@ -207,8 +207,8 @@ const BLOCK_TYPES = [
 ];
 
 const LIST_TYPES = [
-  {label: 'UL', style: 'unordered-list-item'},
-  {label: 'OL', style: 'ordered-list-item'}
+  {label: 'UL', style: 'unordered-list-item', icon: 'list-ol'},
+  {label: 'OL', style: 'ordered-list-item', icon: 'list-ul'}
 ];
 
 const HEADER_TYPES = [
@@ -274,6 +274,7 @@ const ListStyleControls = (props) => {
       label={type.label}
       onToggle={props.onToggle}
       style={type.style}
+      icon={type.icon}
     />
   );
 

@@ -1,9 +1,10 @@
 const initialState = {
   users: [],
-  showModal: false
+  errorMessage: null,
+  roles: []
 };
 
-export default function app(state = initialState, { type, users, new_user }) {
+export default function app(state = initialState, { type, users, new_user, error_msg, roles }) {
   switch (type) {
   case 'USERS_RETRIEVED':
     return {
@@ -11,10 +12,12 @@ export default function app(state = initialState, { type, users, new_user }) {
       users: users
     };
 
-  case 'TOGGLE_NEW_USER_MODAL':
+  case 'NEW_USER_ERROR_RETRIEVED':
+    const newError = (error_msg && (state.errorMessage === error_msg)) ?
+      `${error_msg} (again)` : error_msg;
     return {
       ...state,
-      showModal: !state.showModal
+      errorMessage: newError
     };
 
   case 'NEW_USER_CREATED':
@@ -23,7 +26,14 @@ export default function app(state = initialState, { type, users, new_user }) {
       users: [
         ...state.users,
         new_user
-      ]
+      ],
+      errorMessage: null
+    };
+
+  case 'ROLES_RETRIEVED':
+    return {
+      ...state,
+      roles: roles
     };
 
   default:

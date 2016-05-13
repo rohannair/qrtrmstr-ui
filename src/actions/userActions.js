@@ -20,6 +20,21 @@ function newUserCreated(new_user = {}) {
   };
 }
 
+function rolesRetrieved(roles = {}) {
+  return {
+    type: 'ROLES_RETRIEVED',
+    roles
+  };
+}
+
+// New User contains errors
+export const newUserErrors = (error_msg) => {
+  return {
+    type: 'NEW_USER_ERROR_RETRIEVED',
+    error_msg
+  };
+};
+
 // Get All Users
 export const getUsers = token =>
   dispatch => get(LOCATION_ROOT + 'users', token)
@@ -33,9 +48,17 @@ export const getSingleUser = (token, id) =>
 // Create new User
 export const createUser = (token, payload) =>
   dispatch => post(`${LOCATION_ROOT}users`, token, payload)
-  .then(json => dispatch(newUserCreated(json)));
+  .then(json => {
+    if (!json.message) return dispatch(newUserCreated(json));
+    return dispatch(newUserErrors(json.message));
+  });
 
 // Modify existing User
 export const modifyUser = (token, payload) =>
   dispatch => put(`${LOCATION_ROOT}users/${payload.id}`, token, payload)
   .then(json => console.log(json));
+
+// Get All Roles
+export const getRoles = token =>
+  dispatch => get(LOCATION_ROOT + 'roles', token)
+  .then(json => dispatch(rolesRetrieved(json)));

@@ -36,9 +36,7 @@ const SlideEquipmentBody = ({ opt, newOption, editOption, deleteOption }) => {
         </tbody>
       </table>
       <div className="buttonRow">
-        <ButtonGroup>
-          <Button classes="primary md" onClick={ onClick }>+</Button>
-        </ButtonGroup>
+        <Button classes="primary md" onClick={ onClick }>+</Button>
       </div>
     </div>
   );

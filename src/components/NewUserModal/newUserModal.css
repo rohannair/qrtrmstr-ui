@@ -61,6 +61,10 @@
     transition: opacity .15s linear;
 }
 
+.modal-content .card-body {
+  padding: 10px;
+}
+
 .modal-open .modal {
   overflow-x: hidden;
   overflow-y: auto;
@@ -103,8 +107,9 @@
 }
 
 .modal-content {
-  margin: 200px 200px 200px 200px;
-  width: 60%;
+  margin: auto;
+  margin-top: 15%;
+  max-width: 552px;
   position: relative;
   background-color: #fff;
   -webkit-background-clip: padding-box;
@@ -117,7 +122,6 @@
   box-shadow: 0 3px 9px rgba(0,0,0,.5);
 }
 
-<style>…</style>
 *, *::before, *::after {
   box-sizing: inherit;
 }
@@ -155,7 +159,6 @@ button.close {
   line-height: 1.42857143;
 }
 
-<style>…</style>
 h1, h2, h3, h4, h5, h6, strong {
   color: #30343F;
   font-weight: 500;
@@ -180,6 +183,7 @@ h1, h2, h3, h4, h5, h6, strong {
 .modal-body {
   position: relative;
   padding: 15px;
+  width: 90%;
 }
 
 *, *::before, *::after {
@@ -192,6 +196,85 @@ h1, h2, h3, h4, h5, h6, strong {
   box-sizing: border-box;
 }
 
+.userButtonGroup {
+  float: right;
+}
 
+.errorContainer {
+  display: inline-block;
+  float: right;
 
+  .errorText {
+    height: 28px;
+    display: inline-block;
+    overflow: auto;
+    background-color: rgba(238, 99, 82, 0.24);
+    border: 1px solid rgba(67, 83, 96, 0.26);
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.63);
 
+    p {
+      margin: 0px;
+      padding: 7px;
+    }
+
+    .visibleError {
+      display: inline-block;
+    }
+  }
+}
+.spinnerContainer {
+  height: 28px;
+  padding: 4px;
+  float: right;
+
+  .spinner {
+    height: 16px;
+    float: right;
+    margin-right: 5px;
+  }
+}
+
+.iconContainer {
+  display: inline-block;
+  background-color: #2E404E;
+  color: #FFF;
+  width: 39px;
+  height: 33px;
+  margin-bottom: 5px;
+
+  .iconInfo {
+    padding: 8px 13px;
+  }
+}
+
+.inputIcon {
+  height: 33px;
+  width: 65%;
+  padding: 6px 12px;
+  border: 1px solid #435360;
+  z-index: 900;
+  border-radius: 3px;
+  background-color: #fff;
+  display: inline-block;
+  float: left;
+  margin-bottom: 5px;
+}
+
+.selectInput {
+  width: 77%;
+  border-right: none;
+  border-radius: 0px;
+}
+
+label {
+  display: inline-block;
+  float: left;
+  clear: left;
+  width: 30%;
+  text-align: right;
+  padding-right: 10px;
+  padding-top: 7px;
+}

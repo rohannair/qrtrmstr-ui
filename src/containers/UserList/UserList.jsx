@@ -9,12 +9,14 @@ import Button from '../../components/Button';
 import ButtonGroup from '../../components/ButtonGroup';
 import NewUserModal from '../../components/NewUserModal';
 
-import { getUsers, createUser } from '../../actions/userActions';
+import { getUsers, createUser, newUserErrors, getRoles } from '../../actions/userActions';
 
 class UserList extends Component {
 
   state = {
-    newUser: this.props.newUser || {}
+    newUser: {},
+    loading: false,
+    errorMessage: this.props.errorMessage || null
   };
 
   static propTypes = {
@@ -26,10 +28,20 @@ class UserList extends Component {
 
   componentWillMount() {
     this._renderUserList();
+    this._renderRolesList();
   };
 
+  componentWillReceiveProps(nextProps) {
+    const { newUser, errorMessage } = this.state;
+    this.setState({
+      loading: false,
+      newUser: nextProps.errorMessage ? newUser : {},
+      errorMessage: nextProps.errorMessage
+    });
+  }
+
   render() {
-    const newUserForm = Object.keys(this.state.newUser).length > 0
+    const newUserForm = Object.keys(this.state.newUser).length > 0 || this.state.errorMessage
     ? <NewUserModal
         val={this.state.newUser}
         showModal={true}
@@ -37,6 +49,10 @@ class UserList extends Component {
         submitNewUser={this._addNewUser}
         onChange={this._changeUserParams}
         closeModal={this._closePlaybookModal}
+        loading={this.state.loading}
+        errorMessage={this.state.errorMessage}
+        roles={this.props.roles}
+        chosenRole={this.state.newUser.role_id}
       />
     : null;
 
@@ -45,19 +61,6 @@ class UserList extends Component {
       const adminIcon = val.isAdmin
         ? <i className="oi" data-glyph="key" />
         : null;
-
-      const resultsIcon = val.playbook_results
-        ? (
-            <Button
-              classes="inverse sm"
-              // toolTipText="View playbook results"
-              icon="list-rich" />
-          )
-        : (
-            <Button
-              classes="primary sm"
-              icon="share-boxed" />
-          );
 
       const deactivateClasses = val.isAdmin
         ? 'disabled'
@@ -71,14 +74,16 @@ class UserList extends Component {
           <td>{ val.rolename }</td>
           <td className="actions">
             <ButtonGroup>
-              { resultsIcon }
               <Button
                 classes='sm tertiary'
                 icon="pencil" />
               <Button
                 classes= { `sm tertiary ${deactivateClasses}` }
                 disabled={val.isAdmin}
-                icon="x"/>
+                icon="times"/>
+              <Button
+                classes='secondary sm'
+                icon="paper-plane"/>
             </ButtonGroup>
           </td>
         </tr>
@@ -123,10 +128,16 @@ class UserList extends Component {
     );
   };
 
+  _clearUserErrors = () => {
+    const { dispatch } = this.props;
+    dispatch(newUserErrors(null));
+  };
+
   _closePlaybookModal = () => {
     this.setState({
       newUser: {}
     });
+    this._clearUserErrors();
   };
 
   _renderUserList = () => {
@@ -134,37 +145,72 @@ class UserList extends Component {
     return dispatch(getUsers(token));
   };
 
-  _renderNewUserModal = () => {
+  _renderRolesList = () => {
     const { token, dispatch } = this.props;
+    return dispatch(getRoles(token));
+  };
+
+  _renderNewUserModal = () => {
+    const { token, dispatch, roles } = this.props;
     const { newUser } = this.state;
     this.setState({
       newUser: {
-        username: '',
-        password: '',
+        password: 'password',
+        is_admin: false,
         first_name: '',
         last_name: '',
-        email: '',
-        personal_email: ''
-      }
+        personal_email: '',
+        role_id: ''
+      },
+      errorMessage: null
     });
   };
-
 
   _changeUserParams = (key, val) => {
     const { newUser } = this.state;
-    this.setState({
-      newUser: {
-        ...newUser,
-        [key]: val
-      }
-    });
+    if (key === 'personal_email') {
+      this.setState({
+        newUser: {
+          ...newUser,
+          [key]: val,
+          username: val
+        }
+      });
+    } else {
+      this.setState({
+        newUser: {
+          ...newUser,
+          [key]: val
+        }
+      });
+    }
   };
 
   _addNewUser = () => {
-    this._closePlaybookModal();
     const { token, dispatch } = this.props;
     const { newUser } = this.state;
-    return dispatch(createUser(token, newUser));
+    this.setState({
+      loading: true
+    });
+    let allErrors = '';
+    let formErrors = '';
+    for (let val in newUser) {
+      if (newUser[val].length === 0) {
+        if (val === 'role_id') {
+          val = 'role';
+        } if (val === 'personal_email') {
+          val = 'email';
+        }
+        let valProc = val.replace(/_/g, ' ');
+        formErrors += `${valProc}, `;
+      }
+      if (val === 'personal_email') {
+        allErrors += (/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/).test(newUser[val]) ? ''
+        : 'Please enter a valid email address.';
+      }
+    };
+    allErrors += formErrors ? `The fields: ${formErrors}cannot be blank. ` : '';
+    allErrors.length > 0 ? dispatch(newUserErrors(allErrors)) : dispatch(createUser(token, newUser));
   };
 }
 
@@ -172,7 +218,9 @@ function mapStateToProps(state) {
   const token = state.accountActions.token || Cookies.get('token');
   return {
     token,
-    users: state.app.users
+    users: state.app.users,
+    errorMessage: state.app.errorMessage,
+    roles: state.app.roles
   };
 }
 export default connect(mapStateToProps)(UserList);
