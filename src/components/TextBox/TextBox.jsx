@@ -230,7 +230,7 @@ class TextBox extends Component {
             </Dropdown>
           </ButtonToolbar>
           {dropdownExample}
-          
+          {urlInput}
 
         </ButtonGroup>
         <Editor
