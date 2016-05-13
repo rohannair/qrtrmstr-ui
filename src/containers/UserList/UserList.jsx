@@ -189,8 +189,9 @@ class UserList extends Component {
   };
 
   _addNewUser = () => {
+    debugger;
     const { token, dispatch } = this.props;
-    const { newUser } = this.state;
+    const { loading, newUser } = this.state;
     this.setState({
       loading: true
     });

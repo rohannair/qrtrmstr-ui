@@ -69,6 +69,7 @@ class NewUserModal extends Component {
               </select>
             </div>
           </div>
+          <div className="modalFooter">
             <div className="userButtonGroup">
               <ButtonGroup>
                 <Button classes="inverse sm" onClick={closeModal}>Cancel</Button>
@@ -81,6 +82,7 @@ class NewUserModal extends Component {
             <div className="spinnerContainer">
               { loadingIcon }
             </div>
+          </div>
         </Card>
       </div>
     </div>
