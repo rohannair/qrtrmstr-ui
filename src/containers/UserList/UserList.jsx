@@ -123,7 +123,9 @@ class UserList extends Component {
             <Button onClick={this._renderNewUserModal} classes="primary md">New user +</Button>
           </div>
         </Card>
-        { newUserForm }
+        <div className="modalContainer">
+          { newUserForm }
+        </div>
       </div>
     );
   };
