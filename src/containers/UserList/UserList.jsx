@@ -156,6 +156,7 @@ class UserList extends Component {
     this.setState({
       newUser: {
         password: 'password',
+        is_admin: false,
         first_name: '',
         last_name: '',
         personal_email: '',
