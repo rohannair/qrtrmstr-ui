@@ -189,12 +189,16 @@ class UserList extends Component {
   };
 
   _addNewUser = () => {
-    debugger;
-    const { token, dispatch } = this.props;
-    const { loading, newUser } = this.state;
     this.setState({
       loading: true
+    }, () => {
+      setTimeout(() => this._processNewUser(), 0);
     });
+  };
+
+  _processNewUser = () => {
+    const { token, dispatch } = this.props;
+    const { newUser } = this.state;
     let allErrors = '';
     let formErrors = '';
     for (let val in newUser) {
