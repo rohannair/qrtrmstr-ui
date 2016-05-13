@@ -191,17 +191,26 @@ class UserList extends Component {
     this.setState({
       loading: true
     });
+    let allErrors = '';
     let formErrors = '';
     for (let val in newUser) {
       if (newUser[val].length === 0) {
         if (val === 'role_id') {
           val = 'role';
+        } if (val === 'personal_email') {
+          val = 'email';
         }
         let valProc = val.replace(/_/g, ' ');
         formErrors += `${valProc}, `;
       }
+      debugger;
+      if (val === 'personal_email') {
+        allErrors += (/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/).test(newUser[val]) ? ''
+        : 'Please enter a valid email address.';
+      }
     };
-    formErrors.length > 0 ? dispatch(newUserErrors(`The fields: ${formErrors}cannot be blank.`)) : dispatch(createUser(token, newUser));
+    allErrors += formErrors ? `The fields: ${formErrors}cannot be blank. ` : '';
+    allErrors.length > 0 ? dispatch(newUserErrors(allErrors)) : dispatch(createUser(token, newUser));
   };
 }
 
