@@ -5,11 +5,11 @@ import { IndexRoute, Route } from 'react-router';
 import App from '../containers/App';
 import Home from '../components/Home';
 import Login from '../containers/Auth/Login';
-import playbook from '../containers/playbook';
+import Playbook from '../containers/Playbook';
 
 import NotFound from '../components/NotFound';
-import playbookView from '../containers/playbookView';
-import playbookEditor from '../containers/playbookEditor';
+import PlaybookView from '../containers/PlaybookView';
+import PlaybookEditor from '../containers/PlaybookEditor';
 import UserList from '../containers/UserList';
 
 // Utils
