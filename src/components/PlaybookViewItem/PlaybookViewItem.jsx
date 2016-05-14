@@ -15,9 +15,9 @@ const PlaybookViewItem = props => {
       <div className="cell name">
         { `${props.name}  `}
 
-        <a href={ href }>
+        <Link to={`/playbook/${props.id}`}>
           <i className="fa fa-external-link"></i>
-        </a>
+        </Link>
       </div>
 
       <div className="cell modified">
