@@ -96,7 +96,7 @@ class PlaybookView extends Component {
   _duplicatePlaybook = (id) => {
     const { token, dispatch } = this.props;
     return dispatch(duplicatePlaybook(token, id));
-  }
+  };
 
   _changeUserParams = (value) => {
     this.setState({
