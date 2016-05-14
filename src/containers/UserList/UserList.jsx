@@ -157,11 +157,8 @@ class UserList extends Component {
     const { newUser } = this.state;
     this.setState({
       newUser: {
-        password: 'password',
-        is_admin: false,
         first_name: '',
         last_name: '',
-        personal_email: '',
         role_id: ''
       },
       errorMessage: null
@@ -169,31 +166,38 @@ class UserList extends Component {
   };
 
   _changeUserParams = (key, val) => {
+    if (!this._validateField(val)) return;
+
     const { newUser } = this.state;
-    if (key === 'personal_email') {
-      this.setState({
-        newUser: {
-          ...newUser,
-          [key]: val,
-          username: val
-        }
-      });
-    } else {
-      this.setState({
-        newUser: {
-          ...newUser,
-          [key]: val
-        }
-      });
-    }
+    this.setState({
+      newUser: {
+        ...newUser,
+        [key]: val
+      }
+    });
   };
 
+  _validateField = (val) => !!val;
+
   _addNewUser = () => {
+    const { dispatch, token } = this.props;
+    const { newUser } = this.state;
+
+    for (let val in newUser) {
+      if (!this._validateField(newUser[val])) return;
+    }
+
     this.setState({
       loading: true
-    }, () => {
-      setTimeout(() => this._processNewUser(), 0);
     });
+
+    const data = {
+      ...newUser,
+      username: `${newUser.first_name}.${newUser.last_name}@whatever.com`,
+      password: 'password'
+    }
+
+    dispatch(createUser(token, data));
   };
 
   _processNewUser = () => {
@@ -201,6 +205,7 @@ class UserList extends Component {
     const { newUser } = this.state;
     let allErrors = '';
     let formErrors = '';
+
     for (let val in newUser) {
       if (newUser[val].length === 0) {
         if (val === 'role_id') {
@@ -208,9 +213,11 @@ class UserList extends Component {
         } if (val === 'personal_email') {
           val = 'email';
         }
+
         let valProc = val.replace(/_/g, ' ');
         formErrors += `${valProc}, `;
       }
+
       if (val === 'personal_email') {
         allErrors += (/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/).test(newUser[val]) ? ''
         : 'Please enter a valid email address.';
