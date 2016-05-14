@@ -20,14 +20,14 @@ const routes = (
     <IndexRoute component={ Home } onEnter={ requireAuth } />
     <Route path="dashboard" component={ Home } onEnter={ requireAuth }>
       <IndexRoute component={ UserList } />
-      <Route path="playbooks" component={ playbookView } />
-      <Route path="playbooks/edit/:playbookID" component={ playbookEditor } />
+      <Route path="playbooks" component={ PlaybookView } />
+      <Route path="playbooks/edit/:playbookID" component={ PlaybookEditor } />
       <Route path="users" component={ UserList } />
       <Route path="*" component={ NotFound } />
     </Route>
     <Route path="login" component={ Login } onEnter={ checkAuth } />
     <Route path="logout" component={ Login } />
-    <Route path="playbook/:playbookID" component={ playbook } />
+    <Route path="playbook/:playbookID" component={ Playbook } />
     <Route path="*" component={ NotFound } />
   </Route>
 );
