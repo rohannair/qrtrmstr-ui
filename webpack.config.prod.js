@@ -22,6 +22,7 @@ const config = {
   module: {
 
     loaders: [
+
       {
         test: /\.jsx$/,
         loaders: ['babel-loader'],
@@ -81,6 +82,12 @@ const config = {
     new webpack.NoErrorsPlugin(),
     new webpack.optimize.UglifyJsPlugin(),
     new webpack.optimize.DedupePlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production'),
+        'ENV': JSON.stringify('production')
+      }
+    }),
     function() {
       this.plugin('done', function(stats) {
         require('fs').writeFileSync(
