@@ -3,6 +3,9 @@ import React, { Component, PropTypes } from 'react';
 import Cookies from 'cookies-js';
 import { connect } from 'react-redux';
 
+// Styles
+import styles from './login.css';
+
 // Utils
 import { merge } from 'lodash';
 
@@ -50,7 +53,9 @@ class App extends Component {
     return (
       <div className="app-login">
         <Header />
-        <Login submitForm={this._submitForm}/>
+        <div className="login-container">
+          <Login submitForm={this._submitForm}/>
+        </div>
         <Footer />
       </div>
     );
