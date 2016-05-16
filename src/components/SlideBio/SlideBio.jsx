@@ -14,13 +14,13 @@ class SlideBio extends Component {
     heading: this.props.body.heading,
     desc: this.props.body.desc,
     textAlign: this.props.body.textAlign || 'left',
-    options: this.props.body.options || {}
   };
 
   render() {
     const { slide_number, id, onChange } = this.props;
-    const { heading, desc, options } = this.state;
-    let self = this;
+    const { heading, desc } = this.state;
+    const options = this.props.body.options;
+    const self = this;
 
     const bioOptions = Object.keys(options).map(val => {
       let label = val.split('_').join(' ');
@@ -42,32 +42,26 @@ class SlideBio extends Component {
 
     return (
       <div className="slideBio">
-        <div className="slideEquipment">
-          <div className="slide-input">
-            <strong>Heading:</strong>
-            <input
-              name="heading"
-              value={ heading }
-              onChange={ e => this._updateBioState(e.target.name, e.target.value) }
-            />
-          </div>
-          <div className="options">
-            { bioOptions }
-          </div>
+        <div className="slide-input">
+          <strong>Heading:</strong>
+          <input
+            name="heading"
+            value={ heading }
+            onChange={ e => this._updateBioState(e.target.name, e.target.value) }
+          />
+        </div>
+        <div className="slideBio-options">
+          <h3>Options</h3>
+          { bioOptions }
         </div>
       </div>
     );
   };
 
   _updateSlideOption = val => {
-    console.log('Updated', val);
-
-    this.setState({
-      ...this.state,
-      options: {
-        ...this.state.options,
-        [val]: !this.state.options[val]
-      }
+    return this._updateBioState('options', {
+      ...this.props.body.options,
+      [val]: !this.props.body.options[val]
     });
   };
 

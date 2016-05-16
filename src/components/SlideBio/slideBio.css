@@ -1,11 +1,48 @@
 .slideBio {
-  label {
-    background-color: red;
-    text-align: left;
-    padding: 5px 0;
+
+  .slide-input {
+    width: 100%;
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 20px;
+
+    strong {
+      width: 15%;
+      text-align: right;
+    }
+
+    input {
+      flex-grow: 1;
+      margin-left: 20px;
+      padding: 10px;
+    }
   }
 
-  input[type=checkbox] {
-    margin-right: 10px;
+  &-options {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    h3 {
+      width: 100%;
+    }
+
+    label {
+      width: 33.33%;
+      font-size: 1em;
+      text-align: left;
+      padding: 10px 5px;
+      cursor: pointer;
+      flex-grow: 0;
+      flex-shrink: 0;
+
+      &:hover {
+        background-color: #f1f1f1;
+      }
+    }
+
+    input[type=checkbox] {
+      margin-right: 10px;
+    }
   }
 }
