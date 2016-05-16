@@ -221,8 +221,6 @@ class TextBox extends Component {
           onChange={this.onChange}
           ref="editor"
         />
-        <div className="footer">
-        </div>
       </div>
     );
   };
