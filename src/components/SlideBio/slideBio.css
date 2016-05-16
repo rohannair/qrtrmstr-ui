@@ -1,3 +1,11 @@
 .slideBio {
+  label {
+    background-color: red;
+    text-align: left;
+    padding: 5px 0;
+  }
 
+  input[type=checkbox] {
+    margin-right: 10px;
+  }
 }
