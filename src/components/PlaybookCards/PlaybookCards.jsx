@@ -7,6 +7,7 @@ import Button from '../../components/Button';
 import Card from '../../components/Card';
 import PlaybookFormCard from '../../components/PlaybookFormCard';
 import PlaybookTextCard from '../../components/PlaybookTextCard';
+import PlaybookBio from '../../components/PlaybookBio';
 
 // Mock
 const userInfo = {
@@ -34,32 +35,14 @@ const PlaybookCards = (props) => {
         selected = { isSelected }
         {...field}
       />);
+
     case 'bio':
       return (
         <Card key={ field.slide_number } footer={<div/>}>
-          <h2>Fill out your profile</h2>
-          <div className="bio">
-            <div className="bio-info">
-              <div className="upload-img">
-                Upload a profile picture
-                <i className="material-icons">cloud_upload</i>
-              </div>
-            </div>
-            <div className="bio-form">
-              <h3>{ userInfo.firstName + ' ' + userInfo.lastName}</h3>
-              <p>User Experience Designer - <a href="#">rachel.galaxy@scotiabank.com</a></p>
-              <textarea placeholder="Tell the team a little bit about yourself..."/>
-
-              <div className="social-media">
-                <li className="fb">Link to your Facebook</li>
-                <li className="tw">Link to your Twitter</li>
-                <li className="li">Link to your LinkedIn</li>
-              </div>
-            </div>
-          </div>
-
+          <PlaybookBio { ...field } userInfo={ userInfo } />
         </Card>
       );
+
     case 'equipment':
       const opts = field.body.options.map(val => {
 
@@ -162,9 +145,6 @@ const PlaybookCards = (props) => {
 
   return (
     <div className="container container-playbook">
-      <Card footer={<div/>}>
-        <div className="progressbar">{ cardCount }</div>
-      </Card>
       { cards }
     </div>
   );
