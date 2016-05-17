@@ -42,6 +42,9 @@ export const tryLogin = credentials => {
     })
     .then(response => response.json().then(json => ({json, response})))
     .then(({ json, response }) => {
+      if(!response.ok) {
+        return dispatch(logout());
+      }
       return dispatch(login(json.token));
     });
   };
