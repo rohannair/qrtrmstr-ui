@@ -10,7 +10,7 @@ if (!name) {
   process.exit(0);
 }
 
-const containerName   = _.flowRight(_.capitalize, _.camelCase)(name);
+const containerName   = _.flowRight(_.upperFirst, _.camelCase)(name);
 const containerNameLC = _.camelCase(name);
 const dest            = path.join(__dirname, '..', 'src', 'containers', containerName);
 
