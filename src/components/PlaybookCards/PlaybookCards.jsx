@@ -7,6 +7,7 @@ import Button from '../../components/Button';
 import Card from '../../components/Card';
 import PlaybookFormCard from '../../components/PlaybookFormCard';
 import PlaybookTextCard from '../../components/PlaybookTextCard';
+import PlaybookKnowledgeCentre from '../../components/PlaybookKnowledgeCentre';
 import PlaybookBio from '../../components/PlaybookBio';
 
 // Mock
@@ -71,32 +72,9 @@ const PlaybookCards = (props) => {
       );
 
     case 'knowledgectr':
-      const options = field.body.options.map((val, i) => {
-        if (i === 1) {
-          return <a className="active" href="#" key={val.id}><i className="material-icons">ondemand_video</i> {val.name}</a>;
-        }
-        return <a href="#" key={val.id}><i className="material-icons">ondemand_video</i> {val.name}</a>;
-      });
       return (
         <Card key={field.slide_number} footer={<div/>}>
-          <h2>{field.heading}</h2>
-          <p className = {field.body.textAlign || ''}>{field.body.desc}</p>
-
-          <div className="playlist">
-            <div className="playlist-menu">
-              <div className="playlist-header">
-                <i className="material-icons">playlist_play</i>UX Designer Playlist
-              </div>
-              { options }
-            </div>
-
-            <div className="playlist-viewer">
-              <iframe src={`http://www.youtube.com/embed/${field.body.options[1].id}`} />
-            </div>
-          </div>
-          <div className="playlist-footer">
-            {field.body.footer}
-          </div>
+          <PlaybookKnowledgeCentre { ...field } />
         </Card>
       );
 
