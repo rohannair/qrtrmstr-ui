@@ -5,7 +5,6 @@ import styles from './textBox.css';
 import { Editor, EditorState, RichUtils, ContentState, convertToRaw, Entity, CompositeDecorator } from 'draft-js';
 import { stateFromHTML } from 'draft-js-import-html';
 import { stateToHTML } from 'draft-js-export-html';
-import { ButtonToolbar, MenuItem, Dropdown } from 'react-bootstrap';
 
 import Button from '../../components/Button';
 import ButtonGroup from '../../components/ButtonGroup';
