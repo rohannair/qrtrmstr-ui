@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 // Styles
 import classNames from 'classnames';
-import styles from './sendPlaybookModal.css';
+import styles from './editPlaybookModal.css';
 
 // Components
 import Card from '../Card';
