@@ -38,7 +38,7 @@ class UserList extends Component {
       newUser: nextProps.errorMessage ? newUser : {},
       errorMessage: nextProps.errorMessage
     });
-  }
+  };
 
   render() {
     const newUserForm = Object.keys(this.state.newUser).length > 0 || this.state.errorMessage
@@ -159,6 +159,7 @@ class UserList extends Component {
       newUser: {
         first_name: '',
         last_name: '',
+        personal_email: '',
         role_id: ''
       },
       errorMessage: null
@@ -166,7 +167,6 @@ class UserList extends Component {
   };
 
   _changeUserParams = (key, val) => {
-    if (!this._validateField(val)) return;
 
     const { newUser } = this.state;
     this.setState({
@@ -180,24 +180,11 @@ class UserList extends Component {
   _validateField = (val) => !!val;
 
   _addNewUser = () => {
-    const { dispatch, token } = this.props;
-    const { newUser } = this.state;
-
-    for (let val in newUser) {
-      if (!this._validateField(newUser[val])) return;
-    }
-
     this.setState({
       loading: true
+    }, () => {
+      setTimeout(() => this._processNewUser(), 0);
     });
-
-    const data = {
-      ...newUser,
-      username: `${newUser.first_name}.${newUser.last_name}@whatever.com`,
-      password: 'password'
-    }
-
-    dispatch(createUser(token, data));
   };
 
   _processNewUser = () => {
@@ -220,11 +207,19 @@ class UserList extends Component {
 
       if (val === 'personal_email') {
         allErrors += (/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/).test(newUser[val]) ? ''
-        : 'Please enter a valid email address.';
+        : 'Please enter a valid email address. ';
       }
     };
+
+    const data = {
+      ...newUser,
+      is_admin: false,
+      username: newUser.personal_email,
+      password: 'password'
+    };
+
     allErrors += formErrors ? `The fields: ${formErrors}cannot be blank. ` : '';
-    allErrors.length > 0 ? dispatch(newUserErrors(allErrors)) : dispatch(createUser(token, newUser));
+    allErrors.length > 0 ? dispatch(newUserErrors(allErrors)) : dispatch(createUser(token, data));
   };
 }
 
