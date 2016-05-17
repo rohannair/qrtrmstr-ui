@@ -15,6 +15,7 @@ import { getUsers } from '../../actions/userActions';
 import Card from '../../components/Card';
 import Button from '../../components/Button';
 import SendPlaybookModal from '../../components/SendPlaybookModal';
+import EditPlaybookModal from '../../components/EditPlaybookModal';
 import PlaybookViewItem from '../../components/PlaybookViewItem';
 
 class PlaybookView extends Component {
@@ -23,7 +24,8 @@ class PlaybookView extends Component {
     chosenUser: {},
     chosenPlaybook: {},
     editedPlaybook: {},
-    loading: false
+    loading: false,
+    newPlaybookName: null
   };
 
   componentWillMount() {
@@ -43,7 +45,7 @@ class PlaybookView extends Component {
   };
 
   render() {
-    const playbookModal = Object.keys(this.state.chosenPlaybook).length > 0
+    const sendPlaybookModal = Object.keys(this.state.chosenPlaybook).length > 0
     ? <SendPlaybookModal
         playbookName={this.state.chosenPlaybook.name}
         playbookID={this.state.chosenPlaybook.id}
@@ -58,7 +60,21 @@ class PlaybookView extends Component {
       />
     : null;
 
-    const items = [...this.props.playbookList].map(val => <PlaybookViewItem key={val.id} {...val} onShowModal={ this._selectPlaybookForSending } duplicate={ this._duplicatePlaybook } />);
+    const editPlaybookModal = Object.keys(this.state.editedPlaybook).length > 0
+    ? <EditPlaybookModal
+        playbookName={this.state.editedPlaybook.name}
+        playbookID={this.state.editedPlaybook.id}
+        closeModal={this._closeEditPlaybookModal}
+        savePlaybook={this._savePlaybook}
+        onChange={this._changePlaybookParams}
+        loading={this.state.loading}
+        message={this.props.message}
+        timeOutModal={this._timeOutModal}
+        newPlaybookName={this.state.newPlaybookName}
+      />
+    : null;
+
+    const items = [...this.props.playbookList].map(val => <PlaybookViewItem key={val.id} {...val} onEditShowModal={ this._selectPlaybookForEditing } onSendShowModal={ this._selectPlaybookForSending } duplicate={ this._duplicatePlaybook } />);
 
     return (
       <div className="playbookView">
@@ -72,7 +88,8 @@ class PlaybookView extends Component {
         </div>
 
         { items }
-        { playbookModal }
+        { sendPlaybookModal }
+        { editPlaybookModal }
       </div>
     );
   };
@@ -82,6 +99,14 @@ class PlaybookView extends Component {
     this.setState({
       chosenPlaybook,
       message: null
+    });
+  };
+
+  _selectPlaybookForEditing = (val) => {
+    const editedPlaybook = ([...this.props.playbookList].filter(item => item.id === val.id))[0];
+    this.setState({
+      editedPlaybook,
+      newPlaybookName: ''
     });
   };
 
@@ -102,6 +127,13 @@ class PlaybookView extends Component {
     });
     dispatch(playbookSent(null));
   };
+
+  _closeEditPlaybookModal = () => {
+    this.setState({
+      editedPlaybook: {}
+    });
+  };
+
   // if a success message is returned, closes modal after 2.5 seconds
   _timeOutModal = () => {
     const { dispatch, message } = this.props;
@@ -120,9 +152,21 @@ class PlaybookView extends Component {
     return dispatch(sendPlaybook(token, chosenUser));
   };
 
+  _savePlaybook = () => {
+    const { token, dispatch } = this.props;
+    const { newPlaybookName, editedPlaybook } = this.state;
+    return dispatch(modifyPlaybook(token, {name: newPlaybookName}, editedPlaybook.id));
+  };
+
   _duplicatePlaybook = (id) => {
     const { token, dispatch } = this.props;
     return dispatch(duplicatePlaybook(token, id));
+  };
+
+  _changePlaybookParams = (value) => {
+    this.setState({
+      newPlaybookName: value
+    });
   };
 
   _changeUserParams = (value) => {
@@ -138,10 +182,7 @@ class PlaybookView extends Component {
         emailTemplate: 'welcomeEmail'
       }
     });
-    const { chosenUser } = this.state;
   };
-
-  // _changeEdited
 
 };
 

@@ -7,17 +7,9 @@
   left: 0;
   background: rgba(0, 0, 0, 0.48);
   z-index: 99999;
-  -webkit-animation: mymove 0.4s;  /* Chrome, Safari, Opera */
-  -webkit-animation-iteration-count: 2;  /* Chrome, Safari, Opera */
-  -webkit-animation-fill-mode: forwards;  /* Chrome, Safari, Opera */
   animation: mymove 0.4s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
-}
-
-@-webkit-keyframes mymove {
-    from {top: -50px; opacity: 0;}
-    to {top: 0px; opacity: 1;}
 }
 
 @keyframes mymove {
@@ -43,69 +35,11 @@
   }
 }
 
-.modal-content {
-  margin: auto;
-  margin-top: 15%;
-  max-width: 552px;
-  position: relative;
-  background-color: #fff;
-  -webkit-background-clip: padding-box;
-  background-clip: padding-box;
-  border: 1px solid #999;
-  border: 1px solid rgba(0,0,0,.2);
-  border-radius: 6px;
-  outline: 0;
-  -webkit-box-shadow: 0 3px 9px rgba(0,0,0,.5);
-  box-shadow: 0 3px 9px rgba(0,0,0,.5);
-}
-
-*, *::before, *::after {
-  box-sizing: inherit;
-}
-
-.modal-header {
-  padding: 15px;
-  border-bottom: 1px solid #e5e5e5;
-}
-
-.modal-header .close {
-  margin-top: -2px;
-}
-
-.modal-title {
-  margin: 0;
-  line-height: 1.42857143;
-}
-
-h1, h2, h3, h4, h5, h6, strong {
-  color: #30343F;
-  font-weight: 500;
-}
-
-.h4, h4 {
-  font-size: 18px;
-}
-
-.h4, .h5, .h6, h4, h5, h6 {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
 .modalDialog > div {
   max-width: 570px;
   position: relative;
   margin: 10% auto;
   width: 65%;
-}
-
-*, *::before, *::after {
-  box-sizing: inherit;
-}
-
-* {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
 }
 
 .userButtonGroup {
