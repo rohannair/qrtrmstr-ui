@@ -7,9 +7,6 @@
   left: 0;
   background: rgba(0, 0, 0, 0.48);
   z-index: 99999;
-  -webkit-animation: mymove 0.4s;  /* Chrome, Safari, Opera */
-  -webkit-animation-iteration-count: 2;  /* Chrome, Safari, Opera */
-  -webkit-animation-fill-mode: forwards;  /* Chrome, Safari, Opera */
   animation: mymove 0.4s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
