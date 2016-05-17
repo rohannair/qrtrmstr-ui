@@ -4,15 +4,15 @@ import styles from './playbookBio.css';
 const PlaybookBio = (props) => {
   const bodyOpts = props.body.options;
   const profilePic = bodyOpts.profile_image
-    ? (<div className="upload-img">
-        <i className="material-icons">cloud_upload</i>
-        <span>Upload a profile picture</span>
-      </div>)
-    : null;
+  ? (<div className="upload-img">
+      <i className="material-icons">cloud_upload</i>
+      <span>Upload a profile picture</span>
+    </div>)
+  : null;
 
   const bio = bodyOpts.bio
-    ? <textarea placeholder="Tell the team a little bit about yourself..."/>
-    : null;
+  ? <textarea placeholder="Tell the team a little bit about yourself..."/>
+  : null;
 
   const facebook = bodyOpts.facebook
   ? <li className="fb">Link your Facebook</li>
