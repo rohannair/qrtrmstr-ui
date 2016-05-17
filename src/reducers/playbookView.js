@@ -1,11 +1,11 @@
 import _ from 'lodash';
 
 export const initialState = {
-  showModal: false,
   chosenUser: {},
   list: [],
   playbook: {},
-  openCards: []
+  openCards: [],
+  message: null
 };
 
 export default function playbookView(state = initialState, action) {
@@ -112,10 +112,10 @@ export default function playbookView(state = initialState, action) {
       openCards: [...openCards].concat(action.cardID)
     };
 
-  case 'TOGGLE_SEND_PLAYBOOK_MODAL':
+  case 'PLAYBOOK_SENT':
     return {
       ...state,
-      showModal: !state.showModal
+      message: action.message
     };
 
   default:

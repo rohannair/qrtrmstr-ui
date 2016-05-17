@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styles from './textBox.css';
 
 // Libs
-import { Editor, EditorState, RichUtils, ContentState, convertToRaw } from 'draft-js';
+import { Editor, EditorState, RichUtils, ContentState, convertToRaw, Entity, CompositeDecorator } from 'draft-js';
 import { stateFromHTML } from 'draft-js-import-html';
 import { stateToHTML } from 'draft-js-export-html';
 import { ButtonToolbar, MenuItem, Dropdown } from 'react-bootstrap';
@@ -18,11 +18,20 @@ class TextBox extends Component {
       this.props.onToggle(this.props.style);
     };
 
+    const decorator = new CompositeDecorator([
+      {
+        strategy: findLinkEntities,
+        component: Link,
+      },
+    ]);
+
     const body = props.bodyKey ? props.body[props.bodyKey] : props.body;
     this.state = {
+      showURLInput: false,
+      urlValue: '',
       slideNum: props.slideNum,
       textAlign: props.textAlign || 'left',
-      editorState: EditorState.createWithContent(stateFromHTML(body))
+      editorState: EditorState.createWithContent(stateFromHTML(body), decorator)
     };
 
     this.focus = () => this.refs.editor.focus();
@@ -37,6 +46,11 @@ class TextBox extends Component {
     this.toggleBlockType = (type) => this._toggleBlockType(type);
     this.toggleInlineStyle = (style) => this._toggleInlineStyle(style);
     this.changeBlockStyle = (block) => this._changeBlockStyle(block);
+    this.promptForLink = this._promptForLink.bind(this);
+    this.onURLChange = (e) => this.setState({urlValue: e.target.value});
+    this.confirmLink = this._confirmLink.bind(this);
+    this.onLinkInputKeyDown = this._onLinkInputKeyDown.bind(this);
+    this.removeLink = this._removeLink.bind(this);
   };
 
   _toggleBlockType(blockType) {
@@ -65,8 +79,73 @@ class TextBox extends Component {
     return this.props.updateSlide('textAlign', block, this.state.slideNum);
   };
 
+  _promptForLink(e) {
+    e.preventDefault();
+    const {editorState} = this.state;
+    const selection = editorState.getSelection();
+    if (!selection.isCollapsed()) {
+      this.setState({
+        showURLInput: true,
+        urlValue: '',
+      });
+    }
+  }
+
+  _confirmLink(e) {
+    e.preventDefault();
+    const {editorState, urlValue} = this.state;
+    const entityKey = Entity.create('LINK', 'MUTABLE', {url: urlValue});
+    this.setState({
+      editorState: RichUtils.toggleLink(
+        editorState,
+        editorState.getSelection(),
+        entityKey
+      ),
+      showURLInput: false,
+      urlValue: '',
+    });
+  }
+
+  _onLinkInputKeyDown(e) {
+    if (e.which === 13) {
+      this._confirmLink(e);
+    }
+  }
+
+  _removeLink(e) {
+    e.preventDefault();
+    const {editorState} = this.state;
+    const selection = editorState.getSelection();
+    if (!selection.isCollapsed()) {
+      this.setState({
+        editorState: RichUtils.toggleLink(editorState, selection, null),
+      });
+    }
+  }
+
   render() {
     const { editorState } = this.state;
+    let urlInput;
+    if (this.state.showURLInput) {
+      urlInput =
+        <div className="urlInputContainer">
+          <input
+            onChange={this.onURLChange}
+            ref="url"
+            className="urlInput"
+            type="text"
+            value={this.state.urlValue}
+            onKeyDown={this.onLinkInputKeyDown}
+          />
+          <Button
+            center={true}
+            onClick={this.confirmLink}
+            classes='secondary subList'
+            icon='check-circle'>
+          </Button>
+        </div>;
+    }
+    let preventDefault = e => e.preventDefault();
 
     return (
       <div className="textBox">
@@ -118,6 +197,20 @@ class TextBox extends Component {
             editorState={editorState}
             onToggle={this.changeBlockStyle}
           />
+
+          <Button
+            center={true}
+            onClick={this.promptForLink}
+            classes='secondary subList'
+            icon='link'>
+          </Button>
+          <Button
+            center={true}
+            onClick={this.removeLink}
+            classes='secondary subList'
+            icon='chain-broken'>
+          </Button>
+          {urlInput}
 
         </ButtonGroup>
         <Editor
@@ -175,6 +268,181 @@ class TextBox extends Component {
     }
     return false;
   };
+};
+
+
+class CustomMenuu extends React.Component {
+
+  constructor(...args) {
+    super(...args);
+    this.state = {
+      value: ''
+    };
+    this.onChange = e => this.setState({ value: e.target.value });
+  }
+
+  render() {
+    let { className, ...props } = this.props;
+
+    return (
+      <div
+        className={"dropdown-menu"}
+        style={{ padding: ''}}
+      >
+        <div className="urlInputContainer">
+          <input
+            onChange={this.props.onURLChange}
+            ref="url"
+            className="urlInput"
+            type="text"
+            value={this.state.value}
+            onKeyDown={this.props.onLinkInputKeyDown}
+          />
+          <Button
+            center={true}
+            onClick={this.props.confirmLink}
+            classes='secondary subList'
+            icon='check-circle'>
+          </Button>
+        </div>;
+      </div>
+    );
+  }
+
+  focusNext() {
+    let input = ReactDOM.findDOMNode(this.input);
+
+    if (input) {
+      input.focus();
+    }
+  }
+}
+
+
+
+const dropdownExamplee = (props) => {
+  return (
+    <Dropdown id="dropdown-custom-menu">
+      <a href="#" bsRole="toggle" onClick={preventDefault}>
+        custom Toggle
+      </a>
+      <CustomMenu
+        bsRole="menu"
+        onURLChange={this.props.onURLChange}
+        confirmLink={this.props.confirmLink}
+        onLinkInputKeyDown={this.props.onLinkInputKeyDown}
+        >
+      </CustomMenu>
+    </Dropdown>
+  );
+};
+
+
+
+class CustomMenu extends React.Component {
+
+  constructor(...args) {
+    super(...args);
+    this.state = { value: '' };
+    this.onChange = e => this.setState({ value: e.target.value });
+  }
+
+  render() {
+    let { className, ...props } = this.props;
+
+    return (
+      <div
+        className={"dropdown-menu"}
+        style={{ padding: ''}}
+      >
+        <input
+          ref={input => this.input = input}
+          type="text"
+          className="form-control"
+          placeholder="type to filter..."
+          onChange={this.onChange}
+          value={this.state.value}
+        />
+        <ul className="list-unstyled">
+          { this.filterChildren() }
+        </ul>
+      </div>
+    );
+  }
+
+  filterChildren() {
+    let { children } = this.props;
+    let { value } = this.state;
+    let filtered = [];
+
+    let matches = child => child.props.children.indexOf(value) !== -1;
+
+    React.Children.forEach(children, child => {
+      if (!value.trim() || matches(child)) {
+        filtered.push(child);
+      }
+    });
+
+    return filtered;
+  }
+
+  focusNext() {
+    let input = ReactDOM.findDOMNode(this.input);
+
+    if (input) {
+      input.focus();
+    }
+  }
+}
+
+let preventDefault = e => e.preventDefault();
+
+let dropdownExample = (
+    <Dropdown id="dropdown-custom-menu">
+      <a href="#" bsRole="toggle" onClick={preventDefault}>
+        custom Toggle
+      </a>
+
+      <CustomMenu bsRole="menu">
+        <MenuItem eventKey="1">Red</MenuItem>
+        <MenuItem eventKey="2">Blue</MenuItem>
+        <MenuItem eventKey="3" active>Orange</MenuItem>
+        <MenuItem eventKey="1">Red-Orange</MenuItem>
+      </CustomMenu>
+    </Dropdown>
+  );
+
+
+
+
+
+function findLinkEntities(contentBlock, callback) {
+  contentBlock.findEntityRanges(
+    (character) => {
+      const entityKey = character.getEntity();
+      return (
+        entityKey !== null &&
+        Entity.get(entityKey).getType() === 'LINK'
+      );
+    },
+    callback
+  );
+}
+
+const Link = (props) => {
+  const {url} = Entity.get(props.entityKey).getData();
+  return (
+    <a href={url} style={styless.link}>
+      {props.children}
+    </a>
+  );
+};
+
+const styless = {
+  link: {
+    color: '#3b5998',
+    textDecoration: 'underline',
+  },
 };
 
 class StyleButton extends React.Component {
