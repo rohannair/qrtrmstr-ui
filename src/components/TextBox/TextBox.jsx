@@ -103,13 +103,10 @@ class TextBox extends Component {
       ),
       showURLInput: false,
       urlValue: '',
-    }, () => {
-      setTimeout(() => this.refs.editor.focus(), 0);
     });
   }
 
   _onLinkInputKeyDown(e) {
-    debugger;
     if (e.which === 13) {
       this._confirmLink(e);
     }
@@ -213,23 +210,6 @@ class TextBox extends Component {
             classes='secondary subList'
             icon='chain-broken'>
           </Button>
-
-          <ButtonToolbar>
-            <Dropdown id="dropdown-no-caret">
-              <Dropdown.Toggle>
-                <Button
-                  center={true}
-                  onClick={this.promptForLink}
-                  classes='secondary subList'
-                  icon='link'>
-                </Button>
-              </Dropdown.Toggle>
-              <Dropdown.Menu className="super-colors">
-                {urlInput}
-              </Dropdown.Menu>
-            </Dropdown>
-          </ButtonToolbar>
-          {dropdownExample}
           {urlInput}
 
         </ButtonGroup>
