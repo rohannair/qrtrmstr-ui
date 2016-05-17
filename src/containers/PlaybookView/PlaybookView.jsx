@@ -102,7 +102,7 @@ class PlaybookView extends Component {
     });
     dispatch(playbookSent(null));
   };
-
+  // if a success message is returned, closes modal after 2.5 seconds
   _timeOutModal = () => {
     const { dispatch, message } = this.props;
     let delay = 2500; // milliseconds

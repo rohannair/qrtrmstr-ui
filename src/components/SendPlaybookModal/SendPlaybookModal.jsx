@@ -24,6 +24,7 @@ class SendPlaybookModal extends Component {
   };
 
   componentDidUpdate() {
+    // if a success message is returned, closes modal after 2.5 seconds
     // if (this.props.message) this.props.timeOutModal();
   };
 
