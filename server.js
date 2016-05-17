@@ -30,5 +30,5 @@ app.listen(8080, 'localhost', function(err) {
   if (err) console.log('Error', err);
 
   console.log('App served at localhost:8080');
-  open('http://localhost:8080');
+  open('http://qrtrmstr.localhost:8080');
 });
