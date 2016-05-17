@@ -8,7 +8,7 @@ import Cookies from 'cookies-js';
 import styles from './playbookView.css';
 
 // Containers
-import { getPlaybooks, sendPlaybook, duplicatePlaybook } from '../../actions/playbookViewActions';
+import { getPlaybooks, sendPlaybook, duplicatePlaybook, playbookSent } from '../../actions/playbookViewActions';
 import { getUsers } from '../../actions/userActions';
 
 // Components
@@ -22,12 +22,24 @@ class PlaybookView extends Component {
   state = {
     chosenUser: {},
     chosenPlaybook: {},
-    editedPlaybook: {}
+    editedPlaybook: {},
+    loading: false
   };
 
   componentWillMount() {
     this._renderPlaybookList();
     this._renderUserList();
+  };
+
+  componentWillReceiveProps(nextProps) {
+    const { chosenPlaybook } = this.state;
+    nextProps.message
+    ? this.setState({
+      loading: false,
+      message: nextProps.message
+    })
+    : null;
+
   };
 
   render() {
@@ -36,11 +48,13 @@ class PlaybookView extends Component {
         playbookName={this.state.chosenPlaybook.name}
         playbookID={this.state.chosenPlaybook.id}
         users={this.props.users}
-        showModal={true}
         closeModal={this._closeSendPlaybookModal}
         sendPlaybook={this._sendPlaybook}
         onChange={this._changeUserParams}
         latestUser={this.state.chosenUser}
+        loading={this.state.loading}
+        message={this.props.message}
+        timeOutModal={this._timeOutModal}
       />
     : null;
 
@@ -66,7 +80,8 @@ class PlaybookView extends Component {
   _selectPlaybookForSending = (val) => {
     const chosenPlaybook = ([...this.props.playbookList].filter(item => item.id === val.id))[0];
     this.setState({
-      chosenPlaybook
+      chosenPlaybook,
+      message: null
     });
   };
 
@@ -81,15 +96,27 @@ class PlaybookView extends Component {
   };
 
   _closeSendPlaybookModal = () => {
+    const { dispatch } = this.props;
     this.setState({
       chosenPlaybook: {}
     });
+    dispatch(playbookSent(null));
+  };
+  // if a success message is returned, closes modal after 2.5 seconds
+  _timeOutModal = () => {
+    const { dispatch, message } = this.props;
+    let delay = 2500; // milliseconds
+    let before = Date.now();
+    while (Date.now() < before + delay) {};
+    this._closeSendPlaybookModal();
   };
 
   _sendPlaybook = () => {
-    this._closeSendPlaybookModal();
     const { token, dispatch } = this.props;
     const { chosenUser } = this.state;
+    this.setState({
+      loading: true
+    });
     return dispatch(sendPlaybook(token, chosenUser));
   };
 
@@ -124,7 +151,8 @@ function mapStateToProps(state) {
     showModal: state.playbookAdmin.showModal,
     token,
     playbookList: state.playbookAdmin.list,
-    users: state.app.users
+    users: state.app.users,
+    message: state.playbookAdmin.message
   };
 };
 export default connect(mapStateToProps)(PlaybookView);

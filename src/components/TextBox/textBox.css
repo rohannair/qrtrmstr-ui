@@ -3,6 +3,10 @@
   padding: 10px 2px 2px;
   border-radius: 2px;
 
+  .textBoxLink {
+    color: #EE6352;
+  }
+
   .buttonGroup {
     overflow: hidden;
   }
@@ -126,4 +130,12 @@ div.DraftEditor-root {
 ol, ul {
   margin-top: 0;
   margin-bottom: 10px;
+}
+
+.urlInput {
+  height: 30px;
+  padding: 6px 12px;
+  border: 1px solid #435360;
+  border-radius: 3px;
+  background-color: #fff;
 }

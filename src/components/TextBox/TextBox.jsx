@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styles from './textBox.css';
 
 // Libs
-import { Editor, EditorState, RichUtils, ContentState, convertToRaw } from 'draft-js';
+import { Editor, EditorState, RichUtils, ContentState, convertToRaw, Entity, CompositeDecorator } from 'draft-js';
 import { stateFromHTML } from 'draft-js-import-html';
 import { stateToHTML } from 'draft-js-export-html';
 import { ButtonToolbar, MenuItem, Dropdown } from 'react-bootstrap';
@@ -18,11 +18,20 @@ class TextBox extends Component {
       this.props.onToggle(this.props.style);
     };
 
+    const decorator = new CompositeDecorator([
+      {
+        strategy: findLinkEntities,
+        component: Link,
+      },
+    ]);
+
     const body = props.bodyKey ? props.body[props.bodyKey] : props.body;
     this.state = {
+      showURLInput: false,
+      urlValue: '',
       slideNum: props.slideNum,
       textAlign: props.textAlign || 'left',
-      editorState: EditorState.createWithContent(stateFromHTML(body))
+      editorState: EditorState.createWithContent(stateFromHTML(body), decorator)
     };
 
     this.focus = () => this.refs.editor.focus();
@@ -37,6 +46,11 @@ class TextBox extends Component {
     this.toggleBlockType = (type) => this._toggleBlockType(type);
     this.toggleInlineStyle = (style) => this._toggleInlineStyle(style);
     this.changeBlockStyle = (block) => this._changeBlockStyle(block);
+    this.promptForLink = this._promptForLink.bind(this);
+    this.onURLChange = (e) => this.setState({urlValue: e.target.value});
+    this.confirmLink = this._confirmLink.bind(this);
+    this.onLinkInputKeyDown = this._onLinkInputKeyDown.bind(this);
+    this.removeLink = this._removeLink.bind(this);
   };
 
   _toggleBlockType(blockType) {
@@ -65,8 +79,73 @@ class TextBox extends Component {
     return this.props.updateSlide('textAlign', block, this.state.slideNum);
   };
 
+  _promptForLink(e) {
+    e.preventDefault();
+    const {editorState} = this.state;
+    const selection = editorState.getSelection();
+    if (!selection.isCollapsed()) {
+      this.setState({
+        showURLInput: true,
+        urlValue: '',
+      });
+    }
+  }
+
+  _confirmLink(e) {
+    e.preventDefault();
+    const {editorState, urlValue} = this.state;
+    const entityKey = Entity.create('LINK', 'MUTABLE', {url: urlValue});
+    this.setState({
+      editorState: RichUtils.toggleLink(
+        editorState,
+        editorState.getSelection(),
+        entityKey
+      ),
+      showURLInput: false,
+      urlValue: '',
+    }, this.refs.editor.focus());
+  }
+
+  _onLinkInputKeyDown(e) {
+    if (e.which === 13) {
+      this._confirmLink(e);
+    }
+  }
+
+  _removeLink(e) {
+    e.preventDefault();
+    const {editorState} = this.state;
+    const selection = editorState.getSelection();
+    if (!selection.isCollapsed()) {
+      this.setState({
+        editorState: RichUtils.toggleLink(editorState, selection, null),
+      }, this.refs.editor.focus());
+    }
+  }
+
   render() {
     const { editorState } = this.state;
+    let urlInput;
+    if (this.state.showURLInput) {
+      urlInput =
+        <div className="urlInputContainer">
+          <input
+            onChange={this.onURLChange}
+            ref="url"
+            className="urlInput"
+            type="text"
+            value={this.state.urlValue}
+            onKeyDown={this.onLinkInputKeyDown}
+          />
+          <Button
+            center={true}
+            onClick={this.confirmLink}
+            classes='secondary subList'
+            icon='check-circle'>
+          </Button>
+        </div>;
+    }
+    let preventDefault = e => e.preventDefault();
 
     return (
       <div className="textBox">
@@ -118,6 +197,20 @@ class TextBox extends Component {
             editorState={editorState}
             onToggle={this.changeBlockStyle}
           />
+
+          <Button
+            center={true}
+            onClick={this.promptForLink}
+            classes='secondary subList'
+            icon='link'>
+          </Button>
+          <Button
+            center={true}
+            onClick={this.removeLink}
+            classes='secondary subList'
+            icon='chain-broken'>
+          </Button>
+          {urlInput}
 
         </ButtonGroup>
         <Editor
@@ -175,6 +268,35 @@ class TextBox extends Component {
     }
     return false;
   };
+};
+
+function findLinkEntities(contentBlock, callback) {
+  contentBlock.findEntityRanges(
+    (character) => {
+      const entityKey = character.getEntity();
+      return (
+        entityKey !== null &&
+        Entity.get(entityKey).getType() === 'LINK'
+      );
+    },
+    callback
+  );
+}
+
+const Link = (props) => {
+  const {url} = Entity.get(props.entityKey).getData();
+  return (
+    <a href={url} style={styless.link}>
+      {props.children}
+    </a>
+  );
+};
+
+const styless = {
+  link: {
+    color: '#3b5998',
+    textDecoration: 'underline',
+  },
 };
 
 class StyleButton extends React.Component {

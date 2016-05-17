@@ -1,10 +1,9 @@
 // Deps
 import React, { Component } from 'react';
-import { Modal } from 'react-bootstrap';
 
 // Styles
 import classNames from 'classnames';
-import styles from '../NewUserModal/newUserModal.css';
+import styles from './sendPlaybookModal.css';
 
 // Components
 import Card from '../Card';
@@ -24,8 +23,23 @@ class SendPlaybookModal extends Component {
     this.props.onChange(latestPersonInfo);
   };
 
+  componentDidUpdate() {
+    // if a success message is returned, closes modal after 2.5 seconds
+    // if (this.props.message) this.props.timeOutModal();
+  };
+
   render() {
-    const { latestUser, playbookName, playbookID, users, showModal, closeModal, sendPlaybook, onChange } = this.props;
+    const {
+      latestUser,
+      playbookName,
+      playbookID,
+      users,
+      closeModal,
+      sendPlaybook,
+      onChange,
+      loading,
+      message,
+      timeOutModal } = this.props;
     let selectedUser = {
       id: latestUser.userId,
       first_name: latestUser.firstName,
@@ -35,6 +49,8 @@ class SendPlaybookModal extends Component {
     };
 
     let defaultUser = JSON.stringify(selectedUser);
+    const loadingIcon = loading ? <i className="fa fa-cog fa-lg fa-spin spinner"></i> : null;
+    const feedback = message ? <div className="successText"><p className="errorMsg">{message}</p></div> : null;
     const userOptions = Object.keys(users).map(index => {
       let user = users[index];
       let userInfo = { id: user.id, first_name: user.first_name, last_name: user.last_name, email: user.username, playbookID };
@@ -42,27 +58,35 @@ class SendPlaybookModal extends Component {
     });
 
     return (
-      <Modal animation={true} show={showModal} onHide={closeModal}>
-        <Card className="modal">
-          <Modal.Header closeButton>
-            <Modal.Title>Send playbook {playbookName} to user </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <div className="formField">
-              <label>User: </label>
-              <select value={ defaultUser } onChange={e => onChange(JSON.parse(e.target.value)) }>
-                { userOptions }
-              </select>
+      <div className="openModal modalDialog">
+        <div className="modal">
+          <Card>
+            <h3>Send playbook {playbookName} to user </h3>
+            <div>
+              <div className="formField">
+                <label>User: </label>
+                <select className="inputIcon" value={ defaultUser } onChange={e => onChange(JSON.parse(e.target.value)) }>
+                  { userOptions }
+                </select>
+              </div>
             </div>
-          </Modal.Body>
-          <Modal.Footer>
-            <ButtonGroup>
-              <Button classes="primary sm" onClick={sendPlaybook}>Send Email</Button>
-              <Button classes="primary sm" onClick={closeModal}>Cancel</Button>
-            </ButtonGroup>
-          </Modal.Footer>
-        </Card>
-      </Modal>
+            <div className="modalFooter">
+              <div className="userButtonGroup">
+                <ButtonGroup>
+                  <Button classes="primary sm" onClick={sendPlaybook}>Send Email</Button>
+                  <Button classes="primary sm" onClick={closeModal}>Cancel</Button>
+                </ButtonGroup>
+              </div>
+              <div className="errorContainer">
+                { feedback }
+              </div>
+              <div className="spinnerContainer">
+                { loadingIcon }
+              </div>
+            </div>
+          </Card>
+        </div>
+      </div>
     );
   };
 };

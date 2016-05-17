@@ -41,10 +41,10 @@ function addNewPlaybook(playbook = {}) {
   };
 }
 
-// Show Modal to send a playbook to a user
-export const sendPlaybookModal = () => {
+export const playbookSent = (message) => {
   return {
-    type: 'TOGGLE_SEND_PLAYBOOK_MODAL'
+    type: 'PLAYBOOK_SENT',
+    message
   };
 };
 
@@ -66,8 +66,8 @@ export const sendPlaybook = (token, payload) => {
       if (!response.ok) {
         return Promise.reject(json);
       }
-
-      return console.log(json);
+      console.log(json);
+      return dispatch(playbookSent(json.message));
     });
   };
 };

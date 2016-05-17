@@ -9,7 +9,17 @@ import ButtonGroup from '../ButtonGroup';
 class NewUserModal extends Component {
 
   render() {
-    const {val, showModal, renderModal, submitNewUser, onChange, closeModal, loading, errorMessage, roles, chosenRole } = this.props;
+    const {
+      val,
+      showModal,
+      renderModal,
+      submitNewUser,
+      onChange,
+      closeModal,
+      loading,
+      errorMessage,
+      roles,
+      chosenRole } = this.props;
     const loadingIcon = loading ? <i className="fa fa-cog fa-lg fa-spin spinner"></i> : null;
     const errorText = errorMessage ? <div className="errorText"><p className="errorMsg">{errorMessage}</p></div> : null;
     const rolesOptions = Object.keys(roles).map(index => {
@@ -18,12 +28,12 @@ class NewUserModal extends Component {
     });
 
     return (
-      <Modal animation={true} show={showModal} onHide={closeModal}>
-        <Card className="modal">
-          <Modal.Header>
-            <Modal.Title>Add Team Member</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
+
+    <div className="openModal modalDialog">
+      <div className="modal">
+        <Card>
+          <h3>Add Team Member</h3>
+          <div>
             <div className="formField">
               <label>First Name: </label>
               <input
@@ -58,9 +68,8 @@ class NewUserModal extends Component {
                 { rolesOptions }
               </select>
             </div>
-
-          </Modal.Body>
-          <Modal.Footer>
+          </div>
+          <div className="modalFooter">
             <div className="userButtonGroup">
               <ButtonGroup>
                 <Button classes="inverse sm" onClick={closeModal}>Cancel</Button>
@@ -73,9 +82,10 @@ class NewUserModal extends Component {
             <div className="spinnerContainer">
               { loadingIcon }
             </div>
-          </Modal.Footer>
+          </div>
         </Card>
-      </Modal>
+      </div>
+    </div>
     );
   };
 };
