@@ -1,4 +1,6 @@
 import 'isomorphic-fetch';
+import Cookies from 'cookies-js';
+import { pushState } from 'react-router';
 
 export const API_ROOT = '/api/v1/';
 export default function request(method, location, token, body) {
@@ -21,8 +23,14 @@ export default function request(method, location, token, body) {
   };
 
   return fetch(location, config)
-    .then(response => response.json())
-    .catch(err => console.error(err));
+    .then(response => {
+      if( response.status === 401 ) {
+        Cookies.set('token', '', { expires: -1 });
+        return window.location = '';
+      }
+      return response.json()
+    })
+    .catch(err => err);
 }
 
 export const get = (location, token) => request('GET', location, token);

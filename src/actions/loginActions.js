@@ -40,9 +40,9 @@ export const tryLogin = credentials => {
       },
       body: JSON.stringify(credentials),
     })
-    .then(response => response.json())
-    .then(({ token }) => {
-      return dispatch(login(token));
+    .then(response => response.json().then(json => ({json, response})))
+    .then(({ json, response }) => {
+      return dispatch(login(json.token));
     });
   };
 };
