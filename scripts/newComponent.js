@@ -10,7 +10,7 @@ if (!name) {
   process.exit(0);
 }
 
-const componentName   = _.flowRight(_.capitalize, _.camelCase)(name);
+const componentName   = _.flowRight(_.upperFirst, _.camelCase)(name);
 const componentNameLC = _.camelCase(name);
 const dest            = path.join(__dirname, '..', 'src', 'components', componentName);
 
