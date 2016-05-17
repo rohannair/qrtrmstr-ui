@@ -116,11 +116,11 @@ h1, h2, h3, h4, h5, h6, strong {
   display: inline-block;
   float: right;
 
-  .errorText {
+  .successText {
     height: 28px;
     display: inline-block;
     overflow: auto;
-    background-color: rgba(238, 99, 82, 0.24);
+    background-color: rgba(83, 238, 82, 0.24);
     border: 1px solid rgba(67, 83, 96, 0.26);
     border-radius: 3px;
     font-size: 11px;

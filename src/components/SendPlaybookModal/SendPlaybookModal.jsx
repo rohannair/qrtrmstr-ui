@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 // Styles
 import classNames from 'classnames';
-import styles from '../NewUserModal/newUserModal.css';
+import styles from './sendPlaybookModal.css';
 
 // Components
 import Card from '../Card';
@@ -50,7 +50,7 @@ class SendPlaybookModal extends Component {
 
     let defaultUser = JSON.stringify(selectedUser);
     const loadingIcon = loading ? <i className="fa fa-cog fa-lg fa-spin spinner"></i> : null;
-    const feedback = message ? <div className="errorText"><p className="errorMsg">{message}</p></div> : null;
+    const feedback = message ? <div className="successText"><p className="errorMsg">{message}</p></div> : null;
     const userOptions = Object.keys(users).map(index => {
       let user = users[index];
       let userInfo = { id: user.id, first_name: user.first_name, last_name: user.last_name, email: user.username, playbookID };

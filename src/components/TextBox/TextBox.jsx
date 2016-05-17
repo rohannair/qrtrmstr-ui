@@ -103,7 +103,7 @@ class TextBox extends Component {
       ),
       showURLInput: false,
       urlValue: '',
-    });
+    }, this.refs.editor.focus());
   }
 
   _onLinkInputKeyDown(e) {
@@ -119,7 +119,7 @@ class TextBox extends Component {
     if (!selection.isCollapsed()) {
       this.setState({
         editorState: RichUtils.toggleLink(editorState, selection, null),
-      });
+      }, this.refs.editor.focus());
     }
   }
 
