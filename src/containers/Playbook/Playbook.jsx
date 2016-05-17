@@ -53,8 +53,10 @@ class Playbook extends Component {
 };
 
 function select(state) {
+  const token = state.accountActions.token || Cookies.get('token');
   return {
     id: state.playbook.id,
+    token,
     fields: state.playbook.playbook,
     selected: state.playbook.selected
   };
