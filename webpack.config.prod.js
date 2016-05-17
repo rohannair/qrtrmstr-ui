@@ -75,8 +75,6 @@ const config = {
       }
 
     ],
-
-    noParse: /node_modules\/quill\/dist/
   },
 
   plugins: [

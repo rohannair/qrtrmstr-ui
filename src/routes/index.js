@@ -5,11 +5,11 @@ import { IndexRoute, Route } from 'react-router';
 import App from '../containers/App';
 import Home from '../components/Home';
 import Login from '../containers/Auth/Login';
-import playbook from '../containers/playbook';
+import Playbook from '../containers/Playbook';
 
 import NotFound from '../components/NotFound';
-import playbookView from '../containers/playbookView';
-import playbookEditor from '../containers/playbookEditor';
+import PlaybookView from '../containers/PlaybookView';
+import PlaybookEditor from '../containers/PlaybookEditor';
 import UserList from '../containers/UserList';
 
 // Utils
@@ -20,14 +20,14 @@ const routes = (
     <IndexRoute component={ Home } onEnter={ requireAuth } />
     <Route path="dashboard" component={ Home } onEnter={ requireAuth }>
       <IndexRoute component={ UserList } />
-      <Route path="playbooks" component={ playbookView } />
-      <Route path="playbooks/edit/:playbookID" component={ playbookEditor } />
+      <Route path="playbooks" component={ PlaybookView } />
+      <Route path="playbooks/edit/:playbookID" component={ PlaybookEditor } />
       <Route path="users" component={ UserList } />
       <Route path="*" component={ NotFound } />
     </Route>
     <Route path="login" component={ Login } onEnter={ checkAuth } />
     <Route path="logout" component={ Login } />
-    <Route path="playbook/:playbookID" component={ playbook } />
+    <Route path="playbook/:playbookID" component={ Playbook } />
     <Route path="*" component={ NotFound } />
   </Route>
 );

@@ -55,7 +55,7 @@ then
   npm run build
   CACHE_REV=$(cat stats.json)
   cp index.html ./public/
-  sed -i 's/\/public\/app/app\.'"${CACHE_REV}"'/g' ./public/index.html
+  sed -i 's/public\/app/app\.'"${CACHE_REV}"'/g' ./public/index.html
 else
   echo
   echo "We were told to skip building this project."

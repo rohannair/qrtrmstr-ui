@@ -235,30 +235,6 @@ class TextBox extends Component {
     return htmlProc;
   };
 
-  _onBoldClick = () => {
-    this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'BOLD'));
-  };
-
-  _onItalicClick = () => {
-    this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'ITALIC'));
-  };
-
-  _onUnderlineClick = () => {
-    this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'UNDERLINE'));
-  };
-
-  _onHeaderClick = () => {
-    this.onChange(RichUtils.toggleBlockType(this.state.editorState, {label: 'H2', style: 'header-two'}));
-  };
-
-  _onBlockQuoteClick = () => {
-    this.onChange(this.toggleBlockType('blockquote'));
-  };
-
-  _onCodeBlockClick = () => {
-    this.onChange(this.toggleBlockType('code-block'));
-  };
-
   _handleKeyCommand = (command) => {
     const { editorState } = this.state;
     const newState = RichUtils.handleKeyCommand(editorState, command);
@@ -269,152 +245,6 @@ class TextBox extends Component {
     return false;
   };
 };
-
-
-class CustomMenuu extends React.Component {
-
-  constructor(...args) {
-    super(...args);
-    this.state = {
-      value: ''
-    };
-    this.onChange = e => this.setState({ value: e.target.value });
-  }
-
-  render() {
-    let { className, ...props } = this.props;
-
-    return (
-      <div
-        className={"dropdown-menu"}
-        style={{ padding: ''}}
-      >
-        <div className="urlInputContainer">
-          <input
-            onChange={this.props.onURLChange}
-            ref="url"
-            className="urlInput"
-            type="text"
-            value={this.state.value}
-            onKeyDown={this.props.onLinkInputKeyDown}
-          />
-          <Button
-            center={true}
-            onClick={this.props.confirmLink}
-            classes='secondary subList'
-            icon='check-circle'>
-          </Button>
-        </div>;
-      </div>
-    );
-  }
-
-  focusNext() {
-    let input = ReactDOM.findDOMNode(this.input);
-
-    if (input) {
-      input.focus();
-    }
-  }
-}
-
-
-
-const dropdownExamplee = (props) => {
-  return (
-    <Dropdown id="dropdown-custom-menu">
-      <a href="#" bsRole="toggle" onClick={preventDefault}>
-        custom Toggle
-      </a>
-      <CustomMenu
-        bsRole="menu"
-        onURLChange={this.props.onURLChange}
-        confirmLink={this.props.confirmLink}
-        onLinkInputKeyDown={this.props.onLinkInputKeyDown}
-        >
-      </CustomMenu>
-    </Dropdown>
-  );
-};
-
-
-
-class CustomMenu extends React.Component {
-
-  constructor(...args) {
-    super(...args);
-    this.state = { value: '' };
-    this.onChange = e => this.setState({ value: e.target.value });
-  }
-
-  render() {
-    let { className, ...props } = this.props;
-
-    return (
-      <div
-        className={"dropdown-menu"}
-        style={{ padding: ''}}
-      >
-        <input
-          ref={input => this.input = input}
-          type="text"
-          className="form-control"
-          placeholder="type to filter..."
-          onChange={this.onChange}
-          value={this.state.value}
-        />
-        <ul className="list-unstyled">
-          { this.filterChildren() }
-        </ul>
-      </div>
-    );
-  }
-
-  filterChildren() {
-    let { children } = this.props;
-    let { value } = this.state;
-    let filtered = [];
-
-    let matches = child => child.props.children.indexOf(value) !== -1;
-
-    React.Children.forEach(children, child => {
-      if (!value.trim() || matches(child)) {
-        filtered.push(child);
-      }
-    });
-
-    return filtered;
-  }
-
-  focusNext() {
-    let input = ReactDOM.findDOMNode(this.input);
-
-    if (input) {
-      input.focus();
-    }
-  }
-}
-
-let preventDefault = e => e.preventDefault();
-
-let dropdownExample = (
-    <Dropdown id="dropdown-custom-menu">
-      <a href="#" bsRole="toggle" onClick={preventDefault}>
-        custom Toggle
-      </a>
-
-      <CustomMenu bsRole="menu">
-        <MenuItem eventKey="1">Red</MenuItem>
-        <MenuItem eventKey="2">Blue</MenuItem>
-        <MenuItem eventKey="3" active>Orange</MenuItem>
-        <MenuItem eventKey="1">Red-Orange</MenuItem>
-      </CustomMenu>
-    </Dropdown>
-  );
-
-
-
-
 
 function findLinkEntities(contentBlock, callback) {
   contentBlock.findEntityRanges(
@@ -475,8 +305,8 @@ const BLOCK_TYPES = [
 ];
 
 const LIST_TYPES = [
-  {label: 'UL', style: 'unordered-list-item', icon: 'list-ol'},
-  {label: 'OL', style: 'ordered-list-item', icon: 'list-ul'}
+  {label: 'UL', style: 'unordered-list-item', icon: 'list-ul'},
+  {label: 'OL', style: 'ordered-list-item', icon: 'list-ol'}
 ];
 
 const HEADER_TYPES = [
