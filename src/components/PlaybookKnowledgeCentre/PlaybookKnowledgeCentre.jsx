@@ -23,13 +23,13 @@ class PlaybookKnowledgeCentre extends Component {
 
     return (
       <div className="playbookKnowledgeCentre">
-        <h2>{ heading}</h2>
+        <h2>{ heading }</h2>
         <p className = { body.textAlign || ''}>{ body.desc}</p>
 
         <div className="playlist">
           <div className="playlist-menu">
             <div className="playlist-header">
-              <i className="material-icons">playlist_play</i>UX Designer Playlist
+              <i className="material-icons">playlist_play</i>Videos
             </div>
             { options }
           </div>
