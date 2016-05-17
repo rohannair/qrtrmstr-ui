@@ -1,4 +1,10 @@
 .userList {
+
+  .modalContainer {
+    position: fixed;
+    z-index: 9;
+  }
+
   &-metadata {
     background: #F2F3F6;
     color: #444;

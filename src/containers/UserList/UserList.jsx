@@ -38,7 +38,7 @@ class UserList extends Component {
       newUser: nextProps.errorMessage ? newUser : {},
       errorMessage: nextProps.errorMessage
     });
-  }
+  };
 
   render() {
     const newUserForm = Object.keys(this.state.newUser).length > 0 || this.state.errorMessage
@@ -123,8 +123,10 @@ class UserList extends Component {
             <Button onClick={this._renderNewUserModal} classes="primary md">New user +</Button>
           </div>
         </Card>
+        <div className="modalContainer">
           { newUserForm }
         </div>
+      </div>
     );
   };
 
@@ -155,8 +157,6 @@ class UserList extends Component {
     const { newUser } = this.state;
     this.setState({
       newUser: {
-        password: 'password',
-        is_admin: false,
         first_name: '',
         last_name: '',
         personal_email: '',
@@ -167,33 +167,31 @@ class UserList extends Component {
   };
 
   _changeUserParams = (key, val) => {
+
     const { newUser } = this.state;
-    if (key === 'personal_email') {
-      this.setState({
-        newUser: {
-          ...newUser,
-          [key]: val,
-          username: val
-        }
-      });
-    } else {
-      this.setState({
-        newUser: {
-          ...newUser,
-          [key]: val
-        }
-      });
-    }
+    this.setState({
+      newUser: {
+        ...newUser,
+        [key]: val
+      }
+    });
   };
 
+  _validateField = (val) => !!val;
+
   _addNewUser = () => {
-    const { token, dispatch } = this.props;
-    const { newUser } = this.state;
     this.setState({
       loading: true
     });
+    this._processNewUser();
+  };
+
+  _processNewUser = () => {
+    const { token, dispatch } = this.props;
+    const { newUser } = this.state;
     let allErrors = '';
     let formErrors = '';
+
     for (let val in newUser) {
       if (newUser[val].length === 0) {
         if (val === 'role_id') {
@@ -201,16 +199,26 @@ class UserList extends Component {
         } if (val === 'personal_email') {
           val = 'email';
         }
+
         let valProc = val.replace(/_/g, ' ');
         formErrors += `${valProc}, `;
       }
+
       if (val === 'personal_email') {
         allErrors += (/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/).test(newUser[val]) ? ''
-        : 'Please enter a valid email address.';
+        : 'Please enter a valid email address. ';
       }
     };
+
+    const data = {
+      ...newUser,
+      is_admin: false,
+      username: newUser.personal_email,
+      password: 'password'
+    };
+
     allErrors += formErrors ? `The fields: ${formErrors}cannot be blank. ` : '';
-    allErrors.length > 0 ? dispatch(newUserErrors(allErrors)) : dispatch(createUser(token, newUser));
+    allErrors.length > 0 ? dispatch(newUserErrors(allErrors)) : dispatch(createUser(token, data));
   };
 }
 
