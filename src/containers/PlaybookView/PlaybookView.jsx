@@ -30,8 +30,7 @@ class PlaybookView extends Component {
     chosenPlaybook: {},
     editedPlaybook: {},
     loading: false,
-    newPlaybookName: null,
-    message: null
+    newPlaybookName: null
   };
 
   componentWillMount() {
@@ -42,11 +41,9 @@ class PlaybookView extends Component {
   componentWillReceiveProps(nextProps) {
     nextProps.message
     ? this.setState({
-      loading: false,
-      message: nextProps.message
+      loading: false
     })
     : null;
-
   };
 
   render() {
@@ -78,7 +75,7 @@ class PlaybookView extends Component {
         newPlaybookName={this.state.newPlaybookName}
       />
     : null;
-    
+
     const items = [...this.props.playbookList].map(val =>
       <PlaybookViewItem
         key={val.id}
@@ -150,18 +147,6 @@ class PlaybookView extends Component {
     }
   };
 
-  // if a success message is returned, closes modal after 2.5 seconds
-  _timeOutModal = () => {
-    const { dispatch, message } = this.props;
-    if ((this.state.loading === false) && this.state.message) {
-      let delay = 2500; // milliseconds
-      let before = Date.now();
-      while (Date.now() < before + delay) {};
-      this._closeSendPlaybookModal();
-      this._closeEditPlaybookModal();
-    }
-  };
-
   _timeOutModal = (val) => {
     val === 'edit' ? setTimeout(() => this._closeEditPlaybookModal(), 2000) : null;
     val === 'send' ? setTimeout(() => this._closeSendPlaybookModal(), 2000) : null;
@@ -210,7 +195,6 @@ class PlaybookView extends Component {
       }
     });
   };
-
 };
 
 function mapStateToProps(state) {
