@@ -1,6 +1,7 @@
 // Deps
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Cookies from 'cookies-js';
 
 // Styles
 import styles from './playbook.css';
