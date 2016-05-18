@@ -30,11 +30,33 @@ class SlideFirstDay extends Component {
     const deleteItem = this._deleteItem;
     const timeInput = moment(time).format('HH:MM');
     const items = agenda
-    ? agenda.map((val, i) => {
+    ? agenda
+    // TODO: revise sort based on new date format
+      // .sort(function(a, b){
+      //   if(a.time.slice(-2) === 'pm' && parseInt(a.time.slice(0,-2).replace(':','')) < 1200) {
+      //       a = parseInt(a.time.slice(0,-2).replace(':',''))+1200
+      //     } else if (a.time.slice(-2) === 'am' && parseInt(a.time.slice(0,-2).replace(':','')) >= 1200) {
+      //       a = parseInt(a.time.slice(0,-2).replace(':',''))-1200
+      //     } else {
+      //       a = parseInt(a.time.slice(0,-2).replace(':',''))
+      //     }
+      //
+      //   if(b.time.slice(-2) === 'pm' && parseInt(b.time.slice(0,-2).replace(':','')) < 1200) {
+      //       b = parseInt(b.time.slice(0,-2).replace(':',''))+1200
+      //     } else if (b.time.slice(-2) === 'am' && parseInt(b.time.slice(0,-2).replace(':','')) >= 1200) {
+      //       b = parseInt(b.time.slice(0,-2).replace(':',''))-1200
+      //     } else {
+      //       b = parseInt(b.time.slice(0,-2).replace(':',''))
+      //     }
+      //
+      //   return a-b
+      // })
 
+
+      .map((val, i) => {
+        // console.log(val.time);
       const timeOutput = moment(val.time).format('h:mm A');
-
-
+      // console.log(timeOutput);
       return (
         <div className="agenda-item" key={`agendaItem-${i}`}>
           <div className="timeInput">{timeOutput}</div>
