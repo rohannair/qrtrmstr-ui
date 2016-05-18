@@ -35,7 +35,7 @@ class PlaybookKnowledgeCentre extends Component {
           </div>
 
           <div className="playlist-viewer">
-            <iframe src={`http://www.youtube.com/embed/${ body.options[selectedVideo].id}`} />
+            <iframe src={`https://www.youtube.com/embed/${ body.options[selectedVideo].id}`} />
           </div>
         </div>
         <div className="playlist-footer">
