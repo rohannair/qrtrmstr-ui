@@ -34,9 +34,6 @@ import SlideEquipment from '../../components/SlideEquipment';
 import SlideKnowledgeCenter from '../../components/SlideKnowledgeCenter';
 import SlideFirstDay from '../../components/SlideFirstDay';
 
-// Containers
-import Uploader from '../Uploader';
-
 class PlaybookEditor extends Component {
 
   componentWillMount() {
@@ -54,7 +51,6 @@ class PlaybookEditor extends Component {
       case 'intro':
         return (
           <Card key={val} title={`Section ${parseInt(val) + 1}: Introduction`}>
-          <Uploader />
             <SlideIntro key={ val } {...slide} onChange={ this._updateSlide } />
           </Card>
         );
