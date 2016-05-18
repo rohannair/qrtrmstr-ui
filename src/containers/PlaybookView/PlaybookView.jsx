@@ -8,7 +8,12 @@ import Cookies from 'cookies-js';
 import styles from './playbookView.css';
 
 // Containers
-import { getPlaybooks, sendPlaybook, duplicatePlaybook, playbookSent } from '../../actions/playbookViewActions';
+import {
+  getPlaybooks,
+  sendPlaybook,
+  duplicatePlaybook,
+  playbookSent,
+  modifyPlaybook } from '../../actions/playbookViewActions';
 import { getUsers } from '../../actions/userActions';
 
 // Components
@@ -25,7 +30,8 @@ class PlaybookView extends Component {
     chosenPlaybook: {},
     editedPlaybook: {},
     loading: false,
-    newPlaybookName: null
+    newPlaybookName: null,
+    message: null
   };
 
   componentWillMount() {
@@ -34,7 +40,6 @@ class PlaybookView extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    const { chosenPlaybook } = this.state;
     nextProps.message
     ? this.setState({
       loading: false,
@@ -74,7 +79,18 @@ class PlaybookView extends Component {
       />
     : null;
 
-    const items = [...this.props.playbookList].map(val => <PlaybookViewItem key={val.id} {...val} onEditShowModal={ this._selectPlaybookForEditing } onSendShowModal={ this._selectPlaybookForSending } duplicate={ this._duplicatePlaybook } />);
+    const items = Object.keys(this.props.playbookList).map(val => {
+      let value = this.props.playbookList[val];
+      return (
+        <PlaybookViewItem
+          key={value.id}
+          {...value}
+          onEditShowModal={ this._selectPlaybookForEditing }
+          onSendShowModal={ this._selectPlaybookForSending }
+          duplicate={ this._duplicatePlaybook }
+        />
+      );
+    });
 
     return (
       <div className="playbookView">
@@ -88,8 +104,8 @@ class PlaybookView extends Component {
         </div>
 
         { items }
-        { sendPlaybookModal }
         { editPlaybookModal }
+        { sendPlaybookModal }
       </div>
     );
   };
@@ -97,8 +113,7 @@ class PlaybookView extends Component {
   _selectPlaybookForSending = (val) => {
     const chosenPlaybook = ([...this.props.playbookList].filter(item => item.id === val.id))[0];
     this.setState({
-      chosenPlaybook,
-      message: null
+      chosenPlaybook
     });
   };
 
@@ -129,18 +144,30 @@ class PlaybookView extends Component {
   };
 
   _closeEditPlaybookModal = () => {
-    this.setState({
-      editedPlaybook: {}
-    });
+    const { dispatch } = this.props;
+    if (this.state.loading === false) {
+      this.setState({
+        editedPlaybook: {}
+      });
+      dispatch(playbookSent(null));
+    }
   };
 
   // if a success message is returned, closes modal after 2.5 seconds
   _timeOutModal = () => {
     const { dispatch, message } = this.props;
-    let delay = 2500; // milliseconds
-    let before = Date.now();
-    while (Date.now() < before + delay) {};
-    this._closeSendPlaybookModal();
+    if ((this.state.loading === false) && this.state.message) {
+      let delay = 2500; // milliseconds
+      let before = Date.now();
+      while (Date.now() < before + delay) {};
+      this._closeSendPlaybookModal();
+      this._closeEditPlaybookModal();
+    }
+  };
+
+  _timeOutModal = (val) => {
+    val === 'edit' ? setTimeout(() => this._closeEditPlaybookModal(), 2000) : null;
+    val === 'send' ? setTimeout(() => this._closeSendPlaybookModal(), 2000) : null;
   };
 
   _sendPlaybook = () => {
@@ -155,6 +182,9 @@ class PlaybookView extends Component {
   _savePlaybook = () => {
     const { token, dispatch } = this.props;
     const { newPlaybookName, editedPlaybook } = this.state;
+    this.setState({
+      loading: true
+    });
     return dispatch(modifyPlaybook(token, {name: newPlaybookName}, editedPlaybook.id));
   };
 
@@ -189,7 +219,6 @@ class PlaybookView extends Component {
 function mapStateToProps(state) {
   const token = state.accountActions.token || Cookies.get('token');
   return {
-    showModal: state.playbookAdmin.showModal,
     token,
     playbookList: state.playbookAdmin.list,
     users: state.app.users,

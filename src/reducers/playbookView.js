@@ -23,7 +23,7 @@ export default function playbookView(state = initialState, action) {
       playbook: action.playbook
     };
 
-  case  'ADD_NEW_PLAYBOOK':
+  case 'ADD_NEW_PLAYBOOK':
     return {
       ...state,
       list: [
@@ -65,20 +65,6 @@ export default function playbookView(state = initialState, action) {
     // If slide doesn't exist (which is weird...)
     if (!(slide_number in playbook.doc)) return state;
 
-    let newState = {
-      ...state,
-      playbook: {
-        ...state.playbook,
-        doc: {
-          ...playbook.doc,
-          [slide_number]: {
-            ...playbook.doc[slide_number],
-            ...action.data
-          }
-        }
-      }
-    };
-
     return {
       ...state,
       playbook: {
@@ -116,6 +102,26 @@ export default function playbookView(state = initialState, action) {
     return {
       ...state,
       message: action.message
+    };
+
+  case 'PLAYBOOK_MODIFIED':
+    const { newPlaybook } = action;
+    const { list } = state;
+    let pos = null;
+    list.forEach((val, ind) => {
+      if (val.id === newPlaybook.result.id) {
+        pos = ind;
+      }
+    });
+
+    return {
+      ...state,
+      message: newPlaybook.message,
+      list: [
+        ...list.slice(0, pos),
+        newPlaybook.result,
+        ...list.slice(pos + 1)
+      ]
     };
 
   default:

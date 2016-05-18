@@ -10,10 +10,14 @@ import Card from '../Card';
 import Button from '../Button';
 import ButtonGroup from '../ButtonGroup';
 
-class SendPlaybookModal extends Component {
+class EditPlaybookModal extends Component {
 
   componentWillMount() {
     this.props.onChange(this.props.playbookName);
+  };
+
+  componentDidUpdate() {
+    if (this.props.message) this.props.timeOutModal('edit');
   };
 
   render() {
@@ -35,23 +39,23 @@ class SendPlaybookModal extends Component {
       <div className="openModal modalDialog">
         <div className="modal">
           <Card>
-            <h3>Edit playbook {playbookName} </h3>
+            <h3>Edit Playbook: {playbookName} </h3>
             <div>
               <div className="formField">
-                <label>User: </label>
+                <label>Playbook Title: </label>
                 <input
                   className="inputIcon"
                   name="name"
                   value= { newPlaybookName }
-                  onChange={ e => onChange(e.target.name, e.target.value) }
+                  onChange={ e => onChange(e.target.value) }
                 />
               </div>
             </div>
             <div className="modalFooter">
               <div className="userButtonGroup">
                 <ButtonGroup>
-                  <Button classes="primary sm" onClick={savePlaybook}>Send Email</Button>
-                  <Button classes="primary sm" onClick={closeModal}>Cancel</Button>
+                  <Button classes="inverse sm" onClick={closeModal}>Cancel</Button>
+                  <Button classes="primary sm" onClick={savePlaybook}>Update</Button>
                 </ButtonGroup>
               </div>
               <div className="errorContainer">
@@ -68,4 +72,4 @@ class SendPlaybookModal extends Component {
   };
 };
 
-export default SendPlaybookModal;
+export default EditPlaybookModal;
