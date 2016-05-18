@@ -1,0 +1,17 @@
+.uploader {
+  width: 100%;
+
+  background-color: lightgrey;
+
+  label {
+    padding: 20px;
+    width: 100%;
+    display: block;
+    cursor: pointer;
+    background-color: red;
+  }
+
+  input[type="file"] {
+    visibility: hidden;
+  }
+}

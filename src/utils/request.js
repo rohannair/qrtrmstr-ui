@@ -23,7 +23,7 @@ export default function request(method, location, token, body) {
 
   return fetch(location, config)
     .then(response => {
-      if( response.status === 401 ) {
+      if (response.status === 401) {
         Cookies.set('token', '', { expires: -1 });
         return window.location = '';
       }
@@ -35,3 +35,29 @@ export default function request(method, location, token, body) {
 export const get = (location, token) => request('GET', location, token);
 export const post = (location, token, body) => request('POST', location, token, body);
 export const put = (location, token, body) => request('PUT', location, token, body);
+
+
+export const filePost = (location, token, form) => {
+  debugger
+  const jwt = token
+    ? { Authorization: `bearer ${ token }` }
+    : null;
+
+  const config = {
+    method: 'POST',
+    headers: {
+      ...jwt
+    },
+    body: form
+  };
+
+  return fetch(location, config)
+    .then(response => {
+      if (response.status === 401) {
+        Cookies.set('token', '', { expires: -1 });
+        return window.location = '';
+      }
+      return response.json();
+    })
+    .catch(err => console.error(err));
+}
