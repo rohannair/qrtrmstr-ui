@@ -78,19 +78,16 @@ class PlaybookView extends Component {
         newPlaybookName={this.state.newPlaybookName}
       />
     : null;
-
-    const items = Object.keys(this.props.playbookList).map(val => {
-      let value = this.props.playbookList[val];
-      return (
-        <PlaybookViewItem
-          key={value.id}
-          {...value}
-          onEditShowModal={ this._selectPlaybookForEditing }
-          onSendShowModal={ this._selectPlaybookForSending }
-          duplicate={ this._duplicatePlaybook }
-        />
-      );
-    });
+    
+    const items = [...this.props.playbookList].map(val =>
+      <PlaybookViewItem
+        key={val.id}
+        {...val}
+        onEditShowModal={ this._selectPlaybookForEditing }
+        onSendShowModal={ this._selectPlaybookForSending }
+        duplicate={ this._duplicatePlaybook }
+      />
+    );
 
     return (
       <div className="playbookView">
