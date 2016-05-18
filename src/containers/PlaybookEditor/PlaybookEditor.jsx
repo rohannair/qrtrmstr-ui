@@ -34,6 +34,9 @@ import SlideEquipment from '../../components/SlideEquipment';
 import SlideKnowledgeCenter from '../../components/SlideKnowledgeCenter';
 import SlideFirstDay from '../../components/SlideFirstDay';
 
+// Containers
+import Uploader from '../Uploader';
+
 class PlaybookEditor extends Component {
 
   componentWillMount() {
