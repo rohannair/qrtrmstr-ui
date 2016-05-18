@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import styles from './slideBio.css';
 
+import { capitalize } from 'lodash';
+
 import Button from '../Button';
 import ButtonGroup from '../ButtonGroup';
 import Card from '../Card';
@@ -11,27 +13,56 @@ class SlideBio extends Component {
   state = {
     heading: this.props.body.heading,
     desc: this.props.body.desc,
-    textAlign: this.props.body.textAlign || 'left'
+    textAlign: this.props.body.textAlign || 'left',
   };
 
   render() {
     const { slide_number, id, onChange } = this.props;
     const { heading, desc } = this.state;
+    const options = this.props.body.options;
+    const self = this;
+
+    const bioOptions = Object.keys(options).map(val => {
+      let label = val.split('_').join(' ');
+      let opt = options[val];
+      return (
+        <label key={val}>
+          <input
+            for={val}
+            type="checkbox"
+            checked={opt}
+            onChange={ self._updateSlideOption.bind(self, val) }
+          />
+          <span name={val} className="checkboxLabel">
+            { capitalize(label) }
+          </span>
+        </label>
+      );
+    });
+
     return (
       <div className="slideBio">
-        <div className="slideEquipment">
-          <div className="slide-input">
-            <strong>Heading:</strong>
-            <input
-              name="heading"
-              value={ heading }
-              onChange={ e => this._updateBioState(e.target.name, e.target.value) }
-            />
-          </div>
+        <div className="slide-input">
+          <strong>Heading:</strong>
+          <input
+            name="heading"
+            value={ heading }
+            onChange={ e => this._updateBioState(e.target.name, e.target.value) }
+          />
         </div>
-        <TextBox slideNum={ slide_number } body={ this.state } textAlign={ this.state.textAlign } bodyKey="desc" updateSlide={ this._updateBioState } />
+        <div className="slideBio-options">
+          <h3>Options</h3>
+          { bioOptions }
+        </div>
       </div>
     );
+  };
+
+  _updateSlideOption = val => {
+    return this._updateBioState('options', {
+      ...this.props.body.options,
+      [val]: !this.props.body.options[val]
+    });
   };
 
   _updateBioState = (key, value) => {
