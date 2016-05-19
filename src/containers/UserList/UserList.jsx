@@ -90,18 +90,12 @@ class UserList extends Component {
       );
     });
 
-    const userCount = Object.keys(this.props.users).length;
-
     return (
       <div className="userList">
         <Card>
           <div>Search</div>
         </Card>
-
         <Card noPadding={true}>
-          <div className="userList-metadata">
-            {`${userCount} users`}
-          </div>
           <table>
             <thead>
               <tr className="userList-header">
