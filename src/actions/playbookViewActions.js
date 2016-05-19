@@ -48,6 +48,13 @@ export const playbookSent = (message) => {
   };
 };
 
+export const playbookModified = (newPlaybook) => {
+  return {
+    type: 'PLAYBOOK_MODIFIED',
+    newPlaybook
+  };
+};
+
 // Send Playbook To User
 export const sendPlaybook = (token, payload) => {
   const url = getDomainEmail();
@@ -175,9 +182,12 @@ export const modifyPlaybook = (token, payload, id) => {
       },
       body: JSON.stringify(payload)
     })
-    .then(response => response.json())
-    .then(json => {
-      return;
+    .then(response => response.json().then(json => ({json, response})))
+    .then(({json, response}) => {
+      if (!response.ok) {
+        return Promise.reject(json);
+      }
+      return dispatch(playbookModified(json));
     });
   };
 };

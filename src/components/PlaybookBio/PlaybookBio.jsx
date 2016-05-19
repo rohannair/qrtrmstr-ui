@@ -1,13 +1,15 @@
 import React from 'react';
 import styles from './playbookBio.css';
 
+import Uploader from '../../containers/Uploader';
+
 const PlaybookBio = (props) => {
   const bodyOpts = props.body.options;
   const profilePic = bodyOpts.profile_image
-  ? (<div className="upload-img">
-      <i className="material-icons">cloud_upload</i>
-      <span>Upload a profile picture</span>
-    </div>)
+  ? (<Uploader>
+        <i className="material-icons">cloud_upload</i>
+        <span>Upload a profile picture</span>
+      </Uploader>)
   : null;
 
   const bio = bodyOpts.bio

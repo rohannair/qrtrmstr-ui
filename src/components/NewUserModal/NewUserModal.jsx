@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import styles from './newUserModal.css';
-import { Modal } from 'react-bootstrap';
 import Card from '../Card';
 import Button from '../Button';
 import ButtonGroup from '../ButtonGroup';

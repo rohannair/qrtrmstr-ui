@@ -19,8 +19,9 @@ const userInfo = {
 const PlaybookCards = (props) => {
   const { fields, onClick, onSubmit, selected } = props;
   const cardCount = Object.keys(fields).map(val => {
-    let field = fields[val];
+    const field = fields[val];
     const classes = classnames('progressbar-item', {done: val == 0});
+
     return <div className={classes} key={field.slide_number}><span /></div>;
   });
 
@@ -110,6 +111,8 @@ const PlaybookCards = (props) => {
           </div>
         </Card>
       );
+
+
     case 'intro':
       const introFilled = {
         ...field,

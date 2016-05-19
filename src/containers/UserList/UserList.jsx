@@ -182,8 +182,7 @@ class UserList extends Component {
   _addNewUser = () => {
     this.setState({
       loading: true
-    });
-    this._processNewUser();
+    }, this._processNewUser());
   };
 
   _processNewUser = () => {
