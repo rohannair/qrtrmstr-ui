@@ -47,7 +47,6 @@ const PlaybookBio = (props) => {
         </div>
         <div className="bio-form">
           <h3>{ props.userInfo.firstName + ' ' + props.userInfo.lastName}</h3>
-          <p>User Experience Designer - <a href="#">rachel.galaxy@scotiabank.com</a></p>
           { bio }
           { social }
         </div>
