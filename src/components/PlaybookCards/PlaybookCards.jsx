@@ -12,8 +12,8 @@ import PlaybookBio from '../../components/PlaybookBio';
 
 // Mock
 const userInfo = {
-  firstName: 'Rachel',
-  lastName: 'Galaxy'
+  firstName: 'JerKhurram',
+  lastName: 'Shakirani'
 };
 
 const PlaybookCards = (props) => {
