@@ -1,17 +1,24 @@
 .uploader {
   width: 100%;
 
-  background-color: lightgrey;
-
   label {
-    padding: 20px;
+    background-color: lightgrey;
+    display: flex;
+    flex-direction: column;
     width: 100%;
-    display: block;
     cursor: pointer;
-    background-color: red;
+    justify-content: space-around;
+    align-items: center;
+    padding: 80px 20px;
   }
 
   input[type="file"] {
+    height: 1px;
     visibility: hidden;
+  }
+
+  img {
+    display: block;
+    width: 100%;
   }
 }

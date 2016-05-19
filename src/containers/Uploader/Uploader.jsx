@@ -9,12 +9,6 @@ import FormData from 'form-data';
 // Actions
 import { postUpload } from '../../actions/uploadActions';
 
-// 1. Consume file with form-data
-// 2. Need an upload action
-// 3. Invoke said action with the form-data
-// 4. Wait for response
-// 5. Rejoice
-
 class Uploader extends Component {
 
   render() {
@@ -28,6 +22,7 @@ class Uploader extends Component {
           type="file"
           onChange={ this._validateUpload }
         />
+        { this.props.children }
       </label>);
 
     return (
