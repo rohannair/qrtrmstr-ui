@@ -111,6 +111,8 @@ const PlaybookCards = (props) => {
           </div>
         </Card>
       );
+
+
     case 'intro':
       const introFilled = {
         ...field,
