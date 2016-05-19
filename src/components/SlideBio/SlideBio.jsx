@@ -21,7 +21,6 @@ class SlideBio extends Component {
     const { heading, desc } = this.state;
     const options = this.props.body.options;
     const self = this;
-
     const bioOptions = Object.keys(options).map(val => {
       let label = val.split('_').join(' ');
       let opt = options[val];
