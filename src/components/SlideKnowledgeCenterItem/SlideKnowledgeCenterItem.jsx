@@ -7,7 +7,7 @@ import ButtonGroup from '../ButtonGroup';
 const SlideKnowledgeCenterItem = ({ val, i, deleteVideo, onChange }) => {
   return (
     <div className="knowledgeCenterItem">
-      <iframe src={`https://www.youtube.com/embed/${val.id}`} />
+      <iframe src={`//www.youtube.com/embed/${val.id}`} />
 
       <div className="formField">
         <label>Title:</label>

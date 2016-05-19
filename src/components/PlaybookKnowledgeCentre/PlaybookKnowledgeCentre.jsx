@@ -66,7 +66,7 @@ class PlaybookKnowledgeCentre extends Component {
     : null;
 
     const renderedLink = this.state.selectedType === 'youtube'
-    ? <iframe src={`http://www.youtube.com/embed/${ selected }`} />
+    ? <iframe src={`//www.youtube.com/embed/${ selected }`} />
     : (
         <div className="viewLink">
           <Button classes="xl primary">
