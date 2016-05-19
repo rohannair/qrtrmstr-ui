@@ -28,7 +28,8 @@ class SlideFirstDay extends Component {
     const mapBody = this.props.body.map;
     const { mapDesc, time, desc } = this.state;
     const deleteItem = this._deleteItem;
-    const timeInput = moment(time).format('HH:MM');
+    // const timeInput = moment(time).format('HH:MM');
+    const timeInput = time;
     const items = agenda
     ? agenda
     // TODO: revise sort based on new date format
@@ -52,11 +53,14 @@ class SlideFirstDay extends Component {
       //   return a-b
       // })
 
-
+      // .sort(function(a,b) { return a-b })
       .map((val, i) => {
-        // console.log(val.time);
-      const timeOutput = moment(val.time).format('h:mm A');
-      // console.log(timeOutput);
+
+      // const timeOutput = moment(val.time).format('h:mm A');
+      //   const timeInput = ;
+      // const timeOutput = moment(val.time).format('HH:MM');
+      const timeOutput = moment(val.time);
+      console.log(timeOutput);
       return (
         <div className="agenda-item" key={`agendaItem-${i}`}>
           <div className="timeInput">{timeOutput}</div>
@@ -109,7 +113,7 @@ class SlideFirstDay extends Component {
 
           <div className="agenda-footer">
             <div className="timeInput">
-              <input name="time" value={ timeInput } type="time" max='24:00' defaultValue='00:00' onChange={ this._inputChange } />
+              <input name="time" value={ timeInput } type="time" max='12:00' defaultValue='00:00' autofocus="autofocus" onChange={ this._inputChange } />
             </div>
             <div className="desc">
               <input name="desc" value={ desc } onChange={ this._inputChange } />
@@ -160,15 +164,18 @@ class SlideFirstDay extends Component {
 
   _inputChange = e => {
     const { agenda } =  this.props.body;
-    const { name } = e.target;
-    let { value } = e.target;
+    // const { name } = e.target;
+    // let { value } = e.target;
 
-    if (name === 'time') {
-      value = moment(
-        `${this.state.date} ${value}`,
-        'YYYY-MM-DD HH:mm')
-      .valueOf();
-    }
+    const { name, value } = e.target;
+
+    // if (name === 'time') {
+    //   console.log(value);
+    //   value = moment(
+    //     `${this.state.date} ${value}`,
+    //     'YYYY-MM-DD HH:mm')
+    //   .valueOf();
+    // }
 
     this.setState({
       [name]: value
@@ -181,11 +188,26 @@ class SlideFirstDay extends Component {
     const { agenda } =  this.props.body;
     const { desc, time } = this.state;
 
+    // this.setState({
+    //   ...this.state,
+    //   desc: '',
+    //   time: '00:00'
+    // });
+
+    // time = moment(
+    //       `${this.state.date} ${time}`,
+    //       'YYYY-MM-DD HH:mm')
+    //     .valueOf()
+
     this.setState({
       ...this.state,
       desc: '',
-      time: '00:00'
+      time: moment(
+            `${this.state.date} ${time}`,
+            'YYYY-MM-DD HH:mm')
+          .valueOf()
     });
+  // console.log((moment({ hour:parseInt(time.slice(1)), minute:parseInt(time.slice(-2)) })));
 
     const newAgenda = [
       ...agenda,
