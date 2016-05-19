@@ -34,6 +34,9 @@ const PlaybookViewItem = props => {
         <ButtonGroup>
 
           <Button
+            onClick={ props.onEditShowModal.bind(this,
+              { id: props.id, name: props.name}
+            ) }
             classes="primary sm"
             icon="cog"
             toolTipText="Edit Playbook Details"
@@ -55,7 +58,7 @@ const PlaybookViewItem = props => {
           />
 
           <Button
-            onClick={ props.onShowModal.bind(this,
+            onClick={ props.onSendShowModal.bind(this,
               { id: props.id, name: props.name}
             ) }
             classes="secondary sm"

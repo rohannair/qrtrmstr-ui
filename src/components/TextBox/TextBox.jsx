@@ -233,30 +233,6 @@ class TextBox extends Component {
     return htmlProc;
   };
 
-  _onBoldClick = () => {
-    this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'BOLD'));
-  };
-
-  _onItalicClick = () => {
-    this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'ITALIC'));
-  };
-
-  _onUnderlineClick = () => {
-    this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'UNDERLINE'));
-  };
-
-  _onHeaderClick = () => {
-    this.onChange(RichUtils.toggleBlockType(this.state.editorState, {label: 'H2', style: 'header-two'}));
-  };
-
-  _onBlockQuoteClick = () => {
-    this.onChange(this.toggleBlockType('blockquote'));
-  };
-
-  _onCodeBlockClick = () => {
-    this.onChange(this.toggleBlockType('code-block'));
-  };
-
   _handleKeyCommand = (command) => {
     const { editorState } = this.state;
     const newState = RichUtils.handleKeyCommand(editorState, command);
@@ -327,8 +303,8 @@ const BLOCK_TYPES = [
 ];
 
 const LIST_TYPES = [
-  {label: 'UL', style: 'unordered-list-item', icon: 'list-ol'},
-  {label: 'OL', style: 'ordered-list-item', icon: 'list-ul'}
+  {label: 'UL', style: 'unordered-list-item', icon: 'list-ul'},
+  {label: 'OL', style: 'ordered-list-item', icon: 'list-ol'}
 ];
 
 const HEADER_TYPES = [
