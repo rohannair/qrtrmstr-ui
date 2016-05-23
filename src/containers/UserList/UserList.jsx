@@ -9,6 +9,8 @@ import Button from '../../components/Button';
 import ButtonGroup from '../../components/ButtonGroup';
 import NewUserModal from '../../components/NewUserModal';
 
+import Table from '../../components/Table';
+
 import { getUsers, createUser, newUserErrors, getRoles } from '../../actions/userActions';
 
 class UserList extends Component {
@@ -41,6 +43,7 @@ class UserList extends Component {
   };
 
   render() {
+
     const newUserForm = Object.keys(this.state.newUser).length > 0 || this.state.errorMessage
     ? <NewUserModal
         val={this.state.newUser}
@@ -56,73 +59,66 @@ class UserList extends Component {
       />
     : null;
 
-    const userData = Object.keys(this.props.users).map(value => {
-      let val = this.props.users[value];
-      const adminIcon = val.isAdmin
-        ? <i className="oi" data-glyph="key" />
-        : null;
-
-      const deactivateClasses = val.isAdmin
-        ? 'disabled'
-        : null;
+    const tableBody = this.props.users.map(row => {
+      const profile_img = row.profile_img || '';
+      const admin_img = row.is_admin
+      ? <span className="admin">Admin</span>
+      : '';
+      const deactivateClasses = row.is_admin
+      ? 'disabled'
+      : null;
 
       return (
-        <tr key={val.id} className="userList-option">
-          <td className="checkbox"><input type="checkbox" /></td>
-          <td className="name">{ `${val.first_name} ${val.last_name}` }{ adminIcon }</td>
-          <td>{ val.username }</td>
-          <td>{ val.rolename }</td>
-          <td className="actions">
+        <div key={ row.id } className="table-row">
+          <div className="cell check">
+            <input type="checkbox" disabled />
+          </div>
+
+          <div className="cell name">
+            <div className="profile-img">
+              <img src={row.profile_img} alt=""/>
+            </div>
+
+            { `${row.first_name} ${row.last_name}` } { admin_img }
+          </div>
+
+          <div className="cell email">
+            <a href={`mailto:${row.username}`}>{row.username}</a>
+          </div>
+
+          <div className="cell role">
+            { row.rolename }
+          </div>
+
+          <div className="cell actions">
             <ButtonGroup>
               <Button
                 classes='sm tertiary'
                 icon="pencil" />
               <Button
                 classes= { `sm tertiary ${deactivateClasses}` }
-                disabled={val.isAdmin}
+                disabled={row.is_admin}
                 icon="times"/>
               <Button
                 classes='secondary sm'
                 icon="paper-plane"/>
             </ButtonGroup>
-          </td>
-        </tr>
-      );
+          </div>
+        </div>);
     });
-
-    const userCount = Object.keys(this.props.users).length;
 
     return (
       <div className="userList">
-        <Card>
-          <div>Search</div>
-        </Card>
-
-        <Card noPadding={true}>
-          <div className="userList-metadata">
-            {`${userCount} users`}
-          </div>
-          <table>
-            <thead>
-              <tr className="userList-header">
-                <th className="checkbox"><input type="checkbox" /></th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {userData}
-            </tbody>
-          </table>
-        </Card>
+        <Table headings = {['check', 'name', 'email', 'role', 'actions']} >
+          { tableBody }
+        </Table>
 
         <Card>
           <div className="userList-actionBar">
             <Button onClick={this._renderNewUserModal} classes="primary md">New user +</Button>
           </div>
         </Card>
+
         <div className="modalContainer">
           { newUserForm }
         </div>
@@ -167,7 +163,6 @@ class UserList extends Component {
   };
 
   _changeUserParams = (key, val) => {
-
     const { newUser } = this.state;
     this.setState({
       newUser: {

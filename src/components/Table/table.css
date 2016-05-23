@@ -1,0 +1,38 @@
+.table {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #dbdce2;
+  width: 100%;
+  border-radius: 3px;
+
+  &-header {
+    display: flex;
+    flex-direction: row;
+    font-weight: bold;
+    border-bottom: 1px solid #dbdce2;
+    background-color: #f2f3f6;
+  }
+
+  &-row {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .cell {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+
+    &-heading {
+      color: #767e95;
+      font-size: .75rem;
+      font-weight: 700;
+      text-align: left;
+      text-transform: uppercase;
+
+      &:last-child {
+        border-right: 0;
+      }
+    }
+  }
+}

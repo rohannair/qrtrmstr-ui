@@ -91,6 +91,61 @@
   .checkbox {
     padding-left: 10px;
   }
+
+  .table {
+    margin-bottom: 20px;
+  }
+
+  .cell {
+
+    &.name {
+      width: 45%;
+    }
+
+    &.email {
+      width: 25%;
+    }
+
+    &.role {
+      width: 10%;
+    }
+
+    &.actions {
+      margin-left: auto;
+      width: 12.5%;
+    }
+
+    .profile-img {
+      float: left;
+      width: 36px;
+      height: 36px;
+      background: #ccc;
+      overflow:hidden;
+      border-radius: 100%;
+      margin-right: 10px;
+
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    .actions {
+      margin-left: 0;
+    }
+  }
+
+  .admin {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.5em;
+    margin-left: 10px;
+    padding: 5px;
+    background-color: #EE6352;
+    color: white;
+    border-radius: 2px;
+  }
 }
 
 
