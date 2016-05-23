@@ -7,6 +7,7 @@ const ButtonGroup = ({
   vertical
 }) => {
   const classes = classNames('buttonGroup', {'buttonGroup-vertical': vertical});
+
   return (
     <div className={classes}>
       { children }

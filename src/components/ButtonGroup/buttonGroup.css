@@ -1,13 +1,15 @@
 .buttonGroup {
-
   display: flex;
   flex-direction: row;
+  align-items: baseline;
 
   .btn {
     margin-left: 5px;
   }
 
   &-vertical {
+    flex-direction: column;
+
     .btn {
       display: block;
       margin: 0 0 10px;

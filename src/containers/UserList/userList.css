@@ -91,6 +91,11 @@
   .checkbox {
     padding-left: 10px;
   }
+
+  .buttonGroup {
+    margin-left: auto;
+    text-align: left;
+  }
 }
 
 
