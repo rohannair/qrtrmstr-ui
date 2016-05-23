@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import styles from './userList.css';
 import Cookies from 'cookies-js';
-import { Modal } from 'react-bootstrap';
 
 import Card from '../../components/Card';
 import Button from '../../components/Button';

@@ -1,0 +1,12 @@
+.modal {
+  background: transparent !important;
+
+  .modal-inner {
+    display: flex;
+    flex-direction: column;
+
+    .actions {
+      margin-top: auto;
+    }
+  }
+}
