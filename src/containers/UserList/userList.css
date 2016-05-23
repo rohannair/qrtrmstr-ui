@@ -6,6 +6,7 @@
   }
 
   &-metadata {
+    text-align: right;
     background: #F2F3F6;
     color: #444;
     font-size: 0.75em;

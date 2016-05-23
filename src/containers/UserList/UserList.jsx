@@ -14,7 +14,6 @@ import Table from '../../components/Table';
 import { getUsers, createUser, newUserErrors, getRoles } from '../../actions/userActions';
 
 class UserList extends Component {
-
   state = {
     newUser: {},
     loading: false,
@@ -59,9 +58,12 @@ class UserList extends Component {
       />
     : null;
 
+    const userCount = Object.keys(this.props.users).length;
+
     const tableBody = this.props.users.map(row => {
+
       const profile_img = row.profile_img || '';
-      const admin_img = row.is_admin
+      const admin_pill = row.is_admin
       ? <span className="admin">Admin</span>
       : '';
       const deactivateClasses = row.is_admin
@@ -79,7 +81,7 @@ class UserList extends Component {
               <img src={row.profile_img} alt=""/>
             </div>
 
-            { `${row.first_name} ${row.last_name}` } { admin_img }
+            { `${row.first_name} ${row.last_name}` } { admin_pill }
           </div>
 
           <div className="cell email">
@@ -101,13 +103,17 @@ class UserList extends Component {
                 icon="times"/>
             </ButtonGroup>
           </div>
-        </div>);
+        </div>
+      );
     });
 
     return (
       <div className="userList">
         <Table headings = {['check', 'name', 'email', 'role', 'actions']} >
           { tableBody }
+          <div className="userList-metadata">
+            {`${userCount} users`}
+          </div>
         </Table>
 
         <Card>
