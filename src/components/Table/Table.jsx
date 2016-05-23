@@ -10,15 +10,15 @@ const Table = (props) => {
         <div key={val} className={`cell cell-heading ${val}`}>
           <input type="checkbox" disabled />
         </div>
-      )
+      );
     }
 
     return (
       <div key={val} className={`cell cell-heading ${val}`}>
         { capitalize(val) }
       </div>
-      )
-    })
+    );
+  })
   : null;
 
   return (

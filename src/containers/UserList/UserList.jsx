@@ -99,9 +99,6 @@ class UserList extends Component {
                 classes= { `sm tertiary ${deactivateClasses}` }
                 disabled={row.is_admin}
                 icon="times"/>
-              <Button
-                classes='secondary sm'
-                icon="paper-plane"/>
             </ButtonGroup>
           </div>
         </div>);
