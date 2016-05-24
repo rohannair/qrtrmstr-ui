@@ -81,7 +81,7 @@ const PlaybookCards = (props) => {
 
     case 'day1agenda':
       const agenda = field.body.agenda.map((val, i) => {
-          const timeOutput = moment({ hour:val.time.slice(0,2), minute:val.time.slice(-2) }).format('h:mm A');
+          const timeOutput = moment.unix(val.time).format('h:mm A')
         return (
           <div className="agendaItem" key={`agendaItem-${i}`}>
             <span className="agendaItem-time">{timeOutput}</span>

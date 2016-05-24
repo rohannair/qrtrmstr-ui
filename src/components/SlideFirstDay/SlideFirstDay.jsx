@@ -32,13 +32,9 @@ class SlideFirstDay extends Component {
 
     const items = agenda
     ? agenda
-        .sort((a, b) => {
-          a = moment({ hour:a.time.slice(0,2), minute:a.time.slice(-2) }).format('X');
-          b = moment({ hour:b.time.slice(0,2), minute:b.time.slice(-2) }).format('X');
-          return a-b
-        })
+        .sort((a, b) => { return a.time-b.time } )
         .map((val, i) => {
-          const timeOutput = moment({ hour:val.time.slice(0,2), minute:val.time.slice(-2) }).format('h:mm A');
+          const timeOutput = moment.unix(val.time).format('h:mm A')
         return (
           <div className="agenda-item" key={`agendaItem-${i}`}>
             <div className="timeInput">{timeOutput}</div>
@@ -163,7 +159,7 @@ class SlideFirstDay extends Component {
 
     const newAgenda = [
       ...agenda,
-      { desc, time }
+      { desc, time: +moment(time, "HH:mm").format('X') }
     ];
 
     return this._updateFirstDayState('agenda', newAgenda);
