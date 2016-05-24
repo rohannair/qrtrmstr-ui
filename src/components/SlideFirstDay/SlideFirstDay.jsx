@@ -53,8 +53,8 @@ class SlideFirstDay extends Component {
           </div>
         );
       })
-    : null;
-
+      : null;
+      
     return (
       <div className="slideFirstDay">
         <div className="slideEquipment">
