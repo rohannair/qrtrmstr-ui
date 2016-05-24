@@ -1,6 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import styles from './playbookCard.css';
+import moment from 'moment';
 
 // Components
 import Button from '../../components/Button';
@@ -81,9 +82,10 @@ const PlaybookCards = (props) => {
 
     case 'day1agenda':
       const agenda = field.body.agenda.map((val, i) => {
+          const timeOutput = moment({ hour:val.time.slice(0,2), minute:val.time.slice(-2) }).format('h:mm A');
         return (
           <div className="agendaItem" key={`agendaItem-${i}`}>
-            <span className="agendaItem-time">{val.time}</span>
+            <span className="agendaItem-time">{timeOutput}</span>
             <span className="agendaItem-desc">{val.desc}</span>
           </div>
         );

@@ -28,28 +28,32 @@ class SlideFirstDay extends Component {
     const mapBody = this.props.body.map;
     const { mapDesc, time, desc } = this.state;
     const deleteItem = this._deleteItem;
-    const timeInput = moment(time).format('HH:MM');
+    const timeInput = time;
+
     const items = agenda
-    ? agenda.map((val, i) => {
-
-      const timeOutput = moment(val.time).format('h:mm A');
-
-
-      return (
-        <div className="agenda-item" key={`agendaItem-${i}`}>
-          <div className="timeInput">{timeOutput}</div>
-          <div className="desc">{val.desc}</div>
-          <div className="buttonContainer">
-            <Button
-              classes="transparent"
-              icon="times"
-              onClick={ deleteItem.bind(this, i) }
-            />
+    ? agenda
+        .sort((a, b) => {
+          a = moment({ hour:a.time.slice(0,2), minute:a.time.slice(-2) }).format('X');
+          b = moment({ hour:b.time.slice(0,2), minute:b.time.slice(-2) }).format('X');
+          return a-b
+        })
+        .map((val, i) => {
+          const timeOutput = moment({ hour:val.time.slice(0,2), minute:val.time.slice(-2) }).format('h:mm A');
+        return (
+          <div className="agenda-item" key={`agendaItem-${i}`}>
+            <div className="timeInput">{timeOutput}</div>
+            <div className="desc">{val.desc}</div>
+            <div className="buttonContainer">
+              <Button
+                classes="transparent"
+                icon="times"
+                onClick={ deleteItem.bind(this, i) }
+              />
+            </div>
           </div>
-        </div>
-      );
-    })
-    : null;
+        );
+      })
+      : null;
 
     return (
       <div className="slideFirstDay">
@@ -87,7 +91,7 @@ class SlideFirstDay extends Component {
 
           <div className="agenda-footer">
             <div className="timeInput">
-              <input name="time" value={ timeInput } type="time" max='24:00' defaultValue='00:00' onChange={ this._inputChange } />
+              <input name="time" value={ timeInput } type="time" max='12:00' defaultValue='00:00' onChange={ this._inputChange } />
             </div>
             <div className="desc">
               <input name="desc" value={ desc } onChange={ this._inputChange } />
@@ -138,15 +142,7 @@ class SlideFirstDay extends Component {
 
   _inputChange = e => {
     const { agenda } =  this.props.body;
-    const { name } = e.target;
-    let { value } = e.target;
-
-    if (name === 'time') {
-      value = moment(
-        `${this.state.date} ${value}`,
-        'YYYY-MM-DD HH:mm')
-      .valueOf();
-    }
+    const { name, value } = e.target;
 
     this.setState({
       [name]: value
