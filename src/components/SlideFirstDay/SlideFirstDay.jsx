@@ -28,53 +28,31 @@ class SlideFirstDay extends Component {
     const mapBody = this.props.body.map;
     const { mapDesc, time, desc } = this.state;
     const deleteItem = this._deleteItem;
-    // const timeInput = moment(time).format('HH:MM');
     const timeInput = time;
+
     const items = agenda
     ? agenda
-    // TODO: revise sort based on new date format
-      // .sort(function(a, b){
-      //   if(a.time.slice(-2) === 'pm' && parseInt(a.time.slice(0,-2).replace(':','')) < 1200) {
-      //       a = parseInt(a.time.slice(0,-2).replace(':',''))+1200
-      //     } else if (a.time.slice(-2) === 'am' && parseInt(a.time.slice(0,-2).replace(':','')) >= 1200) {
-      //       a = parseInt(a.time.slice(0,-2).replace(':',''))-1200
-      //     } else {
-      //       a = parseInt(a.time.slice(0,-2).replace(':',''))
-      //     }
-      //
-      //   if(b.time.slice(-2) === 'pm' && parseInt(b.time.slice(0,-2).replace(':','')) < 1200) {
-      //       b = parseInt(b.time.slice(0,-2).replace(':',''))+1200
-      //     } else if (b.time.slice(-2) === 'am' && parseInt(b.time.slice(0,-2).replace(':','')) >= 1200) {
-      //       b = parseInt(b.time.slice(0,-2).replace(':',''))-1200
-      //     } else {
-      //       b = parseInt(b.time.slice(0,-2).replace(':',''))
-      //     }
-      //
-      //   return a-b
-      // })
-
-      // .sort(function(a,b) { return a-b })
-      .map((val, i) => {
-
-      // const timeOutput = moment(val.time).format('h:mm A');
-      //   const timeInput = ;
-      // const timeOutput = moment(val.time).format('HH:MM');
-      const timeOutput = moment(val.time);
-      console.log(timeOutput);
-      return (
-        <div className="agenda-item" key={`agendaItem-${i}`}>
-          <div className="timeInput">{timeOutput}</div>
-          <div className="desc">{val.desc}</div>
-          <div className="buttonContainer">
-            <Button
-              classes="transparent"
-              icon="times"
-              onClick={ deleteItem.bind(this, i) }
-            />
+        .sort((a, b) => {
+          a = moment({ hour:a.time.slice(0,2), minute:a.time.slice(-2) }).format('X');
+          b = moment({ hour:b.time.slice(0,2), minute:b.time.slice(-2) }).format('X');
+          return a-b
+        })
+        .map((val, i) => {
+          const timeOutput = moment({ hour:val.time.slice(0,2), minute:val.time.slice(-2) }).format('h:mm A');
+        return (
+          <div className="agenda-item" key={`agendaItem-${i}`}>
+            <div className="timeInput">{timeOutput}</div>
+            <div className="desc">{val.desc}</div>
+            <div className="buttonContainer">
+              <Button
+                classes="transparent"
+                icon="times"
+                onClick={ deleteItem.bind(this, i) }
+              />
+            </div>
           </div>
-        </div>
-      );
-    })
+        );
+      })
     : null;
 
     return (
@@ -113,7 +91,7 @@ class SlideFirstDay extends Component {
 
           <div className="agenda-footer">
             <div className="timeInput">
-              <input name="time" value={ timeInput } type="time" max='12:00' defaultValue='00:00' autofocus="autofocus" onChange={ this._inputChange } />
+              <input name="time" value={ timeInput } type="time" max='12:00' defaultValue='00:00' onChange={ this._inputChange } />
             </div>
             <div className="desc">
               <input name="desc" value={ desc } onChange={ this._inputChange } />
@@ -164,18 +142,7 @@ class SlideFirstDay extends Component {
 
   _inputChange = e => {
     const { agenda } =  this.props.body;
-    // const { name } = e.target;
-    // let { value } = e.target;
-
     const { name, value } = e.target;
-
-    // if (name === 'time') {
-    //   console.log(value);
-    //   value = moment(
-    //     `${this.state.date} ${value}`,
-    //     'YYYY-MM-DD HH:mm')
-    //   .valueOf();
-    // }
 
     this.setState({
       [name]: value
@@ -188,26 +155,11 @@ class SlideFirstDay extends Component {
     const { agenda } =  this.props.body;
     const { desc, time } = this.state;
 
-    // this.setState({
-    //   ...this.state,
-    //   desc: '',
-    //   time: '00:00'
-    // });
-
-    // time = moment(
-    //       `${this.state.date} ${time}`,
-    //       'YYYY-MM-DD HH:mm')
-    //     .valueOf()
-
     this.setState({
       ...this.state,
       desc: '',
-      time: moment(
-            `${this.state.date} ${time}`,
-            'YYYY-MM-DD HH:mm')
-          .valueOf()
+      time: '00:00'
     });
-  // console.log((moment({ hour:parseInt(time.slice(1)), minute:parseInt(time.slice(-2)) })));
 
     const newAgenda = [
       ...agenda,
