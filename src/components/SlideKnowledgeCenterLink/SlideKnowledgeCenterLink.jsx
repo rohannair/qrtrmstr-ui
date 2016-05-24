@@ -1,28 +1,30 @@
 import React from 'react';
-import styles from './slideKnowledgeCenterItem.css';
+import styles from './slideKnowledgeCenterLink.css';
 
 import Button from '../Button';
 import ButtonGroup from '../ButtonGroup';
 
-const SlideKnowledgeCenterItem = ({ val, i, deleteVideo, onChange }) => {
+const SlideKnowledgeCenterLink = (props) => {
+  const { name, link, i, deleteItem, onChange } = props;
   return (
     <div className="knowledgeCenterItem">
-      <iframe src={`//www.youtube.com/embed/${val.id}`} />
-
+      <div className="knowledgeCenterItem-link">
+        <i className="material-icons">insert_link</i>
+      </div>
       <div className="formField">
         <label>Title:</label>
         <input
           name="name"
-          value={ val.name }
+          value={ props.name }
           onChange={ e => onChange(i, e.target.name, e.target.value) }
         />
       </div>
 
       <div className="formField">
-        <label>Video ID:</label>
+        <label>Link:</label>
         <input
-          name="id"
-          value={ val.id }
+          name="link"
+          value={ props.link }
           onChange={ e => onChange(i, e.target.name, e.target.value) }
         />
       </div>
@@ -30,7 +32,7 @@ const SlideKnowledgeCenterItem = ({ val, i, deleteVideo, onChange }) => {
       <ButtonGroup className="deleteVideo" >
         <Button
           classes="tertiary sm"
-          onClick={ deleteVideo.bind(this, i) }
+          onClick={ props.deleteItem.bind(this, i) }
           icon="times"
         />
       </ButtonGroup>
@@ -38,4 +40,4 @@ const SlideKnowledgeCenterItem = ({ val, i, deleteVideo, onChange }) => {
   );
 };
 
-export default SlideKnowledgeCenterItem;
+export default SlideKnowledgeCenterLink;

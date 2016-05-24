@@ -4,7 +4,8 @@ import styles from './slideKnowledgeCenter.css';
 import Button from '../Button';
 import ButtonGroup from '../ButtonGroup';
 import Card from '../Card';
-import SlideKnowledgeCenterItem from '../SlideKnowledgeCenterItem';
+import SlideKnowledgeCenterVideo from '../SlideKnowledgeCenterVideo';
+import SlideKnowledgeCenterLink from '../SlideKnowledgeCenterLink';
 import { updatePlaybookState } from '../../actions/playbookViewActions';
 import TextBox from '../TextBox';
 
@@ -17,7 +18,11 @@ class SlideKnowledgeCenter extends Component {
   render() {
 
     const { slide_number, heading, body } = this.props;
-    const opts = this.state.options.map((val, i) => <SlideKnowledgeCenterItem i={i} val={ val } deleteVideo={this._deleteVideo} key={i} onChange={this._changeVideoParams} />);
+    const opts = this.state.options.map((val, i) => {
+      return val.type === 'link'
+      ? <SlideKnowledgeCenterLink i={i} key={`link-${i}`} i={i} {...val} deleteItem={this._deleteItem} onChange={this._changeParams} />
+      : <SlideKnowledgeCenterVideo i={i} val={ val } deleteItem={this._deleteItem} key={`video-${i}`} onChange={this._changeParams} />;
+    });
 
     return (
       <div className="slideKnowledgeCenter">
@@ -34,9 +39,16 @@ class SlideKnowledgeCenter extends Component {
           <ButtonGroup>
             <Button
             classes="primary sm"
-            onClick={ this._newVideo }
-            icon="plus">
-              &nbsp;&nbsp;New
+            onClick={ this._newItem.bind(this, 'youtube') }
+            icon="play">
+              &nbsp;&nbsp;New Video
+            </Button>
+
+            <Button
+            classes="primary sm"
+            onClick={ this._newItem.bind(this, 'link') }
+            icon="link">
+              &nbsp;&nbsp;New Link
             </Button>
           </ButtonGroup>
         </div>
@@ -53,7 +65,7 @@ class SlideKnowledgeCenter extends Component {
     return onChange('body', updatedSlide, slide_number);
   };
 
-  _changeVideoParams = (ind, key, val) => {
+  _changeParams = (ind, key, val) => {
     const { options } = this.state;
 
     const editedVideoParams = [
@@ -72,7 +84,7 @@ class SlideKnowledgeCenter extends Component {
     this._updateKnowledgeCenterState('options', editedVideoParams);
   };
 
-  _deleteVideo = (id) => {
+  _deleteItem = (id) => {
     // Needs a dialog
     const { options } = this.state;
 
@@ -88,13 +100,23 @@ class SlideKnowledgeCenter extends Component {
     this._updateKnowledgeCenterState('options', newDeletedOptions);
   };
 
-  _newVideo = () => {
+  _newItem = (type) => {
+    const itemTempl = type === 'link'
+    ? {
+      id: this.state.options.length + 1,
+      name: 'Enter link title',
+      link: 'Enter link URL',
+      type: type
+    }
+    : {
+      id: 'Enter video ID',
+      name: 'Enter video title',
+      type: type
+    };
+
     const newItem = [
       ...this.state.options,
-      {
-        id: 'Enter YouTube ID',
-        name: 'Enter title'
-      }
+      itemTempl
     ];
 
     this.setState({
@@ -102,10 +124,6 @@ class SlideKnowledgeCenter extends Component {
     });
 
     this._updateKnowledgeCenterState('options', newItem);
-  };
-
-  _saveSection = (id) => {
-    // call save here
   };
 
 }
