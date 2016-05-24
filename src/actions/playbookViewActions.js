@@ -55,6 +55,14 @@ export const playbookModified = (newPlaybook) => {
   };
 };
 
+export const reorderPlaybook = (idx, direction) => {
+  return {
+    type: 'PLAYBOOK_ORDER_MODIFIED',
+    idx,
+    direction
+  };
+};
+
 // Send Playbook To User
 export const sendPlaybook = (token, payload) => {
   const url = getDomainEmail();

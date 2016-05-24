@@ -32,6 +32,23 @@ export default function playbookView(state = initialState, action) {
       ]
     };
 
+  case 'PLAYBOOK_ORDER_MODIFIED':
+    console.log('something moved');
+
+    const { idx, direction } = action;
+    const idx2 = direction
+    ? '' + (parseInt(idx) - 1)
+    : '' + (parseInt(idx) + 1);
+
+    return {
+      ...state,
+      playbook: {
+        ...state.playbook.doc,
+        [idx]: action.playbook.doc[idx2],
+        [idx2]: action.playbook.doc[idx]
+      }
+    };
+
   case 'ADD_SLIDE':
     const doc = {
       ...state.playbook.doc,
