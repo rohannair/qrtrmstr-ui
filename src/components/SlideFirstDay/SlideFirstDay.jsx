@@ -85,7 +85,7 @@ class SlideFirstDay extends Component {
 
           <div className="agenda-footer">
             <div className="timeInput">
-              <input name="time" value={ this.state.time } type="time" max='24:00' defaultValue='00:00' onChange={ this._inputChange } />
+              <input name="time" type="time" max='24:00' defaultValue='00:00' onChange={ this._inputChange } />
             </div>
             <div className="desc">
               <input name="desc" value={ desc } onChange={ this._inputChange } />
