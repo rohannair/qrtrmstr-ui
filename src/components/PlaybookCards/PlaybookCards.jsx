@@ -81,10 +81,9 @@ const PlaybookCards = (props) => {
 
     case 'day1agenda':
       const agenda = field.body.agenda.map((val, i) => {
-          const timeOutput = moment.unix(val.time).format('h:mm A')
         return (
           <div className="agendaItem" key={`agendaItem-${i}`}>
-            <span className="agendaItem-time">{timeOutput}</span>
+            <span className="agendaItem-time">{moment(val.time).format('h:mm A')}</span>
             <span className="agendaItem-desc">{val.desc}</span>
           </div>
         );
@@ -98,7 +97,7 @@ const PlaybookCards = (props) => {
 
       return (
         <Card key={field.slide_number} footer={<div/>}>
-          <h2>{field.heading}</h2>
+          <h2>{field.heading} - <span>{moment(field.date).format("MMMM D YYYY")}</span></h2>
           <div className="day1-body">
             <div className="day1-map"
               dangerouslySetInnerHTML={{__html: map_html}}
