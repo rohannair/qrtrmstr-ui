@@ -48,40 +48,43 @@ class PlaybookEditor extends Component {
     const playbookDoc = playbook.doc && Object.keys(playbook.doc).length > 0
     ? Object.keys(playbook.doc).map(val => {
       const slide = playbook.doc[val];
+      let header = (
+        <PlaybookEditorHeader val={ val } moveSlide={this._moveSlide}>
+          {`Section ${parseInt(val) + 1}`}
+        </PlaybookEditorHeader>);
 
       switch (slide.type) {
       case 'intro':
-        let header = <PlaybookEditorHeader>{`Section ${parseInt(val) + 1}: Text`} </PlaybookEditorHeader>;
         return (
-          <Card key={val} title={header}>
+          <Card key={val} title={ header }>
             <SlideIntro key={ val } {...slide} onChange={ this._updateSlide } />
           </Card>
         );
 
       case 'bio':
         return (
-        <Card key={val} title={<PlaybookEditorHeader>{`Section ${parseInt(val) + 1}: Biography`} </PlaybookEditorHeader>}>
+        <Card key={val} title={ header }>
             <SlideBio key={ val } {...slide} onChange={ this._updateSlide } />
           </Card>
         );
 
       case 'equipment':
         return (
-        <Card key={val} title={<PlaybookEditorHeader>{`Section ${parseInt(val) + 1}: Equipment`} </PlaybookEditorHeader>}>
+        <Card key={val} title={ header }>
             <SlideEquipment {...slide} saveSlide={ this._saveSlide } onChange={ this._updateSlide } />
           </Card>
         );
 
       case 'knowledgectr':
         return (
-        <Card key={val} title={<PlaybookEditorHeader>{`Section ${parseInt(val) + 1}: Knowledge Center`} </PlaybookEditorHeader>}>
+        <Card key={val} title={ header }>
             <SlideKnowledgeCenter {...slide} onChange={ this._updateSlide } />
           </Card>
         );
 
       case 'day1agenda':
         return (
-        <Card key={val} title={<PlaybookEditorHeader>{`Section ${parseInt(val) + 1}: Day One Agenda`} </PlaybookEditorHeader>}>
+        <Card key={val} title={ header }>
             <SlideFirstDay
               {...slide}
               onEdit={this._editSlide}
@@ -94,7 +97,7 @@ class PlaybookEditor extends Component {
 
       default:
         return (
-        <Card key={val} title={<PlaybookEditorHeader>{`Section ${parseInt(val) + 1}`} </PlaybookEditorHeader>}>
+        <Card key={val} title={ header }>
             <h1>{slide.heading}</h1>
             <pre>{ JSON.stringify(slide.body, null, 4) }</pre>
           </Card>

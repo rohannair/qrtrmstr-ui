@@ -33,19 +33,24 @@ export default function playbookView(state = initialState, action) {
     };
 
   case 'PLAYBOOK_ORDER_MODIFIED':
-    console.log('something moved');
-
     const { idx, direction } = action;
-    const idx2 = direction
-    ? '' + (parseInt(idx) - 1)
-    : '' + (parseInt(idx) + 1);
+    const totalSlideCount = '' + Object.keys(state.playbook.doc).length - 1;
+
+    if ((idx === '0' && direction === 0) || (idx === totalSlideCount && direction === 1)) return state;
+
+    const idx2 = parseInt(direction)
+    ? '' + (parseInt(idx) + 1)
+    : '' + (parseInt(idx) - 1);
 
     return {
       ...state,
       playbook: {
-        ...state.playbook.doc,
-        [idx]: action.playbook.doc[idx2],
-        [idx2]: action.playbook.doc[idx]
+        ...state.playbook,
+        doc: {
+          ...state.playbook.doc,
+          [idx]: state.playbook.doc[idx2],
+          [idx2]: state.playbook.doc[idx]
+        }
       }
     };
 
