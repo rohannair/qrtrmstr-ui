@@ -171,7 +171,7 @@ class PlaybookList extends Component {
     const { newPlaybookName, editedPlaybook } = this.state;
 
     this.setState({
-      loading: true
+      editedPlaybook: {}
     });
 
     return dispatch(modifyPlaybook(token, {name: newPlaybookName}, editedPlaybook.id));
