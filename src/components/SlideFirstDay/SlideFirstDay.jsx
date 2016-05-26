@@ -38,7 +38,7 @@ class SlideFirstDay extends Component {
           .map((val, i) => {
             return (
               <div className="agenda-item" key={`agendaItem-${i}`}>
-                <div className="timeInput">{moment(val.startTime).format('h:mm')} - {moment(val.finishTime).format('h:mm A')} </div>
+                <div className="timeInput agendaTimeItem">{moment(val.startTime).format('h:mm A')} - {moment(val.finishTime).format('h:mm A')} </div>
                 <div className="desc">{val.desc}</div>
                 <div className="buttonContainer">
                   <Button
@@ -79,7 +79,7 @@ class SlideFirstDay extends Component {
 
         <divl className="agenda">
           <div className="agenda-header">
-            <div className="timeInput">Time</div>
+            <div className="timeInput agendaTimeTitle">Time</div>
             <div className="desc">Description</div>
           </div>
 
@@ -89,18 +89,17 @@ class SlideFirstDay extends Component {
 
           <div className="agenda-footer">
             <div className="timeInput">
-              <label><strong>Start</strong></label>
               <input name="startTime" value={ startTime } type="time" max='24:00' defaultValue='00:00' onChange={ this._inputChange } />
             </div>
+            <p>to</p>
             <div className="timeInput">
-              <label><strong>Finish</strong></label>
               <input name="finishTime" value={ finishTime } type="time" max='24:00' defaultValue='00:00' onChange={ this._inputChange } />
             </div>
             <div className="desc">
               <input name="desc" value={ desc } onChange={ this._inputChange } />
             </div>
             <div className="buttonContainer">
-              <Button classes="primary md" icon="plus" onClick={ this._addNew }/>
+              <Button classes="primary md addItemBtn" icon="plus" onClick={ this._addNew }/>
             </div>
           </div>
           <div className="errorContainer">
