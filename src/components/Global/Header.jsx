@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 
 const Header = props => {
-  const headerLink =  props.children  ? <Link to="/dashboard"> Quartermaster</Link> : <a href="#"> Quartermaster</a>
+  const headerLink =  props.isAdmin  ?  <Link to="/dashboard"> Quartermaster</Link> : <a href="#"> Quartermaster</a>
 
   return (
     <header className="appHeader">
