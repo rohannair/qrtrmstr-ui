@@ -97,7 +97,7 @@ const PlaybookCards = (props) => {
         .replace('<span class="fa fa-user"></span>', '<i class="material-icons">person</i>')
         .replace('<span class="fa fa-envelope"></span>', '<i class="material-icons">mail</i>&nbsp;')
         .replace('<a href="#">onboarding@scotiabank.com</a>', 'Questions - <a href="#">onboarding@scotiabank.com</a>');
-      const bleh = field.position;
+
       return (
         <Card key={field.slide_number} footer={<div/>}>
           <h2>{field.heading} - <span>{moment(field.date).format("MMMM D YYYY")}</span></h2>
