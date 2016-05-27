@@ -131,7 +131,7 @@ export default function playbookView(state = initialState, action) {
     const { list } = state;
     let pos = null;
     list.forEach((val, ind) => {
-      if (val.id === newPlaybook.result.id) {
+      if (val.id === newPlaybook.id) {
         pos = ind;
       }
     });
@@ -141,7 +141,7 @@ export default function playbookView(state = initialState, action) {
       message: newPlaybook.message,
       list: [
         ...list.slice(0, pos),
-        newPlaybook.result,
+        newPlaybook,
         ...list.slice(pos + 1)
       ]
     };

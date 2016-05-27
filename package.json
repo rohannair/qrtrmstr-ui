@@ -80,6 +80,7 @@
     "jwt-decode": "^2.0.1",
     "lodash": "^4.11.1",
     "moment": "^2.13.0",
+    "moment-range": "^2.2.0",
     "normalize.css": "^3.0.3",
     "normalizr": "^2.0.1",
     "ramda": "^0.19.0",

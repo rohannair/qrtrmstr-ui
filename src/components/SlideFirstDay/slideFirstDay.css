@@ -16,7 +16,7 @@
       flex-direction: row;
       flex-wrap: wrap;
       width: 100%;
-      align-items: center;
+      align-items: left;
     }
 
     &-header {
@@ -37,8 +37,12 @@
     }
 
     .timeInput {
-      width: 15%;
-      text-align: right;
+      text-align: left;
+    }
+
+    .agendaTimeItem,
+    .agendaTimeTitle {
+      width: 315px;
     }
 
     .desc {
@@ -54,4 +58,9 @@
       width: 100%;
     }
   }
+
+  .addItemBtn {
+    margin-top: 9px;
+  }
+
 }
