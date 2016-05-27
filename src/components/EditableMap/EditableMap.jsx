@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Map from '../Map';
+import GoogleMap from '../GoogleMap';
 import Marker from '../Marker';
 import MapWidget from '../MapWidget';
 import styles from './editableMap.css';
@@ -10,7 +10,7 @@ class Contents extends React.Component {
   state = {
     place: null,
     position: null,
-    map: null,
+    googleMap: null,
     updated: false
   }
 
@@ -24,8 +24,8 @@ class Contents extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     const {google} = this.props;
-    const {map, position, place} = this.state;
-    if (map !== prevState.map) {
+    const {googleMap, position, place} = this.state;
+    if (googleMap !== prevState.googleMap) {
       this.renderAutoComplete();
     }
     if (position !== prevState.position) {
@@ -36,13 +36,13 @@ class Contents extends React.Component {
 
   renderAutoComplete() {
     const {google} = this.props;
-    const {map, position} = this.state;
-    if (!google || !map) return;
+    const {googleMap, position} = this.state;
+    if (!google || !googleMap) return;
 
     const aref = this.refs.autocomplete;
     const node = ReactDOM.findDOMNode(aref);
     let autocomplete = new google.maps.places.Autocomplete(node);
-    autocomplete.bindTo('bounds', map);
+    autocomplete.bindTo('bounds', googleMap);
     autocomplete.addListener('place_changed', () => {
       const place = autocomplete.getPlace();
       if (!place.geometry) {
@@ -50,10 +50,10 @@ class Contents extends React.Component {
       }
 
       if (place.geometry.viewport) {
-        map.fitBounds(place.geometry.viewport);
+        googleMap.fitBounds(place.geometry.viewport);
       } else {
-        map.setCenter(place.geometry.location);
-        map.setZoom(13);
+        googleMap.setCenter(place.geometry.location);
+        googleMap.setZoom(13);
       }
 
       let newPosition = {}, placePos = place.geometry.location;
@@ -89,7 +89,7 @@ class Contents extends React.Component {
             placeholder={newPlace.formatted_address} />
         </div>
         <div className="right">
-          <Map {...this.props}
+          <GoogleMap {...this.props}
               className="map"
               updated={updated}
               resetUpdate={this._resetUpdate}
@@ -102,15 +102,15 @@ class Contents extends React.Component {
                 place={newPlace}
                 google={this.props.google}
                 position={this.props.pos} />
-          </Map>
+          </GoogleMap>
         </div>
       </div>
     );
   }
 
-  _updateMap = (map) => {
+  _updateMap = (googleMap) => {
     this.setState({
-      map: map,
+      googleMap: googleMap,
       updated: true
     });
   }

@@ -20,8 +20,8 @@ class SlideFirstDay extends Component {
   state = {
     desc: '',
     mapDesc: this.props.body.map || '',
-    pos: this.props.position || {lat: 43.652644, lng: -79.381769},
-    place: this.props.place || 'Toronto, ON Canada',
+    pos: this.props.position || {lat: 43.6446447, lng: -79.39499869999997},
+    place: this.props.place || 'Lighthouse Labs, 46 Spadina Avenue, Toronto, ON, Canada',
     startTime: this.props.startTime,
     finishTime: this.props.finishTime,
     errorMessage: null
@@ -144,9 +144,6 @@ class SlideFirstDay extends Component {
     let updatedSlide = null;
     let slideKey = null;
     if (Object.keys(this.props).indexOf(key) > -1) {
-      updatedSlide = value;
-      slideKey = key;
-    } if (Object.keys(this.props.body).indexOf(key) < 0) {
       updatedSlide = value;
       slideKey = key;
     } else {

@@ -1,9 +1,9 @@
 // Deps
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import styles from './map.css';
+import styles from './googleMap.css';
 
-class Map extends Component {
+class GoogleMap extends Component {
 
   state = {
     currentLocation: {
@@ -11,7 +11,7 @@ class Map extends Component {
       lng: this.props.pos.lng || this.props.initialCenter.lng
     },
     editing: this.props.editing,
-    map: null,
+    googleMap: null,
     google: this.props.google || null
   };
 
@@ -43,15 +43,15 @@ class Map extends Component {
   loadMap() {
     if (this.props && this.state.google) {
       // google is available
-      const {google} = this.props;
-      const maps = google.maps;
+      const {google} = this.state;
+      const googleMaps = google.maps;
 
-      const mapRef = this.refs.map;
+      const mapRef = this.refs.googleMap;
       const node = ReactDOM.findDOMNode(mapRef);
 
       let {initialCenter, zoom} = this.props;
       const {lat, lng} = this.state.currentLocation;
-      const center = new maps.LatLng(lat, lng);
+      const center = new googleMaps.LatLng(lat, lng);
       const newConfig = Object.assign({}, {
         center: center,
         zoom: zoom,
@@ -63,9 +63,9 @@ class Map extends Component {
           position: google.maps.ControlPosition.RIGHT_BOTTOM
         }
       });
-      let newMap = new maps.Map(node, newConfig);
+      let newMap = new googleMaps.Map(node, newConfig);
       this.setState({
-        map: newMap
+        googleMap: newMap
       });
       if (this.props.updateMap) {
         if (this.props.updated === false) {
@@ -80,7 +80,7 @@ class Map extends Component {
     if (!children) return;
     return React.Children.map(children, c => {
       return React.cloneElement(c, {
-        map: this.state.map,
+        googleMap: this.state.googleMap,
         google: this.props.google,
         mapCenter: this.state.currentLocation
       });
@@ -89,7 +89,7 @@ class Map extends Component {
 
   render() {
     return (
-      <div ref='map' className="map">
+      <div ref='googleMap' className="map">
         Loading map...
         {this.renderChildren()}
       </div>
@@ -97,19 +97,19 @@ class Map extends Component {
   };
 };
 
-Map.propTypes = {
+GoogleMap.propTypes = {
   google: PropTypes.object,
   zoom: PropTypes.number,
   initialCenter: PropTypes.object
 };
 
-Map.defaultProps = {
+GoogleMap.defaultProps = {
   zoom: 13,
-  // Toronto, by default
+  // Lighthouse Labs, by default
   initialCenter: {
-    lat: 43.652644,
-    lng: -79.381769
+    lat: 43.6446447,
+    lng: -79.39499869999997
   }
 };
 
-export default Map;
+export default GoogleMap;

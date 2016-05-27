@@ -3,22 +3,24 @@ import React from 'react';
 class Marker extends React.Component {
 
   componentDidUpdate(prevProps) {
-    if ((this.props.map !== prevProps.map) ||
+    debugger;
+    if ((this.props.googleMap !== prevProps.googleMap) ||
       (this.props.position !== prevProps.position)) {
       this.renderMarker();
     };
   };
 
   renderMarker() {
+    debugger;
     let {
-      map, google, position, mapCenter
+      googleMap, google, position, mapCenter
     } = this.props;
-
+    debugger;
     let pos = position || mapCenter;
-    position = new google.maps.LatLng(pos.lat, pos.lng);
+    let newPosition = new google.maps.LatLng(pos.lat, pos.lng);
     const pref = {
-      map: map,
-      position: position
+      map: googleMap,
+      position: newPosition
     };
     this.marker = new google.maps.Marker(pref);
   };
@@ -30,7 +32,7 @@ class Marker extends React.Component {
 
 Marker.propTypes = {
   position: React.PropTypes.object,
-  map: React.PropTypes.object
+  googleMap: React.PropTypes.object
 };
 
 export default Marker;

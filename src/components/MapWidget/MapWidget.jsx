@@ -5,7 +5,7 @@ import styles from './mapWidget.css';
 class MapWidget extends Component {
 
   componentDidUpdate(prevProps) {
-    if ((this.props.map !== prevProps.map) ||
+    if ((this.props.googleMap !== prevProps.googleMap) ||
       (this.props.place !== prevProps.place)) {
       this.renderWidget();
     };
@@ -13,11 +13,11 @@ class MapWidget extends Component {
 
   renderWidget() {
     let {
-      map, google, place, position
+      googleMap, google, place, position
     } = this.props;
     const mapRef = this.refs.widget;
     const widgetDiv = ReactDOM.findDOMNode(mapRef);
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(widgetDiv);
+    googleMap.controls[google.maps.ControlPosition.TOP_LEFT].push(widgetDiv);
   };
 
   render() {

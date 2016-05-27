@@ -1,7 +1,7 @@
 // Deps
 import React from 'react';
 import GoogleApiComponent from '../../vendor/googleMapApi/GoogleApiComponent';
-import Map from '../../components/Map';
+import GoogleMap from '../../components/GoogleMap';
 import Marker from '../../components/Marker';
 import MapWidget from '../../components/MapWidget';
 import styles from './mapContainer.css';
@@ -30,7 +30,7 @@ export class MapContainer extends React.Component {
 
     return (
       <div className='mapContainer' >
-        <Map google={this.props.google}
+        <GoogleMap google={this.props.google}
           place={this.props.place}
           pos={this.props.pos}
           editing={this.props.editing}>
@@ -39,7 +39,7 @@ export class MapContainer extends React.Component {
             place={this.props.place}
             google={this.props.google}
             position={this.props.pos} />
-        </Map>
+        </GoogleMap>
       </div>
     );
   };
