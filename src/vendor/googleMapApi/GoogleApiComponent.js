@@ -51,7 +51,7 @@ export const wrapper = (options) => (WrappedComponent) => {
         google: GoogleApi({
           apiKey: apiKey,
           libraries: libraries
-        });
+        })
       });
     };
 
