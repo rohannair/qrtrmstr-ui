@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Cookies from 'cookies-js';
+import jwtDecode from 'jwt-decode';
 
 // Styles
 import styles from './playbook.css';
@@ -22,10 +23,11 @@ class Playbook extends Component {
   };
 
   render() {
-    const { id, fields, selected } = this.props;
+    const { id, fields, selected, token } = this.props;
+
     return (
       <div className="playbook">
-        <Header />
+        <Header isAdmin={jwtDecode(token).isAdmin} />
         <PlaybookCards
           fields={ fields }
           onClick={ this._onClick }

@@ -4,6 +4,7 @@ import styles from './slideFirstDay.css';
 
 import { omit, pullAt } from 'lodash';
 import moment from 'moment';
+import 'moment-range';
 
 // Components
 import Button from '../../components/Button';
@@ -17,43 +18,42 @@ import FlipMove from 'react-flip-move';
 
 class SlideFirstDay extends Component {
   state = {
-    time: moment().valueOf(),
     desc: '',
     mapDesc: this.props.body.map || '',
-    date: moment().format('YYYY-MM-DD'),
     pos: this.props.position || {lat: 43.652644, lng: -79.381769},
-    place: this.props.place || 'Toronto, ON Canada'
+    place: this.props.place || 'Toronto, ON Canada',
+    startTime: this.props.startTime,
+    finishTime: this.props.finishTime,
+    errorMessage: null
   };
 
   render() {
-
-    const { onAdd, slide_number, body, onChange, heading } = this.props;
+    const { onAdd, slide_number, body, onChange, heading, date } = this.props;
     const { agenda } =  this.props.body;
     const mapBody = this.props.body.map;
-    const { mapDesc, time, desc } = this.state;
+    const { mapDesc, startTime, finishTime, desc, errorMessage } = this.state;
     const deleteItem = this._deleteItem;
-    const timeInput = moment(time).format('HH:MM');
+    const errorText = errorMessage ? <div className="errorText"><p className="errorMsg">{errorMessage}</p></div> : null;
+
     const items = agenda
-    ? agenda.map((val, i) => {
-
-      const timeOutput = moment(val.time).format('h:mm A');
-
-
-      return (
-        <div className="agenda-item" key={`agendaItem-${i}`}>
-          <div className="timeInput">{timeOutput}</div>
-          <div className="desc">{val.desc}</div>
-          <div className="buttonContainer">
-            <Button
-              classes="transparent"
-              icon="times"
-              onClick={ deleteItem.bind(this, i) }
-            />
-          </div>
-        </div>
-      );
-    })
-    : null;
+      ? agenda
+          .sort((a, b) => { return a.finishTime-b.startTime } )
+          .map((val, i) => {
+            return (
+              <div className="agenda-item" key={`agendaItem-${i}`}>
+                <div className="timeInput agendaTimeItem">{moment(val.startTime).format('h:mm A')} - {moment(val.finishTime).format('h:mm A')} </div>
+                <div className="desc">{val.desc}</div>
+                <div className="buttonContainer">
+                  <Button
+                    classes="transparent"
+                    icon="times"
+                    onClick={ deleteItem.bind(this, i) }
+                  />
+                </div>
+              </div>
+            );
+          })
+      : null;
 
     return (
       <div className="slideFirstDay">
@@ -69,9 +69,10 @@ class SlideFirstDay extends Component {
           <div className="slide-input">
             <strong>First Day:</strong>
             <input
+              name="date"
               type="date"
-              value = { this.state.date }
-              onChange = { e => this.setState({ date: e.target.value }) }
+              value = { date }
+              onChange={ e => this._updateFirstDayState(e.target.name, e.target.value) }
             />
           </div>
         </div>
@@ -91,7 +92,7 @@ class SlideFirstDay extends Component {
 
         <divl className="agenda">
           <div className="agenda-header">
-            <div className="timeInput">Time</div>
+            <div className="timeInput agendaTimeTitle">Time</div>
             <div className="desc">Description</div>
           </div>
 
@@ -101,14 +102,21 @@ class SlideFirstDay extends Component {
 
           <div className="agenda-footer">
             <div className="timeInput">
-              <input name="time" value={ timeInput } type="time" max='24:00' defaultValue='00:00' onChange={ this._inputChange } />
+              <input name="startTime" value={ startTime } type="time" max='24:00' defaultValue='00:00' onChange={ this._inputChange } />
+            </div>
+            <p>to</p>
+            <div className="timeInput">
+              <input name="finishTime" value={ finishTime } type="time" max='24:00' defaultValue='00:00' onChange={ this._inputChange } />
             </div>
             <div className="desc">
               <input name="desc" value={ desc } onChange={ this._inputChange } />
             </div>
             <div className="buttonContainer">
-              <Button classes="primary md" icon="plus" onClick={ this._addNew }/>
+              <Button classes="primary md addItemBtn" icon="plus" onClick={ this._addNew }/>
             </div>
+          </div>
+          <div className="errorContainer">
+            { errorText }
           </div>
         </divl>
       </div>
@@ -154,15 +162,7 @@ class SlideFirstDay extends Component {
 
   _inputChange = e => {
     const { agenda } =  this.props.body;
-    const { name } = e.target;
-    let { value } = e.target;
-
-    if (name === 'time') {
-      value = moment(
-        `${this.state.date} ${value}`,
-        'YYYY-MM-DD HH:mm')
-      .valueOf();
-    }
+    const { name, value } = e.target;
 
     this.setState({
       [name]: value
@@ -173,17 +173,38 @@ class SlideFirstDay extends Component {
     e.preventDefault();
 
     const { agenda } =  this.props.body;
-    const { desc, time } = this.state;
+    const { desc, startTime, finishTime } = this.state;
+    const { date } = this.props;
+
+    // Validation to make sure that the start date is before the finish date
+    if (moment(date + ' ' + finishTime).diff(moment(date + ' ' + startTime)) <= 0) {
+      this.setState({
+        errorMessage: 'Start time must be before Finish time, please correct the dates and try again'
+      });
+      return;
+    }
+
+    // Validation to check that the new item does not overlap any current agenda items
+    for (let item in agenda) {
+      if (moment.range(moment(date + ' ' + startTime), moment(date + ' ' + finishTime)).overlaps(moment.range(agenda[item].startTime, agenda[item].finishTime))) {
+        this.setState({
+          errorMessage: 'You all ready have something scheduled during that time period'
+        });
+        return;
+      }
+    }
 
     this.setState({
       ...this.state,
       desc: '',
-      time: '00:00'
+      startTime: '12:00',
+      finishTime: '12:30',
+      errorMessage: null
     });
 
     const newAgenda = [
       ...agenda,
-      { desc, time }
+      { desc, startTime: +moment(date + ' ' + startTime).format('x'), finishTime: +moment(date + ' ' + finishTime).format('x') }
     ];
 
     return this._updateFirstDayState('agenda', newAgenda);

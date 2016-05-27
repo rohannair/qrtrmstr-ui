@@ -4,9 +4,16 @@ import styles from './buttonGroup.css';
 
 const ButtonGroup = ({
   children,
-  vertical
+  vertical,
+  centre
 }) => {
-  const classes = classNames('buttonGroup', {'buttonGroup-vertical': vertical});
+  const classes = classNames(
+    'buttonGroup',
+    {
+      'buttonGroup-vertical': vertical,
+      'buttonGroup-centre': centre
+    });
+
   return (
     <div className={classes}>
       { children }

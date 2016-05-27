@@ -1,16 +1,36 @@
 .buttonGroup {
-
   display: flex;
   flex-direction: row;
+  align-items: baseline;
 
   .btn {
     margin-left: 5px;
   }
 
   &-vertical {
+    flex-direction: column;
+
     .btn {
       display: block;
       margin: 0 0 10px;
+    }
+
+    .btn.xs {
+      margin-bottom: 1px;
+    }
+  }
+
+  &-centre {
+    justify-content: space-between;
+
+    .btn {
+      flex-grow: 1;
+      text-align: center;
+      margin: 0 10px 0 0;
+
+      &:last-child {
+        margin-right: 0;
+      }
     }
   }
 }

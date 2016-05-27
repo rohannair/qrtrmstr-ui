@@ -32,6 +32,28 @@ export default function playbookView(state = initialState, action) {
       ]
     };
 
+  case 'PLAYBOOK_ORDER_MODIFIED':
+    const { idx, direction } = action;
+    const totalSlideCount = '' + Object.keys(state.playbook.doc).length - 1;
+
+    if ((idx === '0' && direction === 0) || (idx === totalSlideCount && direction === 1)) return state;
+
+    const idx2 = parseInt(direction)
+    ? '' + (parseInt(idx) + 1)
+    : '' + (parseInt(idx) - 1);
+
+    return {
+      ...state,
+      playbook: {
+        ...state.playbook,
+        doc: {
+          ...state.playbook.doc,
+          [idx]: state.playbook.doc[idx2],
+          [idx2]: state.playbook.doc[idx]
+        }
+      }
+    };
+
   case 'ADD_SLIDE':
     const doc = {
       ...state.playbook.doc,
@@ -109,7 +131,7 @@ export default function playbookView(state = initialState, action) {
     const { list } = state;
     let pos = null;
     list.forEach((val, ind) => {
-      if (val.id === newPlaybook.result.id) {
+      if (val.id === newPlaybook.id) {
         pos = ind;
       }
     });
@@ -119,7 +141,7 @@ export default function playbookView(state = initialState, action) {
       message: newPlaybook.message,
       list: [
         ...list.slice(0, pos),
-        newPlaybook.result,
+        newPlaybook,
         ...list.slice(pos + 1)
       ]
     };

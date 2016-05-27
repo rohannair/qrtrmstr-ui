@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 import Cookies from 'cookies-js';
 
 // Styles
-import styles from './playbookView.css';
+import styles from './playbookList.css';
 
 // Containers
 import {
@@ -21,11 +21,10 @@ import Card from '../../components/Card';
 import Button from '../../components/Button';
 import SendPlaybookModal from '../../components/SendPlaybookModal';
 import EditPlaybookModal from '../../components/EditPlaybookModal';
-import PlaybookViewItem from '../../components/PlaybookViewItem';
 import MapContainer from '../MapContainer';
+import PlaybookListItem from '../../components/PlaybookListItem';
 
-
-class PlaybookView extends Component {
+class PlaybookList extends Component {
 
   state = {
     chosenUser: {},
@@ -79,7 +78,7 @@ class PlaybookView extends Component {
     : null;
 
     const items = [...this.props.playbookList].map(val =>
-      <PlaybookViewItem
+      <PlaybookListItem
         key={val.id}
         {...val}
         onEditShowModal={ this._selectPlaybookForEditing }
@@ -89,8 +88,8 @@ class PlaybookView extends Component {
     );
 
     return (
-      <div className="playbookView">
-        <div className="playbookView-header">
+      <div className="playbookList">
+        <div className="playbookList-header">
           <div className="cell checkbox"><input type="checkbox" /></div>
           <div className="cell name">Name</div>
           <div className="cell modified">Last Modified</div>
@@ -108,6 +107,7 @@ class PlaybookView extends Component {
 
   _selectPlaybookForSending = (val) => {
     const chosenPlaybook = ([...this.props.playbookList].filter(item => item.id === val.id))[0];
+
     this.setState({
       chosenPlaybook
     });
@@ -115,6 +115,7 @@ class PlaybookView extends Component {
 
   _selectPlaybookForEditing = (val) => {
     const editedPlaybook = ([...this.props.playbookList].filter(item => item.id === val.id))[0];
+
     this.setState({
       editedPlaybook,
       newPlaybookName: ''
@@ -133,9 +134,11 @@ class PlaybookView extends Component {
 
   _closeSendPlaybookModal = () => {
     const { dispatch } = this.props;
+
     this.setState({
       chosenPlaybook: {}
     });
+
     dispatch(playbookSent(null));
   };
 
@@ -157,6 +160,7 @@ class PlaybookView extends Component {
   _sendPlaybook = () => {
     const { token, dispatch } = this.props;
     const { chosenUser } = this.state;
+
     this.setState({
       loading: true
     });
@@ -166,9 +170,11 @@ class PlaybookView extends Component {
   _savePlaybook = () => {
     const { token, dispatch } = this.props;
     const { newPlaybookName, editedPlaybook } = this.state;
+
     this.setState({
-      loading: true
+      editedPlaybook: {}
     });
+
     return dispatch(modifyPlaybook(token, {name: newPlaybookName}, editedPlaybook.id));
   };
 
@@ -187,11 +193,9 @@ class PlaybookView extends Component {
     this.setState({
       chosenUser: {
         userId: value.id,
-        token: null,
         firstName: value.first_name,
         lastName: value.last_name,
         email: value.email,
-        companyName: 'Scotiabank',
         playbookId: value.playbookID,
         emailTemplate: 'welcomeEmail'
       }
@@ -201,6 +205,7 @@ class PlaybookView extends Component {
 
 function mapStateToProps(state) {
   const token = state.accountActions.token || Cookies.get('token');
+
   return {
     token,
     playbookList: state.playbookAdmin.list,
@@ -208,4 +213,4 @@ function mapStateToProps(state) {
     message: state.playbookAdmin.message
   };
 };
-export default connect(mapStateToProps)(PlaybookView);
+export default connect(mapStateToProps)(PlaybookList);

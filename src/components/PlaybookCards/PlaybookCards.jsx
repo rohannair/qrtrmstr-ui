@@ -14,8 +14,8 @@ import MapContainer from '../../containers/MapContainer';
 
 // Mock
 const userInfo = {
-  firstName: 'Rachel',
-  lastName: 'Galaxy'
+  firstName: 'JerKhurram',
+  lastName: 'Shakirani'
 };
 
 const PlaybookCards = (props) => {
@@ -86,7 +86,7 @@ const PlaybookCards = (props) => {
       const agenda = field.body.agenda.map((val, i) => {
         return (
           <div className="agendaItem" key={`agendaItem-${i}`}>
-            <span className="agendaItem-time">{moment(val.time).format('h:mm A')}</span>
+            <span className="agendaItem-time">{moment(val.startTime).format('h:mm')} - {moment(val.finishTime).format('h:mm A')}</span>
             <span className="agendaItem-desc">{val.desc}</span>
           </div>
         );
@@ -100,7 +100,7 @@ const PlaybookCards = (props) => {
       const bleh = field.position;
       return (
         <Card key={field.slide_number} footer={<div/>}>
-          <h2>{field.heading}</h2>
+          <h2>{field.heading} - <span>{moment(field.date).format("MMMM D YYYY")}</span></h2>
           <div className="day1-body">
             <div className="day1-map">
               <div className="mapContainerDiv">
@@ -126,6 +126,8 @@ const PlaybookCards = (props) => {
           </div>
         </Card>
       );
+
+
     case 'intro':
       const introFilled = {
         ...field,

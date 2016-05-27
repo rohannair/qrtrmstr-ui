@@ -8,7 +8,7 @@ import Login from '../containers/Auth/Login';
 import Playbook from '../containers/Playbook';
 
 import NotFound from '../components/NotFound';
-import PlaybookView from '../containers/PlaybookView';
+import PlaybookList from '../containers/PlaybookList';
 import PlaybookEditor from '../containers/PlaybookEditor';
 import UserList from '../containers/UserList';
 
@@ -20,7 +20,7 @@ const routes = (
     <IndexRoute component={ Home } onEnter={ requireAuth } />
     <Route path="dashboard" component={ Home } onEnter={ requireAuth }>
       <IndexRoute component={ UserList } />
-      <Route path="playbooks" component={ PlaybookView } />
+      <Route path="playbooks" component={ PlaybookList } />
       <Route path="playbooks/edit/:playbookID" component={ PlaybookEditor } />
       <Route path="users" component={ UserList } />
       <Route path="*" component={ NotFound } />

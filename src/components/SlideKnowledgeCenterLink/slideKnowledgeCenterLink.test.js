@@ -2,11 +2,11 @@ import test from 'tape';
 import dom from 'cheerio';
 import React from 'react';
 
-import PlaybookViewItem from './index.jsx';
+import SlideKnowledgeCenterLink from './index.jsx';
 
 const renderText = React.renderToStaticMarkup;
 
-test('PlaybookViewItem', next => {
+test('SlideKnowledgeCenterLink', next => {
 
   next.test('...with no props', assert => {
 

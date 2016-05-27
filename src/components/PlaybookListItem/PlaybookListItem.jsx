@@ -1,15 +1,15 @@
 import React from 'react';
-import styles from './playbookViewItem.css';
+import styles from './playbookListItem.css';
 import { Link } from 'react-router';
 import moment from 'moment';
 import Button from '../../components/Button';
 import ButtonGroup from '../../components/ButtonGroup';
 
-const PlaybookViewItem = props => {
+const PlaybookListItem = props => {
   const href = `/playbook/${props.id}`;
 
   return (
-    <div key={ props.id } className="playbookView-option">
+    <div key={ props.id } className="playbookListItem">
       <div className="cell checkbox"><input type="checkbox" /></div>
 
       <div className="cell name">
@@ -71,4 +71,4 @@ const PlaybookViewItem = props => {
   );
 };
 
-export default PlaybookViewItem;
+export default PlaybookListItem;
