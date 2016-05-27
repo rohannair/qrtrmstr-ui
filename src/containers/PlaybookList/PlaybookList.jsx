@@ -192,11 +192,9 @@ class PlaybookList extends Component {
     this.setState({
       chosenUser: {
         userId: value.id,
-        token: null,
         firstName: value.first_name,
         lastName: value.last_name,
         email: value.email,
-        companyName: 'Scotiabank',
         playbookId: value.playbookID,
         emailTemplate: 'welcomeEmail'
       }
