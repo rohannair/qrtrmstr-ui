@@ -21,3 +21,25 @@ ul, ol {
 .left {
   text-align: left;
 }
+
+.mapContainerDiv {
+  width: 100%;
+  height: 100%;
+
+  .mapDiv {
+    width: 100%;
+    height: 100%;
+    margin-left: 9%;
+
+    .mapContainer {
+      margin-top: 25px;
+      margin-bottom: 25px;
+      width: 29vw;
+      height: 50vh;
+    };
+  }
+}
+
+
+
+

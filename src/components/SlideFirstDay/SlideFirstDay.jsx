@@ -11,6 +11,7 @@ import ButtonGroup from '../../components/ButtonGroup';
 import { updatePlaybookState } from '../../actions/playbookViewActions';
 
 import TextBox from '../TextBox';
+import MapContainer from '../../containers/MapContainer';
 
 import FlipMove from 'react-flip-move';
 
@@ -19,10 +20,13 @@ class SlideFirstDay extends Component {
     time: moment().valueOf(),
     desc: '',
     mapDesc: this.props.body.map || '',
-    date: moment().format('YYYY-MM-DD')
+    date: moment().format('YYYY-MM-DD'),
+    pos: this.props.position || {lat: 43.652644, lng: -79.381769},
+    place: this.props.place || 'Toronto, ON Canada'
   };
 
   render() {
+
     const { onAdd, slide_number, body, onChange, heading } = this.props;
     const { agenda } =  this.props.body;
     const mapBody = this.props.body.map;
@@ -71,7 +75,17 @@ class SlideFirstDay extends Component {
             />
           </div>
         </div>
-        <div className="map">
+        <div className="mapContainerDivEdit">
+          <div className="mapDiv">
+            <MapContainer
+              updateState={this._updateFirstDayState}
+              editing={true}
+              pos={this.state.pos}
+              place={this.state.place}
+            />
+          </div>
+        </div>
+        <div className="bodyMap">
           <TextBox body={ body } bodyKey="map"/>
         </div>
 
@@ -121,8 +135,10 @@ class SlideFirstDay extends Component {
     const { onChange, body, slide_number } = this.props;
     let updatedSlide = null;
     let slideKey = null;
-
     if (Object.keys(this.props).indexOf(key) > -1) {
+      updatedSlide = value;
+      slideKey = key;
+    } if (Object.keys(this.props.body).indexOf(key) < 0) {
       updatedSlide = value;
       slideKey = key;
     } else {

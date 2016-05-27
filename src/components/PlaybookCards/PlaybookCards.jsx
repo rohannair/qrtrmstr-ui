@@ -1,6 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import styles from './playbookCard.css';
+import moment from 'moment';
 
 // Components
 import Button from '../../components/Button';
@@ -9,6 +10,7 @@ import PlaybookFormCard from '../../components/PlaybookFormCard';
 import PlaybookTextCard from '../../components/PlaybookTextCard';
 import PlaybookKnowledgeCentre from '../../components/PlaybookKnowledgeCentre';
 import PlaybookBio from '../../components/PlaybookBio';
+import MapContainer from '../../containers/MapContainer';
 
 // Mock
 const userInfo = {
@@ -17,6 +19,7 @@ const userInfo = {
 };
 
 const PlaybookCards = (props) => {
+
   const { fields, onClick, onSubmit, selected } = props;
   const cardCount = Object.keys(fields).map(val => {
     const field = fields[val];
@@ -83,25 +86,37 @@ const PlaybookCards = (props) => {
       const agenda = field.body.agenda.map((val, i) => {
         return (
           <div className="agendaItem" key={`agendaItem-${i}`}>
-            <span className="agendaItem-time">{val.time}</span>
+            <span className="agendaItem-time">{moment(val.time).format('h:mm A')}</span>
             <span className="agendaItem-desc">{val.desc}</span>
           </div>
         );
       });
 
-      const map_html = field.body.map
+      const map_html = field.body.desc
         .replace('<span class="fa fa-building"></span>', '<i class="material-icons">location_on</i>')
         .replace('<span class="fa fa-user"></span>', '<i class="material-icons">person</i>')
         .replace('<span class="fa fa-envelope"></span>', '<i class="material-icons">mail</i>&nbsp;')
         .replace('<a href="#">onboarding@scotiabank.com</a>', 'Questions - <a href="#">onboarding@scotiabank.com</a>');
-
+      const bleh = field.position;
       return (
         <Card key={field.slide_number} footer={<div/>}>
           <h2>{field.heading}</h2>
           <div className="day1-body">
-            <div className="day1-map"
-              dangerouslySetInnerHTML={{__html: map_html}}
-            />
+            <div className="day1-map">
+              <div className="mapContainerDiv">
+                <div className="mapDiv">
+                  <MapContainer
+                    className="day1-body"
+                    place={field.place}
+                    editing={false}
+                    pos={field.position}
+                  />
+                </div>
+              </div>
+              <div className="day1-map"
+                dangerouslySetInnerHTML={{__html: map_html}}
+              />
+            </div>
             <div className="day1-agenda">
               <div className="header">
                 Agenda

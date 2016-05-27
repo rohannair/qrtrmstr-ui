@@ -14,7 +14,7 @@
     }
 
     input {
-      width: calc(85% - 20px);
+      width: calc(85% - 40px);
       margin-left: 20px;
       padding: 10px;
       margin-bottom: 10px;

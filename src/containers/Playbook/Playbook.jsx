@@ -15,6 +15,7 @@ import PlaybookCards from '../../components/PlaybookCards';
 import { setSelection, submitPlaybook, getPlaybook } from '../../actions/playbookActions';
 
 class Playbook extends Component {
+
   componentWillMount() {
     const id = this.props.routeParams.playbookID || this.props.location.query.playbookId;
     this._getPlaybook(id);
@@ -22,7 +23,6 @@ class Playbook extends Component {
 
   render() {
     const { id, fields, selected } = this.props;
-
     return (
       <div className="playbook">
         <Header />
