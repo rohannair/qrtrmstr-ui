@@ -1,7 +1,6 @@
 import fetch from 'isomorphic-fetch';
 import utils from './utils';
 const getDomain = utils.getDomain;
-const getDomainEmail = utils.getDomainEmail;
 
 // Playbooks Retrieved action
 function playbooksRetrieved(playbookList = {}) {
@@ -65,9 +64,9 @@ export const reorderPlaybook = (idx, direction) => {
 
 // Send Playbook To User
 export const sendPlaybook = (token, payload) => {
-  const url = getDomainEmail();
+  const url = getDomain();
   return dispatch => {
-    return fetch(`${url}/api/v1/email/send`, {
+    return fetch(`${url}/api/v1/playbook/send`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
