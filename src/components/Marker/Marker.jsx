@@ -3,7 +3,6 @@ import React from 'react';
 class Marker extends React.Component {
 
   componentDidUpdate(prevProps) {
-    debugger;
     if ((this.props.googleMap !== prevProps.googleMap) ||
       (this.props.position !== prevProps.position)) {
       this.renderMarker();
@@ -11,11 +10,9 @@ class Marker extends React.Component {
   };
 
   renderMarker() {
-    debugger;
     let {
       googleMap, google, position, mapCenter
     } = this.props;
-    debugger;
     let pos = position || mapCenter;
     let newPosition = new google.maps.LatLng(pos.lat, pos.lng);
     const pref = {
