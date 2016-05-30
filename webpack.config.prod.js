@@ -29,13 +29,13 @@ const config = {
 
       {
         test: /\.jsx$/,
-        loaders: ['babel-loader'],
+        loaders: ['babel'],
       },
 
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loaders: ['babel-loader'],
+        loaders: ['babel'],
       },
 
       {
@@ -45,7 +45,7 @@ const config = {
 
       {
         test: /\.css$/,
-        loader: 'style-loader!css-loader!postcss-loader'
+        loader: 'style!css!postcss'
       },
 
       {
@@ -75,7 +75,7 @@ const config = {
 
       {
         test: /\.(png|jpg|otf)$/,
-        loader: 'file-loader'
+        loader: 'file'
       }
 
     ],
