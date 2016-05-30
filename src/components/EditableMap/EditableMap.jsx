@@ -122,9 +122,7 @@ class EditableMap extends React.Component {
     const {google} = this.props;
 
     return (
-      <div>
-        <Contents {...props} />
-      </div>
+      <Contents {...props} />
     );
   }
 };

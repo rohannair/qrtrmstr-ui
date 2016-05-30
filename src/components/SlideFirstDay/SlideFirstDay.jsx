@@ -21,7 +21,7 @@ class SlideFirstDay extends Component {
     desc: '',
     mapDesc: this.props.body.map || '',
     pos: this.props.position || {lat: 43.6446447, lng: -79.39499869999997},
-    place: this.props.place || 'Lighthouse Labs, 46 Spadina Avenue, Toronto, ON, Canada',
+    place: this.props.place || {name: 'Lighthouse Labs', formatted_address: '46 Spadina Avenue, Toronto, ON, Canada'},
     startTime: this.props.startTime,
     finishTime: this.props.finishTime,
     errorMessage: null
