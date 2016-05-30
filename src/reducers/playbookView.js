@@ -141,7 +141,7 @@ export default function playbookView(state = initialState, action) {
       message: newPlaybook.message,
       list: [
         ...list.slice(0, pos),
-        newPlaybook,
+        newPlaybook.result,
         ...list.slice(pos + 1)
       ]
     };
