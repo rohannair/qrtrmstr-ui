@@ -17,5 +17,4 @@ export default class Root extends Component {
       </Provider>
     );
   }
-
 }

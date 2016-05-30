@@ -5,6 +5,10 @@ const path         = require('path');
 const rucksack     = require('rucksack-css');
 const webpack      = require('webpack');
 
+const devFlagPlugin = new webpack.DefinePlugin({
+  __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false'))
+});
+
 const config = {
   devtool: 'cheap-source-map',
   bail: true,
@@ -95,7 +99,8 @@ const config = {
           stats.toJson().hash
         );
       });
-    }
+    },
+    devFlagPlugin
   ],
 
   postcss: function() {
