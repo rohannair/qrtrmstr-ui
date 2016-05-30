@@ -62,7 +62,7 @@ class PlaybookKnowledgeCentre extends Component {
       : null;
 
     const selectedLink = this.state.selectedType === 'link'
-    ? body.options.filter(val => val.id === selected)[0].link
+    ? this._validateLink(body.options.filter(val => val.id === selected)[0].link)
     : null;
 
     const renderedLink = this.state.selectedType === 'youtube'
@@ -102,6 +102,8 @@ class PlaybookKnowledgeCentre extends Component {
   };
 
   _changeVideo = (id, type) => this.setState({ selected: id, selectedType: type});
+
+  _validateLink = (link) => link.indexOf('https://') > -1 || link.indexOf('http://') > -1 ? link : 'https://' + link;
 };
 
 export default PlaybookKnowledgeCentre;
