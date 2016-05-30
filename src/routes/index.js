@@ -22,7 +22,7 @@ export default (store) => {
   return (
     <Router history={ browserHistory } >
       <Route path="/" component={ App }>
-        <IndexRoute component={ Home } onEnter={ requireAuth } />
+        <IndexRedirect to="/dashboard" />
         <Route path="dashboard" component={ Home } onEnter={ requireAuth }>
           <IndexRoute component={ UserList } />
           <Route path="playbooks" component={ PlaybookList } />
