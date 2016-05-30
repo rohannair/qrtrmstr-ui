@@ -21,6 +21,7 @@ import Card from '../../components/Card';
 import Button from '../../components/Button';
 import SendPlaybookModal from '../../components/SendPlaybookModal';
 import EditPlaybookModal from '../../components/EditPlaybookModal';
+import MapContainer from '../MapContainer';
 import PlaybookListItem from '../../components/PlaybookListItem';
 
 class PlaybookList extends Component {

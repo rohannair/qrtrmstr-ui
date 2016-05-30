@@ -44,7 +44,6 @@ class PlaybookEditor extends Component {
 
   render() {
     const { playbook, openCards, dispatch } = this.props;
-
     const playbookDoc = playbook.doc && Object.keys(playbook.doc).length > 0
     ? Object.keys(playbook.doc).map(val => {
       const slide = playbook.doc[val];
@@ -142,7 +141,6 @@ class PlaybookEditor extends Component {
   _savePlaybook = () => {
     const { token, dispatch, playbook, params } = this.props;
     return dispatch(modifyPlaybook(token, {doc: playbook.doc}, params.playbookID));
-
   };
 
   _moveSlide = (i, direction) => {
@@ -178,7 +176,7 @@ function mapStateToProps(state, ownProps) {
     openCards: state.playbookAdmin.openCards,
     playbook: state.playbookAdmin.playbook,
     playbookID: ownProps.params.id,
-    token,
+    token
   };
 }
 export default connect(mapStateToProps)(PlaybookEditor);

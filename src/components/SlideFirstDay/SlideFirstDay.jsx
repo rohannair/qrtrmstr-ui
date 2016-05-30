@@ -12,6 +12,7 @@ import ButtonGroup from '../../components/ButtonGroup';
 import { updatePlaybookState } from '../../actions/playbookViewActions';
 
 import TextBox from '../TextBox';
+import MapContainer from '../../containers/MapContainer';
 
 import FlipMove from 'react-flip-move';
 
@@ -19,6 +20,8 @@ class SlideFirstDay extends Component {
   state = {
     desc: '',
     mapDesc: this.props.body.map || '',
+    pos: this.props.position || {lat: 43.6446447, lng: -79.39499869999997},
+    place: this.props.place || {name: 'Lighthouse Labs', formatted_address: '46 Spadina Avenue, Toronto, ON, Canada'},
     startTime: this.props.startTime,
     finishTime: this.props.finishTime,
     errorMessage: null
@@ -73,7 +76,17 @@ class SlideFirstDay extends Component {
             />
           </div>
         </div>
-        <div className="map">
+        <div className="mapContainerDivEdit">
+          <div className="mapDiv">
+            <MapContainer
+              updateState={this._updateFirstDayState}
+              editing={true}
+              pos={this.state.pos}
+              place={this.state.place}
+            />
+          </div>
+        </div>
+        <div className="bodyMap">
           <TextBox body={ body } bodyKey="map"/>
         </div>
 
@@ -130,7 +143,6 @@ class SlideFirstDay extends Component {
     const { onChange, body, slide_number } = this.props;
     let updatedSlide = null;
     let slideKey = null;
-
     if (Object.keys(this.props).indexOf(key) > -1) {
       updatedSlide = value;
       slideKey = key;
@@ -166,16 +178,16 @@ class SlideFirstDay extends Component {
       this.setState({
         errorMessage: 'Start time must be before Finish time, please correct the dates and try again'
       });
-      return
+      return;
     }
 
     // Validation to check that the new item does not overlap any current agenda items
     for (let item in agenda) {
-      if(moment.range(moment(date + ' ' + startTime), moment(date + ' ' + finishTime)).overlaps(moment.range(agenda[item].startTime, agenda[item].finishTime))) {
+      if (moment.range(moment(date + ' ' + startTime), moment(date + ' ' + finishTime)).overlaps(moment.range(agenda[item].startTime, agenda[item].finishTime))) {
         this.setState({
           errorMessage: 'You all ready have something scheduled during that time period'
         });
-        return
+        return;
       }
     }
 

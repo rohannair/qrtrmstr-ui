@@ -1,0 +1,46 @@
+.mapContainer {
+  margin-bottom: 25px;
+  margin-right: 20px;
+
+  .flexWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .left {
+      flex: 1;
+      order: 1;
+      align-items: center;
+      flex-wrap: wrap;
+      position: relative;
+      height: 30px;
+      flex-direction: row;
+
+      .strong {
+        width: 30%;
+        text-align: right;
+        margin-top: 11px;
+        margin-bottom: 10px;
+        float: left;
+      }
+
+      input {
+        width: calc(75% - 100px);
+        margin-left: 20px;
+        margin-right: 10px;
+        padding: 10px;
+        margin-bottom: 10px;
+        font-size: 17px;
+        float: left;
+      }
+    }
+
+    .right {
+      flex: 1;
+      order: 2;
+      width: 67vw;
+      height: 40vh;
+    }
+  }
+}
+

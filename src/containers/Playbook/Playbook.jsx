@@ -16,6 +16,7 @@ import PlaybookCards from '../../components/PlaybookCards';
 import { setSelection, submitPlaybook, getPlaybook } from '../../actions/playbookActions';
 
 class Playbook extends Component {
+
   componentWillMount() {
     const id = this.props.routeParams.playbookID || this.props.location.query.playbookId;
     this._getPlaybook(id);
