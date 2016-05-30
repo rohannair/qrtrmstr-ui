@@ -11,8 +11,9 @@
     flex-direction: column;
 
     p {
-      text-align: center;
+      text-align: left;
       margin-top: 0;
+      padding-left: 15px;
     }
 
     .actions {
