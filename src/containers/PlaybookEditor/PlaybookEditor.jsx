@@ -35,7 +35,7 @@ import SlideBio from '../../components/SlideBio';
 import SlideEquipment from '../../components/SlideEquipment';
 import SlideKnowledgeCenter from '../../components/SlideKnowledgeCenter';
 import SlideFirstDay from '../../components/SlideFirstDay';
-import RemoveEquipmentTabModal from '../../components/RemoveEquipmentTabModal';
+import Dialog from '../../components/Dialog';
 
 
 class PlaybookEditor extends Component {
@@ -50,10 +50,13 @@ class PlaybookEditor extends Component {
 
   render() {
     const RemoveEquipmentTab = this.state.showModal.open
-    ? <RemoveEquipmentTabModal
-        onRemove={ this._removeOption }
-        closeModal={ this._closeModal }
-      />
+    ? <Dialog
+        onAction={ this._removeOption }
+        buttonAction='Remove'
+        onClose={ this._closeModal }
+        heading='Confirmation Needed'>
+        <p>Are you sure you want to remove this tab?</p>
+      </Dialog>
     : null;
     const { playbook, openCards, dispatch } = this.props;
     const playbookDoc = playbook.doc && Object.keys(playbook.doc).length > 0

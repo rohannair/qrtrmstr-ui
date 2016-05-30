@@ -1,12 +1,26 @@
 .modal {
-  background: transparent !important;
+
+  h3 {
+    border-bottom: 1px solid #e5e5e5;
+    padding: 15px;
+    margin-top: 0px;
+  } 
 
   .modal-inner {
     display: flex;
     flex-direction: column;
 
+    p {
+      text-align: center;
+      margin-top: 0;
+    }
+
     .actions {
       margin-top: auto;
+
+      .buttonGroup {
+        float: right;
+      }
     }
   }
 }
