@@ -32,23 +32,14 @@ const PlaybookListItem = props => {
 
       <div className="cell actions">
         <ButtonGroup>
-
           <Button
             onClick={ props.onEditShowModal.bind(this,
               { id: props.id, name: props.name}
             ) }
-            classes="primary sm"
-            icon="cog"
-            toolTipText="Edit Playbook Details"
+            classes="inverse sm"
+            icon="pencil"
+            toolTipText="Edit Name"
           />
-
-          <Link to={`/dashboard/playbooks/edit/${props.id}`}>
-            <Button
-              classes='inverse sm'
-              icon="pencil"
-              toolTipText="Edit Playbook"
-            />
-          </Link>
 
           <Button
             onClick={ props.duplicate.bind(this, props.id) }
@@ -57,11 +48,20 @@ const PlaybookListItem = props => {
             toolTipText="Duplicate Playbook"
           />
 
+          <Link to={`/dashboard/playbooks/edit/${props.id}`}>
+            <Button
+              classes='primary sm'
+              icon="cog"
+              toolTipText="Edit Playbook"
+            />
+          </Link>
+
+
           <Button
             onClick={ props.onSendShowModal.bind(this,
               { id: props.id, name: props.name}
             ) }
-            classes="secondary sm"
+            classes="tertiary sm"
             icon="paper-plane"
             toolTipText="Send to User"
           />
