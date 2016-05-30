@@ -1,8 +1,8 @@
-import fs from 'fs';
-import _ from 'lodash';
-import path from 'path';
-import isDir from 'is-dir';
-import chalk from 'chalk';
+const fs = require('fs');
+const _ = require('lodash');
+const path = require('path');
+const isDir = require('is-dir');
+const chalk = require('chalk');
 
 const name = process.argv[2];
 if (!name) {

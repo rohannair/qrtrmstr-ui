@@ -1,13 +1,13 @@
 {
   "presets": ["es2015", "stage-0", "react"],
-  "plugins": ["transform-object-rest-spread", "syntax-object-rest-spread"],
+  "plugins": ["transform-object-rest-spread", "transform-class-properties"],
   "env": {
     "development": {
-      "presets": ["react-hmre"]
+      "plugins": ["react-hot-loader/babel"]
     },
     "production": {
       "presets": ["es2015", "stage-0", "react"],
-      "plugins": ["transform-object-rest-spread", "syntax-object-rest-spread", "transform-remove-console"]
+      "plugins": ["transform-object-rest-spread", "transform-class-properties",  "transform-remove-console"]
     }
   }
 }

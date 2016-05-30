@@ -15,8 +15,8 @@ const config = {
   devtool: 'cheap-module-eval-source-map',
 
   entry: [
-    'eventsource-polyfill', // necessary for hot reloading with IE
     'webpack-hot-middleware/client',
+    'react-hot-loader/patch',
     './src/index.js'
   ],
 
@@ -32,13 +32,13 @@ const config = {
 
       {
         test: /\.jsx$/,
-        loaders: ['react-hot', 'babel-loader'],
+        loaders: ['babel'],
       },
 
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loaders: ['react-hot', 'babel-loader'],
+        loaders: ['babel'],
       },
 
       {
