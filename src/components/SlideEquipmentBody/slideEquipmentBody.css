@@ -3,6 +3,7 @@
   background: #ECF5FF;
   padding: 20px;
   overflow: hidden;
+  padding-left: 30px;
 
   table {
     background: transparent;
@@ -26,7 +27,7 @@
   td {
     background: transparent;
     &.removeButton {
-      text-align: center;
+      text-align: left;
 
       .btn {
         font-size: 1rem;
