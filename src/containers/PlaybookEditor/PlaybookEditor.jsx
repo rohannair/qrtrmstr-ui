@@ -35,14 +35,26 @@ import SlideBio from '../../components/SlideBio';
 import SlideEquipment from '../../components/SlideEquipment';
 import SlideKnowledgeCenter from '../../components/SlideKnowledgeCenter';
 import SlideFirstDay from '../../components/SlideFirstDay';
+import RemoveEquipmentTabModal from '../../components/RemoveEquipmentTabModal';
+
 
 class PlaybookEditor extends Component {
+
+  state = {
+    showModal: {open: false, remove: false}
+  };
 
   componentWillMount() {
     this._renderPlaybook();
   };
 
   render() {
+    const RemoveEquipmentTab = this.state.showModal.open
+    ? <RemoveEquipmentTabModal
+        onRemove={ this._removeOption }
+        closeModal={ this._closeModal }
+      />
+    : null;
     const { playbook, openCards, dispatch } = this.props;
     const playbookDoc = playbook.doc && Object.keys(playbook.doc).length > 0
     ? Object.keys(playbook.doc).map(val => {
@@ -70,7 +82,12 @@ class PlaybookEditor extends Component {
       case 'equipment':
         return (
         <Card key={val} title={ header }>
-            <SlideEquipment {...slide} saveSlide={ this._saveSlide } onChange={ this._updateSlide } />
+            <SlideEquipment
+              {...slide}
+              openModal={ this._openModal }
+              showModal={ this.state.showModal }
+              saveSlide={ this._saveSlide }
+              onChange={ this._updateSlide } />
           </Card>
         );
 
@@ -120,8 +137,36 @@ class PlaybookEditor extends Component {
         <StickyContainer className="sidebarBuffer" >
           <PlaybookEditorSidebar save={this._savePlaybook}/>
         </StickyContainer>
+        { RemoveEquipmentTab }
       </div>
       );
+  };
+
+  _openModal = () => {
+    this.setState({
+      showModal: {
+        open: true,
+        remove: false
+      }
+    });
+  };
+
+  _removeOption = () => {
+    this.setState({
+      showModal: {
+        open: false,
+        remove: true
+      }
+    });
+  };
+
+  _closeModal = () => {
+    this.setState({
+      showModal: {
+        open: false,
+        remove: false
+      }
+    });
   };
 
   _renderPlaybook = () => {

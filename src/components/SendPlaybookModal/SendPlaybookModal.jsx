@@ -72,8 +72,8 @@ class SendPlaybookModal extends Component {
             <div className="modalFooter">
               <div className="userButtonGroup">
                 <ButtonGroup>
+                  <Button classes="inverse sm" onClick={closeModal}>Cancel</Button>
                   <Button classes="primary sm" onClick={sendPlaybook}>Send Email</Button>
-                  <Button classes="primary sm" onClick={closeModal}>Cancel</Button>
                 </ButtonGroup>
               </div>
               <div className="errorContainer">

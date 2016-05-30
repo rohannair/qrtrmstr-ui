@@ -15,7 +15,12 @@ class SlideEquipment extends Component {
   state = {
     options: this.props.body.options || [],
     selected: null,
-    textAlign: this.props.body.textAlign || 'left'
+    textAlign: this.props.body.textAlign || 'left',
+    chosenTab: this.props.chosenTab || null
+  };
+
+  componentWillReceiveProps(nextProps) {
+    if (this.state.chosenTab && nextProps.showModal.remove) this._removeOption(this.state.chosenTab);
   };
 
   render() {
@@ -47,7 +52,7 @@ class SlideEquipment extends Component {
           onClick={ this._setSelected }
           onNew={ this._newOption }
           onEdit={ this._editOption }
-          onRemove={ this._removeOption }
+          onRemove={ this._selectTabToRemove }
           selected={ selected.id }
         />
 
@@ -135,6 +140,13 @@ class SlideEquipment extends Component {
     this._updateEquipmentState('options', newOptions);
   };
 
+  _selectTabToRemove = (key) => {
+    this.setState({
+      chosenTab: key
+    });
+    this.props.openModal();
+  };
+
   _removeOption = (key) => {
     const options = [...this.state.options]
     .filter(val => {
@@ -145,6 +157,9 @@ class SlideEquipment extends Component {
       options
     });
 
+    this.setState({
+      chosenTab: null
+    });
     this._updateEquipmentState('options', options);
 
     if (this.state.selected === key) {
