@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Cookies from 'cookies-js';
+import jwtDecode from 'jwt-decode';
 
 // Styles
 import styles from './playbook.css';
@@ -15,17 +16,18 @@ import PlaybookCards from '../../components/PlaybookCards';
 import { setSelection, submitPlaybook, getPlaybook } from '../../actions/playbookActions';
 
 class Playbook extends Component {
+
   componentWillMount() {
     const id = this.props.routeParams.playbookID || this.props.location.query.playbookId;
     this._getPlaybook(id);
   };
 
   render() {
-    const { id, fields, selected } = this.props;
+    const { id, fields, selected, token } = this.props;
 
     return (
       <div className="playbook">
-        <Header />
+        <Header isAdmin={jwtDecode(token).isAdmin} />
         <PlaybookCards
           fields={ fields }
           onClick={ this._onClick }

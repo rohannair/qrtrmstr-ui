@@ -3,7 +3,7 @@
   flex-direction: column;
   flex-wrap: wrap;
 
-  .map {
+  .bodyMap {
     width: 100%;
   }
 
@@ -16,7 +16,7 @@
       flex-direction: row;
       flex-wrap: wrap;
       width: 100%;
-      align-items: center;
+      align-items: left;
     }
 
     &-header {
@@ -37,8 +37,12 @@
     }
 
     .timeInput {
-      width: 15%;
-      text-align: right;
+      text-align: left;
+    }
+
+    .agendaTimeItem,
+    .agendaTimeTitle {
+      width: 315px;
     }
 
     .desc {
@@ -52,6 +56,24 @@
 
     input {
       width: 100%;
+    }
+  }
+
+  .addItemBtn {
+    margin-top: 9px;
+  }
+
+}
+
+.mapContainerDivEdit {
+  width: 100%;
+  height: 100%;
+
+  .mapDiv {
+    height: 100%;
+
+    .mapContainer {
+      margin-bottom: 25px;
     }
   }
 }

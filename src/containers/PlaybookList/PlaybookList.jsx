@@ -21,6 +21,7 @@ import Card from '../../components/Card';
 import Button from '../../components/Button';
 import SendPlaybookModal from '../../components/SendPlaybookModal';
 import EditPlaybookModal from '../../components/EditPlaybookModal';
+import MapContainer from '../MapContainer';
 import PlaybookListItem from '../../components/PlaybookListItem';
 
 class PlaybookList extends Component {
@@ -171,7 +172,7 @@ class PlaybookList extends Component {
     const { newPlaybookName, editedPlaybook } = this.state;
 
     this.setState({
-      loading: true
+      editedPlaybook: {}
     });
 
     return dispatch(modifyPlaybook(token, {name: newPlaybookName}, editedPlaybook.id));
@@ -192,11 +193,9 @@ class PlaybookList extends Component {
     this.setState({
       chosenUser: {
         userId: value.id,
-        token: null,
         firstName: value.first_name,
         lastName: value.last_name,
         email: value.email,
-        companyName: 'Scotiabank',
         playbookId: value.playbookID,
         emailTemplate: 'welcomeEmail'
       }
