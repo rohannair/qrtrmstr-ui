@@ -131,7 +131,7 @@ export default function playbookView(state = initialState, action) {
     const { list } = state;
     let pos = null;
     list.forEach((val, ind) => {
-      if (val.id === newPlaybook.id) {
+      if (val.id === newPlaybook.result.id) {
         pos = ind;
       }
     });
