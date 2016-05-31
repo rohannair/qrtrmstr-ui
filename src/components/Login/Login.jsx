@@ -17,8 +17,7 @@ class Login extends Component {
 
   state = {
     username: '',
-    password: '',
-    error: null
+    password: ''
   };
 
   render() {
