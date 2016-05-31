@@ -3,17 +3,9 @@ import React from 'react';
 import { render } from 'react-dom';
 import { AppContainer as HotLoaderContainer } from 'react-hot-loader';
 
-// import { createStore, combineReducers, applyMiddleware } from 'redux';
-// import { Provider } from 'react-redux';
-
-// import { Router, Link, browserHistory } from 'react-router';
-// import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
-
+// Root Container
 import Root from './containers/Root';
 const rootEl = document.getElementById('app');
-
-// Routes
-// import Routes from './routes';
 
 // Reducers
 import reducers from './reducers';
@@ -24,16 +16,15 @@ const store = configure(reducers);
 import configureRoutes from './routes';
 const routes = configureRoutes(store);
 
-// const history = syncHistoryWithStore(browserHistory, store);
-
+// Render
 render(
   <HotLoaderContainer>
     <Root store={ store } routes={ routes} />
-  </HotLoaderContainer>
-,
+  </HotLoaderContainer>,
   rootEl
 );
 
+// Hot Module Reloading
 if (__DEV__ && module.hot) {
   console.warn('in!');
   module.hot.accept('./containers/Root', () => {
@@ -48,7 +39,3 @@ if (__DEV__ && module.hot) {
     );
   });
 }
-
-// <Provider store={store}>
-//   <Router history={browserHistory} routes={ Routes } />
-// </Provider>
