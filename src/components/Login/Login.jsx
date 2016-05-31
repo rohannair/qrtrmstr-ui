@@ -86,13 +86,6 @@ class Login extends Component {
 
   _submitForm = () => {
     const { username, password } = this.state;
-    if (!username || !password) {
-      return this.setState({
-        error: 'Complete fields'
-      });
-    }
-
-    this.setState({ error: null });
     return this.props.submitForm({username, password});
   };
 }
