@@ -7,7 +7,7 @@ import ButtonGroup from '../../components/ButtonGroup';
 
 const PlaybookListItem = props => {
   const href = `/playbook/${props.id}`;
-  const assignedTo = props.firstName === null ? ' ' : `${props.firstName} ${props.lastName}`
+  const assignedTo = props.firstName ? `${props.firstName} ${props.lastName}` : ' ';
 
   return (
     <div key={ props.id } className="playbookListItem">
@@ -25,7 +25,7 @@ const PlaybookListItem = props => {
         { moment(props.updated_at).format('MMMM DD YYYY, h:mma') }
       </div>
 
-      <div className="cell assigned">
+      <div className="cell assigned assigned-text">
         { assignedTo }
       </div>
 

@@ -58,7 +58,7 @@ class SendPlaybookModal extends Component {
 
     return (
       <div className="openModal modalDialog">
-        <div className="modal">
+        <div className="sendPlaybookModal">
           <Card>
             <h3>Send playbook {playbookName} to user </h3>
             <div>

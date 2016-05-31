@@ -29,7 +29,7 @@ class NewUserModal extends Component {
     return (
 
     <div className="openModal modalDialog">
-      <div className="modal">
+      <div className="newUserModal">
         <Card>
           <h3>Add Team Member</h3>
           <div>
