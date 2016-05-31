@@ -6,8 +6,8 @@ const webpack              = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 
-const compiler = webpack(config);
-const app = express();
+const compiler             = webpack(config);
+const app                  = express();
 
 app.use(require('morgan')('dev'));
 
