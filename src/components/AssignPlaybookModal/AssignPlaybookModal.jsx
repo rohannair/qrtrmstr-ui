@@ -14,8 +14,14 @@ import Modal from '../Modal';
 class AssignPlaybookModal extends Component {
 
   componentWillMount() {
-    this.props.onChange(this.props.playbookName);
-    const latestPerson = this.props.users[(this.props.users.length) - 1];
+    const latestPerson = this.props.users[0];
+    const latestPersonInfo = {
+      id: latestPerson.id,
+      first_name: latestPerson.first_name,
+      last_name: latestPerson.last_name,
+      email: latestPerson.username,
+      playbookID: this.props.playbookID };
+    this.props.onChange(latestPersonInfo);
   };
 
   componentDidUpdate() {
