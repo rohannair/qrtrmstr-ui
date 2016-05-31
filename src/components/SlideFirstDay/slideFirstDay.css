@@ -6,6 +6,9 @@
   .bodyMap {
     width: 100%;
   }
+  input.couponCheckbox {
+    width: auto;
+  }
 
   .agenda {
     width: 100%;

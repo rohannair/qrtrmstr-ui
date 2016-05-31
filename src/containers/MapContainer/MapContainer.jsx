@@ -9,6 +9,14 @@ import EditableMap from '../../components/EditableMap';
 
 export class MapContainer extends React.Component {
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props.google && this.props.place && this.props.pos) {
+      return (this.props.pos !== nextProps.pos);
+    } else {
+      return true;
+    }
+  }
+
   render() {
     if (!this.props.loaded) {
       return <div>Loading...</div>;
