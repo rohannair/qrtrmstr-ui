@@ -48,7 +48,7 @@ class PlaybookEditor extends Component {
       optionsOriginal: null,
       slide_num: null
     },
-    playbook: this.props.playbook || null
+    playbook: null
   };
 
   componentWillMount() {
@@ -65,7 +65,7 @@ class PlaybookEditor extends Component {
         <p>Are you sure you want to remove this tab?</p>
       </Dialog>
     : null;
-    const { playbook, openCards, dispatch } = this.props;
+    const { playbook } = this.props;
     const playbookDoc = playbook.doc && Object.keys(playbook.doc).length > 0
     ? Object.keys(playbook.doc).map(val => {
       const slide = playbook.doc[val];
@@ -154,6 +154,7 @@ class PlaybookEditor extends Component {
   };
 
   _openModal = (key, selected, options, slideNum) => {
+    debugger;
     this.setState({
       showModal: true,
       removeTabInfo: {
@@ -171,7 +172,15 @@ class PlaybookEditor extends Component {
     .filter(val => {
       return val.id !== removeTabInfo.chosenTab;
     });
-    this._updateSlide('options', options, removeTabInfo.slide_num);
+
+    const { body } = this.props;
+
+    const updatedSlide = {
+      ...body,
+      options: options
+    };
+
+    this._updateSlide('body', updatedSlide, removeTabInfo.slide_num);
     this.setState({
       chosenTab: null
     });
