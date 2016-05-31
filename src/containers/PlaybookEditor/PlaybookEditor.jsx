@@ -41,7 +41,14 @@ import Dialog from '../../components/Dialog';
 class PlaybookEditor extends Component {
 
   state = {
-    showModal: {open: false, remove: false}
+    showModal: false,
+    removeTabInfo: {
+      chosenTab: null,
+      selected: null,
+      optionsOriginal: null,
+      slide_num: null
+    },
+    playbook: this.props.playbook || null
   };
 
   componentWillMount() {
@@ -49,7 +56,7 @@ class PlaybookEditor extends Component {
   };
 
   render() {
-    const RemoveEquipmentTab = this.state.showModal.open
+    const RemoveEquipmentTab = this.state.showModal
     ? <Dialog
         onAction={ this._removeOption }
         buttonAction='Remove'
@@ -88,7 +95,8 @@ class PlaybookEditor extends Component {
             <SlideEquipment
               {...slide}
               openModal={ this._openModal }
-              showModal={ this.state.showModal }
+              selected={ this.state.removeTabInfo.selected }
+              closeModal={ this._closeModal }
               saveSlide={ this._saveSlide }
               onChange={ this._updateSlide } />
           </Card>
@@ -145,31 +153,35 @@ class PlaybookEditor extends Component {
       );
   };
 
-  _openModal = () => {
+  _openModal = (key, selected, options, slideNum) => {
     this.setState({
-      showModal: {
-        open: true,
-        remove: false
+      showModal: true,
+      removeTabInfo: {
+        chosenTab: key,
+        selected: selected,
+        optionsOriginal: options,
+        slide_num: slideNum
       }
     });
   };
 
   _removeOption = () => {
+    const { removeTabInfo } = this.state;
+    const options = removeTabInfo.optionsOriginal
+    .filter(val => {
+      return val.id !== removeTabInfo.chosenTab;
+    });
+    this._updateSlide('options', options, removeTabInfo.slide_num);
     this.setState({
-      showModal: {
-        open: false,
-        remove: true
-      }
+      chosenTab: null
     });
   };
 
   _closeModal = () => {
     this.setState({
-      showModal: {
-        open: false,
-        remove: false
-      }
+      showModal: false
     });
+    const { showModal } = this.state;
   };
 
   _renderPlaybook = () => {

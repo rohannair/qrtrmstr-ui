@@ -3,7 +3,6 @@
   background: #ECF5FF;
   padding: 20px;
   overflow: hidden;
-  padding-left: 30px;
 
   table {
     background: transparent;
@@ -36,6 +35,7 @@
   }
 
   input {
-    width: 100%;
+    width: 95%;
+    margin-right: 10px;
   }
 }
