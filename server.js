@@ -13,7 +13,7 @@ app.use(require('morgan')('dev'));
 
 app.use(webpackDevMiddleware(compiler, {
   publicPath: config.output.publicPath,
-  noInfo: true,
+  noInfo: false,
   stats: {
     colors: true,
   },
@@ -28,7 +28,5 @@ app.get('*', function(req, res) {
 
 app.listen(8080, 'localhost', function(err) {
   if (err) console.log('Error', err);
-
-  console.log('App served at localhost:8080');
-  open('http://qrtrmstr.localhost:8080');
+  console.log('App served at localhost:8080. Remember to use a subdomain!');
 });
