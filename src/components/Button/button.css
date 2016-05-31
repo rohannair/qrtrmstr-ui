@@ -121,6 +121,7 @@
   &.xl {
     font-size: 1.5rem;
     padding: 15px 20px;
+    text-align: center;
   }
 
   &.lg {

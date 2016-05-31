@@ -47,6 +47,13 @@ export const playbookSent = (message) => {
   };
 };
 
+export const playbookAssigned = (message) => {
+  return {
+    type: 'PLAYBOOK_ASSIGNED',
+    message
+  };
+};
+
 export const playbookModified = (newPlaybook) => {
   return {
     type: 'PLAYBOOK_MODIFIED',
@@ -104,6 +111,27 @@ export const duplicatePlaybook = (token, id) => {
     }
 
     return dispatch(addNewPlaybook(json));
+  });
+};
+
+export const assignPlaybook = (token, id, userId) => {
+  const url = getDomain();
+  return dispatch => fetch(`${url}/api/v1/playbooks/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Accept': 'application/json',
+      'Authorization': 'bearer ' + token,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ assigned: userId })
+  })
+  .then(response => response.json().then(json => ({json, response})))
+  .then(({json, response}) => {
+    if (!response.ok) {
+      return Promise.reject(json);
+    }
+
+    return dispatch(playbookModified(json));
   });
 };
 
