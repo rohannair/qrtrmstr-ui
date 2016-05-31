@@ -42,9 +42,12 @@ const PlaybookCards = (props) => {
       />);
 
     case 'bio':
+      const Uploader = props.uploader;
       return (
         <Card key={ field.slide_number } footer={<div/>}>
-          <PlaybookBio { ...field } userInfo={ userInfo } />
+          <PlaybookBio { ...field } userInfo={ userInfo }>
+            { Uploader }
+          </PlaybookBio>
         </Card>
       );
 

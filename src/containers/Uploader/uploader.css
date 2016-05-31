@@ -1,8 +1,12 @@
 .uploader {
-  width: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 
   label {
-    background-color: lightgrey;
+    border: 3px dashed lightgrey;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -10,6 +14,11 @@
     justify-content: space-around;
     align-items: center;
     padding: 80px 20px;
+    border-radius: 4px;
+  }
+
+  i {
+    color: lightgrey;
   }
 
   input[type="file"] {
@@ -20,5 +29,36 @@
   img {
     display: block;
     width: 100%;
+    border: 3px solid lightgrey;
+  }
+
+  .LoadingContainer {
+    display: flex;
+    flex-grow: 1;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    border: 3px dashed #EE6352;
+    border-radius: 4px;
+
+    img {
+      max-width: 32px;
+      border: none;
+    }
+  }
+
+  .ImgContainer {
+    position: relative;
+
+    .btn {
+      font-size: 0.35rem;
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+
+      .tooltip {
+        font-size: 0.75rem;
+      }
+    }
   }
 }
