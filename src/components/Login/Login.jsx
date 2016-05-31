@@ -22,6 +22,8 @@ class Login extends Component {
 
   render() {
     const { submitForm, forgotPassword } = this.props;
+
+    //TODO: Use Alert here when Alert is merged in
     const errorEl = this.props.error
     ? <div>{`ERROR: ${this.props.error}`}</div>
     : null;
