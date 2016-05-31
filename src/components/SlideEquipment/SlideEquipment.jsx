@@ -14,10 +14,22 @@ import TextBox from '../TextBox';
 class SlideEquipment extends Component {
   state = {
     selected: null,
-    textAlign: this.props.body.textAlign || 'left'
+    textAlign: this.props.body.textAlign || 'left',
+    options: this.props.body.options || null
   };
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.options) {
+      if (nextProps.options !== this.props.body.options) {
+        this.setState({
+          options: nextProps.options
+        });
+      }
+    } else {
+      this.setState({
+        options: nextProps.body.options
+      });
+    }
     if (nextProps.selected) {
       const newOptions = nextProps.options
       .filter(val => {
@@ -36,13 +48,13 @@ class SlideEquipment extends Component {
   };
 
   render() {
-    const { slide_number, body, options } = this.props;
-
-    const names = options.map(val => ({ id: val.id, name: val.name }));
+    const { slide_number, body } = this.props;
+    const currentOptions = this.state.options ? this.state.options : body.options;
+    const names = currentOptions.map(val => ({ id: val.id, name: val.name }));
     const selected = this.state.selected
-      ? (options
+      ? (currentOptions
         .filter(val => val.id === this.state.selected))[0]
-      : this.props.options[0];
+      : currentOptions[0];
     return (
       <div className="slideEquipment">
         <div className="slide-input">
@@ -93,7 +105,7 @@ class SlideEquipment extends Component {
   };
 
   _openEquipmentModal = (key) => {
-    this.props.openModal(key, this.state.selected, this.props.options, this.props.slide_number);
+    this.props.openModal(key, this.state.selected, this.state.options, this.props.slide_number);
   };
 
   _setSelected = (key) => {
@@ -114,8 +126,7 @@ class SlideEquipment extends Component {
         'New Label'
       ]
     };
-    const { options } = this.props;
-
+    const { options } = this.state;
     const newAddOptions = [
       ...options,
       newOptions
@@ -124,7 +135,7 @@ class SlideEquipment extends Component {
   };
 
   _editOption = (key, newName) => {
-    const { options } = this.props;
+    const { options } = this.state;
 
     const opt = find(options, (o) => o.id === key);
     const optIndex = findIndex(options, (o) => o.id === key);
@@ -148,11 +159,11 @@ class SlideEquipment extends Component {
   };
 
   _editSubOption = (key, value, ind) => {
-    const { options } = this.props;
+    const { options } = this.state;
     const selected = this.state.selected
       ? (options
         .filter(val => val.id === this.state.selected))[0]
-      : this.props.options[0];
+      : options[0];
     const pos = options.indexOf(selected);
     const newOption = {
       ...selected,
@@ -173,7 +184,7 @@ class SlideEquipment extends Component {
   };
 
   _removeSubOption = (ind, key) => {
-    const { options } = this.props;
+    const { options } = this.state;
     let selectedIdIndex = 0;
     let selectedKeyIndex = 0;
 
@@ -213,7 +224,7 @@ class SlideEquipment extends Component {
   };
 
   _newSubOption = (ind) => {
-    const { options } = this.props;
+    const { options } = this.state;
     let selectedIndex = 0;
 
     const optToChange = options.reduce((prev, val, i) => {

@@ -86,7 +86,7 @@ export default function playbookView(state = initialState, action) {
 
     // If slide doesn't exist (which is weird...)
     if (!(slide_number in playbook.doc)) return state;
-
+    
     return {
       ...state,
       playbook: {
