@@ -9,6 +9,7 @@ import styles from './assignPlaybookModal.css';
 import Card from '../Card';
 import Button from '../Button';
 import ButtonGroup from '../ButtonGroup';
+import Modal from '../Modal';
 
 class AssignPlaybookModal extends Component {
 
@@ -53,35 +54,31 @@ class AssignPlaybookModal extends Component {
     });
 
     return (
-      <div className="openModal modalDialog">
-        <div className="modal">
-          <Card>
-            <h3>Assign Playbook: {playbookName} </h3>
-            <div>
-              <div className="formField">
-                <label>User: </label>
-                  <select className="inputIcon" value={ defaultUser } onChange={e => onChange(JSON.parse(e.target.value)) }>
-                    { userOptions }
-                  </select>
-              </div>
-            </div>
-            <div className="modalFooter">
-              <div className="userButtonGroup">
-                <ButtonGroup>
-                  <Button classes="primary sm" onClick={assignPlaybook}>Update</Button>
-                  <Button classes="inverse sm" onClick={closeModal}>Cancel</Button>
-                </ButtonGroup>
-              </div>
-              <div className="errorContainer">
-                { feedback }
-              </div>
-              <div className="spinnerContainer">
-                { loadingIcon }
-              </div>
-            </div>
-          </Card>
+      <Modal onClose={closeModal}>
+        <h3>Assign Playbook: {playbookName} </h3>
+        <div>
+          <div className="formField">
+            <label>User: </label>
+              <select className="inputIcon" value={ defaultUser } onChange={e => { e.stopPropagation(); onChange(JSON.parse(e.target.value)) } }>
+                { userOptions }
+              </select>
+          </div>
         </div>
-      </div>
+        <div className="modalFooter">
+          <div className="userButtonGroup">
+            <ButtonGroup>
+              <Button classes="primary sm" onClick={assignPlaybook}>Update</Button>
+              <Button classes="primary sm" onClick={closeModal}>Close</Button>
+            </ButtonGroup>
+          </div>
+          <div className="errorContainer">
+            { feedback }
+          </div>
+          <div className="spinnerContainer">
+            { loadingIcon }
+          </div>
+        </div>
+      </Modal>
     );
   };
 };

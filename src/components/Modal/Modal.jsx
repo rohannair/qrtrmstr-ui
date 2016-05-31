@@ -14,7 +14,7 @@ const Modal = (props) => {
 
   return (
     <div className='modal' onClick={ props.onClose }>
-      <div className={ classes }>
+      <div className={ classes } onClick={e => e.stopPropagation()}>
         { props.children }
       </div>
     </div>
