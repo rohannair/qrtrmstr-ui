@@ -47,6 +47,8 @@ class PlaybookEditor extends Component {
     const playbookDoc = playbook.doc && Object.keys(playbook.doc).length > 0
     ? Object.keys(playbook.doc).map(val => {
       const slide = playbook.doc[val];
+      const userFirstName = playbook.firstName;
+      const userLastName = playbook.lastName;
       let header = (
         <PlaybookEditorHeader val={ val } moveSlide={this._moveSlide}>
           {`Section ${parseInt(val) + 1}`}
@@ -56,7 +58,7 @@ class PlaybookEditor extends Component {
       case 'intro':
         return (
           <Card key={val} title={ header }>
-            <SlideIntro key={ val } {...slide} onChange={ this._updateSlide } />
+            <SlideIntro key={ val } { ...slide } userFirstName={userFirstName} userLastName={userLastName} onChange={ this._updateSlide } />
           </Card>
         );
 
