@@ -88,7 +88,7 @@ export const sendPlaybook = (token, payload) => {
         return Promise.reject(json);
       }
       console.log(json);
-      return dispatch(playbookSent(json.message));
+      return dispatch(playbookModified(json));
     });
   };
 };

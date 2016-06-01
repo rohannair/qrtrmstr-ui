@@ -6,12 +6,17 @@ import classNames from 'classnames';
 import styles from './assignPlaybookModal.css';
 
 // Components
+import Alert from '../Alert';
 import Card from '../Card';
 import Button from '../Button';
 import ButtonGroup from '../ButtonGroup';
 import Modal from '../Modal';
 
 class AssignPlaybookModal extends Component {
+
+  state = {
+    message: this.props.message || null
+  }
 
   componentWillMount() {
     const latestPerson = this.props.users[0];
@@ -24,9 +29,13 @@ class AssignPlaybookModal extends Component {
     this.props.onChange(latestPersonInfo);
   };
 
-  componentDidUpdate() {
-    if (this.props.message) this.props.timeOutModal('edit');
-  };
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.message != this.state.message) {
+      this.setState({
+        message: nextProps.message
+      });
+    }
+  }
 
   render() {
     const {
@@ -38,7 +47,6 @@ class AssignPlaybookModal extends Component {
       assignPlaybook,
       onChange,
       loading,
-      message,
       timeOutModal,
       newPlaybookAssignee } = this.props;
 
@@ -52,7 +60,7 @@ class AssignPlaybookModal extends Component {
 
     let defaultUser = JSON.stringify(selectedUser);
     const loadingIcon = loading ? <i className="fa fa-cog fa-lg fa-spin spinner"></i> : null;
-    const feedback = message ? <div className="successText"><p className="errorMsg">{message}</p></div> : null;
+    const feedback = this.state.message ? <Alert closeAlert={this._closeAlert} success={true} >{this.state.message}</Alert> : null;
     const userOptions = Object.keys(users).map(index => {
       let user = users[index];
       let userInfo = { id: user.id, first_name: user.first_name, last_name: user.last_name, email: user.username, playbookID };
@@ -77,9 +85,7 @@ class AssignPlaybookModal extends Component {
               <Button classes="primary sm" onClick={closeModal}>Close</Button>
             </ButtonGroup>
           </div>
-          <div className="errorContainer">
-            { feedback }
-          </div>
+          { feedback }
           <div className="spinnerContainer">
             { loadingIcon }
           </div>
@@ -87,6 +93,13 @@ class AssignPlaybookModal extends Component {
       </Modal>
     );
   };
+
+  _closeAlert = () => {
+    this.setState({
+      message: null
+    });
+  };
+
 };
 
 export default AssignPlaybookModal;

@@ -33,6 +33,7 @@ const PlaybookListItem = props => {
       </div>
 
       <div className="cell status">
+        { props.current_status }
       </div>
 
       <div className="cell actions">

@@ -18,7 +18,7 @@ h3 {
   float: right;
 }
 
-.errorContainer {
+/*.errorContainer {
   display: inline-block;
   float: right;
 
@@ -42,7 +42,7 @@ h3 {
       display: inline-block;
     }
   }
-}
+}*/
 .spinnerContainer {
   height: 28px;
   padding: 4px;
