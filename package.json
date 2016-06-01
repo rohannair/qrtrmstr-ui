@@ -39,6 +39,7 @@
     "faucet": "0.0.1",
     "file-loader": "^0.8.5",
     "fs": "0.0.2",
+    "img-loader": "^1.2.2",
     "immutable": "^3.8.0",
     "is-dir": "^1.0.0",
     "lost": "^6.6.2",
