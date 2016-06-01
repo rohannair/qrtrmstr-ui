@@ -154,7 +154,6 @@ class PlaybookEditor extends Component {
   };
 
   _openModal = (key, selected, options, slideNum) => {
-    debugger;
     this.setState({
       showModal: true,
       removeTabInfo: {

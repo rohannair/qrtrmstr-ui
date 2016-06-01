@@ -18,7 +18,6 @@ class SlideEquipment extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    debugger;
     if (nextProps.selected) {
       const newOptions = nextProps.body.options
       .filter(val => {
