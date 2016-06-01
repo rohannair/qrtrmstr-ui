@@ -77,7 +77,7 @@ const config = {
       },
 
       {
-        test: /\.(png|jpg|otf)$/,
+        test: /\.(png|jpg|gif|otf)$/,
         loader: 'file'
       }
 

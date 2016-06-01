@@ -8,7 +8,23 @@ export default function uploader(state = initialState, action) {
   case 'UPLOAD_SUCCESSFUL':
     return {
       ...state,
-      img: action.data
+      img: action.data,
+      loading: false
+    };
+
+  case 'DELETE_IMAGE':
+    return {
+      ...state,
+      img: null
+    };
+
+  case 'UPLOAD_FAILED':
+    return state;
+
+  case 'SET_LOADING':
+    return {
+      ...state,
+      loading: true
     };
 
   default:

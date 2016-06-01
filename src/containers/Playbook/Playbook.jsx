@@ -12,6 +12,9 @@ import Footer from '../../components/Global/Footer';
 import Header from '../../components/Global/Header';
 import PlaybookCards from '../../components/PlaybookCards';
 
+// Containers
+import Uploader from '../Uploader';
+
 // Actions
 import { setSelection, submitPlaybook, getPlaybook } from '../../actions/playbookActions';
 
@@ -24,6 +27,7 @@ class Playbook extends Component {
 
   render() {
     const { id, fields, selected, token } = this.props;
+    const PlaybookUploader = (<Uploader updateState={(url) => console.log(url)} ><i className="material-icons">cloud_upload</i></Uploader>);
 
     return (
       <div className="playbook">
@@ -33,6 +37,7 @@ class Playbook extends Component {
           onClick={ this._onClick }
           onSubmit={ this._onSubmit }
           selected={ selected }
+          uploader={ PlaybookUploader }
         />
         <Footer />
       </div>

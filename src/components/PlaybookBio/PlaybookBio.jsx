@@ -43,7 +43,7 @@ const PlaybookBio = (props) => {
       <h2>Fill out your profile</h2>
       <div className="bio">
         <div className="bio-info">
-          { profilePic }
+          { props.children }
         </div>
         <div className="bio-form">
           <h3>{ props.userInfo.firstName + ' ' + props.userInfo.lastName}</h3>
