@@ -31,6 +31,7 @@ class Contents extends React.Component {
     if (position !== prevState.position) {
       this.props.updateState('position', position);
       this.props.updateState('place', place);
+      this.props.updateLocation('detailed_location', place.formatted_address);
     }
   }
 

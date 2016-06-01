@@ -307,15 +307,17 @@ h1, h2, h3, h4, h5, h6, strong {
   font-size: 18px;
   padding: 0 20px;
 
-  iframe {
-    height: 350px;
-    width: 100%;
-    margin-bottom: 20px;
+  &.mapDesc {
+    margin-left: 5%;
   }
 
   div {
     font-weight: bold;
     color: #30343F;
+
+    &.day1-item {
+      margin-bottom: 7px;
+    }
 
     &.dir a {
       font-size: 12px;
@@ -328,12 +330,13 @@ h1, h2, h3, h4, h5, h6, strong {
       font-weight: bold;
 
       &:hover {
+        text-decoration: none;
         padding-bottom: 2px;
         border-bottom: 2px solid #337ab7;
       }
     }
 
-    i.material-icons {
+    i {
       font-size: 0.95em;
       position: relative;
       top: 2px;
@@ -348,7 +351,7 @@ h1, h2, h3, h4, h5, h6, strong {
     text-align: center;
     padding: 20px;
     font-weight: normal;
-    margin-top: 10px;
+    margin-top: 30px;
 
     strong {
       display: block;

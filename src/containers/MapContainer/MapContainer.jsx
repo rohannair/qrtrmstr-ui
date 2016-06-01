@@ -26,6 +26,7 @@ export class MapContainer extends React.Component {
       return (
         <div className='mapContainer' >
           <EditableMap
+            updateLocation={this.props.updateLocation}
             updateState={this.props.updateState}
             className="day1-body"
             google={this.props.google}

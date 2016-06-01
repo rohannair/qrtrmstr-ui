@@ -6,8 +6,13 @@
   .bodyMap {
     width: 100%;
   }
-  input.couponCheckbox {
+
+  .coupon {
     width: auto;
+    
+    input.couponCheckbox {
+      width: auto;
+    }
   }
 
   .agenda {

@@ -28,7 +28,7 @@ class SlideFirstDay extends Component {
   };
 
   render() {
-    const { onAdd, slide_number, body, onChange, heading, date, detailed_location, supervisor, couponInput } = this.props;
+    const { onAdd, slide_number, body, onChange, heading, date, detailed_location, contact, couponInput } = this.props;
     const detLoc = detailed_location ? detailed_location : this.state.place.formatted_address;
     const { agenda } =  this.props.body;
     const mapBody = this.props.body.map;
@@ -59,16 +59,7 @@ class SlideFirstDay extends Component {
     const couponInputFields = couponInput.show
     ?  <div className="slideEquipment">
         <div className="slide-input">
-          <strong>Coupon Label:</strong>
-          <input
-            name="label"
-            type="text"
-            value = { couponInput.label }
-            onChange={ e => this._updateDesc('couponInput', e.target.name, e.target.value) }
-          />
-        </div>
-        <div className="slide-input">
-          <strong>Supervisor Email:</strong>
+          <strong>Coupon Code:</strong>
           <input
             name="code"
             type="text"
@@ -104,6 +95,7 @@ class SlideFirstDay extends Component {
           <div className="mapDiv">
             <MapContainer
               updateState={this._updateFirstDayState}
+              updateLocation={this._updateFirstDayState}
               editing={true}
               pos={this.state.pos}
               place={this.state.place}
@@ -122,34 +114,34 @@ class SlideFirstDay extends Component {
               />
             </div>
             <div className="slide-input">
-              <strong>Supervisor Title:</strong>
+              <strong>Contact Title:</strong>
               <input
                 name="title"
                 type="text"
-                value = { supervisor.title }
-                onChange={ e => this._updateDesc('supervisor', e.target.name, e.target.value) }
+                value = { contact.title }
+                onChange={ e => this._updateDesc('contact', e.target.name, e.target.value) }
               />
             </div>
             <div className="slide-input">
-              <strong>Supervisor Name:</strong>
+              <strong>Contact Name:</strong>
               <input
                 name="name"
                 type="text"
-                value = { supervisor.name }
-                onChange={ e => this._updateDesc('supervisor', e.target.name, e.target.value) }
+                value = { contact.name }
+                onChange={ e => this._updateDesc('contact', e.target.name, e.target.value) }
               />
             </div>
             <div className="slide-input">
-              <strong>Supervisor Email:</strong>
+              <strong>contact Email:</strong>
               <input
                 name="email"
                 type="text"
-                value = { supervisor.email }
-                onChange={ e => this._updateDesc('supervisor', e.target.name, e.target.value) }
+                value = { contact.email }
+                onChange={ e => this._updateDesc('contact', e.target.name, e.target.value) }
               />
             </div>
             <div className="slide-input">
-              <label>
+              <label className="coupon">
               <input
                 className='couponCheckbox'
                 type="checkbox"
@@ -157,7 +149,7 @@ class SlideFirstDay extends Component {
                 onChange={ this._toggleCouponInput }
               />
               <span className="checkboxLabel">
-                { '  Include Coupon?' }
+                { '  Include UBER Coupon' }
               </span>
             </label>
             </div>
@@ -207,7 +199,7 @@ class SlideFirstDay extends Component {
     return this._updateFirstDayState('agenda', newAgenda);
   };
 
-  _showCouponInput = () => {
+  _toggleCouponInput = () => {
     const { couponInput } = this.props;
     const newValue = {
       ...couponInput,
@@ -217,8 +209,8 @@ class SlideFirstDay extends Component {
   };
 
   _updateDesc = (masterKey, key, value) => {
-    const { supervisor, couponInput } = this.props;
-    const allValues = masterKey === 'supervisor' ? supervisor : couponInput;
+    const { contact, couponInput } = this.props;
+    const allValues = masterKey === 'contact' ? contact : couponInput;
     const newValue = {
       ...allValues,
       [key]: value
