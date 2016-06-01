@@ -92,11 +92,14 @@ const PlaybookCards = (props) => {
         );
       });
 
-      const map_html = field.body.desc
-        .replace('<span class="fa fa-building"></span>', '<i class="material-icons">location_on</i>')
-        .replace('<span class="fa fa-user"></span>', '<i class="material-icons">person</i>')
-        .replace('<span class="fa fa-envelope"></span>', '<i class="material-icons">mail</i>&nbsp;')
-        .replace('<a href="#">onboarding@scotiabank.com</a>', 'Questions - <a href="#">onboarding@scotiabank.com</a>');
+      const dirLoc = `https://www.google.com/maps/dir/Current+Location/${field.position.lat},${field.position.lng}`;
+
+      const couponCode = field.couponInput.show
+      ? <div className="uber-promo">
+          Complimentary UBER Code
+          <strong>{ field.couponInput.code}</strong>
+        </div>
+      : null;
 
       return (
         <Card key={field.slide_number} footer={<div/>}>
@@ -113,9 +116,22 @@ const PlaybookCards = (props) => {
                   />
                 </div>
               </div>
-              <div className="day1-map"
-                dangerouslySetInnerHTML={{__html: map_html}}
-              />
+              <div className="day1-map mapDesc">
+                <div className="day1-item">
+                  <i className="material-icons">location_on</i>
+                  { field.detailed_location }
+                  <a href={ dirLoc }> Get Directions</a>
+                </div>
+                <div className="day1-item">
+                  <i className="material-icons">person</i>
+                  { field.contact.title } - {field.contact.name}
+                </div>
+                <div className="day1-item">
+                  <i className="material-icons">mail</i>&nbsp;
+                  <a href={`mailto:${field.contact.email}`}>{field.contact.email}</a>
+                </div>
+                { couponCode }
+              </div>
             </div>
             <div className="day1-agenda">
               <div className="header">

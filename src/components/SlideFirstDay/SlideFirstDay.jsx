@@ -28,7 +28,8 @@ class SlideFirstDay extends Component {
   };
 
   render() {
-    const { onAdd, slide_number, body, onChange, heading, date } = this.props;
+    const { onAdd, slide_number, body, onChange, heading, date, detailed_location, contact, couponInput } = this.props;
+    const detLoc = detailed_location ? detailed_location : this.state.place.formatted_address;
     const { agenda } =  this.props.body;
     const mapBody = this.props.body.map;
     const { mapDesc, startTime, finishTime, desc, errorMessage } = this.state;
@@ -55,6 +56,20 @@ class SlideFirstDay extends Component {
           })
       : null;
 
+    const couponInputFields = couponInput.show
+    ?  <div className="slideEquipment">
+        <div className="slide-input">
+          <strong>Coupon Code:</strong>
+          <input
+            name="code"
+            type="text"
+            value = { couponInput.code }
+            onChange={ e => this._updateDesc('couponInput', e.target.name, e.target.value) }
+          />
+        </div>
+      </div>
+    : null;
+
     return (
       <div className="slideFirstDay">
         <div className="slideEquipment">
@@ -80,6 +95,7 @@ class SlideFirstDay extends Component {
           <div className="mapDiv">
             <MapContainer
               updateState={this._updateFirstDayState}
+              updateLocation={this._updateFirstDayState}
               editing={true}
               pos={this.state.pos}
               place={this.state.place}
@@ -87,7 +103,58 @@ class SlideFirstDay extends Component {
           </div>
         </div>
         <div className="bodyMap">
-          <TextBox body={ body } bodyKey="map"/>
+          <div className="slideEquipment">
+            <div className="slide-input">
+              <strong>Detailed Location:</strong>
+              <input
+                name="detailed_location"
+                type="text"
+                value={ detLoc }
+                onChange={ e => this._updateFirstDayState(e.target.name, e.target.value) }
+              />
+            </div>
+            <div className="slide-input">
+              <strong>Contact Title:</strong>
+              <input
+                name="title"
+                type="text"
+                value = { contact.title }
+                onChange={ e => this._updateDesc('contact', e.target.name, e.target.value) }
+              />
+            </div>
+            <div className="slide-input">
+              <strong>Contact Name:</strong>
+              <input
+                name="name"
+                type="text"
+                value = { contact.name }
+                onChange={ e => this._updateDesc('contact', e.target.name, e.target.value) }
+              />
+            </div>
+            <div className="slide-input">
+              <strong>contact Email:</strong>
+              <input
+                name="email"
+                type="text"
+                value = { contact.email }
+                onChange={ e => this._updateDesc('contact', e.target.name, e.target.value) }
+              />
+            </div>
+            <div className="slide-input">
+              <label className="coupon">
+              <input
+                className='couponCheckbox'
+                type="checkbox"
+                checked={ couponInput.show }
+                onChange={ this._toggleCouponInput }
+              />
+              <span className="checkboxLabel">
+                { '  Include UBER Coupon' }
+              </span>
+            </label>
+            </div>
+            { couponInputFields }
+          </div>
         </div>
 
         <divl className="agenda">
@@ -123,13 +190,6 @@ class SlideFirstDay extends Component {
     );
   };
 
-  _mapDescChange = e => {
-    const { value } = e.target;
-    this.setState({
-      mapDesc: value
-    });
-  };
-
   _deleteItem = id => {
     const newAgenda = [
       ...this.props.body.agenda.slice(0, id),
@@ -137,6 +197,26 @@ class SlideFirstDay extends Component {
     ];
 
     return this._updateFirstDayState('agenda', newAgenda);
+  };
+
+  _toggleCouponInput = () => {
+    const { couponInput } = this.props;
+    const newValue = {
+      ...couponInput,
+      show: !couponInput.show
+    };
+    this._updateFirstDayState('couponInput', newValue);
+  };
+
+  _updateDesc = (masterKey, key, value) => {
+    const { contact, couponInput } = this.props;
+    const allValues = masterKey === 'contact' ? contact : couponInput;
+    const newValue = {
+      ...allValues,
+      [key]: value
+    };
+
+    this._updateFirstDayState(masterKey, newValue);
   };
 
   _updateFirstDayState = (key, value) => {
