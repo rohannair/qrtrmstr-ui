@@ -73,6 +73,15 @@ const PlaybookListItem = props => {
           />
 
           <Button
+            onClick={ props.onAssignShowModal.bind(this,
+              { id: props.id, name: props.name}
+            ) }
+            classes="inverse sm"
+            icon="user"
+            toolTipText="Assign Playbook"
+          />
+
+          <Button
             onClick={ props.onSendShowModal.bind(this,
               { id: props.id, name: props.name}
             ) }

@@ -18,31 +18,6 @@ h3 {
   float: right;
 }
 
-/*.errorContainer {
-  display: inline-block;
-  float: right;
-
-  .successText {
-    height: 28px;
-    display: inline-block;
-    overflow: auto;
-    background-color: rgba(83, 238, 82, 0.24);
-    border: 1px solid rgba(67, 83, 96, 0.26);
-    border-radius: 3px;
-    font-size: 11px;
-    font-weight: bold;
-    color: rgba(0, 0, 0, 0.63);
-
-    p {
-      margin: 0px;
-      padding: 7px;
-    }
-
-    .visibleError {
-      display: inline-block;
-    }
-  }
-}*/
 .spinnerContainer {
   height: 28px;
   padding: 4px;
