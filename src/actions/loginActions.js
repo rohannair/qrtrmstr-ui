@@ -28,6 +28,14 @@ export const logout = () => {
   };
 };
 
+// Login failed
+const loginFail = (error) => {
+  return {
+    type: 'LOG_IN_FAILURE',
+    error
+  };
+};
+
 // Login API call
 export const tryLogin = credentials => {
   const url = getDomain();
@@ -42,9 +50,7 @@ export const tryLogin = credentials => {
     })
     .then(response => response.json().then(json => ({json, response})))
     .then(({ json, response }) => {
-      if(!response.ok) {
-        console.error(response);
-      }
+      if (!response.ok) return dispatch(loginFail(json.message));
       return dispatch(login(json.token));
     });
   };

@@ -28,9 +28,6 @@ class App extends Component {
 
   componentDidMount() {
     const { token, dispatch } = this.props;
-    if (token) {
-    }
-
     if (Cookies.get('token')) {
       return dispatch(login(Cookies.get('token'), true));
     }
@@ -48,38 +45,31 @@ class App extends Component {
   }
 
   render() {
-    const { token, users } = this.props;
+    const { token, users, error } = this.props;
 
     return (
       <div className="app-login">
         <Header />
         <div className="login-container">
-          <Login submitForm={this._submitForm}/>
+          <Login submitForm={this._submitForm} error={ error }/>
         </div>
         <Footer />
       </div>
     );
   };
 
-  _submitForm = (e) => {
-    e.preventDefault();
+  _submitForm = (data) => {
     const { dispatch } = this.props;
-    let data = {};
-
-    [...e.target]
-    .filter(val => val.localName === 'input')
-    .map(val => ({ [val.name]: val.value }))
-    .forEach(val => data = merge(data, val));
-
     return dispatch(tryLogin(data));
   };
 
 };
 
 function mapStateToProps(state) {
-  const { token } = state.accountActions;
+  const { token, error } = state.accountActions;
   return {
-    token
+    token,
+    error
   };
 }
 
