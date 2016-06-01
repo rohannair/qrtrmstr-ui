@@ -7,29 +7,32 @@ import ButtonGroup from '../ButtonGroup';
 
 const Dialog = (props) => {
   const heading = props.heading
-  ? <h1 className="modal-heading">{props.heading}</h1>
+  ? <h3 className="modal-heading">{props.heading}</h3>
   : null;
+  const buttonAction = props.buttonAction
+  ? props.buttonAction
+  : 'OK';
 
   return (
-    <Modal onClose={ props.onClose } sm>
+    <Modal onClose={ props.onClose } md>
       { heading }
       <div className="modal-body">
         { props.children }
       </div>
       <div className="actions">
-        <ButtonGroup centre>
+        <ButtonGroup>
           <Button
-            classes="inverse lg"
+            classes="inverse sm"
             onClick={ props.onClose }
           >
             Cancel
           </Button>
 
           <Button
-            classes="primary lg"
+            classes="primary sm"
             onClick={ props.onAction }
           >
-            OK
+            {buttonAction}
           </Button>
         </ButtonGroup>
       </div>

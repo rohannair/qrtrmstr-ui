@@ -13,22 +13,35 @@ import TextBox from '../TextBox';
 
 class SlideEquipment extends Component {
   state = {
-    options: this.props.body.options || [],
     selected: null,
     textAlign: this.props.body.textAlign || 'left'
   };
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.selected) {
+      const newOptions = nextProps.body.options
+      .filter(val => {
+        return val.id === nextProps.selected;
+      });
+      if (newOptions.length < 1) {
+        this.setState({
+          selected: null
+        });
+      }
+    } else {
+      this.setState({
+        selected: this.state.selected
+      });
+    }
+  };
+
   render() {
-    const { options, textAlign } = this.state;
     const { slide_number, body } = this.props;
-
-    const names = options.map(val => ({ id: val.id, name: val.name }));
-
+    const names = body.options.map(val => ({ id: val.id, name: val.name }));
     const selected = this.state.selected
-      ? (options
+      ? (body.options
         .filter(val => val.id === this.state.selected))[0]
-      : this.state.options[0];
-
+      : body.options[0];
     return (
       <div className="slideEquipment">
         <div className="slide-input">
@@ -47,7 +60,7 @@ class SlideEquipment extends Component {
           onClick={ this._setSelected }
           onNew={ this._newOption }
           onEdit={ this._editOption }
-          onRemove={ this._removeOption }
+          onRemove={ this._openEquipmentModal }
           selected={ selected.id }
         />
 
@@ -78,6 +91,10 @@ class SlideEquipment extends Component {
     return onChange(slideKey, updatedSlide, slide_number);
   };
 
+  _openEquipmentModal = (key) => {
+    this.props.openModal(key, this.state.selected, this.props.body.options, this.props.slide_number);
+  };
+
   _setSelected = (key) => {
     this.setState({
       selected: key
@@ -96,15 +113,7 @@ class SlideEquipment extends Component {
         'New Label'
       ]
     };
-    const { options } = this.state;
-
-    this.setState({
-      options:  [
-        ...options,
-        newOptions
-      ]
-    });
-
+    const { options } = this.props.body;
     const newAddOptions = [
       ...options,
       newOptions
@@ -113,7 +122,7 @@ class SlideEquipment extends Component {
   };
 
   _editOption = (key, newName) => {
-    const { options } = this.state;
+    const { options } = this.props.body;
 
     const opt = find(options, (o) => o.id === key);
     const optIndex = findIndex(options, (o) => o.id === key);
@@ -129,37 +138,19 @@ class SlideEquipment extends Component {
       ...options.slice(optIndex + 1)
     ];
 
-    this.setState({
-      options: newOptions
-    });
     this._updateEquipmentState('options', newOptions);
   };
 
-  _removeOption = (key) => {
-    const options = [...this.state.options]
-    .filter(val => {
-      return val.id !== key;
-    });
-
-    this.setState({
-      options
-    });
-
-    this._updateEquipmentState('options', options);
-
-    if (this.state.selected === key) {
-      this.setState({
-        selected: null
-      });
-    };
+  _selectTabToRemove = (key) => {
+    this.props.openModal(key);
   };
 
   _editSubOption = (key, value, ind) => {
-    const { options } = this.state;
+    const { options } = this.props.body;
     const selected = this.state.selected
       ? (options
         .filter(val => val.id === this.state.selected))[0]
-      : this.state.options[0];
+      : options[0];
     const pos = options.indexOf(selected);
     const newOption = {
       ...selected,
@@ -176,14 +167,11 @@ class SlideEquipment extends Component {
       ...options.slice(pos + 1)
     ];
 
-    this.setState({
-      options: newOptions
-    });
     this._updateEquipmentState('options', newOptions);
   };
 
   _removeSubOption = (ind, key) => {
-    const { options } = this.state;
+    const { options } = this.props.body;
     let selectedIdIndex = 0;
     let selectedKeyIndex = 0;
 
@@ -219,15 +207,11 @@ class SlideEquipment extends Component {
       ...options.slice(selectedIdIndex + 1),
     ];
 
-    this.setState({
-      options: newRemOpt
-    });
-
     this._updateEquipmentState('options', newRemOpt);
   };
 
   _newSubOption = (ind) => {
-    const { options } = this.state;
+    const { options } = this.props.body;
     let selectedIndex = 0;
 
     const optToChange = options.reduce((prev, val, i) => {
@@ -260,10 +244,6 @@ class SlideEquipment extends Component {
       newOpt,
       ...options.slice(selectedIndex + 1),
     ];
-
-    this.setState({
-      options: newAddOption
-    });
 
     this._updateEquipmentState('options', newAddOption);
   };

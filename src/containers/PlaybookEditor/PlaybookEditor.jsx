@@ -35,15 +35,37 @@ import SlideBio from '../../components/SlideBio';
 import SlideEquipment from '../../components/SlideEquipment';
 import SlideKnowledgeCenter from '../../components/SlideKnowledgeCenter';
 import SlideFirstDay from '../../components/SlideFirstDay';
+import Dialog from '../../components/Dialog';
+
 
 class PlaybookEditor extends Component {
+
+  state = {
+    showModal: false,
+    removeTabInfo: {
+      chosenTab: null,
+      selected: null,
+      optionsOriginal: null,
+      slide_num: null
+    },
+    playbook: null
+  };
 
   componentWillMount() {
     this._renderPlaybook();
   };
 
   render() {
-    const { playbook, openCards, dispatch } = this.props;
+    const RemoveEquipmentTab = this.state.showModal
+    ? <Dialog
+        onAction={ this._removeOption }
+        buttonAction='Remove'
+        onClose={ this._closeModal }
+        heading='Confirmation Needed'>
+        <p>Are you sure you want to remove this tab?</p>
+      </Dialog>
+    : null;
+    const { playbook } = this.props;
     const playbookDoc = playbook.doc && Object.keys(playbook.doc).length > 0
     ? Object.keys(playbook.doc).map(val => {
       const slide = playbook.doc[val];
@@ -70,7 +92,13 @@ class PlaybookEditor extends Component {
       case 'equipment':
         return (
         <Card key={val} title={ header }>
-            <SlideEquipment {...slide} saveSlide={ this._saveSlide } onChange={ this._updateSlide } />
+            <SlideEquipment
+              {...slide}
+              openModal={ this._openModal }
+              selected={ this.state.removeTabInfo.selected }
+              closeModal={ this._closeModal }
+              saveSlide={ this._saveSlide }
+              onChange={ this._updateSlide } />
           </Card>
         );
 
@@ -120,8 +148,48 @@ class PlaybookEditor extends Component {
         <StickyContainer className="sidebarBuffer" >
           <PlaybookEditorSidebar save={this._savePlaybook}/>
         </StickyContainer>
+        { RemoveEquipmentTab }
       </div>
       );
+  };
+
+  _openModal = (key, selected, options, slideNum) => {
+    this.setState({
+      showModal: true,
+      removeTabInfo: {
+        chosenTab: key,
+        selected: selected,
+        optionsOriginal: options,
+        slide_num: slideNum
+      }
+    });
+  };
+
+  _removeOption = () => {
+    const { removeTabInfo } = this.state;
+    const options = removeTabInfo.optionsOriginal
+    .filter(val => {
+      return val.id !== removeTabInfo.chosenTab;
+    });
+
+    const { body } = this.props;
+
+    const updatedSlide = {
+      ...body,
+      options: options
+    };
+
+    this._updateSlide('body', updatedSlide, removeTabInfo.slide_num);
+    this.setState({
+      chosenTab: null
+    });
+  };
+
+  _closeModal = () => {
+    this.setState({
+      showModal: false
+    });
+    const { showModal } = this.state;
   };
 
   _renderPlaybook = () => {

@@ -14,7 +14,7 @@ class SlideEquipmentHeader extends Component {
     editing: false
   };
 
-  render () {
+  render() {
     const { vals, onClick, onNew, selected, onRemove, onEdit } = this.props;
     const { editing } = this.state;
 
@@ -73,7 +73,6 @@ class Editing extends Component {
   render() {
     const { val, onClick, onSave, onRemove, selected } = this.props;
     const classes = val.id === selected ? 'tab active' : 'tab';
-
     return (
       <div className={ classes }>
         <div className="tabText " onClick={ onClick.bind(this, val.id) }>
@@ -102,7 +101,7 @@ const Regular = ({ val, onClick, onEdit, onRemove, selected }) => {
       <div className="tabText " onClick={ onClick.bind(this, val.id) }>{ val.name }</div>
       <div className="actionButtons">
         <Button classes="editBtn transparent xs" onClick={ onEdit.bind(this, val.id) } icon="pencil" />
-        <Button classes="removeBtn transparent xs" onClick={ onRemove.bind(this, val.id) } icon="x" />
+        <Button classes="removeBtn transparent xs" onClick={ onRemove.bind(this, val.id) } icon="times" />
       </div>
     </div>
   );

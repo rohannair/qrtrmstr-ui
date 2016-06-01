@@ -1,15 +1,16 @@
 .modal {
-  position: absolute;
+  position: fixed;
   top: 0;
+  right: 0;
   bottom: 0;
   left: 0;
-  right: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: rgba(0,0,0,0.8);
   z-index: 9999;
+  background: rgba(0, 0, 0, 0.48);
+  animation: mymove 0.4s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
 .modal-inner {
@@ -18,7 +19,7 @@
   background-color: #fff;
   border-radius: 3px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-  padding: 40px;
+  padding: 10px;
 
   &.xl {
     width: 80%;
@@ -29,7 +30,9 @@
   }
 
   &.md {
-    width: 40%;
+    max-width: 570px;
+    margin: 10% auto;
+    width: 65%;
   }
 
   &.sm {
