@@ -64,6 +64,7 @@ class PlaybookList extends Component {
         loading={this.state.loading}
         message={this.props.message}
         timeOutModal={this._timeOutModal}
+        closeAlert={this._closeAlert}
       />
     : null;
 
@@ -78,6 +79,7 @@ class PlaybookList extends Component {
         message={this.props.message}
         timeOutModal={this._timeOutModal}
         newPlaybookName={this.state.newPlaybookName}
+        closeAlert={this._closeAlert}
       />
     : null;
 
@@ -93,6 +95,7 @@ class PlaybookList extends Component {
         loading={this.state.loading}
         message={this.props.message}
         timeOutModal={this._timeOutModal}
+        closeAlert={this._closeAlert}
       />
     : null;
     const items = [...this.props.playbookList].map(val =>
@@ -185,6 +188,12 @@ class PlaybookList extends Component {
     }
   };
 
+  _closeAlert = () => {
+    const { dispatch } = this.props;
+    dispatch(updateMessage(null));
+  }
+
+
   _closeAssignPlaybookModal = () => {
     const { dispatch } = this.props;
     this.setState({
@@ -211,10 +220,6 @@ class PlaybookList extends Component {
   _savePlaybook = () => {
     const { token, dispatch } = this.props;
     const { newPlaybookName, editedPlaybook } = this.state;
-
-    this.setState({
-      editedPlaybook: {}
-    });
 
     return dispatch(modifyPlaybook(token, {name: newPlaybookName}, editedPlaybook.id));
   };
