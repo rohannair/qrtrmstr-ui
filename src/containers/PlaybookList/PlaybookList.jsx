@@ -213,7 +213,7 @@ class PlaybookList extends Component {
     this.setState({
       loading: true
     });
-    console.log(chosenUser);
+
     return dispatch(sendPlaybook(token, chosenUser));
   };
 
