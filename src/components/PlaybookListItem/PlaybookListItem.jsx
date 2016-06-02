@@ -7,6 +7,7 @@ import ButtonGroup from '../../components/ButtonGroup';
 
 const PlaybookListItem = props => {
   const href = `/playbook/${props.id}`;
+  const assignedTo = props.firstName ? `${props.firstName} ${props.lastName}` : ' ';
 
   return (
     <div key={ props.id } className="playbookListItem">
@@ -24,10 +25,15 @@ const PlaybookListItem = props => {
         { moment(props.updated_at).format('MMMM DD YYYY, h:mma') }
       </div>
 
+      <div className="cell assigned assigned-text">
+        { assignedTo }
+      </div>
+
       <div className="cell collaborators">
       </div>
 
       <div className="cell status">
+        { props.current_status }
       </div>
 
       <div className="cell actions">
@@ -56,6 +62,15 @@ const PlaybookListItem = props => {
             />
           </Link>
 
+
+          <Button
+            onClick={ props.onAssignShowModal.bind(this,
+              { id: props.id, name: props.name}
+            ) }
+            classes="inverse sm"
+            icon="user"
+            toolTipText="Assign Playbook"
+          />
 
           <Button
             onClick={ props.onSendShowModal.bind(this,

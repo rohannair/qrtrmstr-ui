@@ -126,6 +126,12 @@ export default function playbookView(state = initialState, action) {
       message: action.message
     };
 
+  case 'PLAYBOOK_ASSIGNED':
+    return {
+      ...state,
+      message: action.message
+    };
+
   case 'PLAYBOOK_MODIFIED':
     const { newPlaybook } = action;
     const { list } = state;

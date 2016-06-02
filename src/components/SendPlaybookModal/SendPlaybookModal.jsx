@@ -13,7 +13,7 @@ import ButtonGroup from '../ButtonGroup';
 class SendPlaybookModal extends Component {
 
   componentWillMount() {
-    const latestPerson = this.props.users[(this.props.users.length) - 1];
+    const latestPerson = this.props.users[0];
     const latestPersonInfo = {
       id: latestPerson.id,
       first_name: latestPerson.first_name,
@@ -58,7 +58,7 @@ class SendPlaybookModal extends Component {
 
     return (
       <div className="openModal modalDialog">
-        <div className="modal">
+        <div className="sendPlaybookModal">
           <Card>
             <h3>Send playbook {playbookName} to user </h3>
             <div>

@@ -8,8 +8,8 @@ import TextBox from '../TextBox';
 
 const SlideIntro = (props) => {
 
-  const { heading, body, slide_number, id, onChange, textAlign } = props;
-
+  const { heading, body, slide_number, id, onChange, textAlign, userFirstName, userLastName } = props;
+  const defaultMesage = heading ? heading : heading + ' ' + userFirstName
   return (
     <div className="slideIntro">
       <div className="slideEquipment">

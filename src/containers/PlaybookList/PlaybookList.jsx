@@ -12,7 +12,9 @@ import {
   getPlaybooks,
   sendPlaybook,
   duplicatePlaybook,
+  assignPlaybook,
   playbookSent,
+  playbookAssigned,
   modifyPlaybook } from '../../actions/playbookViewActions';
 import { getUsers } from '../../actions/userActions';
 
@@ -21,6 +23,7 @@ import Card from '../../components/Card';
 import Button from '../../components/Button';
 import SendPlaybookModal from '../../components/SendPlaybookModal';
 import EditPlaybookModal from '../../components/EditPlaybookModal';
+import AssignPlaybookModal from '../../components/AssignPlaybookModal';
 import MapContainer from '../MapContainer';
 import PlaybookListItem from '../../components/PlaybookListItem';
 
@@ -30,6 +33,7 @@ class PlaybookList extends Component {
     chosenUser: {},
     chosenPlaybook: {},
     editedPlaybook: {},
+    assignedPlaybook: {},
     loading: false,
     newPlaybookName: null
   };
@@ -77,13 +81,29 @@ class PlaybookList extends Component {
       />
     : null;
 
+    const assignPlaybookModal = Object.keys(this.state.assignedPlaybook).length > 0
+    ? <AssignPlaybookModal
+        playbookName={this.state.assignedPlaybook.name}
+        playbookID={this.state.assignedPlaybook.id}
+        users={this.props.users}
+        closeModal={this._closeAssignPlaybookModal}
+        assignPlaybook={this._assignPlaybook}
+        onChange={this._changeUserParams}
+        latestUser={this.state.chosenUser}
+        loading={this.state.loading}
+        message={this.props.message}
+        timeOutModal={this._timeOutModal}
+      />
+    : null;
+
     const items = [...this.props.playbookList].map(val =>
       <PlaybookListItem
         key={val.id}
         {...val}
         onEditShowModal={ this._selectPlaybookForEditing }
-        onSendShowModal={ this._selectPlaybookForSending }
         duplicate={ this._duplicatePlaybook }
+        onAssignShowModal={ this._selectPlaybookForAssigning }
+        onSendShowModal={ this._selectPlaybookForSending }
       />
     );
 
@@ -93,6 +113,7 @@ class PlaybookList extends Component {
           <div className="cell checkbox"><input type="checkbox" /></div>
           <div className="cell name">Name</div>
           <div className="cell modified">Last Modified</div>
+          <div className="cell assigned">Assigned To</div>
           <div className="cell collaborators">Collaborators</div>
           <div className="cell status">Status</div>
           <div className="cell actions">Actions</div>
@@ -101,6 +122,7 @@ class PlaybookList extends Component {
         { items }
         { editPlaybookModal }
         { sendPlaybookModal }
+        { assignPlaybookModal }
       </div>
     );
   };
@@ -119,6 +141,13 @@ class PlaybookList extends Component {
     this.setState({
       editedPlaybook,
       newPlaybookName: ''
+    });
+  };
+
+  _selectPlaybookForAssigning = (val) => {
+    const assignedPlaybook = ([...this.props.playbookList].filter(item => item.id === val.id))[0];
+    this.setState({
+      assignedPlaybook
     });
   };
 
@@ -152,6 +181,14 @@ class PlaybookList extends Component {
     }
   };
 
+  _closeAssignPlaybookModal = () => {
+    const { dispatch } = this.props;
+    this.setState({
+      assignedPlaybook: {}
+    });
+    dispatch(playbookAssigned(null));
+  };
+
   _timeOutModal = (val) => {
     val === 'edit' ? setTimeout(() => this._closeEditPlaybookModal(), 2000) : null;
     val === 'send' ? setTimeout(() => this._closeSendPlaybookModal(), 2000) : null;
@@ -182,6 +219,12 @@ class PlaybookList extends Component {
     const { token, dispatch } = this.props;
     return dispatch(duplicatePlaybook(token, id));
   };
+
+  _assignPlaybook = (id) => {
+    const { token, dispatch } = this.props;
+    const { chosenUser } = this.state;
+    return dispatch(assignPlaybook(token, chosenUser.playbookId, chosenUser.userId));
+  }
 
   _changePlaybookParams = (value) => {
     this.setState({

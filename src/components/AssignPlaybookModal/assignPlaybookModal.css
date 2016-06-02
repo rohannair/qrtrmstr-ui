@@ -1,0 +1,73 @@
+
+h3 {
+  border-bottom: 1px solid #e5e5e5;
+  padding: 15px;
+  margin-top: 0px;
+}
+
+.card-body {
+  padding: 10px;
+
+  .modalFooter {
+    margin-top: 10px;
+  }
+}
+
+
+.userButtonGroup {
+  float: right;
+}
+
+.spinnerContainer {
+  height: 28px;
+  padding: 4px;
+  float: right;
+
+  .spinner {
+    height: 16px;
+    float: right;
+    margin-right: 5px;
+  }
+}
+
+.iconContainer {
+  display: inline-block;
+  background-color: #2E404E;
+  color: #FFF;
+  width: 39px;
+  height: 33px;
+  margin-bottom: 5px;
+
+  .iconInfo {
+    padding: 8px 13px;
+  }
+}
+
+.inputIcon {
+  height: 33px;
+  width: 53%;
+  padding: 6px 12px;
+  border: 1px solid #435360;
+  z-index: 900;
+  border-radius: 3px;
+  background-color: #fff;
+  display: inline-block;
+  float: left;
+  margin-bottom: 5px;
+}
+
+.selectInput {
+  width: 77%;
+  border-right: none;
+  border-radius: 0px;
+}
+
+label {
+  display: inline-block;
+  float: left;
+  clear: left;
+  width: 30%;
+  text-align: right;
+  padding-right: 10px;
+  padding-top: 7px;
+}

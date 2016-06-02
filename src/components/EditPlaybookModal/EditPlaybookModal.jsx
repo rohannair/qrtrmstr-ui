@@ -37,7 +37,7 @@ class EditPlaybookModal extends Component {
 
     return (
       <div className="openModal modalDialog">
-        <div className="modal">
+        <div className="editPlaybookModal">
           <Card>
             <h3>Edit Playbook: {playbookName} </h3>
             <div>
