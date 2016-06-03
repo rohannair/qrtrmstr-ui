@@ -28,10 +28,9 @@ class Playbook extends Component {
   render() {
     const { id, fields, selected, token } = this.props;
     const PlaybookUploader = (<Uploader updateState={(url) => console.log(url)} ><i className="material-icons">cloud_upload</i></Uploader>);
-
     return (
       <div className="playbook">
-        <Header isAdmin={jwtDecode(token).isAdmin} />
+        <Header isAdmin={false} />
         <PlaybookCards
           fields={ fields }
           onClick={ this._onClick }
@@ -55,7 +54,10 @@ class Playbook extends Component {
 
   _getPlaybook = id => {
     const { token, dispatch } = this.props;
-    return dispatch(getPlaybook(token, id));
+    if(token) {
+      return dispatch(getPlaybook(token, id));
+    }
+    return dispatch(getPlaybook(null, id));
   };
 
 };
