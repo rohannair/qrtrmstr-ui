@@ -59,4 +59,4 @@ export const filePost = (location, token, form) => {
       return response.json();
     })
     .catch(err => console.error(err));
-}
+};
