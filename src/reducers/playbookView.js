@@ -133,6 +133,7 @@ export default function playbookView(state = initialState, action) {
     };
 
   case 'PLAYBOOK_MODIFIED':
+    debugger;
     const { newPlaybook } = action;
     const { list } = state;
     let pos = null;

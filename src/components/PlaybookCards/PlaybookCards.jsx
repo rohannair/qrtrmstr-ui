@@ -43,25 +43,47 @@ const PlaybookCards = (props) => {
 
     case 'bio':
       const Uploader = props.uploader;
+      const { slideKey } = props.findSlideKey(field.slide_number);
+      const submittedPic = props.submittedDoc[slideKey].body.options.profile_image;
+      debugger;
+      const profilePic =
+        <Uploader img={submittedPic}>
+          <i className="material-icons">cloud_upload</i>
+          <span>Upload a profile picture</span>
+        </Uploader>;
       return (
         <Card key={ field.slide_number } footer={<div/>}>
-          <PlaybookBio { ...field } userInfo={ userInfo }>
-            { Uploader }
+          <PlaybookBio
+            { ...field }
+            onSubmit={ props.onSubmit }
+            userInfo={ userInfo }
+            onChange={ props.onChange }
+            submittedDoc={ props.submittedDoc }
+            img={ props.img }
+            findSlideKey={ props.findSlideKey }>
+            { profilePic }
           </PlaybookBio>
         </Card>
       );
 
     case 'equipment':
-      const opts = field.body.options.map(val => {
+      const { submittedDoc, onEquipChange, onSubmit } = props;
+      const opts = field.body.options.map((val, ind) => {
 
         const options = val.opts.map((opt, i) => {
-          return <option value={opt} key={opt}>{val.optNames[i]}</option>;
+          const optValue = JSON.stringify({opts: opt, optNames: val.optNames[i]});
+          return <option value={optValue} key={opt}>{val.optNames[i]}</option>;
         });
 
+        const { slide } = props.findSlideKey(field.slide_number);
+
+        const currentValue = JSON.stringify(slide.body.options[ind].opts.length > 0
+        ? { opts: slide.body.options[ind].opts, optNames: slide.body.options[ind].optNames }
+        : { opts: val.opts[0], optNames: val.optNames[0] });
         return (
           <div key={val.id} className="equipment-choice">
             <span>{val.name + ':'}</span>
-            <select>
+            <select value={ currentValue } onChange={e => onEquipChange(field.slide_number, val.id, (JSON.parse(e.target.value)))}>
             { options }
             </select>
           </div>
@@ -74,6 +96,9 @@ const PlaybookCards = (props) => {
           <p className = {field.body.textAlign || ''}>{field.body.desc}</p>
           <div className="equipment-form">
             { opts }
+          </div>
+          <div className="slideFooter">
+            <Button classes="primary sm equipSub" onClick={onSubmit}>Submit</Button>
           </div>
         </Card>
       );

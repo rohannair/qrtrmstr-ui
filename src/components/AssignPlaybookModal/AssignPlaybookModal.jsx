@@ -81,8 +81,8 @@ class AssignPlaybookModal extends Component {
         <div className="modalFooter">
           <div className="userButtonGroup">
             <ButtonGroup>
+              <Button classes="inverse sm" onClick={closeModal}>Close</Button>
               <Button classes="primary sm" onClick={assignPlaybook}>Update</Button>
-              <Button classes="primary sm" onClick={closeModal}>Close</Button>
             </ButtonGroup>
           </div>
           { feedback }

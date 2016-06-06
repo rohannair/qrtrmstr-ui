@@ -206,6 +206,7 @@ export const createPlaybook = (token, payload) => {
 
 // Modify existing Playbook
 export const modifyPlaybook = (token, payload, id) => {
+  debugger;
   const url = getDomain();
   return dispatch => {
     return fetch(`${url}/api/v1/playbooks/${id}`, {

@@ -16,7 +16,7 @@ import PlaybookCards from '../../components/PlaybookCards';
 import Uploader from '../Uploader';
 
 // Actions
-import { setSelection, submitPlaybook, getPlaybook } from '../../actions/playbookActions';
+import { setSelection, submitPlaybook, getPlaybook, editSubmittedPlaybook } from '../../actions/playbookActions';
 
 class Playbook extends Component {
 
@@ -26,18 +26,24 @@ class Playbook extends Component {
   };
 
   render() {
-    const { id, fields, selected, token } = this.props;
+    const { id, fields, selected, token, img } = this.props;
     const PlaybookUploader = (<Uploader updateState={(url) => console.log(url)} ><i className="material-icons">cloud_upload</i></Uploader>);
 
     return (
       <div className="playbook">
         <Header isAdmin={jwtDecode(token).isAdmin} />
         <PlaybookCards
+          onEquipChange={ this._updateEquipmentSubDoc}
+          findSlideKey={ this._findSlideKey }
+          onChange={ this._updateSubmittedDoc }
+          submittedDoc={ this.props.submittedDoc }
+          onSubmit={ this._onSubmitPlaybook }
           fields={ fields }
           onClick={ this._onClick }
-          onSubmit={ this._onSubmit }
+          // onSubmit={ this._onSubmit }
           selected={ selected }
           uploader={ PlaybookUploader }
+          img={ img }
         />
         <Footer />
       </div>
@@ -49,8 +55,83 @@ class Playbook extends Component {
   };
 
   _onSubmit = () => {
-    const { selected } = this.props;
-    return this.props.dispatch(submitPlaybook(selected));
+    const { selected, dispatch } = this.props;
+    return dispatch(submitPlaybook(selected));
+  };
+
+  _findSlideKey = (slideNum) => {
+    const { submittedDoc } = this.props;
+    let slide = null;
+    let slideKey = null;
+    // Isolate the key element that is changing
+    for (let val in submittedDoc) {
+      if (submittedDoc[val].slide_number === +slideNum) {
+        slide = submittedDoc[val];
+        slideKey = val;
+      };
+    };
+    return { slide, slideKey };
+  };
+
+  _updateSubmittedDoc = (slideNum, key, value) => {
+    const { dispatch, submittedDoc } = this.props;
+    const { slide, slideKey } = this._findSlideKey(slideNum);
+    let updatedSlide = null;
+    if (Object.keys(slide.body.options).indexOf(key) > -1) {
+      updatedSlide = {
+        ...slide,
+        body: {
+          ...slide.body,
+          options: {
+            ...slide.body.options,
+            [key]: value
+          }
+        }
+      };
+    }
+
+    return dispatch(editSubmittedPlaybook(slideKey, updatedSlide));
+  };
+
+  _updateEquipmentSubDoc = (slideNum, id, value) => {
+    const { dispatch, submittedDoc } = this.props;
+
+    const { slide, slideKey } = this._findSlideKey(slideNum);
+
+    let oldItem = null;
+    let oldItemKey = null;
+    for (let val in slide.body.options) {
+      if (slide.body.options[val].id === id) {
+        oldItem = slide.body.options[val];
+        oldItemKey = val;
+      }
+    };
+    const newItem = {
+      ...oldItem,
+      opts: value.opts,
+      optNames: value.optNames
+    };
+    const newEquipOptions = [
+      ...slide.body.options.slice(0, oldItemKey),
+      newItem,
+      ...slide.body.options.slice(+oldItemKey + 1)
+    ];
+
+    const updatedSlide = {
+      ...slide,
+      body: {
+        ...slide.body,
+        options: newEquipOptions
+      }
+    };
+
+    return dispatch(editSubmittedPlaybook(slideKey, updatedSlide));
+  };
+
+  _onSubmitPlaybook = () => {
+    debugger;
+    const { dispatch, submittedDoc, params } = this.props;
+    return dispatch(submitPlaybook({submitted_doc: submittedDoc}, params.playbookID));
   };
 
   _getPlaybook = id => {
@@ -66,7 +147,9 @@ function select(state) {
     id: state.playbook.id,
     token,
     fields: state.playbook.playbook,
-    selected: state.playbook.selected
+    submittedDoc: state.playbook.submittedPlaybook,
+    selected: state.playbook.selected,
+    img: state.uploader.img
   };
 }
 
