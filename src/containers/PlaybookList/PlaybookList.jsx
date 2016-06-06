@@ -7,7 +7,7 @@ import Cookies from 'cookies-js';
 // Styles
 import styles from './playbookList.css';
 
-// Containers
+// Actions
 import {
   getPlaybooks,
   sendPlaybook,
@@ -18,29 +18,34 @@ import {
 import { getUsers } from '../../actions/userActions';
 
 // Components
-import Card from '../../components/Card';
+import Alert from '../../components/Alert';
 import Button from '../../components/Button';
-import SendPlaybookModal from '../../components/SendPlaybookModal';
-import EditPlaybookModal from '../../components/EditPlaybookModal';
+import Card from '../../components/Card';
+
 import AssignPlaybookModal from '../../components/AssignPlaybookModal';
-import MapContainer from '../MapContainer';
+import EditPlaybookModal from '../../components/EditPlaybookModal';
 import PlaybookListItem from '../../components/PlaybookListItem';
+
+// Containers
+import MapContainer from '../MapContainer';
 
 class PlaybookList extends Component {
 
   state = {
     chosenUser: {},
-    chosenPlaybook: {},
-    editedPlaybook: {},
-    assignedPlaybook: {},
     loading: false,
-    newPlaybookName: null,
-    openSendModal: false
+
+    visibleModal: null,
+    modalData: {}
   };
 
   componentWillMount() {
-    this._renderPlaybookList();
-    this._renderUserList();
+    const { token, dispatch } = this.props;
+
+    // Select all playbooks
+    dispatch(getPlaybooks(token));
+    // Select all users
+    dispatch(getUsers(token));
   };
 
   componentWillReceiveProps(nextProps) {
@@ -52,65 +57,48 @@ class PlaybookList extends Component {
   };
 
   render() {
-    const sendPlaybookModal = this.state.openSendModal
-    ? <SendPlaybookModal
-        playbookName={this.state.chosenPlaybook.name}
-        playbookID={this.state.chosenPlaybook.id}
-        users={this.props.users}
-        closeModal={this._closeSendPlaybookModal}
-        sendPlaybook={this._sendPlaybook}
-        onChange={this._changeUserParams}
-        latestUser={this.state.chosenUser}
-        loading={this.state.loading}
-        message={this.props.message}
-        timeOutModal={this._timeOutModal}
-        closeAlert={this._closeAlert}
-      />
-    : null;
+    const { visibleModal } = this.state;
 
-    const editPlaybookModal = Object.keys(this.state.editedPlaybook).length > 0
+    const editPlaybookModal = visibleModal === 'edit'
     ? <EditPlaybookModal
-        playbookName={this.state.editedPlaybook.name}
-        playbookID={this.state.editedPlaybook.id}
-        closeModal={this._closeEditPlaybookModal}
-        savePlaybook={this._savePlaybook}
-        onChange={this._changePlaybookParams}
-        loading={this.state.loading}
-        message={this.props.message}
-        timeOutModal={this._timeOutModal}
-        newPlaybookName={this.state.newPlaybookName}
-        closeAlert={this._closeAlert}
+        closeModal={ this._closeModal }
+        playbook={ this.state.modalData }
+        savePlaybook={ this._savePlaybook }
       />
     : null;
 
-    const assignPlaybookModal = Object.keys(this.state.assignedPlaybook).length > 0
+    const sendPlaybookModal = visibleModal === 'send'
     ? <AssignPlaybookModal
-        playbookName={this.state.assignedPlaybook.name}
-        playbookID={this.state.assignedPlaybook.id}
-        users={this.props.users}
-        closeModal={this._closeAssignPlaybookModal}
-        assignPlaybook={this._assignPlaybook}
-        onChange={this._changeUserParams}
-        latestUser={this.state.chosenUser}
-        loading={this.state.loading}
-        message={this.props.message}
-        timeOutModal={this._timeOutModal}
-        closeAlert={this._closeAlert}
+        closeModal={ this._closeModal }
+        playbook={ this.state.modalData }
+        users={ this.props.users }
+        action={ this._sendPlaybook }
       />
     : null;
-    const items = [...this.props.playbookList].map(val =>
+
+    const assignPlaybookModal = visibleModal === 'assign'
+    ? <AssignPlaybookModal
+        closeModal={ this._closeModal }
+        playbook={ this.state.modalData }
+        users={ this.props.users }
+        action={ this._savePlaybook }
+      />
+    : null;
+
+    const items = [...this.props.playbookList].map(val => (
       <PlaybookListItem
         key={val.id}
         {...val}
-        users={this.props.users}
-        sendPlaybookToAssignedUser={this._sendPlaybookToAssignedUser}
-        openSendModal={ this._showSendModal }
-        onEditShowModal={ this._selectPlaybookForEditing }
-        duplicate={ this._duplicatePlaybook }
-        onAssignShowModal={ this._selectPlaybookForAssigning }
-        onSendShowModal={ this._selectPlaybookForSending }
+        users={ this.props.users }
+        sendPlaybook={ this._sendPlaybookToAssignedUser }
+
+        duplicatePlaybook={ this._duplicatePlaybook }
+
+        showEditModal={ this._showEditModal }
+        showAssignModal={ this._showAssignModal }
+        showSendModal={ this._showSendModal }
       />
-    );
+    ));
 
     return (
       <div className="playbookList">
@@ -132,96 +120,61 @@ class PlaybookList extends Component {
     );
   };
 
+  _closeModal = () => this.setState({ visibleModal: null, modalData: {} });
+  _openModal = (visibleModal, playbook, state = null) => {
+    this.setState({
+      visibleModal,
+      modalData: {
+        name: playbook.name,
+        id: playbook.id
+      },
+      ...state });
+  };
+
   _showSendModal = (val) => {
-    const chosenPlaybook = ([...this.props.playbookList].filter(item => item.id === val.id))[0];
+    const chosenPlaybook = [...this.props.playbookList]
+      .filter(item => item.id === val.id)[0];
 
-    this.setState({
-      openSendModal: true,
-      chosenPlaybook
-    });
+    this._openModal('send', chosenPlaybook);
   };
 
-  _selectPlaybookForEditing = (val) => {
-    const editedPlaybook = ([...this.props.playbookList].filter(item => item.id === val.id))[0];
+  _showEditModal = (val) => {
+    const editedPlaybook = [...this.props.playbookList]
+      .filter(item => item.id === val.id)[0];
 
-    this.setState({
-      editedPlaybook,
-      newPlaybookName: ''
-    });
+    this._openModal('edit', editedPlaybook);
   };
 
-  _selectPlaybookForAssigning = (val) => {
-    const assignedPlaybook = ([...this.props.playbookList].filter(item => item.id === val.id))[0];
-    this.setState({
-      assignedPlaybook
-    });
-  };
+  _showAssignModal = (val) => {
+    const assignedPlaybook = [...this.props.playbookList]
+      .filter(item => item.id === val.id)[0];
 
-  _renderPlaybookList = () => {
-    const { token, dispatch } = this.props;
-    return dispatch(getPlaybooks(token));
-  };
-
-  _renderUserList = () => {
-    const { token, dispatch } = this.props;
-    return dispatch(getUsers(token));
-  };
-
-  _closeSendPlaybookModal = () => {
-    const { dispatch } = this.props;
-
-    this.setState({
-      chosenPlaybook: {},
-      openSendModal: false
-    });
-
-    dispatch(updateMessage(null));
-  };
-
-  _closeEditPlaybookModal = () => {
-    const { dispatch } = this.props;
-    if (this.state.loading === false) {
-      this.setState({
-        editedPlaybook: {}
-      });
-      dispatch(updateMessage(null));
-    }
+    this._openModal('assign', assignedPlaybook);
   };
 
   _closeAlert = () => {
     const { dispatch } = this.props;
     dispatch(updateMessage(null));
-  }
-
-
-  _closeAssignPlaybookModal = () => {
-    const { dispatch } = this.props;
-    this.setState({
-      assignedPlaybook: {}
-    });
-    dispatch(updateMessage(null));
   };
 
-  _timeOutModal = (val) => {
-    val === 'edit' ? setTimeout(() => this._closeEditPlaybookModal(), 2000) : null;
-    val === 'send' ? setTimeout(() => this._closeSendPlaybookModal(), 2000) : null;
-  };
-
-  _sendPlaybook = () => {
+  _sendPlaybook = (id, { selected }) => {
     const { token, dispatch } = this.props;
-    const { chosenUser } = this.state;
-    this.setState({
-      loading: true
-    });
 
-    return dispatch(sendPlaybook(token, chosenUser));
+    const welcomeEmailParams = {
+      userId: selected.id,
+      firstName: selected.first_name,
+      lastName: selected.last_name,
+      email: selected.email,
+      playbookId: id,
+      emailTemplate: 'welcomeEmail'
+    };
+
+    return dispatch(sendPlaybook(token, welcomeEmailParams));
   };
 
-  _savePlaybook = () => {
+  _savePlaybook = (id, payload) => {
     const { token, dispatch } = this.props;
-    const { newPlaybookName, editedPlaybook } = this.state;
-
-    return dispatch(modifyPlaybook(token, {name: newPlaybookName}, editedPlaybook.id));
+    return dispatch(modifyPlaybook(token, payload, id));
   };
 
   _duplicatePlaybook = (id) => {
@@ -229,22 +182,10 @@ class PlaybookList extends Component {
     return dispatch(duplicatePlaybook(token, id));
   };
 
-  _assignPlaybook = () => {
-    const { token, dispatch } = this.props;
-    const { chosenUser } = this.state;
-    return dispatch(assignPlaybook(token, chosenUser.playbookId, chosenUser.userId));
-  }
-
-  _changePlaybookParams = (value) => {
-    this.setState({
-      newPlaybookName: value
-    });
-  };
-
   _sendPlaybookToAssignedUser = (value) => {
     this._changeUserParams(value);
     this._sendPlaybook();
-  }
+  };
 
   _changeUserParams = (value) => {
     this.setState({
