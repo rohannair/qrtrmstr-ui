@@ -88,7 +88,7 @@ export const sendPlaybook = (token, payload) => {
         return Promise.reject(json);
       }
       console.log(json);
-      return dispatch(playbookModified(json));
+      return dispatch(playbookModified(json.result));
     });
   };
 };
@@ -110,7 +110,7 @@ export const duplicatePlaybook = (token, id) => {
       return Promise.reject(json);
     }
 
-    return dispatch(addNewPlaybook(json));
+    return dispatch(addNewPlaybook(json.result));
   });
 };
 
@@ -131,7 +131,7 @@ export const assignPlaybook = (token, id, userId) => {
       return Promise.reject(json);
     }
 
-    return dispatch(playbookModified(json));
+    return dispatch(playbookModified(json.result));
   });
 };
 
@@ -153,7 +153,7 @@ export const getPlaybooks = token => {
         return Promise.reject(json);
       }
 
-      return dispatch(playbooksRetrieved(json));
+      return dispatch(playbooksRetrieved(json.result));
     });
   };
 };
@@ -175,7 +175,7 @@ export const getSinglePlaybook = (token, id) => {
       if (!response.ok) {
         return Promise.reject(json);
       }
-      return dispatch(singlePlaybookRetrieved(json));
+      return dispatch(singlePlaybookRetrieved(json.result));
     });
   };
 };
@@ -199,7 +199,7 @@ export const createPlaybook = (token, payload) => {
         return Promise.reject(json);
       }
 
-      return console.log(json);
+      return console.log(json.result);
     });
   };
 };
@@ -222,7 +222,7 @@ export const modifyPlaybook = (token, payload, id) => {
       if (!response.ok) {
         return Promise.reject(json);
       }
-      return dispatch(playbookModified(json));
+      return dispatch(playbookModified(json.result));
     });
   };
 };

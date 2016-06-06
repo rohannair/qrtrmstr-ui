@@ -38,12 +38,12 @@ export const newUserErrors = (error_msg) => {
 // Get All Users
 export const getUsers = token =>
   dispatch => get(LOCATION_ROOT + 'users', token)
-  .then(json => dispatch(usersRetrieved(json)));
+  .then(json => dispatch(usersRetrieved(json.result)));
 
 // Single User Call
 export const getSingleUser = (token, id) =>
   dispatch => get(`${LOCATION_ROOT}users/${id}`, token)
-  .then(json => dispatch(usersRetrieved(json)));
+  .then(json => dispatch(usersRetrieved(json.result)));
 
 // Create new User
 export const createUser = (token, payload) =>
@@ -61,4 +61,4 @@ export const modifyUser = (token, payload) =>
 // Get All Roles
 export const getRoles = token =>
   dispatch => get(LOCATION_ROOT + 'roles', token)
-  .then(json => dispatch(rolesRetrieved(json)));
+  .then(json => dispatch(rolesRetrieved(json.result)));

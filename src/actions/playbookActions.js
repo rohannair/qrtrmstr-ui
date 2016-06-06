@@ -17,7 +17,7 @@ export const submitPlaybook = (choices) =>
 
 export const getPlaybook = (token = '', id) =>
   dispatch => get(`${LOCATION_ROOT}playbooks/${id}`, token)
-  .then(playbook => dispatch(playbookRetrieved(playbook)));
+  .then(json => dispatch(playbookRetrieved(json.result)));
 
 function playbookRetrieved(playbook = {}) {
   return {
