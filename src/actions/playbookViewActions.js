@@ -26,30 +26,16 @@ export const updatePlaybookState = (slide_number, data) => {
   };
 };
 
-function addNewPlaybook(playbook = {}) {
+function addNewPlaybook(newPlaybook = {}) {
   return {
     type: 'ADD_NEW_PLAYBOOK',
-    playbook
+    newPlaybook
   };
 }
 
-function addNewPlaybook(playbook = {}) {
+export const updateMessage = (message) => {
   return {
-    type: 'ADD_NEW_PLAYBOOK',
-    playbook
-  };
-}
-
-export const playbookSent = (message) => {
-  return {
-    type: 'PLAYBOOK_SENT',
-    message
-  };
-};
-
-export const playbookAssigned = (message) => {
-  return {
-    type: 'PLAYBOOK_ASSIGNED',
+    type: 'UPDATE_MESSAGE',
     message
   };
 };

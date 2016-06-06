@@ -13,20 +13,20 @@ app.use(require('morgan')('dev'));
 
 app.use(webpackDevMiddleware(compiler, {
   publicPath: config.output.publicPath,
-  noInfo: false,
-  stats: {
-    colors: true,
-  },
+  noInfo: true
 }));
 
 app.use(webpackHotMiddleware(compiler));
 
 app.get('*', function(req, res) {
-  console.log('Path', path.join(__dirname, 'index.html'));
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.listen(8080, 'localhost', function(err) {
-  if (err) console.log('Error', err);
+  if (err) {
+    console.log('Error', err);
+    return;
+  }
+
   console.log('App served at localhost:8080. Remember to use a subdomain!');
 });

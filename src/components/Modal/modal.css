@@ -31,8 +31,9 @@
 
   &.md {
     max-width: 570px;
-    margin: 10% auto;
+    margin: auto;
     width: 65%;
+    margin-top: 10%;
   }
 
   &.sm {

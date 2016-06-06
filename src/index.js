@@ -13,6 +13,8 @@ import reducers from './reducers';
 // Create store
 import configure from './store';
 const store = configure(reducers);
+
+// Routes
 import configureRoutes from './routes';
 const routes = configureRoutes(store);
 
