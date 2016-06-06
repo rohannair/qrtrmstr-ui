@@ -26,9 +26,10 @@ export default function playbookView(state = initialState, action) {
   case 'ADD_NEW_PLAYBOOK':
     return {
       ...state,
+      message: action.newPlaybook.message,
       list: [
         ...state.list,
-        action.playbook
+        action.newPlaybook.result
       ]
     };
 
@@ -120,13 +121,7 @@ export default function playbookView(state = initialState, action) {
       openCards: [...openCards].concat(action.cardID)
     };
 
-  case 'PLAYBOOK_SENT':
-    return {
-      ...state,
-      message: action.message
-    };
-
-  case 'PLAYBOOK_ASSIGNED':
+  case 'UPDATE_MESSAGE':
     return {
       ...state,
       message: action.message
