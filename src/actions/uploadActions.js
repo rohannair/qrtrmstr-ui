@@ -5,7 +5,8 @@ const getDomain = utils.getDomain;
 const LOCATION_ROOT = getDomain() + API_ROOT;
 
 // Users Retrieved action
-function uploadComplete(data) {
+export function uploadComplete(data) {
+  debugger;
   return {
     type: 'UPLOAD_SUCCESSFUL',
     data

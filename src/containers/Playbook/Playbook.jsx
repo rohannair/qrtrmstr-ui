@@ -17,6 +17,7 @@ import Uploader from '../Uploader';
 
 // Actions
 import { setSelection, submitPlaybook, getPlaybook, editSubmittedPlaybook } from '../../actions/playbookActions';
+import { uploadComplete } from '../../actions/uploadActions';
 
 class Playbook extends Component {
 
@@ -32,6 +33,7 @@ class Playbook extends Component {
       <div className="playbook">
         <Header isAdmin={false} />
         <PlaybookCards
+          updateImage={ this._updateImage }
           onEquipChange={ this._updateEquipmentSubDoc}
           findSlideKey={ this._findSlideKey }
           onChange={ this._updateSubmittedDoc }
@@ -53,9 +55,16 @@ class Playbook extends Component {
     return this.props.dispatch(setSelection(id));
   };
 
-  _onSubmit = () => {
+  _onSubmit = (key) => {
     const { selected, dispatch } = this.props;
     return dispatch(submitPlaybook(selected));
+    //CHANGE SUBMITTED TO TRUE
+  };
+
+  _updateImage = (image) => {
+    debugger;
+    const { dispatch } = this.props;
+    return dispatch(uploadComplete(image));
   };
 
   _findSlideKey = (slideNum) => {

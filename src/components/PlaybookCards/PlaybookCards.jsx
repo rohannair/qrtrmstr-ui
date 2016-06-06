@@ -45,23 +45,18 @@ const PlaybookCards = (props) => {
       const Uploader = props.uploader;
       const { slideKey } = props.findSlideKey(field.slide_number);
       const submittedPic = props.submittedDoc[slideKey].body.options.profile_image;
-      debugger;
-      const profilePic =
-        <Uploader img={submittedPic}>
-          <i className="material-icons">cloud_upload</i>
-          <span>Upload a profile picture</span>
-        </Uploader>;
       return (
         <Card key={ field.slide_number } footer={<div/>}>
           <PlaybookBio
             { ...field }
+            updateImage={ props.updateImage}
             onSubmit={ props.onSubmit }
             userInfo={ userInfo }
             onChange={ props.onChange }
             submittedDoc={ props.submittedDoc }
             img={ props.img }
             findSlideKey={ props.findSlideKey }>
-            { profilePic }
+            { Uploader }
           </PlaybookBio>
         </Card>
       );
@@ -75,15 +70,16 @@ const PlaybookCards = (props) => {
           return <option value={optValue} key={opt}>{val.optNames[i]}</option>;
         });
 
-        const { slide } = props.findSlideKey(field.slide_number);
+        const { slide, slideKey } = props.findSlideKey(field.slide_number);
 
         const currentValue = JSON.stringify(slide.body.options[ind].opts.length > 0
         ? { opts: slide.body.options[ind].opts, optNames: slide.body.options[ind].optNames }
-        : { opts: val.opts[0], optNames: val.optNames[0] });
+        : '');
         return (
           <div key={val.id} className="equipment-choice">
             <span>{val.name + ':'}</span>
             <select value={ currentValue } onChange={e => onEquipChange(field.slide_number, val.id, (JSON.parse(e.target.value)))}>
+            <option value=''></option>
             { options }
             </select>
           </div>
