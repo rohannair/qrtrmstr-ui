@@ -15,7 +15,15 @@ import Modal from '../Modal';
 class AssignPlaybookModal extends Component {
 
   state = {
-    selected: this.props.playbook.assigned || this.props.users[0] || {}
+    selected: this.props.users[0] || {}
+  }
+
+  componentDidMount() {
+    if (this.props.playbook.assigned) {
+      this.setState({
+        selected: this.props.users.filter(val => val.id === this.props.playbook.assigned)[0]
+      });
+    }
   }
 
   render() {
