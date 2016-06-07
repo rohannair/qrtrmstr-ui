@@ -3,6 +3,9 @@ import classnames from 'classnames';
 import styles from './playbookCard.css';
 import moment from 'moment';
 
+// Containers
+import Uploader from '../../containers/Uploader';
+
 // Components
 import Button from '../../components/Button';
 import Card from '../../components/Card';
@@ -42,21 +45,25 @@ const PlaybookCards = (props) => {
       />);
 
     case 'bio':
-      const Uploader = props.uploader;
       const { slideKey } = props.findSlideKey(field.slide_number);
       const submittedPic = props.submittedDoc[slideKey].body.options.profile_image;
+      const savedPic = submittedPic && submittedPic.url ? submittedPic : null;
+      const ImageUploader = (<Uploader updateState={ props.onChange } savedImg={ savedPic } slideKey={ slideKey } ><i className="material-icons">cloud_upload</i></Uploader>);
+      // const Uploader = <Uploader updateSubDoc={ props.onChange } savedImg={ savedPic } slideKey={ slideKey }></Uploader>;
+
       return (
         <Card key={ field.slide_number } footer={<div/>}>
           <PlaybookBio
             { ...field }
             img={ props.img }
+            savedPic={ savedPic }
             updateImage={ props.updateImage}
             onSubmit={ props.onSubmit }
             userInfo={ userInfo }
             onChange={ props.onChange }
             submittedDoc={ props.submittedDoc }
             findSlideKey={ props.findSlideKey }>
-            { Uploader }
+            { ImageUploader }
           </PlaybookBio>
         </Card>
       );

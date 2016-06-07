@@ -28,7 +28,7 @@ class Playbook extends Component {
 
   render() {
     const { id, fields, selected, token, img } = this.props;
-    const PlaybookUploader = (<Uploader updateState={(url) => console.log(url)} ><i className="material-icons">cloud_upload</i></Uploader>);
+    // const PlaybookUploader = (<Uploader updateState={(url) => console.log(url)} ><i className="material-icons">cloud_upload</i></Uploader>);
     return (
       <div className="playbook">
         <Header isAdmin={false} />
@@ -42,7 +42,6 @@ class Playbook extends Component {
           fields={ fields }
           onClick={ this._onClick }
           selected={ selected }
-          uploader={ PlaybookUploader }
           img={ img }
         />
         <Footer />
@@ -55,7 +54,6 @@ class Playbook extends Component {
   };
 
   _updateImage = (image) => {
-    debugger;
     const { dispatch } = this.props;
     return dispatch(uploadComplete(image));
   };

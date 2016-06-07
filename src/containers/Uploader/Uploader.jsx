@@ -8,7 +8,7 @@ import Button from '../../components/Button';
 import FormData from 'form-data';
 
 // Actions
-import { postUpload, setLoading, deleteImage } from '../../actions/uploadActions';
+import { postUpload, setLoading, deleteImage, uploadComplete } from '../../actions/uploadActions';
 
 // Img
 import loadingGif from '../../assets/loading.gif';
@@ -19,13 +19,17 @@ class Uploader extends Component {
     updateState: PropTypes.func.isRequired
   }
 
-  componentDidUpdate(lastParams) {
-    if (this.props.img && lastParams.img !== this.props.img) {
-      this.props.updateState(this.props.img);
+  componentWillMount() {
+    if (this.props.savedImg.url) {
+      this._addImage(this.props.savedImg);
     }
+  }
 
-    if (!this.props.img && lastParams.img !== this.props.img) {
-      this.props.updateState(null);
+  componentDidUpdate(lastParams) {
+    if (this.props.img !== this.props.savedImg) {
+      if (lastParams.img !== this.props.img) {
+        this.props.updateState(this.props.slideKey, 'profile_image', this.props.img);
+      }
     }
   }
 
@@ -50,6 +54,10 @@ class Uploader extends Component {
     form.append('file', uploadedFile);
 
     dispatch(postUpload(token, form));
+  };
+
+  _addImage = (image) => {
+    this.props.dispatch(uploadComplete(image));
   };
 
   _deleteImage = (e) => {

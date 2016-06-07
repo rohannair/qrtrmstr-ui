@@ -19,7 +19,6 @@ export function setLoading() {
 }
 
 export function deleteImage() {
-  debugger;
   return {
     type: 'DELETE_IMAGE'
   };
