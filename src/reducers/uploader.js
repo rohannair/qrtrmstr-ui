@@ -13,6 +13,7 @@ export default function uploader(state = initialState, action) {
     };
 
   case 'DELETE_IMAGE':
+    debugger;
     return {
       ...state,
       img: null

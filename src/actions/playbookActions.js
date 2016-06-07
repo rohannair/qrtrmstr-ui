@@ -18,11 +18,6 @@ export const playbookSubmitted = playbook => {
   };
 };
 
-
-// export const submitPlaybook = (choices) =>
-//   dispatch => post(`${LOCATION_ROOT}submitPlaybook`, { id: 3, playbook_results: choices })
-//   .then(json => ({ type: 'PLAYBOOK_SUBMITTED' }));
-
 export const getPlaybook = (token = '', id) =>
   dispatch => get(`${LOCATION_ROOT}playbooks/${id}`, token)
   .then(playbook => dispatch(playbookRetrieved(playbook)));

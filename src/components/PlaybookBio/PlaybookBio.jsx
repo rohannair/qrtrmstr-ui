@@ -17,7 +17,9 @@ class PlaybookBio extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
+    debugger;
     if (nextProps.img !== this.props.img) {
+      debugger;
       this.props.onChange(this.props.slide_number, 'profile_image', nextProps.img);
     };
   }

@@ -49,12 +49,12 @@ const PlaybookCards = (props) => {
         <Card key={ field.slide_number } footer={<div/>}>
           <PlaybookBio
             { ...field }
+            img={ props.img }
             updateImage={ props.updateImage}
             onSubmit={ props.onSubmit }
             userInfo={ userInfo }
             onChange={ props.onChange }
             submittedDoc={ props.submittedDoc }
-            img={ props.img }
             findSlideKey={ props.findSlideKey }>
             { Uploader }
           </PlaybookBio>

@@ -55,6 +55,7 @@ class Playbook extends Component {
   };
 
   _updateImage = (image) => {
+    debugger;
     const { dispatch } = this.props;
     return dispatch(uploadComplete(image));
   };
