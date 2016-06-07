@@ -6,7 +6,6 @@ const LOCATION_ROOT = getDomain() + API_ROOT;
 
 // Users Retrieved action
 export function uploadComplete(data) {
-  debugger;
   return {
     type: 'UPLOAD_SUCCESSFUL',
     data

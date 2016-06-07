@@ -6,7 +6,6 @@ const initialState = {
 export default function uploader(state = initialState, action) {
   switch (action.type) {
   case 'UPLOAD_SUCCESSFUL':
-    debugger;
     return {
       ...state,
       img: action.data,

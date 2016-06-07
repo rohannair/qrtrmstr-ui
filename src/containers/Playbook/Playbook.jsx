@@ -41,7 +41,6 @@ class Playbook extends Component {
           onSubmit={ this._onSubmitPlaybook }
           fields={ fields }
           onClick={ this._onClick }
-          // onSubmit={ this._onSubmit }
           selected={ selected }
           uploader={ PlaybookUploader }
           img={ img }
@@ -55,14 +54,7 @@ class Playbook extends Component {
     return this.props.dispatch(setSelection(id));
   };
 
-  _onSubmit = (key) => {
-    const { selected, dispatch } = this.props;
-    return dispatch(submitPlaybook(selected));
-    //CHANGE SUBMITTED TO TRUE
-  };
-
   _updateImage = (image) => {
-    debugger;
     const { dispatch } = this.props;
     return dispatch(uploadComplete(image));
   };
@@ -88,6 +80,7 @@ class Playbook extends Component {
     if (Object.keys(slide.body.options).indexOf(key) > -1) {
       updatedSlide = {
         ...slide,
+        submitted: true,
         body: {
           ...slide.body,
           options: {
@@ -127,6 +120,7 @@ class Playbook extends Component {
 
     const updatedSlide = {
       ...slide,
+      submitted: true,
       body: {
         ...slide.body,
         options: newEquipOptions
@@ -137,7 +131,6 @@ class Playbook extends Component {
   };
 
   _onSubmitPlaybook = () => {
-    debugger;
     const { dispatch, submittedDoc, params } = this.props;
     return dispatch(submitPlaybook({submitted_doc: submittedDoc}, params.playbookID));
   };

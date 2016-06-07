@@ -7,7 +7,6 @@ import Uploader from '../../containers/Uploader';
 class PlaybookBio extends Component {
 
   componentWillMount() {
-    debugger;
     if (this.props.submittedDoc) {
       const { slideKey } = this.props.findSlideKey(this.props.slide_number);
       const savedPic = this.props.submittedDoc[slideKey].body.options.profile_image;
