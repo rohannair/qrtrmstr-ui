@@ -12,9 +12,6 @@ import Footer from '../../components/Global/Footer';
 import Header from '../../components/Global/Header';
 import PlaybookCards from '../../components/PlaybookCards';
 
-// Containers
-import Uploader from '../Uploader';
-
 // Actions
 import { setSelection, submitPlaybook, getPlaybook, editSubmittedPlaybook } from '../../actions/playbookActions';
 import { uploadComplete } from '../../actions/uploadActions';
@@ -28,7 +25,6 @@ class Playbook extends Component {
 
   render() {
     const { id, fields, selected, token, img } = this.props;
-    // const PlaybookUploader = (<Uploader updateState={(url) => console.log(url)} ><i className="material-icons">cloud_upload</i></Uploader>);
     return (
       <div className="playbook">
         <Header isAdmin={false} />
