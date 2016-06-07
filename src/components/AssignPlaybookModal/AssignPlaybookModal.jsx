@@ -22,7 +22,8 @@ class AssignPlaybookModal extends Component {
     const {
       playbook,
       closeModal,
-      users
+      users,
+      title
     } = this.props;
     const { selected } = this.state;
 
@@ -33,7 +34,7 @@ class AssignPlaybookModal extends Component {
 
     return (
       <Modal onClose={closeModal} md>
-        <h3>Assign Playbook: {playbook.name} </h3>
+        <h3>{`${title}: ${playbook.name}`}</h3>
 
         <div className="formField">
           <label>Assign to user: </label>
