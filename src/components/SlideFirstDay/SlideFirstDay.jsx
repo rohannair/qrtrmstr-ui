@@ -23,7 +23,7 @@ class SlideFirstDay extends Component {
     pos: this.props.position || {lat: 43.6446447, lng: -79.39499869999997},
     place: this.props.place || {name: 'Lighthouse Labs', formatted_address: '46 Spadina Avenue, Toronto, ON, Canada'},
     startTime: moment(this.props.body.agenda[(this.props.body.agenda.length - 1)].finishTime).format('H:mm'),
-    finishTime: '',
+    finishTime: moment(this.props.body.agenda[(this.props.body.agenda.length - 1)].finishTime).add(1, 'hour').format('H:mm'),
     errorMessage: null
   };
 
@@ -265,7 +265,7 @@ class SlideFirstDay extends Component {
       ...this.state,
       desc: '',
       startTime: finishTime,
-      finishTime: '',
+      finishTime: moment(date + ' ' + finishTime).add(1, 'hour').format('H:mm'),
       errorMessage: null
     });
 
