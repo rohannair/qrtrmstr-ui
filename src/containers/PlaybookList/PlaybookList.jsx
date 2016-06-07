@@ -85,8 +85,9 @@ class PlaybookList extends Component {
       />
     : null;
 
-    const items = [...this.props.playbookList].map(val => (
-      <PlaybookListItem
+    const items = [...this.props.playbookList].map(val => {
+
+      return (<PlaybookListItem
         key={val.id}
         {...val}
         users={ this.props.users }
@@ -98,7 +99,7 @@ class PlaybookList extends Component {
         showAssignModal={ this._showAssignModal }
         showSendModal={ this._showSendModal }
       />
-    ));
+    )});
 
     return (
       <div className="playbookList">
@@ -126,7 +127,8 @@ class PlaybookList extends Component {
       visibleModal,
       modalData: {
         name: playbook.name,
-        id: playbook.id
+        id: playbook.id,
+        assigned: playbook.assigned || null
       },
       ...state });
   };

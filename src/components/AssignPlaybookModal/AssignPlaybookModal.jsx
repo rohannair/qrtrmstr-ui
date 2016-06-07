@@ -15,7 +15,7 @@ import Modal from '../Modal';
 class AssignPlaybookModal extends Component {
 
   state = {
-    selected: this.props.users[0] || {}
+    selected: this.props.playbook.assigned || this.props.users[0] || {}
   }
 
   render() {
@@ -37,7 +37,7 @@ class AssignPlaybookModal extends Component {
 
         <div className="formField">
           <label>Assign to user: </label>
-            <select className="inputIcon" value={ selected.id } onChange={ this._onChange }>
+            <select className="inputIcon" value={ selected.id || selected } onChange={ this._onChange }>
               { opts }
             </select>
         </div>
