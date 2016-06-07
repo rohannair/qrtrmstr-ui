@@ -164,7 +164,7 @@ class PlaybookList extends Component {
       userId: selected.id,
       firstName: selected.first_name,
       lastName: selected.last_name,
-      email: selected.email,
+      email: selected.username,
       playbookId: id,
       emailTemplate: 'welcomeEmail'
     };
