@@ -22,8 +22,8 @@ class SlideFirstDay extends Component {
     mapDesc: this.props.body.map || '',
     pos: this.props.position || {lat: 43.6446447, lng: -79.39499869999997},
     place: this.props.place || {name: 'Lighthouse Labs', formatted_address: '46 Spadina Avenue, Toronto, ON, Canada'},
-    startTime: this.props.startTime,
-    finishTime: this.props.finishTime,
+    startTime: moment(this.props.body.agenda[(this.props.body.agenda.length - 1)].finishTime).format('H:mm'),
+    finishTime: '',
     errorMessage: null
   };
 
@@ -38,7 +38,7 @@ class SlideFirstDay extends Component {
 
     const items = agenda
       ? agenda
-          .sort((a, b) => { return a.finishTime-b.startTime } )
+          .sort((a, b) => { return a.startTime-b.startTime } )
           .map((val, i) => {
             return (
               <div className="agenda-item" key={`agendaItem-${i}`}>
@@ -169,11 +169,11 @@ class SlideFirstDay extends Component {
 
           <div className="agenda-footer">
             <div className="timeInput">
-              <input name="startTime" value={ startTime } type="time" max='24:00' defaultValue='00:00' onChange={ this._inputChange } />
+              <input name="startTime" value={ startTime } type="time" max='24:00' onChange={ this._inputChange } />
             </div>
             <p>to</p>
             <div className="timeInput">
-              <input name="finishTime" value={ finishTime } type="time" max='24:00' defaultValue='00:00' onChange={ this._inputChange } />
+              <input name="finishTime" value={ finishTime } type="time" max='24:00' onChange={ this._inputChange } />
             </div>
             <div className="desc">
               <input name="desc" value={ desc } onChange={ this._inputChange } />
@@ -261,21 +261,11 @@ class SlideFirstDay extends Component {
       return;
     }
 
-    // Validation to check that the new item does not overlap any current agenda items
-    for (let item in agenda) {
-      if (moment.range(moment(date + ' ' + startTime), moment(date + ' ' + finishTime)).overlaps(moment.range(agenda[item].startTime, agenda[item].finishTime))) {
-        this.setState({
-          errorMessage: 'You all ready have something scheduled during that time period'
-        });
-        return;
-      }
-    }
-
     this.setState({
       ...this.state,
       desc: '',
-      startTime: '12:00',
-      finishTime: '12:30',
+      startTime: finishTime,
+      finishTime: '',
       errorMessage: null
     });
 
