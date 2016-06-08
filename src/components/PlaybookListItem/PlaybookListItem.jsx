@@ -21,8 +21,14 @@ class PlaybookListItem extends Component {
     );
 
     const currentStatusDisplay = this.props.current_status === 'in progress'
-    ? `${this.props.current_status} (${this.props.percent_submitted})`
+    ? `${this.props.current_status} - ${this.props.percent_submitted * 100}% `
     : this.props.current_status;
+
+    const viewSubPlaybookBtn = this.props.current_status === 'in progress'
+    ? <Link to={`/dashboard/playbooks/results/${this.props.id}`}>
+        <i className="fa fa-eye"></i>
+      </Link>
+    : null;
 
     const editPlaybookButton = this.props.current_status === 'draft' ?
       <Link to={`/dashboard/playbooks/edit/${this.props.id}`}>
@@ -58,11 +64,9 @@ class PlaybookListItem extends Component {
           { assignedTo }
         </div>
 
-        <div className="cell collaborators">
-        </div>
-
         <div className="cell status">
           { currentStatusDisplay }
+          { viewSubPlaybookBtn }
         </div>
 
         <div className="cell actions">

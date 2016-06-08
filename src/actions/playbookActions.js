@@ -11,13 +11,65 @@ export const setSelection = id => {
   };
 };
 
-export const submitPlaybook = (choices) =>
-  dispatch => post(`${LOCATION_ROOT}submitPlaybook`, { id: 3, playbook_results: choices })
-  .then(json => ({ type: 'PLAYBOOK_SUBMITTED' }));
+export const playbookSubmitted = playbook => {
+  return {
+    type: 'PLAYBOOK_SUBMITTED',
+    playbook
+  };
+};
 
 export const getPlaybook = (token = '', id) =>
   dispatch => get(`${LOCATION_ROOT}playbooks/${id}`, token)
   .then(playbook => dispatch(playbookRetrieved(playbook)));
+
+export const submitPlaybook = (data, id) => {
+  return dispatch => {
+    return fetch(`${LOCATION_ROOT}playbooks/submit/${id}`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json().then(json => ({json, response})))
+    .then(({json, response}) => {
+      if (!response.ok) {
+        return Promise.reject(json);
+      }
+      return dispatch(playbookSubmitted(json.result));
+    });
+  };
+};
+
+export const updatePlaybookStatus = (data, id) => {
+  return dispatch => {
+    return fetch(`${LOCATION_ROOT}playbooks/statusUpdate/${id}`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json().then(json => ({json, response})))
+    .then(({json, response}) => {
+      if (!response.ok) {
+        return Promise.reject(json);
+      }
+      return null;
+     // return dispatch(playbookSubmitted(json.result));
+    });
+  };
+};
+
+export const editSubmittedPlaybook = (slideKey, data) => {
+  return {
+    type: 'EDIT_SUBMITTED_PLAYBOOK',
+    slideKey,
+    data
+  };
+};
 
 function playbookRetrieved(playbook = {}) {
   return {

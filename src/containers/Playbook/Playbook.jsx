@@ -12,31 +12,34 @@ import Footer from '../../components/Global/Footer';
 import Header from '../../components/Global/Header';
 import PlaybookCards from '../../components/PlaybookCards';
 
-// Containers
-import Uploader from '../Uploader';
-
 // Actions
-import { setSelection, submitPlaybook, getPlaybook } from '../../actions/playbookActions';
+import { setSelection, submitPlaybook, getPlaybook, editSubmittedPlaybook, updatePlaybookStatus } from '../../actions/playbookActions';
+import { uploadComplete } from '../../actions/uploadActions';
 
 class Playbook extends Component {
 
   componentWillMount() {
     const id = this.props.routeParams.playbookID || this.props.location.query.playbookId;
     this._getPlaybook(id);
+    if (this.props.location.query.from_email) this._setInProgress(id);
   };
 
   render() {
-    const { id, fields, selected, token } = this.props;
-    const PlaybookUploader = (<Uploader updateState={(url) => console.log(url)} ><i className="material-icons">cloud_upload</i></Uploader>);
+    const { id, fields, selected, token, img } = this.props;
     return (
       <div className="playbook">
         <Header isAdmin={false} />
         <PlaybookCards
+          onEquipChange={ this._updateEquipmentSubDoc}
+          findSlideKey={ this._findSlideKey }
+          onChange={ this._updateSubmittedDoc }
+          submittedDoc={ this.props.submittedDoc }
+          onSubmit={ this._onSubmitPlaybook }
           fields={ fields }
           onClick={ this._onClick }
-          onSubmit={ this._onSubmit }
           selected={ selected }
-          uploader={ PlaybookUploader }
+          img={ img }
+          uploaderFn={ this._updateSubmittedDoc }
         />
         <Footer />
       </div>
@@ -47,17 +50,92 @@ class Playbook extends Component {
     return this.props.dispatch(setSelection(id));
   };
 
-  _onSubmit = () => {
-    const { selected } = this.props;
-    return this.props.dispatch(submitPlaybook(selected));
+  _findSlideKey = (slideNum) => {
+    const { submittedDoc } = this.props;
+    let slide = null;
+    let slideKey = null;
+    // Isolate the key element that is changing
+    for (let val in submittedDoc) {
+      if (submittedDoc[val].slide_number === +slideNum) {
+        slide = submittedDoc[val];
+        slideKey = val;
+      };
+    };
+    return { slide, slideKey };
+  };
+
+  _updateSubmittedDoc = (slideNum, key, value) => {
+    const { dispatch, submittedDoc } = this.props;
+    const { slide, slideKey } = this._findSlideKey(slideNum);
+    let updatedSlide = null;
+    if (Object.keys(slide.body.options).indexOf(key) > -1) {
+      updatedSlide = {
+        ...slide,
+        submitted: true,
+        body: {
+          ...slide.body,
+          options: {
+            ...slide.body.options,
+            [key]: value
+          }
+        }
+      };
+    }
+
+    return dispatch(editSubmittedPlaybook(slideKey, updatedSlide));
+  };
+
+  _updateEquipmentSubDoc = (slideNum, id, value) => {
+    const { dispatch, submittedDoc } = this.props;
+
+    const { slide, slideKey } = this._findSlideKey(slideNum);
+
+    let oldItem = null;
+    let oldItemKey = null;
+    for (let val in slide.body.options) {
+      if (slide.body.options[val].id === id) {
+        oldItem = slide.body.options[val];
+        oldItemKey = val;
+      }
+    };
+    const newItem = {
+      ...oldItem,
+      opts: value.opts,
+      optNames: value.optNames
+    };
+    const newEquipOptions = [
+      ...slide.body.options.slice(0, oldItemKey),
+      newItem,
+      ...slide.body.options.slice(+oldItemKey + 1)
+    ];
+
+    const updatedSlide = {
+      ...slide,
+      submitted: true,
+      body: {
+        ...slide.body,
+        options: newEquipOptions
+      }
+    };
+
+    return dispatch(editSubmittedPlaybook(slideKey, updatedSlide));
+  };
+
+  _onSubmitPlaybook = () => {
+    const { dispatch, submittedDoc, params } = this.props;
+    return dispatch(submitPlaybook({submitted_doc: submittedDoc}, params.playbookID));
   };
 
   _getPlaybook = id => {
     const { token, dispatch } = this.props;
-    if(token) {
+    if (token) {
       return dispatch(getPlaybook(token, id));
     }
     return dispatch(getPlaybook(null, id));
+  };
+
+  _setInProgress = id => {
+    this.props.dispatch(updatePlaybookStatus({current_status: 'in progress'}, id));
   };
 
 };
@@ -68,7 +146,9 @@ function select(state) {
     id: state.playbook.id,
     token,
     fields: state.playbook.playbook,
-    selected: state.playbook.selected
+    submittedDoc: state.playbook.submittedPlaybook,
+    selected: state.playbook.selected,
+    img: state.uploader.img
   };
 }
 
