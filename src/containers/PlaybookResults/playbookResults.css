@@ -1,0 +1,12 @@
+.profileImage {
+  float: left;
+
+  img {
+    max-width: 300px;
+  }
+}
+
+.profileDesc {
+  margin-left: 20px;
+  float: left;
+}

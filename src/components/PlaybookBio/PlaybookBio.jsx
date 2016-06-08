@@ -53,7 +53,6 @@ const PlaybookBio = (props) => {
           { props.children }
         </div>
         <div className="bio-form">
-          <h3>{ props.userInfo.firstName + ' ' + props.userInfo.lastName}</h3>
           { bio }
           { social }
           <div className="slideFooter">
