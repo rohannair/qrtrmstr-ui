@@ -13,11 +13,13 @@
     .btn {
       display: block;
       margin: 0 0 10px;
+      text-align: center;
     }
 
     .btn.xs {
       margin-bottom: 1px;
     }
+
   }
 
   &-centre {
