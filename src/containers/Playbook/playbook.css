@@ -17,6 +17,16 @@ h1, h2, h3, h4, h5, h6, strong {
   font-weight: 500;
 }
 
+.slideFooter {
+  float: right;
+  margin: 10px 5px;
+
+  .btn.equipSub {
+    float: right;
+    margin-right: 15px;
+  }
+}
+
 .progressbar {
   display: flex;
   flex-direction: row;
@@ -219,6 +229,10 @@ h1, h2, h3, h4, h5, h6, strong {
 
   &-info {
     width: 40%
+  }
+  img {
+    width: 100%;
+    max-width: 500px;
   }
 
   &-form {
