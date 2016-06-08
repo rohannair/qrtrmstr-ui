@@ -25,7 +25,7 @@ export const getPlaybook = (token = '', id) =>
 export const submitPlaybook = (data, id) => {
   return dispatch => {
     return fetch(`${LOCATION_ROOT}playbooks/submit/${id}`, {
-      method: 'PUT',
+      method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
