@@ -121,7 +121,6 @@ class Playbook extends Component {
   };
 
   _onSubmitPlaybook = () => {
-    debugger;
     const { dispatch, submittedDoc, params } = this.props;
     return dispatch(submitPlaybook({submitted_doc: submittedDoc}, params.playbookID));
   };

@@ -12,7 +12,6 @@ export const setSelection = id => {
 };
 
 export const playbookSubmitted = playbook => {
-  debugger;
   return {
     type: 'PLAYBOOK_SUBMITTED',
     playbook
@@ -35,7 +34,6 @@ export const submitPlaybook = (data, id) => {
     })
     .then(response => response.json().then(json => ({json, response})))
     .then(({json, response}) => {
-      debugger;
       if (!response.ok) {
         return Promise.reject(json);
       }
