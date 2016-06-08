@@ -21,7 +21,10 @@ class PlaybookListItem extends Component {
     );
 
     const currentStatusDisplay = this.props.current_status === 'in progress'
-    ? `${this.props.current_status} (${this.props.percent_submitted})`
+    ? `${this.props.current_status} (${this.props.percent_submitted})
+      ${<Link to={`/dashboard/playbooks/results/${this.props.id}`}>
+        <i className="fa fa-eye"></i>
+      </Link>}`
     : this.props.current_status;
 
     const editPlaybookButton = this.props.current_status === 'draft' ?

@@ -12,6 +12,7 @@ export const setSelection = id => {
 };
 
 export const playbookSubmitted = playbook => {
+  debugger;
   return {
     type: 'PLAYBOOK_SUBMITTED',
     playbook
@@ -25,7 +26,28 @@ export const getPlaybook = (token = '', id) =>
 export const submitPlaybook = (data, id) => {
   return dispatch => {
     return fetch(`${LOCATION_ROOT}playbooks/submit/${id}`, {
-      method: 'PUT',
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json().then(json => ({json, response})))
+    .then(({json, response}) => {
+      debugger;
+      if (!response.ok) {
+        return Promise.reject(json);
+      }
+      return dispatch(playbookSubmitted(json.result));
+    });
+  };
+};
+
+export const updatePlaybookStatus = (data, id) => {
+  return dispatch => {
+    return fetch(`${LOCATION_ROOT}playbooks/statusUpdate/${id}`, {
+      method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -37,7 +59,8 @@ export const submitPlaybook = (data, id) => {
       if (!response.ok) {
         return Promise.reject(json);
       }
-      return dispatch(playbookSubmitted(json.result));
+      return null;
+      // return dispatch(playbookSubmitted(json.result));
     });
   };
 };
