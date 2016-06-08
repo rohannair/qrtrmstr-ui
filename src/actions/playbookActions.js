@@ -42,8 +42,6 @@ export const submitPlaybook = (data, id) => {
   };
 };
 
-<<<<<<< HEAD
-=======
 export const updatePlaybookStatus = (data, id) => {
   return dispatch => {
     return fetch(`${LOCATION_ROOT}playbooks/statusUpdate/${id}`, {
@@ -65,7 +63,6 @@ export const updatePlaybookStatus = (data, id) => {
   };
 };
 
->>>>>>> 12509655d24bd09c97e24b706ddbd5022ecd3f21
 export const editSubmittedPlaybook = (slideKey, data) => {
   return {
     type: 'EDIT_SUBMITTED_PLAYBOOK',
