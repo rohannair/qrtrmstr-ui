@@ -110,7 +110,6 @@ class PlaybookList extends Component {
           <div className="cell name">Name</div>
           <div className="cell modified">Last Modified</div>
           <div className="cell assigned">Assigned To</div>
-          <div className="cell collaborators">Collaborators</div>
           <div className="cell status">Status</div>
           <div className="cell actions">Actions</div>
         </div>

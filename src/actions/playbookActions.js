@@ -25,7 +25,7 @@ export const getPlaybook = (token = '', id) =>
 export const submitPlaybook = (data, id) => {
   return dispatch => {
     return fetch(`${LOCATION_ROOT}playbooks/submit/${id}`, {
-      method: 'PUT',
+      method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -42,6 +42,30 @@ export const submitPlaybook = (data, id) => {
   };
 };
 
+<<<<<<< HEAD
+=======
+export const updatePlaybookStatus = (data, id) => {
+  return dispatch => {
+    return fetch(`${LOCATION_ROOT}playbooks/statusUpdate/${id}`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json().then(json => ({json, response})))
+    .then(({json, response}) => {
+      if (!response.ok) {
+        return Promise.reject(json);
+      }
+      return null;
+     // return dispatch(playbookSubmitted(json.result));
+    });
+  };
+};
+
+>>>>>>> 12509655d24bd09c97e24b706ddbd5022ecd3f21
 export const editSubmittedPlaybook = (slideKey, data) => {
   return {
     type: 'EDIT_SUBMITTED_PLAYBOOK',
