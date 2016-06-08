@@ -10,7 +10,16 @@ class Button extends Component {
   };
 
   render() {
-    const {center = false, children, classes = null, text, toolTipText, onClick, icon, iconPos = null } = this.props;
+    const {
+      center = false,
+      children,
+      classes = null,
+      text,
+      toolTipText,
+      onClick,
+      icon,
+      iconPos = null
+    } = this.props;
 
     const buttonClasses = classNames(
       'btn',
@@ -30,7 +39,7 @@ class Button extends Component {
     return (
       <div
         className={ buttonClasses }
-        onClick={ onClick}
+        onClick={ onClick }
         onMouseEnter={ this._showTooltip }
         onMouseLeave={ this._showTooltip }
       >

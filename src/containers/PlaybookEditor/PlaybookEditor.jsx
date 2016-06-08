@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Cookies from 'cookies-js';
 import moment from 'moment';
-import { StickyContainer } from 'react-sticky';
 
 // Containers
 import {
@@ -36,7 +35,6 @@ import SlideEquipment from '../../components/SlideEquipment';
 import SlideKnowledgeCenter from '../../components/SlideKnowledgeCenter';
 import SlideFirstDay from '../../components/SlideFirstDay';
 import Dialog from '../../components/Dialog';
-
 
 class PlaybookEditor extends Component {
 
@@ -93,7 +91,7 @@ class PlaybookEditor extends Component {
 
       case 'equipment':
         return (
-        <Card key={val} title={ header }>
+          <Card key={val} title={ header }>
             <SlideEquipment
               {...slide}
               openModal={ this._openModal }
@@ -126,7 +124,7 @@ class PlaybookEditor extends Component {
 
       default:
         return (
-        <Card key={val} title={ header }>
+          <Card key={val} title={ header }>
             <h1>{slide.heading}</h1>
             <pre>{ JSON.stringify(slide.body, null, 4) }</pre>
           </Card>
@@ -147,9 +145,7 @@ class PlaybookEditor extends Component {
         <PlaybookEditorBody>
           { playbookDoc}
         </PlaybookEditorBody>
-        <StickyContainer className="sidebarBuffer" >
-          <PlaybookEditorSidebar save={this._savePlaybook}/>
-        </StickyContainer>
+        <PlaybookEditorSidebar save={this._savePlaybook} id={ playbookID } />
         { RemoveEquipmentTab }
       </div>
       );

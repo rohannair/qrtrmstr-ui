@@ -16,11 +16,9 @@ class PlaybookListItem extends Component {
     const assignedTo = this.props.firstName ? `${this.props.firstName} ${this.props.lastName}` : ' ';
     const  deactivateClasses = this.props.current_status === 'draft' ? '' : 'disabled';
 
-    const canOpen = !this.props.assigned
-    ? this.props.openSendModal.bind(this,
+    const canOpen = this.props.showSendModal.bind(this,
         { id: this.props.id, name: this.props.name}
-      )
-    : this._sendPlaybookToAssignedUser.bind(this, this.props.assigned);
+    );
 
     const currentStatusDisplay = this.props.current_status === 'in progress'
     ? `${this.props.current_status} (${this.props.percent_submitted})`
@@ -38,7 +36,7 @@ class PlaybookListItem extends Component {
         classes={`primary sm ${deactivateClasses}`}
         icon="cog"
         toolTipText="Edit Playbook"
-      />
+      />;
 
     return (
       <div key={ this.props.id } className="playbookListItem">
@@ -53,7 +51,7 @@ class PlaybookListItem extends Component {
         </div>
 
         <div className="cell modified">
-          { moment(this.props.updated_at).format('MMMM DD YYYY, h:mma') }
+          { moment(this.props.updated_at).format('YYYY-MM-DD h:mma') }
         </div>
 
         <div className="cell assigned assigned-text">
@@ -70,7 +68,7 @@ class PlaybookListItem extends Component {
         <div className="cell actions">
           <ButtonGroup>
             <Button
-              onClick={ this.props.onEditShowModal.bind(this,
+              onClick={ this.props.showEditModal.bind(this,
                 { id: this.props.id, name: this.props.name}
               ) }
               classes= {`inverse sm ${deactivateClasses}`}
@@ -79,17 +77,14 @@ class PlaybookListItem extends Component {
             />
 
             <Button
-              onClick={ this.props.duplicate.bind(this, this.props.id) }
+              onClick={ this.props.duplicatePlaybook.bind(this, this.props.id) }
               classes='inverse sm'
               icon="copy"
               toolTipText="Duplicate Playbook"
             />
 
-          { editPlaybookButton }
-
-
             <Button
-              onClick={ this.props.onAssignShowModal.bind(this,
+              onClick={ this.props.showAssignModal.bind(this,
                 { id: this.props.id, name: this.props.name}
               ) }
               classes={`inverse sm  ${deactivateClasses}`}
@@ -97,9 +92,11 @@ class PlaybookListItem extends Component {
               toolTipText="Assign Playbook"
             />
 
+            { editPlaybookButton }
+
             <Button
               onClick={ canOpen }
-              classes={`tertiary sm  ${deactivateClasses}`}
+              classes={`secondary sm  ${deactivateClasses}`}
               icon="paper-plane"
               toolTipText="Send to User"
             />
@@ -109,10 +106,11 @@ class PlaybookListItem extends Component {
     );
   }
 
-  _sendPlaybookToAssignedUser = (userID) => {
+  _sendPlaybook = (userID) => {
     let assignedUser = null;
+
     if (this.props.assigned) {
-      const assignedUserOrg = this.props.users.filter(val => val.id === userID)[0]
+      const assignedUserOrg = this.props.users.filter(val => val.id === userID)[0];
       assignedUser = {
         id: assignedUserOrg.id,
         first_name: assignedUserOrg.first_name,
@@ -120,7 +118,8 @@ class PlaybookListItem extends Component {
         email: assignedUserOrg.username,
         playbookID: this.props.id };
     }
-    this.props.sendPlaybookToAssignedUser(assignedUser)
+
+    this.props.sendPlaybook(assignedUser);
   };
 
 

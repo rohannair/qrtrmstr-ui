@@ -15,65 +15,50 @@ import ButtonGroup from '../ButtonGroup';
 class EditPlaybookModal extends Component {
 
   state = {
-    message: this.props.message || null
+    name: this.props.playbook.name || ''
   }
-
-  componentWillMount() {
-    this.props.onChange(this.props.playbookName);
-  };
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.message != this.state.message) {
-      this.setState({
-        message: nextProps.message
-      });
-    }
-  }
-
 
   render() {
     const {
-      playbookName,
-      playbookID,
+      playbook,
       closeModal,
       savePlaybook,
-      onChange,
-      loading,
-      closeAlert,
-      timeOutModal,
-      newPlaybookName } = this.props;
-
-    const loadingIcon = loading ? <i className="fa fa-cog fa-lg fa-spin spinner"></i> : null;
-    const feedback = this.state.message ? <Alert closeAlert={closeAlert} success={true}>{this.state.message}</Alert> : null;
+    } = this.props;
 
     return (
       <Modal onClose={closeModal} md>
-        <h3>Edit Playbook: {playbookName} </h3>
-        <div>
-          <div className="formField">
-            <label>Playbook Title: </label>
-            <input
-              className="inputIcon"
-              name="name"
-              value= { newPlaybookName }
-              onChange={ e => onChange(e.target.value) }
-            />
-          </div>
+        <h3>Edit Playbook: { playbook.name } </h3>
+
+        <div className="formField">
+          <label>Playbook Title: </label>
+          <input
+            className="inputIcon"
+            name="name"
+            value= { this.state.name }
+            onChange={ e => this.setState({name: e.target.value}) }
+          />
         </div>
+
         <div className="modalFooter">
           <div className="userButtonGroup">
             <ButtonGroup>
               <Button classes="inverse sm" onClick={closeModal}>Cancel</Button>
-              <Button classes="primary sm" onClick={savePlaybook}>Update</Button>
+              <Button classes="primary sm" onClick={this._saveAndClose}>
+                Update
+              </Button>
             </ButtonGroup>
           </div>
-          <div className="spinnerContainer">
-            { loadingIcon }
-          </div>
         </div>
-        { feedback }
       </Modal>
     );
+  };
+
+  _saveAndClose = () => {
+    const { closeModal, savePlaybook, playbook } = this.props;
+    const { name } = this.state;
+
+    savePlaybook(playbook.id, this.state);
+    closeModal();
   };
 
 };
