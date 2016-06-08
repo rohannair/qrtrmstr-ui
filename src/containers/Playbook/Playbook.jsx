@@ -13,7 +13,7 @@ import Header from '../../components/Global/Header';
 import PlaybookCards from '../../components/PlaybookCards';
 
 // Actions
-import { setSelection, submitPlaybook, getPlaybook, editSubmittedPlaybook, updatePlaybookStatus } from '../../actions/playbookActions';
+import { setSelection, submitPlaybook, getPlaybook, editSubmittedPlaybook } from '../../actions/playbookActions';
 import { uploadComplete } from '../../actions/uploadActions';
 
 class Playbook extends Component {
@@ -21,7 +21,6 @@ class Playbook extends Component {
   componentWillMount() {
     const id = this.props.routeParams.playbookID || this.props.location.query.playbookId;
     this._getPlaybook(id);
-    if (this.props.location.query.from_email) this._setInProgress(id);
   };
 
   render() {

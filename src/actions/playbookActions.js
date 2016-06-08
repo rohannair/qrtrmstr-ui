@@ -42,27 +42,6 @@ export const submitPlaybook = (data, id) => {
   };
 };
 
-export const updatePlaybookStatus = (data, id) => {
-  return dispatch => {
-    return fetch(`${LOCATION_ROOT}playbooks/statusUpdate/${id}`, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-    .then(response => response.json().then(json => ({json, response})))
-    .then(({json, response}) => {
-      if (!response.ok) {
-        return Promise.reject(json);
-      }
-      return null;
-      // return dispatch(playbookSubmitted(json.result));
-    });
-  };
-};
-
 export const editSubmittedPlaybook = (slideKey, data) => {
   return {
     type: 'EDIT_SUBMITTED_PLAYBOOK',
