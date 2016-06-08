@@ -73,7 +73,6 @@ export const sendPlaybook = (token, payload) => {
       if (!response.ok) {
         return Promise.reject(json);
       }
-      console.log(json);
       return dispatch(playbookModified(json));
     });
   };
@@ -193,6 +192,17 @@ export const createPlaybook = (token, payload) => {
 // Modify existing Playbook
 export const modifyPlaybook = (token, payload, id) => {
   const url = getDomain();
+
+  let body = '';
+  for (let key in payload) {
+    if (key === 'selected') {
+      body += JSON.stringify({ assigned: payload[key].id});
+    }
+    else {
+      body += JSON.stringify({ [key]: payload[key]});
+    }
+  }
+
   return dispatch => {
     return fetch(`${url}/api/v1/playbooks/${id}`, {
       method: 'PUT',
@@ -201,7 +211,7 @@ export const modifyPlaybook = (token, payload, id) => {
         'Authorization': 'bearer ' + token,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(payload)
+      body
     })
     .then(response => response.json().then(json => ({json, response})))
     .then(({json, response}) => {
