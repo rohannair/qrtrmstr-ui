@@ -29,7 +29,6 @@ class Playbook extends Component {
       <div className="playbook">
         <Header isAdmin={false} />
         <PlaybookCards
-          updateImage={ this._updateImage }
           onEquipChange={ this._updateEquipmentSubDoc}
           findSlideKey={ this._findSlideKey }
           onChange={ this._updateSubmittedDoc }
@@ -39,6 +38,7 @@ class Playbook extends Component {
           onClick={ this._onClick }
           selected={ selected }
           img={ img }
+          uploaderFn={ this._updateSubmittedDoc }
         />
         <Footer />
       </div>
@@ -47,11 +47,6 @@ class Playbook extends Component {
 
   _onClick = (id) => {
     return this.props.dispatch(setSelection(id));
-  };
-
-  _updateImage = (image) => {
-    const { dispatch } = this.props;
-    return dispatch(uploadComplete(image));
   };
 
   _findSlideKey = (slideNum) => {

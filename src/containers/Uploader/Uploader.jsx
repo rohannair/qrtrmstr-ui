@@ -20,18 +20,18 @@ class Uploader extends Component {
   }
 
   componentWillMount() {
-    if (this.props.savedImg.url) {
-      this._addImage(this.props.savedImg);
-    }
-  }
+    if (this.props.savedPic) this.props.dispatch(uploadComplete(this.props.savedPic));
+  };
 
   componentDidUpdate(lastParams) {
-    if (this.props.img !== this.props.savedImg) {
-      if (lastParams.img !== this.props.img) {
-        this.props.updateState(this.props.slideKey, 'profile_image', this.props.img);
-      }
+    if (this.props.img && lastParams.img !== this.props.img) {
+      this.props.updateState(this.props.img);
     }
-  }
+    if (!this.props.img && lastParams.img !== this.props.img) {
+      this.props.updateState(null);
+    }
+  };
+
 
   render() {
     const img = this.props.img || null;
@@ -54,10 +54,6 @@ class Uploader extends Component {
     form.append('file', uploadedFile);
 
     dispatch(postUpload(token, form));
-  };
-
-  _addImage = (image) => {
-    this.props.dispatch(uploadComplete(image));
   };
 
   _deleteImage = (e) => {

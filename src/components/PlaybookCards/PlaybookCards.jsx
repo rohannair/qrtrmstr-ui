@@ -32,7 +32,20 @@ const PlaybookCards = (props) => {
   });
 
   const cards = Object.keys(fields).map((val) => {
+
     let field = fields[val];
+    const { slideKey } = props.findSlideKey(field.slide_number);
+    const submittedPic = slideKey && props.submittedDoc[slideKey].body.options.profile_image
+    ? props.submittedDoc[slideKey].body.options.profile_image
+    : null;
+    let wrapped = (img) => props.uploaderFn(field.slide_number, 'profile_image', img);
+    let PlaybookUploader = (
+      <Uploader
+        savedPic={ submittedPic }
+        updateState={ wrapped } >
+        <i className="material-icons">cloud_upload</i>
+      </Uploader>
+    );
 
     switch (field.type) {
     case 'option':
@@ -45,11 +58,6 @@ const PlaybookCards = (props) => {
       />);
 
     case 'bio':
-      const { slideKey } = props.findSlideKey(field.slide_number);
-      const submittedPic = props.submittedDoc[slideKey].body.options.profile_image;
-      const savedPic = submittedPic && submittedPic.url ? submittedPic : null;
-      const ImageUploader = (<Uploader updateState={ props.onChange } savedImg={ savedPic } slideKey={ slideKey } ><i className="material-icons">cloud_upload</i></Uploader>);
-
       return (
         <Card key={ field.slide_number } footer={<div/>}>
           <PlaybookBio
@@ -59,7 +67,7 @@ const PlaybookCards = (props) => {
             onChange={ props.onChange }
             submittedDoc={ props.submittedDoc }
             findSlideKey={ props.findSlideKey }>
-            { ImageUploader }
+            { PlaybookUploader }
           </PlaybookBio>
         </Card>
       );
