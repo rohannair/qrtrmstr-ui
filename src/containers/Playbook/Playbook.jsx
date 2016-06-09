@@ -87,7 +87,6 @@ class Playbook extends Component {
 
   _updateEquipmentSubDoc = (slideNum, id, value) => {
     const { dispatch, submittedDoc } = this.props;
-
     const { slide, slideKey } = this._findSlideKey(slideNum);
 
     let oldItem = null;

@@ -23,7 +23,10 @@ const userInfo = {
 
 const PlaybookCards = (props) => {
 
-  const { fields, onClick, onSubmit, selected } = props;
+  const { fields, onClick, onSubmit, selected, submittedDoc } = props;
+
+  const submitAction = submittedDoc ? onSubmit : null;
+
   const cardCount = Object.keys(fields).map(val => {
     const field = fields[val];
     const classes = classnames('progressbar-item', {done: val == 0});
@@ -62,7 +65,7 @@ const PlaybookCards = (props) => {
         <Card key={ field.slide_number } footer={<div/>}>
           <PlaybookBio
             { ...field }
-            onSubmit={ props.onSubmit }
+            onSubmit={ submitAction }
             userInfo={ userInfo }
             onChange={ props.onChange }
             submittedDoc={ props.submittedDoc }
@@ -73,7 +76,7 @@ const PlaybookCards = (props) => {
       );
 
     case 'equipment':
-      const { submittedDoc, onEquipChange, onSubmit } = props;
+      const { submittedDoc, onEquipChange } = props;
       const opts = field.body.options.map((val, ind) => {
 
         const options = val.opts.map((opt, i) => {
@@ -83,16 +86,24 @@ const PlaybookCards = (props) => {
 
         const { slide, slideKey } = props.findSlideKey(field.slide_number);
 
-        const currentValue = JSON.stringify(slide.body.options[ind].opts.length > 0
+        const currentValue = JSON.stringify((slide && slide.body.options[ind].opts.length > 0)
         ? { opts: slide.body.options[ind].opts, optNames: slide.body.options[ind].optNames }
         : '');
+
+        const selectTag = submittedDoc
+        ? <select value={ currentValue } onChange={e => onEquipChange(field.slide_number, val.id, (JSON.parse(e.target.value)))}>
+            <option value=''></option>
+            { options }
+          </select>
+        : <select>
+            <option value=''></option>
+            { options }
+          </select>;
+
         return (
           <div key={val.id} className="equipment-choice">
             <span>{val.name + ':'}</span>
-            <select value={ currentValue } onChange={e => onEquipChange(field.slide_number, val.id, (JSON.parse(e.target.value)))}>
-            <option value=''></option>
-            { options }
-            </select>
+            { selectTag }
           </div>
         );
       });
@@ -105,7 +116,7 @@ const PlaybookCards = (props) => {
             { opts }
           </div>
           <div className="slideFooter">
-            <Button classes="primary sm equipSub" onClick={onSubmit}>Submit</Button>
+            <Button classes="primary sm equipSub" onClick={ submitAction }>Submit</Button>
           </div>
         </Card>
       );
