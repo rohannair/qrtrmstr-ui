@@ -196,12 +196,27 @@ class PlaybookEditor extends Component {
     return dispatch(getSinglePlaybook(token, playbookID));
   };
 
+  _findSlideKey = (slideNum) => {
+    const { playbook } = this.props;
+    let slide = null;
+    let slideKey = null;
+    // Isolate the key element that is changing
+    for (let val in playbook.doc) {
+      if (playbook.doc[val].slide_number === +slideNum) {
+        slide = playbook.doc[val];
+        slideKey = val;
+      };
+    };
+    return { slide, slideKey };
+  };
+
   _updateSlide = (key, value, slideNum) => {
     const { dispatch, playbook } = this.props;
+    const { slideKey } = this._findSlideKey(slideNum);
     const updatedSlide = {
       [key]: value
     };
-    return dispatch(updatePlaybookState(slideNum, updatedSlide));
+    return dispatch(updatePlaybookState(slideKey, updatedSlide));
   };
 
   _savePlaybook = () => {
