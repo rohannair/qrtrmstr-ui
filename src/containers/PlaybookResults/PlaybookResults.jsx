@@ -7,7 +7,6 @@ import Cookies from 'cookies-js';
 import Footer from '../../components/Global/Footer';
 import Header from '../../components/Global/Header';
 import Menu from '../../components/Global/Menu';
-import PlaybookResultsView from '../../components/PlaybookResultsView';
 import PlaybookResultsCards from '../../components/PlaybookResultsCards';
 import Card from '../../components/Card';
 import { getPlaybook } from '../../actions/playbookActions';
