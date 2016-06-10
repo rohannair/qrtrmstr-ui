@@ -6,69 +6,105 @@ import Cookies from 'cookies-js';
 // Components
 import Footer from '../../components/Global/Footer';
 import Header from '../../components/Global/Header';
-import PlaybookCards from '../../components/PlaybookCards';
+import Menu from '../../components/Global/Menu';
+import PlaybookResultsView from '../../components/PlaybookResultsView';
+import PlaybookResultsCards from '../../components/PlaybookResultsCards';
 import Card from '../../components/Card';
 import { getPlaybook } from '../../actions/playbookActions';
+import { getSingleUser } from '../../actions/userActions';
 import styles from './playbookResults.css';
 
 
 
 class PlaybookResults extends Component {
 
+  state = {
+    selectedTab: 'completed'
+  };
+
   componentWillMount() {
     const id = this.props.routeParams.playbookID || this.props.location.query.playbookId;
     this._getPlaybook(id);
+  };
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.completePlaybook !== this.props.completePlaybook) {
+      this._getSingleUser(nextProps.completePlaybook.assigned);
+    };
   }
 
   render() {
-    const cards = Object.keys(this.props.submittedDoc).map((val) => {
+    const { playbook, submittedDoc, users, completePlaybook } = this.props;
+    let incompleteCards = {};
+    let completedCards = {};
+    let unsubmittableCards = {};
+    let cardsDisplay = null;
 
-      let field = this.props.submittedDoc[val];
 
-      switch (field.type) {
-      case 'bio':
-        return (
-          <Card key={ field.slide_number } footer={<div/>}>
-            <h2>{field.body.heading}</h2>
-            <div>
-              <div className="profileImage">
-                <img src={ field.body.options.profile_image.url } />
-              </div>
-              <div className="profileDesc">
-                { field.body.options.bio }
-              </div>
-            </div>
-          </Card>
-        );
+    for (let val in playbook) {
+      if (playbook[val].submittable === false) {
+        unsubmittableCards[val] = playbook[val];
+      };
+    };
 
-      case 'equipment':
-        const opts = field.body.options.map((val, ind) => {
+    for (let val in submittedDoc) {
+      submittedDoc[val].submitted === true
+      ? completedCards[val] = submittedDoc[val]
+      : incompleteCards[val] = submittedDoc[val];
+    };
 
-          return (
-            <div key={val.id} className="equipment-choice">
-              <span>{val.name + ': ' + field.body.options[ind].optNames }</span>
-            </div>
-          );
-        });
+    const totalCompleted = {
+      ...completedCards,
+      ...unsubmittableCards
+    };
 
-        return (
-          <Card key={field.slide_number} footer={<div/>}>
-            <h2>{field.heading}</h2>
-            <div className="equipment-form">
-              { opts }
-            </div>
-          </Card>
-        );
+    if (users.first_name) {
+      cardsDisplay = this.state.selectedTab === 'completed'
+      ? <PlaybookResultsCards
+          userInfo={ users }
+          view={ this.state.selectedTab }
+          totalCards={ totalCompleted }
+        />
+      : <PlaybookResultsCards
+          userInfo={ users }
+          view={ this.state.selectedTab }
+          totalCards={ incompleteCards }
+        />;
+    }
 
-      default:
-        return null;
-      }
-
-    });
-
+    const userInfo = users ? <div className="textInfoUser">{users.first_name} {users.last_name}</div> : null;
+    const playbookName = completePlaybook ? <div className="textInfoComp">{completePlaybook.name}</div> : null;
+    const status = completePlaybook ? <span className="textInfoPerc">{completePlaybook.percent_submitted * 100}%</span> : null;
+    const comTaskClass = this.state.selectedTab === 'completed' ? 'selected' : null;
+    const incomTaskClass = this.state.selectedTab === 'incomplete' ? 'selected' : null;
     return (
-      <div className="container container-playbook">
-        { cards }
+      <div className="playbook">
+        <Header isAdmin={true}>
+          <Menu />
+        </Header>
+        <div className="resultsInfo">
+          <div className="resultsInfoBody">
+            <span className="resultsTitle">
+              <div className="playbookTitle" >Playbook:</div>
+              <div className="playbookInfo">{ userInfo } { playbookName }</div>
+            </span>
+            <span className="resultsTitle">
+              <div className="playbookTitle" >Status: { status } </div>
+            </span>
+          </div>
+        </div>
+        <div className="tasksTab">
+          <div onClick={this._setCompleted} className={`comTask ${comTaskClass}`}>
+            COMPLETED TASKS
+          </div>
+          <div onClick={this._setIncomplete} className={`incomTask ${incomTaskClass}`}>
+            INCOMPLETE TASKS
+          </div>
+        </div>
+        <div className="container container-playbook">
+          { cardsDisplay }
+        </div>
+        <Footer />
       </div>
     );
   };
@@ -80,6 +116,27 @@ class PlaybookResults extends Component {
     }
     return dispatch(getPlaybook(null, id));
   };
+
+  _getSingleUser = id => {
+    const { token, dispatch } = this.props;
+    if (token) {
+      return dispatch(getSingleUser(token, id));
+    }
+    return dispatch(getSingleUser(null, id));
+  };
+
+  _setCompleted = () => {
+    this.setState({
+      selectedTab: 'completed'
+    });
+  };
+
+  _setIncomplete = () => {
+    this.setState({
+      selectedTab: 'incomplete'
+    });
+  };
+
 };
 
 function select(state) {
@@ -87,6 +144,9 @@ function select(state) {
   return {
     token,
     submittedDoc: state.playbook.submittedPlaybook,
+    playbook: state.playbook.playbook,
+    completePlaybook: state.playbook.completePlaybook,
+    users: state.app.users
   };
 }
 
