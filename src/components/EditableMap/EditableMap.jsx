@@ -79,30 +79,32 @@ class Contents extends React.Component {
 
     return (
       <div className="flexWrapper">
-        <div className="left">
-          <div className="strong">
-            <strong>Location:</strong>
-          </div>
+
+        <div className="slide-input">
+          <strong>Location:</strong>
           <input
             ref='autocomplete'
             type="text"
             onSubmit={this.onSubmit}
-            placeholder={newPlace.formatted_address} />
+            placeholder={newPlace.formatted_address}
+          />
         </div>
-        <div className="right">
+
+        <div className="slide-map">
           <GoogleMap {...this.props}
-              className="map"
-              updated={updated}
-              resetUpdate={this._resetUpdate}
-              center={newPos}
-              pos={newPos}
-              updateMap={this._updateMap}
-              centerAroundCurrentLocation={true}>
-              <Marker position={newPos} />
-              <MapWidget
-                place={newPlace}
-                google={this.props.google}
-                position={this.props.pos} />
+            className="map"
+            updated={updated}
+            resetUpdate={this._resetUpdate}
+            center={newPos}
+            pos={newPos}
+            updateMap={this._updateMap}
+            centerAroundCurrentLocation={true}>
+            <Marker position={newPos} />
+            <MapWidget
+              place={newPlace}
+              google={this.props.google}
+              position={this.props.pos}
+            />
           </GoogleMap>
         </div>
       </div>

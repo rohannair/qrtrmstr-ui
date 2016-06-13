@@ -132,7 +132,7 @@ class SlideFirstDay extends Component {
               />
             </div>
             <div className="slide-input">
-              <strong>contact Email:</strong>
+              <strong>Contact Email:</strong>
               <input
                 name="email"
                 type="text"

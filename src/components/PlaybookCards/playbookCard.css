@@ -31,11 +31,19 @@ ul, ol {
     height: 100%;
     margin-left: 9%;
 
+    @media (max-width: 30em) {
+      margin-left: 0;
+    }
+
     .mapContainer {
       margin-top: 25px;
       margin-bottom: 25px;
       width: 29vw;
       height: 50vh;
+
+      @media(max-width: 30em) {
+        width: 100%;
+      }
     };
   }
 }

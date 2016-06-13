@@ -31,6 +31,10 @@
   margin: 0 10px 30px;
   width: calc(25% - 20px);
 
+  @media (max-width: 30em) {
+    width: 100%;
+  }
+
   label, input {
     display: block;
     width: 100%;
@@ -42,7 +46,6 @@
     outline: none;
     width: 100%;
   }
-
 
   &-link {
     height: 150px;
