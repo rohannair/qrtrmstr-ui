@@ -26,7 +26,7 @@ class PlaybookListItem extends Component {
     : <Pill warning>{this.props.current_status}</Pill>;
 
     const viewSubPlaybookBtn = this.props.current_status === 'in progress'
-    ? <Link to={`/playbook/results/${this.props.id}`}>
+    ? <Link to={`/dashboard/playbook/results/${this.props.id}`}>
         <i className="fa fa-eye"></i>
       </Link>
     : null;
