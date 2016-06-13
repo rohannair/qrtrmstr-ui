@@ -8,7 +8,7 @@ import Button from '../../components/Button';
 import FormData from 'form-data';
 
 // Actions
-import { postUpload, setLoading, deleteImage } from '../../actions/uploadActions';
+import { postUpload, setLoading, deleteImage, uploadComplete } from '../../actions/uploadActions';
 
 // Img
 import loadingGif from '../../assets/loading.gif';
@@ -19,15 +19,19 @@ class Uploader extends Component {
     updateState: PropTypes.func.isRequired
   }
 
+  componentWillMount() {
+    if (this.props.savedPic) this.props.dispatch(uploadComplete(this.props.savedPic));
+  };
+
   componentDidUpdate(lastParams) {
     if (this.props.img && lastParams.img !== this.props.img) {
       this.props.updateState(this.props.img);
     }
-
     if (!this.props.img && lastParams.img !== this.props.img) {
       this.props.updateState(null);
     }
-  }
+  };
+
 
   render() {
     const img = this.props.img || null;

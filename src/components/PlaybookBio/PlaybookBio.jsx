@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styles from './playbookBio.css';
+import Button from '../Button';
 
 import Uploader from '../../containers/Uploader';
 
 const PlaybookBio = (props) => {
+
+  const { slideKey } = props.findSlideKey(props.slide_number);
+  const currentBio = props.submittedDoc ? props.submittedDoc[slideKey].body.options.bio : '';
   const bodyOpts = props.body.options;
   const profilePic = bodyOpts.profile_image
   ? (<Uploader>
@@ -12,9 +16,12 @@ const PlaybookBio = (props) => {
       </Uploader>)
   : null;
 
-  const bio = bodyOpts.bio
-  ? <textarea placeholder="Tell the team a little bit about yourself..."/>
-  : null;
+  let bio = null;
+  if (bodyOpts.bio && props.submittedDoc) {
+    bio = <textarea value={currentBio} name={props.slide_number} onChange={ e => props.onChange(e.target.name, 'bio', e.target.value) } placeholder="Tell the team a little bit about yourself..."/>;
+  } if (bodyOpts.bio && !props.submittedDoc) {
+    bio = <textarea placeholder="Tell the team a little bit about yourself..."/>;
+  }
 
   const facebook = bodyOpts.facebook
   ? <li className="fb">Link your Facebook</li>
@@ -46,9 +53,11 @@ const PlaybookBio = (props) => {
           { props.children }
         </div>
         <div className="bio-form">
-          <h3>{ props.userInfo.firstName + ' ' + props.userInfo.lastName}</h3>
           { bio }
           { social }
+          <div className="slideFooter">
+            <Button classes="primary sm" onClick={props.onSubmit}>Submit</Button>
+          </div>
         </div>
       </div>
     </div>

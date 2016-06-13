@@ -3,6 +3,9 @@ import classnames from 'classnames';
 import styles from './playbookCard.css';
 import moment from 'moment';
 
+// Containers
+import Uploader from '../../containers/Uploader';
+
 // Components
 import Button from '../../components/Button';
 import Card from '../../components/Card';
@@ -20,7 +23,10 @@ const userInfo = {
 
 const PlaybookCards = (props) => {
 
-  const { fields, onClick, onSubmit, selected } = props;
+  const { fields, onClick, onSubmit, selected, submittedDoc } = props;
+
+  const submitAction = submittedDoc ? onSubmit : null;
+
   const cardCount = Object.keys(fields).map(val => {
     const field = fields[val];
     const classes = classnames('progressbar-item', {done: val == 0});
@@ -29,7 +35,20 @@ const PlaybookCards = (props) => {
   });
 
   const cards = Object.keys(fields).map((val) => {
+
     let field = fields[val];
+    const { slideKey } = props.findSlideKey(field.slide_number);
+    const submittedPic = slideKey && props.submittedDoc[slideKey].body.options.profile_image
+    ? props.submittedDoc[slideKey].body.options.profile_image
+    : null;
+    let wrapped = (img) => props.uploaderFn(field.slide_number, 'profile_image', img);
+    let PlaybookUploader = (
+      <Uploader
+        savedPic={ submittedPic }
+        updateState={ wrapped } >
+        <i className="material-icons">cloud_upload</i>
+      </Uploader>
+    );
 
     switch (field.type) {
     case 'option':
@@ -42,28 +61,49 @@ const PlaybookCards = (props) => {
       />);
 
     case 'bio':
-      const Uploader = props.uploader;
       return (
         <Card key={ field.slide_number } footer={<div/>}>
-          <PlaybookBio { ...field } userInfo={ userInfo }>
-            { Uploader }
+          <PlaybookBio
+            { ...field }
+            onSubmit={ submitAction }
+            userInfo={ userInfo }
+            onChange={ props.onChange }
+            submittedDoc={ props.submittedDoc }
+            findSlideKey={ props.findSlideKey }>
+            { PlaybookUploader }
           </PlaybookBio>
         </Card>
       );
 
     case 'equipment':
-      const opts = field.body.options.map(val => {
+      const { submittedDoc, onEquipChange } = props;
+      const opts = field.body.options.map((val, ind) => {
 
         const options = val.opts.map((opt, i) => {
-          return <option value={opt} key={opt}>{val.optNames[i]}</option>;
+          const optValue = JSON.stringify({opts: opt, optNames: val.optNames[i]});
+          return <option value={optValue} key={opt}>{val.optNames[i]}</option>;
         });
+
+        const { slide, slideKey } = props.findSlideKey(field.slide_number);
+
+        const currentValue = JSON.stringify((slide && slide.body.options[ind].opts.length > 0)
+        ? { opts: slide.body.options[ind].opts, optNames: slide.body.options[ind].optNames }
+        : '');
+
+        const selectTag = submittedDoc
+        ? <select value={ currentValue } onChange={e => onEquipChange(field.slide_number, val.id, (JSON.parse(e.target.value)))}>
+            <option value=''></option>
+            { options }
+          </select>
+        : <select>
+            <option value=''></option>
+            { options }
+          </select>;
 
         return (
           <div key={val.id} className="equipment-choice">
             <span>{val.name + ':'}</span>
-            <select>
-            { options }
-            </select>
+            { selectTag }
           </div>
         );
       });
@@ -74,6 +114,9 @@ const PlaybookCards = (props) => {
           <p className = {field.body.textAlign || ''}>{field.body.desc}</p>
           <div className="equipment-form">
             { opts }
+          </div>
+          <div className="slideFooter">
+            <Button classes="primary sm equipSub" onClick={ submitAction }>Submit</Button>
           </div>
         </Card>
       );

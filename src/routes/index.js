@@ -11,6 +11,7 @@ import Playbook from '../containers/Playbook';
 import NotFound from '../components/NotFound';
 import PlaybookList from '../containers/PlaybookList';
 import PlaybookEditor from '../containers/PlaybookEditor';
+import PlaybookResults from '../containers/PlaybookResults';
 import UserList from '../containers/UserList';
 
 // Utils
@@ -27,6 +28,7 @@ export default (store) => {
           <IndexRoute component={ UserList } />
           <Route path="playbooks" component={ PlaybookList } />
           <Route path="playbooks/edit/:playbookID" component={ PlaybookEditor } />
+          <Route path="playbooks/results/:playbookID" component={ PlaybookResults } />
           <Route path="users" component={ UserList } />
           <Route path="*" component={ NotFound } />
         </Route>
