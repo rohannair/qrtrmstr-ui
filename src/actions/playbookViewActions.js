@@ -26,10 +26,10 @@ export const updatePlaybookState = (slide_number, data) => {
   };
 };
 
-function addNewPlaybook(newPlaybook = {}) {
+function addNewPlaybook(playbook = {}) {
   return {
     type: 'ADD_NEW_PLAYBOOK',
-    newPlaybook
+    playbook
   };
 }
 
@@ -94,8 +94,7 @@ export const duplicatePlaybook = (token, id) => {
     if (!response.ok) {
       return Promise.reject(json);
     }
-
-    return dispatch(addNewPlaybook(json));
+    return dispatch(addNewPlaybook(json.result));
   });
 };
 
