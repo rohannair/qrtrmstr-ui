@@ -24,7 +24,7 @@ export class MapContainer extends React.Component {
 
     if (this.props.editing === true) {
       return (
-        <div className='mapContainer' >
+        <div className='mapContainer'>
           <EditableMap
             updateLocation={this.props.updateLocation}
             updateState={this.props.updateState}
