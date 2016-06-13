@@ -5,7 +5,6 @@ import Button from '../Button';
 import Uploader from '../../containers/Uploader';
 
 const PlaybookBio = (props) => {
-
   const { slideKey } = props.findSlideKey(props.slide_number);
   const currentBio = props.submittedDoc ? props.submittedDoc[slideKey].body.options.bio : '';
   const bodyOpts = props.body.options;
@@ -18,21 +17,47 @@ const PlaybookBio = (props) => {
 
   let bio = null;
   if (bodyOpts.bio && props.submittedDoc) {
-    bio = <textarea value={currentBio} name={props.slide_number} onChange={ e => props.onChange(e.target.name, 'bio', e.target.value) } placeholder="Tell the team a little bit about yourself..."/>;
+    bio = <textarea value={currentBio} name='bio' onChange={ e => props.onChange(props.slide_number, e.target.name, e.target.value) } placeholder="Tell the team a little bit about yourself..."/>;
   } if (bodyOpts.bio && !props.submittedDoc) {
     bio = <textarea placeholder="Tell the team a little bit about yourself..."/>;
   }
 
+  const fbCurrVal = props.submittedDoc ? props.submittedDoc[slideKey].body.options.facebook : '';
   const facebook = bodyOpts.facebook
-  ? <li className="fb">Link your Facebook</li>
+  ? <div className="socMedia">
+      <div className="iconBox fb">
+        <i className="fa fa-facebook"></i>
+      </div>
+      <input value={ fbCurrVal }
+        name='facebook'
+        placeholder="Facebook url"
+        onChange={ e => props.onChange(props.slide_number, e.target.name, e.target.value) } />
+    </div>
   : null;
-
+  const twCurrVal = props.submittedDoc ? props.submittedDoc[slideKey].body.options.twitter : '';
   const twitter = bodyOpts.twitter
-  ? <li className="tw">Link your Twitter</li>
+  ? <div className="socMedia">
+      <div className="iconBox tw">
+        <i className="fa fa-twitter"></i>
+      </div>
+      <input value={ twCurrVal }
+        name='twitter'
+        placeholder="@Twitter handle or url"
+        onChange={ e => props.onChange(props.slide_number, e.target.name, e.target.value) } />
+    </div>
   : null;
 
+  const lnCurrVal = props.submittedDoc ? props.submittedDoc[slideKey].body.options.linkedin : '';
   const linkedin = bodyOpts.linkedin
-  ? <li className="li">Link your LinkedIn</li>
+  ? <div className="socMedia">
+      <div className="iconBox li">
+        <i className="fa fa-linkedin"></i>
+      </div>
+      <input value={ lnCurrVal }
+        name='linkedin'
+        placeholder="LinkedIn url"
+        onChange={ e => props.onChange(props.slide_number, e.target.name, e.target.value) } />
+    </div>
   : null;
 
   const social = (facebook || twitter || linkedin)

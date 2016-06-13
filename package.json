@@ -11,11 +11,12 @@
   "scripts": {
     "newComp": "babel-node ./scripts/newComponent.js",
     "newCont": "babel-node ./scripts/newContainer.js",
-    "start": "NODE_ENV=development node server.js",
-    "build": "NODE_ENV=production webpack -p --progress --config webpack.config.prod.js",
+    "dev": "NODE_ENV=development node server.js",
+    "build": "NODE_ENV=production node_modules/.bin/webpack -p --config webpack.config.prod.js",
     "test": "babel-tape-runner ./src/**/*.test.js | tap-spec",
     "lint": "eslint src",
-    "lint:fix": "eslint src --fix"
+    "lint:fix": "eslint src --fix",
+    "postinstall": "npm run build"
   },
   "devDependencies": {
     "autoprefixer": "^6.2.1",
@@ -61,7 +62,9 @@
     "url-loader": "^0.5.7",
     "webpack": "^1.13.1",
     "webpack-dev-middleware": "^1.6.1",
-    "webpack-hot-middleware": "^2.10.0"
+    "webpack-hot-middleware": "^2.10.0",
+    "webpack-manifest-plugin": "^1.0.1",
+    "webpack-path-rewriter": "^1.1.4"
   },
   "dependencies": {
     "classnames": "^2.2.3",

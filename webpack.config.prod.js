@@ -5,6 +5,10 @@ const path         = require('path');
 const rucksack     = require('rucksack-css');
 const webpack      = require('webpack');
 
+const devFlagPlugin = new webpack.DefinePlugin({
+  __DEV__: JSON.stringify('false')
+});
+
 const config = {
   devtool: 'cheap-source-map',
   bail: true,
@@ -69,7 +73,7 @@ const config = {
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.NoErrorsPlugin(),
-    new webpack.optimize.UglifyJsPlugin(({
+    new webpack.optimize.UglifyJsPlugin({
       compressor: {
         warnings: false
       }
@@ -88,7 +92,8 @@ const config = {
           stats.toJson().hash
         );
       });
-    }
+    },
+    devFlagPlugin
   ],
 
   postcss: function() {
