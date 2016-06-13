@@ -81,7 +81,6 @@ class Playbook extends Component {
         }
       };
     }
-
     return dispatch(editSubmittedPlaybook(slideKey, updatedSlide));
   };
 

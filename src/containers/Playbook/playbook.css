@@ -228,7 +228,8 @@ h1, h2, h3, h4, h5, h6, strong {
   padding: 10px;
 
   &-info {
-    width: 40%
+    width: 40%;
+    max-width: 200px;
   }
   img {
     width: 100%;
@@ -236,7 +237,7 @@ h1, h2, h3, h4, h5, h6, strong {
   }
 
   &-form {
-    width: 60%;
+    width: 70%;
     padding: 0 0 0 40px;
     margin: 0;
 
@@ -263,10 +264,9 @@ h1, h2, h3, h4, h5, h6, strong {
     display: flex;
     flex-direction: row;
 
-    li {
+    .socMedia {
       flex-grow: 1;
       list-style: none;
-      background: red;
       padding: 9px;
       margin: 0 5px;
       text-align: center;
@@ -274,6 +274,26 @@ h1, h2, h3, h4, h5, h6, strong {
       color: #fff;
       cursor: pointer;
       border-radius: 3px;
+    }
+
+    .iconBox {
+      padding: 8px;
+      border-radius: 50%;
+      float: left;
+      width: 40%;
+      max-width: 40px;
+
+      i {
+        font-size: 24px; 
+      }
+    }
+
+
+    input {
+      width: 65%;
+      float: left;
+      margin-left: 10%;
+      margin-top: 5%;
     }
 
     .fb {
