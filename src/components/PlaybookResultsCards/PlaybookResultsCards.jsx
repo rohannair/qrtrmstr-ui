@@ -19,15 +19,32 @@ const PlaybookResultsCards = (props) => {
     switch (field.type) {
 
     case 'bio':
+      let twitter = field.body.options.twitter
+      ? `Twitter: ${field.body.options.twitter}`
+      : '';
+
+      let linkedin = field.body.options.linkedin
+      ? `LinkedIn: ${field.body.options.linkedin}`
+      : '';
+
       return (
         <Card key={ field.slide_number } footer={<div/>}>
-          <h2>{field.body.heading}</h2>
-          <div>
+          <div className="bio-results">
+            <h2>{field.body.heading}</h2>
+
             <div className="profileImage">
               <img src={ field.body.options.profile_image.url } />
             </div>
-            <div className="profileDesc">
-              { field.body.options.bio }
+
+            <div className="body">
+              <div className="profileDesc">
+                <strong>Biography:</strong>
+                { field.body.options.bio }
+              </div>
+              <div className="socialMedia">
+                { twitter }
+                { linkedin }
+              </div>
             </div>
           </div>
         </Card>
