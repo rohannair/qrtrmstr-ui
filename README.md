@@ -34,9 +34,13 @@ YUP!
 4. The dev server randomly breaks
 Known bug... unknown fix. Bounty of 1 beer to whoever solves this problem for good.
 
-## For Prod:
-`npm run build`
-
-### To serve:
-Link: /var/www/html -> /root/of/repository
-
+## Build & Deploy:
+1. Get Heroku toolbelt (`$ brew install heroku-toolbelt`)
+2. Make sure you have Heroku credentials for UI repo
+3. `$ heroku login`
+4. `$ source scripts/build-ui.sh`
+5. Grab the `app.js` url with the cache-revved hash code
+6. Replace `/public/app.js` at bottom of `public/index.html` with `/app.[whatever].js`
+7. Get Heroku static plugin: `$ heroku plugins:install heroku-cli-static`
+8. `$ heroku git:remote -a qrtrmstr-ui` 
+9. `$ heroku static:deploy`
