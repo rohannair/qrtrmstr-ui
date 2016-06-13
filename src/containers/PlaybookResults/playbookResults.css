@@ -1,77 +1,83 @@
-.profileImage {
-  float: left;
+.playbook-results {
 
-  img {
-    max-width: 300px;
-  }
-}
+  .bio-results {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 
-.profileDesc {
-  margin-left: 20px;
-  float: left;
-}
+    h2 {
+      width: 100%;
+    }
 
-.resultsInfo {
-  background-color: #fff;
-  box-shadow: 5px 3px 3px #C3C0C0;
+    .body {
+      width: 75%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
 
-  .resultsInfoBody {
-    width: 70%;
-    padding: 12px;
-    color: #474747;
-    overflow: auto;
-
-    .resultsTitle {
-      padding-left: 10%;
-
-      .playbookInfo {
-        display: inline-block;
-        padding-left: 15px;
-
-        .textInfoComp {
-          font-size: 13px;
-        }
-
-        .textInfoUser {
-          display: block;
-          font-size: 15px;
-          font-weight: 500;
-        }
+      strong {
+        display: block;
       }
+    }
 
-      .playbookTitle {
-        display: table-cell;
-        vertical-align: middle;
+    .profileImage {
+      width: 25%;
+      max-width: 450px;
 
-        .textInfoPerc {
-          font-size: 17px;
-          padding-left: 15px;
-        }
+      img {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+      }
+    }
+
+    .profileDesc, .socialMedia {
+      width: 100%;
+    }
+
+
+  }
+
+  &-info {
+    display: flex;
+    flex-direction: rowf;
+    flex-wrap: wrap;
+  }
+
+  &-single {
+    width: 50%;
+
+    .title {
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 0.75em;
+    }
+  }
+
+  .tasksTab {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 20px 0;
+    padding: 10px 0 0;
+
+    text-transform: uppercase;
+
+
+    .comTask, .incomTask {
+      width: 50%;
+      text-align: center;
+      cursor: pointer;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #E6DEDE;
+
+      &.selected {
+        border-bottom: 2px solid #EE6352;
+        color: #474747;
       }
     }
   }
+
+
+
 }
-
-.tasksTab {
-  text-transform: uppercase;
-  padding-top: 15px;
-  width: 70%;
-  margin: 0 auto;
-  margin-top: 30px;
-  font-size: 14px;
-  color: #AFA7A7;
-  border-bottom: 1px solid #E6DEDE;
-
-  .comTask, .incomTask {
-    width: 30%;
-    display: inline-block;
-    padding-bottom: 13px;
-    text-align: center;
-
-    &.selected {
-      border-bottom: 2px solid #EE6352;
-      color: #474747;
-    }
-  }
-}
-
