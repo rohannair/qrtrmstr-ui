@@ -111,7 +111,7 @@ const PlaybookCards = (props) => {
       return (
         <Card key={field.slide_number} footer={<div/>}>
           <h2>{field.heading}</h2>
-          <p className = {field.body.textAlign || ''}>{field.body.desc}</p>
+          <div className = {field.body.textAlign || ''} dangerouslySetInnerHTML={{__html: field.body.desc}} />
           <div className="equipment-form">
             { opts }
           </div>

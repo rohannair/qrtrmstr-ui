@@ -4,6 +4,7 @@
   bottom: 0;
   left: 0;
   right: 0;
+  max-width: 200px;
 
   label {
     border: 3px dashed lightgrey;
