@@ -1,3 +1,4 @@
+rm -rf public/*
 npm run build
 CACHE_REV=$(cat stats.json)
 cp index.html ./public/
