@@ -71,10 +71,6 @@ class UserList extends Component {
 
       return (
         <div key={ row.id } className="table-row">
-          <div className="cell check">
-            <input type="checkbox" disabled />
-          </div>
-
           <div className="cell name">
             <div className="profile-img">
               <img src={row.profile_img} alt=""/>
@@ -108,18 +104,16 @@ class UserList extends Component {
 
     return (
       <div className="userList">
-        <Table headings = {['check', 'name', 'email', 'role', 'actions']} >
+        <Table headings = {['name', 'email', 'role', 'actions']} >
           { tableBody }
           <div className="userList-metadata">
             {`${userCount} users`}
           </div>
         </Table>
 
-        <Card>
-          <div className="userList-actionBar">
-            <Button onClick={this._renderNewUserModal} classes="primary md">New user +</Button>
-          </div>
-        </Card>
+        <div className="userList-actionBar">
+          <Button onClick={this._renderNewUserModal} classes="primary md">New user +</Button>
+        </div>
 
         <div className="modalContainer">
           { newUserForm }
