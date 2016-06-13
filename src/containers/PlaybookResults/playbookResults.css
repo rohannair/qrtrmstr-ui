@@ -23,6 +23,7 @@
     .profileImage {
       width: 25%;
       max-width: 450px;
+      margin-right: 20px;
 
       img {
         display: block;
