@@ -27,12 +27,6 @@ const PlaybookEditorSidebar = (props) => {
           </Link>
         </ButtonGroup>
       </Card>
-
-      <Card title="Add cards">
-        <ButtonGroup vertical>
-          <NavGrid opts={ opts } onClick={ props.onClick }/>
-        </ButtonGroup>
-      </Card>
     </div>
   );
 };

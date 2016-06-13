@@ -98,6 +98,11 @@ h1, h2, h3, h4, h5, h6, strong {
   margin: 0 auto;
   padding: 40px 0;
 
+  @media(max-width: 30em) {
+    width: 100%;
+    padding: 40px 20px;
+  }
+
   >* {
     margin-bottom: 40px;
   }
@@ -119,7 +124,6 @@ h1, h2, h3, h4, h5, h6, strong {
   p, ul, ol {
     line-height: 1.5;
   }
-
 
   p {
     strong,
@@ -335,14 +339,26 @@ h1, h2, h3, h4, h5, h6, strong {
 .day1-body {
   display: flex;
   flex-direction: row;
+
+  @media (max-width: 30em) {
+    flex-direction: column;
+  }
 }
 
 .day1-map {
   font-size: 18px;
   padding: 0 20px;
 
+  @media (max-width: 30em) {
+    padding: 0;
+  }
+
   &.mapDesc {
     margin-left: 5%;
+
+    @media (max-width: 30em) {
+      margin-left: 0;
+    }
   }
 
   div {
@@ -477,6 +493,11 @@ h1, h2, h3, h4, h5, h6, strong {
   padding: 0 20px;
   font-size: 18px;
 
+  @media (max-width: 30em) {
+    width: 100%;
+    padding: 0;
+  }
+
   .header {
     display: flex;
     flex-direction: row;
@@ -501,17 +522,38 @@ h1, h2, h3, h4, h5, h6, strong {
     margin-bottom: 20px;
     border-bottom: 1px solid #e3e3e3;
 
+    @media (max-width: 30em) {
+      padding: 0;
+      flex-direction: column;
+    }
+
     &-time {
       text-align: right;
       width: 37%;
       padding-right: 20px;
       font-weight: bold;
       color: #30343F;
+
+      @media (max-width: 30em) {
+        width: 100%;
+        text-align: left;
+        margin-bottom: 10px;
+
+        &:after {
+          content: ':';
+        }
+      }
     }
 
     &-desc {
       width: 80%;
       padding-left: 20px;
+
+      @media (max-width: 30em) {
+        width: 100%;
+        text-align: left;
+        padding: 0 0 20px;
+      }
     }
   }
 }
