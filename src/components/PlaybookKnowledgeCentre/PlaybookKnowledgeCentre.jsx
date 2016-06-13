@@ -82,7 +82,7 @@ class PlaybookKnowledgeCentre extends Component {
     return (
       <div className="playbookKnowledgeCentre">
         <h2>{ heading }</h2>
-        <p className = { body.textAlign || ''}>{ body.desc}</p>
+        <div className = { body.textAlign || ''} dangerouslySetInnerHTML={{__html: body.desc}} />
 
         <div className="playlist">
           <div className="playlist-menu">

@@ -13,6 +13,7 @@ export default function playbook(state = defaultState, action) {
   case 'PLAYBOOK_RETRIEVED':
     return {
       ...state,
+      completePlaybook: action.playbook,
       playbook: action.playbook.doc,
       submittedPlaybook: action.playbook.submitted_doc
     };
