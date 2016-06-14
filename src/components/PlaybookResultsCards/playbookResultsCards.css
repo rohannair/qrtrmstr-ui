@@ -1,30 +1,22 @@
-.profileDesc {
+.social-media {
   width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding-top: 30px;
 
-  .socialMedia {
-    width: 100%;
+  .socMedia {
+    flex: 1;
+    list-style: none;
+    padding: 9px 9px 9px 0px;
+    font-size: 0.65em;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 3px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 
-    .socMedia {
-      flex-grow: 1;
-      list-style: none;
-      padding: 9px;
-      margin: 0 5px;
-      font-size: 0.65em;
-      color: #fff;
-      cursor: pointer;
-      border-radius: 3px;
-      display: inline-block;
-
-      p {
-        color: black;
-        margin-left: 30px;
-        font-size: 11px;
-      }
-    }
-    
     .iconBox {
       padding-top: 5px;
       border-radius: 50%;
@@ -49,5 +41,12 @@
         background-color: #0077b5;
       }
     }
+
+    p {
+      color: black;
+      margin-left: 15px;
+      font-size: 14px;
+    }
   }
+   
 }
