@@ -63,6 +63,7 @@
   border-bottom: 1px solid #E6DEDE;
 
   .comTask, .incomTask {
+    cursor: pointer;
     width: 30%;
     display: inline-block;
     padding-bottom: 13px;

@@ -28,7 +28,7 @@ const PlaybookResultsCards = (props) => {
           <div className="iconBox fb">
             <i className="fa fa-facebook"></i>
           </div>
-          <p>{fieldOptions.facebook}</p>
+          <a href={fieldOptions.facebook}><p>{fieldOptions.facebook}</p></a>
        </div>
       : null;
 
@@ -37,7 +37,7 @@ const PlaybookResultsCards = (props) => {
           <div className="iconBox tw">
             <i className="fa fa-twitter"></i>
           </div>
-          <p>{fieldOptions.twitter}</p>
+          <a href={fieldOptions.twitter}><p>{fieldOptions.twitter}</p></a>
        </div>
       : null;
 
@@ -46,7 +46,7 @@ const PlaybookResultsCards = (props) => {
           <div className="iconBox li">
             <i className="fa fa-linkedin"></i>
           </div>
-          <p>{fieldOptions.linkedin}</p>
+          <a href={fieldOptions.linkedin}><p>{fieldOptions.linkedin}</p></a>
        </div>
       : null;
 
