@@ -15,7 +15,7 @@ import Footer from '../../components/Global/Footer';
 import Login from '../../components/Login';
 
 // Actions
-import { login, tryLogin, logOut } from '../../actions/loginActions';
+import { login, tryLogin, logout } from '../../actions/loginActions';
 
 class App extends Component {
 
@@ -24,6 +24,15 @@ class App extends Component {
 
   static contextTypes = {
     router: React.PropTypes.object.isRequired
+  };
+
+  componentWillMount() {
+    const { dispatch } = this.props;
+
+    if (this.props.route.path === 'logout') {
+      dispatch(logout());
+      this.context.router.replace('/');
+    }
   };
 
   componentDidMount() {
