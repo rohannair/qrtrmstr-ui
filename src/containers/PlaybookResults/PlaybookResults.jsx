@@ -13,8 +13,6 @@ import { getPlaybook } from '../../actions/playbookActions';
 import { getSingleUser } from '../../actions/userActions';
 import styles from './playbookResults.css';
 
-
-
 class PlaybookResults extends Component {
 
   state = {
@@ -38,7 +36,6 @@ class PlaybookResults extends Component {
     let completedCards = {};
     let unsubmittableCards = {};
     let cardsDisplay = null;
-
 
     for (let val in playbook) {
       if (playbook[val].submittable === false) {
@@ -71,39 +68,38 @@ class PlaybookResults extends Component {
         />;
     }
 
-    const userInfo = users ? <div className="textInfoUser">{users.first_name} {users.last_name}</div> : null;
-    const playbookName = completePlaybook ? <div className="textInfoComp">{completePlaybook.name}</div> : null;
-    const status = completePlaybook ? <span className="textInfoPerc">{completePlaybook.percent_submitted * 100}%</span> : null;
+    const userInfo = users ? <div className="textInfoUser"></div> : null;
+    const playbookName = completePlaybook ? <div className="textInfoComp"></div> : null;
+    const status = completePlaybook
+    ? completePlaybook.percent_submitted * 100 + '%'
+    : '';
     const comTaskClass = this.state.selectedTab === 'completed' ? 'selected' : null;
     const incomTaskClass = this.state.selectedTab === 'incomplete' ? 'selected' : null;
+
     return (
-      <div className="playbook">
-        <Header isAdmin={true}>
-          <Menu />
-        </Header>
-        <div className="resultsInfo">
-          <div className="resultsInfoBody">
-            <span className="resultsTitle">
-              <div className="playbookTitle" >Playbook:</div>
-              <div className="playbookInfo">{ userInfo } { playbookName }</div>
-            </span>
-            <span className="resultsTitle">
-              <div className="playbookTitle" >Status: { status } </div>
-            </span>
+      <div className="playbook-results">
+        <div className="playbook-results-info">
+          <div className="playbook-results-single">
+            <div className="title">Playbook:</div>
+            <div className="info">{`${users.first_name} ${users.last_name} -  ${completePlaybook ? completePlaybook.name : '' }`}</div>
+          </div>
+          <div className="playbook-results-single">
+            <div className="title">Status: </div>
+            <div className="info">{ `${status} Completed` }</div>
           </div>
         </div>
+
         <div className="tasksTab">
           <div onClick={this._setCompleted} className={`comTask ${comTaskClass}`}>
-            COMPLETED TASKS
+            Complete Tasks
           </div>
           <div onClick={this._setIncomplete} className={`incomTask ${incomTaskClass}`}>
-            INCOMPLETE TASKS
+            Incomplete Tasks
           </div>
         </div>
-        <div className="container container-playbook">
-          { cardsDisplay }
-        </div>
-        <Footer />
+
+        { cardsDisplay }
+
       </div>
     );
   };

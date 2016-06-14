@@ -22,7 +22,6 @@ const PlaybookResultsCards = (props) => {
     switch (field.type) {
 
     case 'bio':
-
       const facebookSoc = Object.keys(fieldOptions).indexOf('facebook') > -1
       ? <div className="socMedia">
           <div className="iconBox fb">
@@ -62,14 +61,20 @@ const PlaybookResultsCards = (props) => {
 
       return (
         <Card key={ field.slide_number } footer={<div/>}>
-          <h2>{field.body.heading}</h2>
-          <div>
+          <div className="bio-results">
+            <h2>{field.body.heading}</h2>
+
             <div className="profileImage">
               <img src={ fieldOptions.profile_image.url } />
             </div>
-            { fieldOptions.bio }
-            <div className="profileDesc">
-              { socialSoc }
+            <div className="body">
+              <div className="profileDesc">
+                <strong>Biography:</strong>
+                { fieldOptions.bio }
+              </div>
+              <div className="socialMedia">
+                { socialSoc }
+              </div>
             </div>
           </div>
         </Card>

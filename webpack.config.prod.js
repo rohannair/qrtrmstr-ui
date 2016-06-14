@@ -20,7 +20,8 @@ const config = {
   output: {
     path: path.join(__dirname, 'public'),
     filename: 'app.[hash].js',
-    sourceMapFilename: '[file].map'
+    sourceMapFilename: '[file].map',
+    publicPath: 'https://qrtrmstr.io/'
   },
 
   module: {

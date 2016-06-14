@@ -21,6 +21,7 @@ import { getUsers } from '../../actions/userActions';
 import Alert from '../../components/Alert';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
+import Table from '../../components/Table';
 
 import AssignPlaybookModal from '../../components/AssignPlaybookModal';
 import EditPlaybookModal from '../../components/EditPlaybookModal';
@@ -88,7 +89,7 @@ class PlaybookList extends Component {
     : null;
 
     const items = [...this.props.playbookList].map(val => {
-
+      debugger;
       return (<PlaybookListItem
         key={val.id}
         {...val}
@@ -105,16 +106,10 @@ class PlaybookList extends Component {
 
     return (
       <div className="playbookList">
-        <div className="playbookList-header">
-          <div className="cell checkbox"><input type="checkbox" /></div>
-          <div className="cell name">Name</div>
-          <div className="cell modified">Last Modified</div>
-          <div className="cell assigned">Assigned To</div>
-          <div className="cell status">Status</div>
-          <div className="cell actions">Actions</div>
-        </div>
+        <Table headings = {['name', 'modified', 'assigned', 'status', 'actions']} >
+          { items }
+        </Table>
 
-        { items }
         { editPlaybookModal }
         { sendPlaybookModal }
         { assignPlaybookModal }
