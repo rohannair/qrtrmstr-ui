@@ -15,7 +15,7 @@ import PlaybookResults from '../containers/PlaybookResults';
 import UserList from '../containers/UserList';
 
 // Utils
-import { hasToken, requireAuth, checkAuth, invalidateAuth } from '../utils/auth';
+import { hasToken, requireAuth, checkAuth } from '../utils/auth';
 
 export default (store) => {
   const history = syncHistoryWithStore(browserHistory, store);

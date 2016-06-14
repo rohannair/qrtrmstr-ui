@@ -1,6 +1,5 @@
 import Cookies from 'cookies-js';
 import { has } from 'lodash';
-import { logout } from '../actions/loginActions';
 
 const utils = {
   hasToken: (store) => {
@@ -25,18 +24,6 @@ const utils = {
         pathname: '/'
       });
     }
-  },
-
-  invalidateAuth: (nextState, replace) => {
-    debugger;
-    if (utils.hasToken()) {
-      Cookies.remove('token');
-
-    }
-
-    replace({
-      pathname: '/login'
-    })
   }
 };
 

@@ -21,7 +21,6 @@ export const login = (token = null, hasCookie) => {
 export const logout = () => {
 
   // Delete cookie
-  console.log(Cookies);
   Cookies.set('token', '', { expires: -1 });
 
   return {

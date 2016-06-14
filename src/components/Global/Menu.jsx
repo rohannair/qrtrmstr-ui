@@ -6,7 +6,6 @@ const Menu = props => {
     <div className="header-menu">
       <Link to="/dashboard/playbooks">Playbooks</Link>
       <Link to="/dashboard/users">Users</Link>
-
     </div>
   );
 };
