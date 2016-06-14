@@ -101,7 +101,7 @@ export const duplicatePlaybook = (token, id) => {
 export const assignPlaybook = (token, id, userId) => {
   const url = getDomain();
   return dispatch => fetch(`${url}/api/v1/playbooks/${id}`, {
-    method: 'PUT',
+    method: 'POST',
     headers: {
       'Accept': 'application/json',
       'Authorization': 'bearer ' + token,
@@ -169,7 +169,7 @@ export const createPlaybook = (token, payload) => {
   const url = getDomain();
   return dispatch => {
     return fetch(`${url}/api/v1/playbooks`, {
-      method: 'PUT',
+      method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Authorization': 'bearer ' + token,
@@ -204,7 +204,7 @@ export const modifyPlaybook = (token, payload, id) => {
 
   return dispatch => {
     return fetch(`${url}/api/v1/playbooks/${id}`, {
-      method: 'PUT',
+      method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Authorization': 'bearer ' + token,

@@ -79,5 +79,9 @@
     >* {
       margin-left: 20px;
     }
+
+    .right {
+      margin-left: auto;
+    }
   }
 }
