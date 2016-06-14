@@ -26,10 +26,9 @@ export default function playbookView(state = initialState, action) {
   case 'ADD_NEW_PLAYBOOK':
     return {
       ...state,
-      message: action.newPlaybook.message,
       list: [
         ...state.list,
-        action.newPlaybook.result
+        action.playbook
       ]
     };
 

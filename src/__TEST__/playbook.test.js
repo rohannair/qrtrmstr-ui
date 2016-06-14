@@ -26,12 +26,18 @@ test('Playbook', next => {
 
     const state_after = {
       baz: 'qux',
+      completePlaybook: {
+        doc: {
+          foo: 'bar'
+        }
+      },
       playbook: {
         foo: 'bar'
       },
       selected: {
         obj: 'nonono'
-      }
+      },
+      submittedPlaybook: undefined
     };
 
     t.plan(1);

@@ -1,5 +1,5 @@
 .playbookListItem {
-  display: flex;
+ /*  display: flex;
   flex-direction: row;
   align-items: baseline;
 
@@ -27,5 +27,6 @@
   .last {
     padding-right: 20px;
     text-align: right;
-  }
+    flex-shrink: 0;
+  } */
 }

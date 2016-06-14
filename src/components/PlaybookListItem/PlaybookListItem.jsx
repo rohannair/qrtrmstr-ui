@@ -2,8 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import styles from './playbookListItem.css';
 import { Link } from 'react-router';
 import moment from 'moment';
-import Button from '../../components/Button';
-import ButtonGroup from '../../components/ButtonGroup';
+import Button from '../Button';
+import ButtonGroup from '../ButtonGroup';
+import Pill from '../Pill';
 
 class PlaybookListItem extends Component {
 
@@ -14,18 +15,18 @@ class PlaybookListItem extends Component {
   render() {
     const href = `/playbook/${this.props.id}`;
     const assignedTo = this.props.firstName ? `${this.props.firstName} ${this.props.lastName}` : ' ';
-    const  deactivateClasses = this.props.current_status === 'draft' ? '' : 'disabled';
+    const deactivateClasses = this.props.current_status === 'draft' ? '' : 'disabled';
 
     const canOpen = this.props.showSendModal.bind(this,
         { id: this.props.id, name: this.props.name}
     );
 
     const currentStatusDisplay = this.props.current_status === 'in progress'
-    ? `${this.props.current_status} - ${this.props.percent_submitted * 100}% `
-    : this.props.current_status;
+    ? <Pill info>{`${this.props.percent_submitted * 100}% Done`}</Pill>
+    : <Pill warning>{this.props.current_status}</Pill>;
 
     const viewSubPlaybookBtn = this.props.current_status === 'in progress'
-    ? <Link to={`/playbook/results/${this.props.id}`}>
+    ? <Link to={`/dashboard/playbook/results/${this.props.id}`}>
         <i className="fa fa-eye"></i>
       </Link>
     : null;
@@ -45,19 +46,13 @@ class PlaybookListItem extends Component {
       />;
 
     return (
-      <div key={ this.props.id } className="playbookListItem">
-        <div className="cell checkbox"><input type="checkbox" /></div>
-
+      <div key={ this.props.id } className="table-row playbookListItem">
         <div className="cell name">
           { `${this.props.name}  `}
-
-          <Link to={`/playbook/${this.props.id}`}>
-            <i className="fa fa-external-link"></i>
-          </Link>
         </div>
 
         <div className="cell modified">
-          { moment(this.props.updated_at).format('YYYY-MM-DD h:mma') }
+          { moment(this.props.updated_at).fromNow() }
         </div>
 
         <div className="cell assigned assigned-text">
