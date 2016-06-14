@@ -1,8 +1,8 @@
 import { find } from 'lodash';
 
 const defaultState = {
-  playbook: {},
   selected: {},
+  completePlaybook: {},
   submittedPlaybook: {}
 };
 
@@ -14,7 +14,6 @@ export default function playbook(state = defaultState, action) {
     return {
       ...state,
       completePlaybook: action.playbook,
-      playbook: action.playbook.doc,
       submittedPlaybook: action.playbook.submitted_doc
     };
 

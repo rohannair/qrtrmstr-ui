@@ -23,10 +23,21 @@ const userInfo = {
 
 const PlaybookCards = (props) => {
 
-  const { fields, onClick, onSubmit, selected, submittedDoc } = props;
-
-  const submitAction = submittedDoc ? onSubmit : null;
-
+  const {
+    onClick,
+    findSlideKey,
+    onSubmit,
+    uploaderFn,
+    selected,
+    // submittedDoc,
+    completePlaybook,
+    onEquipChange,
+    onChange } = props;
+  const fields = completePlaybook.doc ? completePlaybook.doc : {};
+  const submittedDocProp = onEquipChange.submittedDoc
+  ? onEquipChange.submittedDoc
+  : null;
+  const submitAction = submittedDocProp ? onSubmit : null;
   const cardCount = Object.keys(fields).map(val => {
     const field = fields[val];
     const classes = classnames('progressbar-item', {done: val == 0});
@@ -37,11 +48,11 @@ const PlaybookCards = (props) => {
   const cards = Object.keys(fields).map((val) => {
 
     let field = fields[val];
-    const { slideKey } = props.findSlideKey(field.slide_number);
-    const submittedPic = slideKey && props.submittedDoc[slideKey].body.options.profile_image
-    ? props.submittedDoc[slideKey].body.options.profile_image
+    const { slideKey } = findSlideKey(field.slide_number);
+    const submittedPic = slideKey && submittedDocProp[slideKey].body.options.profile_image
+    ? submittedDocProp[slideKey].body.options.profile_image
     : null;
-    let wrapped = (img) => props.uploaderFn(field.slide_number, 'profile_image', img);
+    let wrapped = (img) => uploaderFn(field.slide_number, 'profile_image', img);
     let PlaybookUploader = (
       <Uploader
         savedPic={ submittedPic }
@@ -67,16 +78,15 @@ const PlaybookCards = (props) => {
             { ...field }
             onSubmit={ submitAction }
             userInfo={ userInfo }
-            onChange={ props.onChange }
-            submittedDoc={ props.submittedDoc }
-            findSlideKey={ props.findSlideKey }>
+            onChange={ onChange }
+            submittedDoc={ submittedDocProp }
+            findSlideKey={ findSlideKey }>
             { PlaybookUploader }
           </PlaybookBio>
         </Card>
       );
 
     case 'equipment':
-      const { submittedDoc, onEquipChange } = props;
       const opts = field.body.options.map((val, ind) => {
 
         const options = val.opts.map((opt, i) => {
@@ -84,13 +94,13 @@ const PlaybookCards = (props) => {
           return <option value={optValue} key={opt}>{val.optNames[i]}</option>;
         });
 
-        const { slide, slideKey } = props.findSlideKey(field.slide_number);
+        const { slide, slideKey } = findSlideKey(field.slide_number);
 
         const currentValue = JSON.stringify((slide && slide.body.options[ind].opts.length > 0)
         ? { opts: slide.body.options[ind].opts, optNames: slide.body.options[ind].optNames }
         : '');
 
-        const selectTag = submittedDoc
+        const selectTag = submittedDocProp
         ? <select value={ currentValue } onChange={e => onEquipChange(field.slide_number, val.id, (JSON.parse(e.target.value)))}>
             <option value=''></option>
             { options }

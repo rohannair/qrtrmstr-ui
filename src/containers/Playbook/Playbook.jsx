@@ -25,7 +25,7 @@ class Playbook extends Component {
   };
 
   render() {
-    const { id, fields, selected, token, img } = this.props;
+    const { id, selected, token, img, completePlaybook } = this.props;
     return (
       <div className="playbook">
         <Header isAdmin={false} />
@@ -33,9 +33,9 @@ class Playbook extends Component {
           onEquipChange={ this._updateEquipmentSubDoc}
           findSlideKey={ this._findSlideKey }
           onChange={ this._updateSubmittedDoc }
-          submittedDoc={ this.props.submittedDoc }
+          // submittedDoc={ this.props.submittedDoc }
           onSubmit={ this._onSubmitPlaybook }
-          fields={ fields }
+          completePlaybook={ completePlaybook }
           onClick={ this._onClick }
           selected={ selected }
           img={ img }
@@ -140,11 +140,12 @@ class Playbook extends Component {
 
 function select(state) {
   const token = state.accountActions.token || Cookies.get('token');
+  debugger;
   return {
     id: state.playbook.id,
     token,
-    fields: state.playbook.playbook,
-    submittedDoc: state.playbook.submittedPlaybook,
+    completePlaybook: state.playbook.completePlaybook,
+    // submittedDoc: state.playbook.submittedPlaybook,
     selected: state.playbook.selected,
     img: state.uploader.img
   };

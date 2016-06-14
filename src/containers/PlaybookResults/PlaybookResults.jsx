@@ -31,22 +31,22 @@ class PlaybookResults extends Component {
   }
 
   render() {
-    const { playbook, submittedDoc, users, completePlaybook } = this.props;
+    const { users, completePlaybook } = this.props;
     let incompleteCards = {};
     let completedCards = {};
     let unsubmittableCards = {};
     let cardsDisplay = null;
 
-    for (let val in playbook) {
-      if (playbook[val].submittable === false) {
-        unsubmittableCards[val] = playbook[val];
+    for (let val in completePlaybook.doc) {
+      if (completePlaybook.doc[val].submittable === false) {
+        unsubmittableCards[val] = completePlaybook.doc[val];
       };
     };
 
-    for (let val in submittedDoc) {
-      submittedDoc[val].submitted === true
-      ? completedCards[val] = submittedDoc[val]
-      : incompleteCards[val] = submittedDoc[val];
+    for (let val in completePlaybook.submitted_doc) {
+      completePlaybook.submitted_doc[val].submitted === true
+      ? completedCards[val] = completePlaybook.submitted_doc[val]
+      : incompleteCards[val] = completePlaybook.submitted_doc[val];
     };
 
     const totalCompleted = {
@@ -138,8 +138,6 @@ function select(state) {
   const token = state.accountActions.token || Cookies.get('token');
   return {
     token,
-    submittedDoc: state.playbook.submittedPlaybook,
-    playbook: state.playbook.playbook,
     completePlaybook: state.playbook.completePlaybook,
     users: state.app.users
   };
