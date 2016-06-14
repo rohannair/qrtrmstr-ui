@@ -8,6 +8,8 @@ import Card from '../Card';
 import PlaybookTextCard from '../PlaybookTextCard';
 import PlaybookKnowledgeCentre from '../PlaybookKnowledgeCentre';
 import MapContainer from '../../containers/MapContainer';
+import styles from './playbookResultsCards.css';
+
 
 const PlaybookResultsCards = (props) => {
 
@@ -15,30 +17,70 @@ const PlaybookResultsCards = (props) => {
   const cards = Object.keys(totalCards).map((val) => {
 
     let field = totalCards[val];
+    let fieldOptions = field.body.options;
 
     switch (field.type) {
 
     case 'bio':
+
+      const facebookSoc = Object.keys(fieldOptions).indexOf('facebook') > -1
+      ? <div className="socMedia">
+          <div className="iconBox fb">
+            <i className="fa fa-facebook"></i>
+          </div>
+          <p>{fieldOptions.facebook}</p>
+       </div>
+      : null;
+
+      const twitterSoc = Object.keys(fieldOptions).indexOf('twitter') > -1
+      ? <div className="socMedia">
+          <div className="iconBox tw">
+            <i className="fa fa-twitter"></i>
+          </div>
+          <p>{fieldOptions.twitter}</p>
+       </div>
+      : null;
+
+      const linkedinSoc = Object.keys(fieldOptions).indexOf('linkedin') > -1
+      ? <div className="socMedia">
+          <div className="iconBox li">
+            <i className="fa fa-linkedin"></i>
+          </div>
+          <p>{fieldOptions.linkedin}</p>
+       </div>
+      : null;
+
+      const socialSoc = (facebookSoc || twitterSoc || linkedinSoc)
+      ? (
+        <div className="social-media">
+          { facebookSoc }
+          { twitterSoc }
+          { linkedinSoc }
+        </div>
+      )
+      : null;
+
       return (
         <Card key={ field.slide_number } footer={<div/>}>
           <h2>{field.body.heading}</h2>
           <div>
             <div className="profileImage">
-              <img src={ field.body.options.profile_image.url } />
+              <img src={ fieldOptions.profile_image.url } />
             </div>
+            { fieldOptions.bio }
             <div className="profileDesc">
-              { field.body.options.bio }
+              { socialSoc }
             </div>
           </div>
         </Card>
       );
 
     case 'equipment':
-      const opts = field.body.options.map((val, ind) => {
+      const opts = fieldOptions.map((val, ind) => {
 
         return (
           <div key={val.id} className="equipment-choice">
-            <span>{val.name + ': ' + field.body.options[ind].optNames }</span>
+            <span>{val.name + ': ' + fieldOptions[ind].optNames }</span>
           </div>
         );
       });

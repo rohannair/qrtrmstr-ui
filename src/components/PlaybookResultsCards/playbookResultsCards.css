@@ -1,0 +1,53 @@
+.profileDesc {
+  width: 100%;
+
+  .social-media {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .socMedia {
+      flex-grow: 1;
+      list-style: none;
+      padding: 9px;
+      margin: 0 5px;
+      font-size: 0.65em;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 3px;
+      display: inline-block;
+
+      p {
+        color: black;
+        margin-left: 30px;
+        font-size: 11px;
+      }
+    }
+    
+    .iconBox {
+      padding-top: 5px;
+      border-radius: 50%;
+      float: left;
+      width: 35px;
+      height: 35px;
+      text-align: center;
+
+      i {
+        font-size: 24px; 
+      }
+
+      &.fb {
+        background: #3b5998;
+      }
+   
+      &.tw {
+        background: #55acee;
+      }
+   
+      &.li {
+        background-color: #0077b5;
+      }
+    }
+  }
+}
