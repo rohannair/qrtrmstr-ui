@@ -17,44 +17,27 @@ const PlaybookResultsCards = (props) => {
   const cards = Object.keys(totalCards).map((val) => {
 
     let field = totalCards[val];
-    let fieldOptions = field.body.options;
 
     switch (field.type) {
 
     case 'bio':
-      const facebookSoc = Object.keys(fieldOptions).indexOf('facebook') > -1
-      ? <div className="socMedia">
-          <div className="iconBox fb">
-            <i className="fa fa-facebook"></i>
-          </div>
-          <a href={fieldOptions.facebook}><p>{fieldOptions.facebook}</p></a>
-       </div>
-      : null;
 
-      const twitterSoc = Object.keys(fieldOptions).indexOf('twitter') > -1
-      ? <div className="socMedia">
-          <div className="iconBox tw">
-            <i className="fa fa-twitter"></i>
-          </div>
-          <a href={fieldOptions.twitter}><p>{fieldOptions.twitter}</p></a>
-       </div>
-      : null;
+      const socLinks = ['facebook', 'twitter', 'linkedin'].map(val => {
+        const socClass = val.slice(0,2);
+        return Object.keys(field.body.options).indexOf(val) > -1
+        ? <div key={val} className="socMedia">
+            <div className={`iconBox ${socClass}`}>
+              <i className={`fa fa-${val}`}></i>
+            </div>
+            <a href={field.body.options[val]}><p>{field.body.options[val]}</p></a>
+         </div>
+        : null;
+      });
 
-      const linkedinSoc = Object.keys(fieldOptions).indexOf('linkedin') > -1
-      ? <div className="socMedia">
-          <div className="iconBox li">
-            <i className="fa fa-linkedin"></i>
-          </div>
-          <a href={fieldOptions.linkedin}><p>{fieldOptions.linkedin}</p></a>
-       </div>
-      : null;
-
-      const socialSoc = (facebookSoc || twitterSoc || linkedinSoc)
+      const socialSoc = socLinks
       ? (
         <div className="social-media">
-          { facebookSoc }
-          { twitterSoc }
-          { linkedinSoc }
+          { socLinks }
         </div>
       )
       : null;
@@ -65,12 +48,12 @@ const PlaybookResultsCards = (props) => {
             <h2>{field.body.heading}</h2>
 
             <div className="profileImage">
-              <img src={ fieldOptions.profile_image.url } />
+              <img src={ field.body.options.profile_image.url } />
             </div>
             <div className="body">
               <div className="profileDesc">
                 <strong>Biography:</strong>
-                { fieldOptions.bio }
+                { field.body.options.bio }
               </div>
               <div className="socialMedia">
                 { socialSoc }
@@ -81,11 +64,11 @@ const PlaybookResultsCards = (props) => {
       );
 
     case 'equipment':
-      const opts = fieldOptions.map((val, ind) => {
+      const opts = field.body.options.map((val, ind) => {
 
         return (
           <div key={val.id} className="equipment-choice">
-            <span>{val.name + ': ' + fieldOptions[ind].optNames }</span>
+            <span>{val.name + ': ' + field.body.options[ind].optNames }</span>
           </div>
         );
       });
