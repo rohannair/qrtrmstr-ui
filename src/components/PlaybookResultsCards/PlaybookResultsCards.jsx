@@ -25,7 +25,7 @@ const PlaybookResultsCards = (props) => {
       const socLinks = ['facebook', 'twitter', 'linkedin'].map(val => {
         const socClass = val.slice(0,2);
         return Object.keys(field.body.options).indexOf(val) > -1
-        ? <div key={val} className="socMedia">
+        ? <div key={val} className="socMedia flexSocCon">
             <div className={`iconBox ${socClass}`}>
               <i className={`fa fa-${val}`}></i>
             </div>
@@ -36,7 +36,7 @@ const PlaybookResultsCards = (props) => {
 
       const socialSoc = socLinks
       ? (
-        <div className="social-media">
+        <div className="social-media flexSocCon">
           { socLinks }
         </div>
       )
