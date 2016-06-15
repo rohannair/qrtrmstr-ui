@@ -20,7 +20,8 @@ export default function playbookView(state = initialState, action) {
   case 'SINGLE_PLAYBOOK_RETRIEVED':
     return {
       ...state,
-      playbook: action.playbook
+      playbook: action.playbook,
+      users: action.users
     };
 
   case 'ADD_NEW_PLAYBOOK':

@@ -11,10 +11,11 @@ function playbooksRetrieved(playbookList = {}) {
 };
 
 // Single playbook retrieved for editing
-function singlePlaybookRetrieved(playbook = {}) {
+function singlePlaybookRetrieved(data) {
   return {
     type: 'SINGLE_PLAYBOOK_RETRIEVED',
-    playbook
+    playbook: data.playbook,
+    users: data.users
   };
 };
 
