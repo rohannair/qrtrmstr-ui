@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import styles from './login.css';
 
-import Card from '../Card';
+import Alert from '../Alert';
 import Button from '../Button';
+import Card from '../Card';
 
 class Login extends Component {
   static propTypes = {
@@ -25,13 +26,15 @@ class Login extends Component {
 
     //TODO: Use Alert here when Alert is merged in
     const errorEl = this.props.error
-    ? <div>{`ERROR: ${this.props.error}`}</div>
+    ? <Alert danger>{`ERROR: ${this.props.error}`}</Alert>
     : null;
 
     return (
       <div className="login-box">
         <Card>
           <h2>Log-in to Quartermaster</h2>
+
+          <div className="errorContainer">{ errorEl }</div>
           <form
           className="form"
           onSubmit={ this._submitForm }>
@@ -60,12 +63,8 @@ class Login extends Component {
                 />
             </label>
 
-            { errorEl }
-            <Button
-              classes="primary lgLong"
-              onClick={ this._submitForm }>
-              Submit
-            </Button>
+
+            <input className="btn primary lgLong" type="submit"/>
           </form>
 
           <Button
@@ -84,7 +83,9 @@ class Login extends Component {
     });
   };
 
-  _submitForm = () => {
+  _submitForm = (e) => {
+    e.preventDefault();
+
     const { username, password } = this.state;
     return this.props.submitForm({username, password});
   };
