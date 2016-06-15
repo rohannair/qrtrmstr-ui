@@ -29,14 +29,14 @@ const PlaybookCards = (props) => {
     onSubmit,
     uploaderFn,
     selected,
-    // submittedDoc,
-    completePlaybook,
+    playbook,
     onEquipChange,
     onChange } = props;
-  const fields = completePlaybook.doc ? completePlaybook.doc : {};
-  const submittedDocProp = onEquipChange.submittedDoc
-  ? onEquipChange.submittedDoc
+  const fields = playbook.doc ? playbook.doc : {};
+  const submittedDocProp = playbook.submitted_doc
+  ? playbook.submitted_doc
   : null;
+
   const submitAction = submittedDocProp ? onSubmit : null;
   const cardCount = Object.keys(fields).map(val => {
     const field = fields[val];

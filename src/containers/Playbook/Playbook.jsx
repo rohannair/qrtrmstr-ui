@@ -25,7 +25,7 @@ class Playbook extends Component {
   };
 
   render() {
-    const { id, selected, token, img, completePlaybook } = this.props;
+    const { id, selected, token, img, playbook } = this.props;
     return (
       <div className="playbook">
         <Header isAdmin={false} />
@@ -33,9 +33,8 @@ class Playbook extends Component {
           onEquipChange={ this._updateEquipmentSubDoc}
           findSlideKey={ this._findSlideKey }
           onChange={ this._updateSubmittedDoc }
-          // submittedDoc={ this.props.submittedDoc }
           onSubmit={ this._onSubmitPlaybook }
-          completePlaybook={ completePlaybook }
+          playbook={ playbook }
           onClick={ this._onClick }
           selected={ selected }
           img={ img }
@@ -51,13 +50,13 @@ class Playbook extends Component {
   };
 
   _findSlideKey = (slideNum) => {
-    const { submittedDoc } = this.props;
+    const { playbook } = this.props;
     let slide = null;
     let slideKey = null;
     // Isolate the key element that is changing
-    for (let val in submittedDoc) {
-      if (submittedDoc[val].slide_number === +slideNum) {
-        slide = submittedDoc[val];
+    for (let val in playbook.submitted_doc) {
+      if (playbook.submitted_doc[val].slide_number === +slideNum) {
+        slide = playbook.submitted_doc[val];
         slideKey = val;
       };
     };
@@ -65,7 +64,7 @@ class Playbook extends Component {
   };
 
   _updateSubmittedDoc = (slideNum, key, value) => {
-    const { dispatch, submittedDoc } = this.props;
+    const { dispatch, playbook } = this.props;
     const { slide, slideKey } = this._findSlideKey(slideNum);
     let updatedSlide = null;
     if (Object.keys(slide.body.options).indexOf(key) > -1) {
@@ -85,7 +84,7 @@ class Playbook extends Component {
   };
 
   _updateEquipmentSubDoc = (slideNum, id, value) => {
-    const { dispatch, submittedDoc } = this.props;
+    const { dispatch, playbook } = this.props;
     const { slide, slideKey } = this._findSlideKey(slideNum);
 
     let oldItem = null;
@@ -120,8 +119,8 @@ class Playbook extends Component {
   };
 
   _onSubmitPlaybook = () => {
-    const { dispatch, submittedDoc, params } = this.props;
-    return dispatch(submitPlaybook({submitted_doc: submittedDoc}, params.playbookID));
+    const { dispatch, playbook, params } = this.props;
+    return dispatch(submitPlaybook({submitted_doc: playbook.submitted_doc}, params.playbookID));
   };
 
   _getPlaybook = id => {
@@ -140,12 +139,10 @@ class Playbook extends Component {
 
 function select(state) {
   const token = state.accountActions.token || Cookies.get('token');
-  debugger;
   return {
     id: state.playbook.id,
     token,
-    completePlaybook: state.playbook.completePlaybook,
-    // submittedDoc: state.playbook.submittedPlaybook,
+    playbook: state.playbook.playbook,
     selected: state.playbook.selected,
     img: state.uploader.img
   };
