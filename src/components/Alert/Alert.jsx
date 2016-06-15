@@ -14,26 +14,30 @@ const Alert = (props) => {
       danger: props.danger
     }
   );
-  return (
-    <div className={ classes }>
-      <div className="content">
-        { props.children }
-      </div>
 
-      <div className="closeBtn">
+  const closeBtn = props.closeAlert
+  ? <div className="closeBtn">
         <Button
           onClick={ props.closeAlert }
           classes='sm transparent'
           icon='times'
         />
       </div>
+  : null;
+
+  return (
+    <div className={ classes }>
+      <div className="content">
+        { props.children }
+      </div>
+      { closeBtn }
     </div>
   );
 };
 
 Alert.propTypes = {
   children: PropTypes.string.isRequired,
-  closeAlert: PropTypes.func.isRequired
+  closeAlert: PropTypes.func
 };
 
 export default Alert;
