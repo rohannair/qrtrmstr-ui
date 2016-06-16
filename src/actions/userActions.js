@@ -55,7 +55,7 @@ export const createUser = (token, payload) =>
 
 // Modify existing User
 export const modifyUser = (token, payload) =>
-  dispatch => put(`${LOCATION_ROOT}users/${payload.id}`, token, payload)
+  dispatch => post(`${LOCATION_ROOT}users/${payload.id}`, token, payload)
   .then(json => console.log(json));
 
 // Get All Roles

@@ -89,7 +89,6 @@ class PlaybookList extends Component {
     : null;
 
     const items = [...this.props.playbookList].map(val => {
-      debugger;
       return (<PlaybookListItem
         key={val.id}
         {...val}

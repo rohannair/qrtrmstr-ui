@@ -81,9 +81,7 @@ const config = {
         loader: 'file!img'
       }
 
-    ],
-
-    noParse: /node_modules\/quill\/dist/
+    ]
   },
 
   plugins: [
