@@ -14,7 +14,9 @@ const Header = props => {
           { props.children }
         </div>
       </div>
-      <div className="appHeader-section"></div>
+      <div className="appHeader-section">
+        <Link to="/logout" className="right">Log Out</Link>
+      </div>
     </header>
   );
 };

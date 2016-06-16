@@ -37,8 +37,8 @@ class NewUserModal extends Component {
               <label>First Name: </label>
               <input
                 className="inputIcon"
-                name="first_name"
-                value= { val.first_name }
+                name="firstName"
+                value= { val.firstName }
                 onChange={ e => onChange(e.target.name, e.target.value) }
               />
             </div>
@@ -46,8 +46,8 @@ class NewUserModal extends Component {
               <label>Last Name: </label>
               <input
                 className="inputIcon"
-                name="last_name"
-                value= { val.last_name }
+                name="lastName"
+                value= { val.lastName }
                 onChange={ e => onChange(e.target.name, e.target.value) }
               />
             </div>

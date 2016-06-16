@@ -84,13 +84,19 @@ test('PlaybookView', ({ test }) => {
       type: 'SINGLE_PLAYBOOK_RETRIEVED',
       playbook: {
         k3y: 'hello i am k3y'
-      }
+      },
+      users: [
+        {username: 'frank@email.com'}
+      ]
     };
 
     const state_after = {
       playbook: {
         k3y: 'hello i am k3y'
-      }
+      },
+      users: [
+        {username: 'frank@email.com'}
+      ]
     };
 
     assert.plan(1);
