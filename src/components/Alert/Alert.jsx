@@ -17,12 +17,12 @@ const Alert = (props) => {
 
   const closeBtn = props.closeAlert
   ? <div className="closeBtn">
-        <Button
-          onClick={ props.closeAlert }
-          classes='sm transparent'
-          icon='times'
-        />
-      </div>
+      <Button
+        onClick={ props.closeAlert }
+        classes='sm transparent'
+        icon='times'
+      />
+    </div>
   : null;
 
   return (
