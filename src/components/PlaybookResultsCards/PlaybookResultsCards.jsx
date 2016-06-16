@@ -13,7 +13,7 @@ import styles from './playbookResultsCards.css';
 
 const PlaybookResultsCards = (props) => {
 
-  const { totalCards, userInfo, view } = props;
+  const { totalCards, userInfo, view, validateLink } = props;
   const cards = Object.keys(totalCards).map((val) => {
 
     let field = totalCards[val];
@@ -21,17 +21,21 @@ const PlaybookResultsCards = (props) => {
     switch (field.type) {
 
     case 'bio':
-
       const socLinks = ['facebook', 'twitter', 'linkedin'].map(val => {
         const socClass = val.slice(0,2);
-        return Object.keys(field.body.options).indexOf(val) > -1
-        ? <div key={val} className="socMedia flexSocCon">
-            <div className={`iconBox ${socClass}`}>
-              <i className={`fa fa-${val}`}></i>
+        if (Object.keys(field.body.options).indexOf(val) > -1) {
+          const valSoclink = validateLink(field.body.options[val]);
+          return (
+            <div key={val} className="socMedia flexSocCon">
+              <div className={`iconBox ${socClass}`}>
+                <i className={`fa fa-${val}`}></i>
+              </div>
+              <a href={valSoclink}><p>{field.body.options[val]}</p></a>
             </div>
-            <a href={field.body.options[val]}><p>{field.body.options[val]}</p></a>
-         </div>
-        : null;
+          );
+        }
+        return null;
+
       });
 
       const socialSoc = socLinks
