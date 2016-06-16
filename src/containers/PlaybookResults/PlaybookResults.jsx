@@ -54,7 +54,7 @@ class PlaybookResults extends Component {
       ...unsubmittableCards
     };
 
-    if (users.first_name) {
+    if (users.firstName) {
       cardsDisplay = this.state.selectedTab === 'completed'
       ? <PlaybookResultsCards
           userInfo={ users }
@@ -81,7 +81,7 @@ class PlaybookResults extends Component {
         <div className="playbook-results-info">
           <div className="playbook-results-single">
             <div className="title">Playbook:</div>
-            <div className="info">{`${users.first_name} ${users.last_name} -  ${completePlaybook ? completePlaybook.name : '' }`}</div>
+            <div className="info">{`${users.firstName} ${users.lastName} -  ${completePlaybook ? completePlaybook.name : '' }`}</div>
           </div>
           <div className="playbook-results-single">
             <div className="title">Status: </div>

@@ -154,7 +154,7 @@ const PlaybookResultsCards = (props) => {
     case 'intro':
       const introFilled = {
         ...field,
-        heading: field.heading.replace('\${user}', userInfo.first_name).replace('Scotia Bank', 'Scotiabank')
+        heading: field.heading.replace('\${user}', userInfo.firstName).replace('Scotia Bank', 'Scotiabank')
       };
       return <PlaybookTextCard key={field.slide_number} {...introFilled} />;
     default:
