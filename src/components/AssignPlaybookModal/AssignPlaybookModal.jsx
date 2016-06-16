@@ -37,7 +37,7 @@ class AssignPlaybookModal extends Component {
 
     const opts = Object.keys(users).map(idx => {
       let user = users[idx];
-      return <option key={user.id} value={user.id}>{user.first_name + ' ' + user.last_name}</option>;
+      return <option key={user.id} value={user.id}>{user.firstName + ' ' + user.lastName}</option>;
     });
 
     return (

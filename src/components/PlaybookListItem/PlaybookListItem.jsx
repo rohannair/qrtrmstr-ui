@@ -112,8 +112,8 @@ class PlaybookListItem extends Component {
       const assignedUserOrg = this.props.users.filter(val => val.id === userID)[0];
       assignedUser = {
         id: assignedUserOrg.id,
-        first_name: assignedUserOrg.first_name,
-        last_name: assignedUserOrg.last_name,
+        firstName: assignedUserOrg.firstName,
+        lastName: assignedUserOrg.lastName,
         email: assignedUserOrg.username,
         playbookID: this.props.id };
     }
