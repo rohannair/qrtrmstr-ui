@@ -76,7 +76,7 @@ class UserList extends Component {
               <img src={row.profile_img} alt=""/>
             </div>
 
-            { `${row.first_name} ${row.last_name}` } { admin_pill }
+            { `${row.firstName} ${row.lastName}` } { admin_pill }
           </div>
 
           <div className="cell email">

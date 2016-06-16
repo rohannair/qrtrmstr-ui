@@ -94,9 +94,7 @@ class PlaybookList extends Component {
         {...val}
         users={ this.props.users }
         sendPlaybook={ this._sendPlaybookToAssignedUser }
-
         duplicatePlaybook={ this._duplicatePlaybook }
-
         showEditModal={ this._showEditModal }
         showAssignModal={ this._showAssignModal }
         showSendModal={ this._showSendModal }
@@ -159,8 +157,8 @@ class PlaybookList extends Component {
 
     const welcomeEmailParams = {
       userId: selected.id,
-      firstName: selected.first_name,
-      lastName: selected.last_name,
+      firstName: selected.firstName,
+      lastName: selected.lastName,
       email: selected.username,
       playbookId: id,
       emailTemplate: 'welcomeEmail'
@@ -188,8 +186,8 @@ class PlaybookList extends Component {
     this.setState({
       chosenUser: {
         userId: value.id,
-        firstName: value.first_name,
-        lastName: value.last_name,
+        firstName: value.firstName,
+        lastName: value.lastName,
         email: value.email,
         playbookId: value.playbookID,
         emailTemplate: 'welcomeEmail'

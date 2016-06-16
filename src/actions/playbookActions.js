@@ -13,7 +13,7 @@ export const setSelection = id => {
 
 export const getPlaybook = (token = '', id) =>
   dispatch => get(`${LOCATION_ROOT}playbooks/${id}`, token)
-  .then(playbook => dispatch(playbookRetrieved(playbook)));
+  .then(data => dispatch(playbookRetrieved(data)));
 
 export const submitPlaybook = (data, id) => {
   return dispatch => {
@@ -63,9 +63,9 @@ export const editSubmittedPlaybook = (slideKey, data) => {
   };
 };
 
-function playbookRetrieved(playbook = {}) {
+function playbookRetrieved(data = {}) {
   return {
     type: 'PLAYBOOK_RETRIEVED',
-    playbook
+    playbook: data.playbook
   };
 }

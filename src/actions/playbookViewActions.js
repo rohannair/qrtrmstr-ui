@@ -11,10 +11,11 @@ function playbooksRetrieved(playbookList = {}) {
 };
 
 // Single playbook retrieved for editing
-function singlePlaybookRetrieved(playbook = {}) {
+function singlePlaybookRetrieved(data) {
   return {
     type: 'SINGLE_PLAYBOOK_RETRIEVED',
-    playbook
+    playbook: data.playbook,
+    users: data.users
   };
 };
 
@@ -101,7 +102,7 @@ export const duplicatePlaybook = (token, id) => {
 export const assignPlaybook = (token, id, userId) => {
   const url = getDomain();
   return dispatch => fetch(`${url}/api/v1/playbooks/${id}`, {
-    method: 'PUT',
+    method: 'POST',
     headers: {
       'Accept': 'application/json',
       'Authorization': 'bearer ' + token,
@@ -169,7 +170,7 @@ export const createPlaybook = (token, payload) => {
   const url = getDomain();
   return dispatch => {
     return fetch(`${url}/api/v1/playbooks`, {
-      method: 'PUT',
+      method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Authorization': 'bearer ' + token,
@@ -204,7 +205,7 @@ export const modifyPlaybook = (token, payload, id) => {
 
   return dispatch => {
     return fetch(`${url}/api/v1/playbooks/${id}`, {
-      method: 'PUT',
+      method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Authorization': 'bearer ' + token,
