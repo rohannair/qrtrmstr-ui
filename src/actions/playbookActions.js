@@ -11,13 +11,6 @@ export const setSelection = id => {
   };
 };
 
-export const playbookSubmitted = playbook => {
-  return {
-    type: 'PLAYBOOK_SUBMITTED',
-    playbook
-  };
-};
-
 export const getPlaybook = (token = '', id) =>
   dispatch => get(`${LOCATION_ROOT}playbooks/${id}`, token)
   .then(data => dispatch(playbookRetrieved(data)));
@@ -37,7 +30,7 @@ export const submitPlaybook = (data, id) => {
       if (!response.ok) {
         return Promise.reject(json);
       }
-      return dispatch(playbookSubmitted(json.result));
+      return null;
     });
   };
 };
@@ -58,7 +51,6 @@ export const updatePlaybookStatus = (data, id) => {
         return Promise.reject(json);
       }
       return null;
-     // return dispatch(playbookSubmitted(json.result));
     });
   };
 };
