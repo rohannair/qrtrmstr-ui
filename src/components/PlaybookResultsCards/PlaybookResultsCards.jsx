@@ -8,6 +8,8 @@ import Card from '../Card';
 import PlaybookTextCard from '../PlaybookTextCard';
 import PlaybookKnowledgeCentre from '../PlaybookKnowledgeCentre';
 import MapContainer from '../../containers/MapContainer';
+import styles from './playbookResultsCards.css';
+
 
 const PlaybookResultsCards = (props) => {
 
@@ -19,13 +21,26 @@ const PlaybookResultsCards = (props) => {
     switch (field.type) {
 
     case 'bio':
-      let twitter = field.body.options.twitter
-      ? `Twitter: ${field.body.options.twitter}`
-      : '';
 
-      let linkedin = field.body.options.linkedin
-      ? `LinkedIn: ${field.body.options.linkedin}`
-      : '';
+      const socLinks = ['facebook', 'twitter', 'linkedin'].map(val => {
+        const socClass = val.slice(0,2);
+        return Object.keys(field.body.options).indexOf(val) > -1
+        ? <div key={val} className="socMedia flexSocCon">
+            <div className={`iconBox ${socClass}`}>
+              <i className={`fa fa-${val}`}></i>
+            </div>
+            <a href={field.body.options[val]}><p>{field.body.options[val]}</p></a>
+         </div>
+        : null;
+      });
+
+      const socialSoc = socLinks
+      ? (
+        <div className="social-media flexSocCon">
+          { socLinks }
+        </div>
+      )
+      : null;
 
       return (
         <Card key={ field.slide_number } footer={<div/>}>
@@ -35,15 +50,13 @@ const PlaybookResultsCards = (props) => {
             <div className="profileImage">
               <img src={ field.body.options.profile_image.url } />
             </div>
-
             <div className="body">
               <div className="profileDesc">
                 <strong>Biography:</strong>
                 { field.body.options.bio }
               </div>
               <div className="socialMedia">
-                { twitter }
-                { linkedin }
+                { socialSoc }
               </div>
             </div>
           </div>
@@ -141,7 +154,7 @@ const PlaybookResultsCards = (props) => {
     case 'intro':
       const introFilled = {
         ...field,
-        heading: field.heading.replace('\${user}', userInfo.first_name).replace('Scotia Bank', 'Scotiabank')
+        heading: field.heading.replace('\${user}', userInfo.firstName).replace('Scotia Bank', 'Scotiabank')
       };
       return <PlaybookTextCard key={field.slide_number} {...introFilled} />;
     default:
