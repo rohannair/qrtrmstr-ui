@@ -19,6 +19,7 @@ const SlideKnowledgeCenterVideo = ({ val, i, deleteItem, onChange }) => {
         <input
           name="name"
           value={ val.name }
+          placeholder="Enter video title"
           onChange={ e => onChange(i, e.target.name, e.target.value) }
         />
       </div>
@@ -28,6 +29,7 @@ const SlideKnowledgeCenterVideo = ({ val, i, deleteItem, onChange }) => {
         <input
           name="id"
           value={ val.id }
+          placeholder="Enter video ID"
           onChange={ e => onChange(i, e.target.name, e.target.value) }
         />
       </div>

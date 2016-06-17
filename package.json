@@ -6,7 +6,7 @@
   "description": "",
   "main": "index.js",
   "engines": {
-    "node": "6.0.0"
+    "node": "6.2.1"
   },
   "scripts": {
     "newComp": "babel-node ./scripts/newComponent.js",
@@ -85,8 +85,8 @@
     "react-flip-move": "^2.0.5",
     "react-hot-loader": "^3.0.0-beta.2",
     "react-redux": "^4.0.6",
-    "react-router": "^2.0.0-rc5",
-    "react-router-redux": "^4.0.2",
+    "react-router": "^2.4.0",
+    "react-router-redux": "^4.0.5",
     "redux": "^3.4.0",
     "redux-thunk": "^2.0.1"
   }
