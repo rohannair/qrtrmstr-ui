@@ -26,18 +26,14 @@ test('Playbook', next => {
 
     const state_after = {
       baz: 'qux',
-      completePlaybook: {
+      playbook: {
         doc: {
           foo: 'bar'
         }
       },
-      playbook: {
-        foo: 'bar'
-      },
       selected: {
         obj: 'nonono'
-      },
-      submittedPlaybook: undefined
+      }
     };
 
     t.plan(1);
@@ -45,6 +41,65 @@ test('Playbook', next => {
       playbook(state, action),
       state_after,
       'Add playbook object to state on retrieval'
+    );
+    t.end();
+  });
+
+  next.test('EDIT_SUBMITTED_PLAYBOOK', t => {
+
+    const action = {
+      type: 'EDIT_SUBMITTED_PLAYBOOK',
+      slideKey: '1',
+      data: {
+        body: {
+          bio: 'Hello'
+        }
+      }
+    };
+
+    const state = {
+      baz: 'qux',
+      playbook: {
+        doc: {
+          foo: 'bar'
+        },
+        submitted_doc: {
+          1: {
+            body: {
+              bio: ''
+            }
+          }
+        }
+      },
+      selected: {
+        obj: 'nonono'
+      }
+    };
+
+    const state_after = {
+      baz: 'qux',
+      playbook: {
+        doc: {
+          foo: 'bar'
+        },
+        submitted_doc: {
+          1: {
+            body: {
+              bio: 'Hello'
+            }
+          }
+        }
+      },
+      selected: {
+        obj: 'nonono'
+      }
+    };
+
+    t.plan(1);
+    t.deepEqual(
+      playbook(state, action),
+      state_after,
+      'Edit submitted doc object in state on retrieval'
     );
     t.end();
   });
