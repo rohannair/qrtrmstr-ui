@@ -51,8 +51,6 @@ h3 {
   z-index: 900;
   border-radius: 3px;
   background-color: #fff;
-  display: inline-block;
-  float: left;
   margin-bottom: 5px;
 }
 
@@ -61,4 +59,3 @@ h3 {
   border-right: none;
   border-radius: 0px;
 }
-
