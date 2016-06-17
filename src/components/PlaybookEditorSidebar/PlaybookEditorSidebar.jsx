@@ -22,7 +22,12 @@ const PlaybookEditorSidebar = (props) => {
             onClick={ props.save }
             classes='primary block lglong'
           >Save</Button>
-          <Link to={`/playbook/${props.id}`} className='btn tertiary block md'>
+          <Link
+            to={`/playbook/${props.id}`}
+            className="btn tertiary block md"
+            target="_blank"
+            rel="noopener"
+          >
               Preview Playbook
           </Link>
         </ButtonGroup>

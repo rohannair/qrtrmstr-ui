@@ -214,6 +214,7 @@ class TextBox extends Component {
 
         </ButtonGroup>
         <Editor
+          spellCheck={true}
           textAlignment={this.state.textAlign}
           contentEditable={true}
           suppressContentEditableWarning={true}

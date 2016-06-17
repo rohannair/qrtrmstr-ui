@@ -6,7 +6,8 @@
   padding: 15px;
   background-color: #eee;
   border: 1px solid #ccc;
-  border-right: 4px;
+  border-right-size: 4px;
+  text-align: center;
   align-items: baseline;
   line-height: 1.2;
 
