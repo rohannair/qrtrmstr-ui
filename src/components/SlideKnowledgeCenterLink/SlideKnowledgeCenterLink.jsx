@@ -16,6 +16,7 @@ const SlideKnowledgeCenterLink = (props) => {
         <input
           name="name"
           value={ props.name }
+          placeholder="Enter link title"
           onChange={ e => onChange(i, e.target.name, e.target.value) }
         />
       </div>
@@ -25,6 +26,7 @@ const SlideKnowledgeCenterLink = (props) => {
         <input
           name="link"
           value={ props.link }
+          placeholder="Enter link URL"
           onChange={ e => onChange(i, e.target.name, e.target.value) }
         />
       </div>
