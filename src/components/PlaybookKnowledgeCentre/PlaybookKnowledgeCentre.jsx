@@ -65,9 +65,14 @@ class PlaybookKnowledgeCentre extends Component {
     ? this._validateLink(body.options.filter(val => val.id === selected)[0].link)
     : null;
 
-    const renderedLink = this.state.selectedType === 'youtube'
-    ? <iframe src={`//www.youtube.com/embed/${ selected }`} />
-    : (
+    let renderedLink = null;
+    if (this.state.selectedType === 'youtube') {
+      const youtubeLinkType = selected.indexOf('youtube') > -1
+      ? selected.replace(/watch\?v=/i, 'embed/')
+      : `//www.youtube.com/embed/${ selected }`;
+      renderedLink = <iframe src={ youtubeLinkType } />;
+    } else {
+      renderedLink = (
         <div className="viewLink">
           <Button classes="xl primary">
             <a style={{color: '#fff', borderRadius: '100%'}}href={selectedLink} target="_blank">
@@ -77,7 +82,7 @@ class PlaybookKnowledgeCentre extends Component {
             <small>{selectedLink}</small>
         </div>
       );
-
+    }
 
     return (
       <div className="playbookKnowledgeCentre">

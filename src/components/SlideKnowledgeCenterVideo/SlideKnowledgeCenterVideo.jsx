@@ -5,9 +5,14 @@ import Button from '../Button';
 import ButtonGroup from '../ButtonGroup';
 
 const SlideKnowledgeCenterVideo = ({ val, i, deleteItem, onChange }) => {
+
+  const youtubeLinkType = val.id.indexOf('youtube') > -1
+  ? val.id.replace(/watch\?v=/i, 'embed/')
+  : `//www.youtube.com/embed/${ val.id }`;
+
   return (
     <div className="knowledgeCenterItem">
-      <iframe src={`//www.youtube.com/embed/${val.id}`} />
+      <iframe src={ youtubeLinkType } />
 
       <div className="formField">
         <label>Title:</label>
@@ -19,7 +24,7 @@ const SlideKnowledgeCenterVideo = ({ val, i, deleteItem, onChange }) => {
       </div>
 
       <div className="formField">
-        <label>Video ID:</label>
+        <label>YouTube URL or ID:</label>
         <input
           name="id"
           value={ val.id }

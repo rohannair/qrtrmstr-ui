@@ -109,7 +109,7 @@ class SlideKnowledgeCenter extends Component {
       type: type
     }
     : {
-      id: 'Enter video ID',
+      id: 'Enter YouTube URL or ID',
       name: 'Enter video title',
       type: type
     };
