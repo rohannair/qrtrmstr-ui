@@ -72,7 +72,7 @@ const PlaybookBio = (props) => {
 
   return (
     <div className="playbookBio">
-      <h2>Fill out your profile</h2>
+      <h2>{ props.body.heading }</h2>
       <div className="bio">
         <div className="bio-info">
           { props.children }

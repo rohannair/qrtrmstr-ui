@@ -104,13 +104,13 @@ class SlideKnowledgeCenter extends Component {
     const itemTempl = type === 'link'
     ? {
       id: this.state.options.length + 1,
-      name: 'Enter link title',
-      link: 'Enter link URL',
+      name: '',
+      link: '',
       type: type
     }
     : {
-      id: 'Enter video ID',
-      name: 'Enter video title',
+      id: '',
+      name: '',
       type: type
     };
 
