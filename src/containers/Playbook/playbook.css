@@ -18,11 +18,19 @@ h1, h2, h3, h4, h5, h6, strong {
 }
 
 .slideFooter {
+  display: flex;
   float: right;
   margin: 10px 5px;
+  align-items: center;
+  justify-content: flex-end;
+
+  .saveMessage {
+    font-size: 14px;
+    margin-right: 15px;
+    color: #3c3939;
+  }
 
   .btn.equipSub {
-    float: right;
     margin-right: 15px;
   }
 }
@@ -287,6 +295,18 @@ h1, h2, h3, h4, h5, h6, strong {
       width: 40%;
       max-width: 40px;
 
+      &.fa {
+        background: #3b5998;
+      }
+
+      &.tw {
+        background: #55acee;
+      }
+
+      &.li {
+        background-color: #0077b5;
+      }
+
       i {
         font-size: 24px; 
       }
@@ -298,18 +318,6 @@ h1, h2, h3, h4, h5, h6, strong {
       float: left;
       margin-left: 10%;
       margin-top: 5%;
-    }
-
-    .fb {
-      background: #3b5998;
-    }
-
-    .tw {
-      background: #55acee;
-    }
-
-    .li {
-      background-color: #0077b5;
     }
   }
 

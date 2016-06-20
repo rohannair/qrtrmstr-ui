@@ -13,7 +13,7 @@ import Header from '../../components/Global/Header';
 import PlaybookCards from '../../components/PlaybookCards';
 
 // Actions
-import { setSelection, submitPlaybook, getPlaybook, editSubmittedPlaybook, updatePlaybookStatus } from '../../actions/playbookActions';
+import { setSelection, submitPlaybook, getPlaybook, editSubmittedPlaybook, updatePlaybookStatus, updateMessage } from '../../actions/playbookActions';
 import { uploadComplete } from '../../actions/uploadActions';
 
 class Playbook extends Component {
@@ -25,7 +25,7 @@ class Playbook extends Component {
   };
 
   render() {
-    const { id, selected, token, img, playbook } = this.props;
+    const { id, selected, token, img, playbook, message } = this.props;
     return (
       <div className="playbook">
         <Header isAdmin={false} />
@@ -39,6 +39,7 @@ class Playbook extends Component {
           selected={ selected }
           img={ img }
           uploaderFn={ this._updateSubmittedDoc }
+          message={ message }
         />
         <Footer />
       </div>
@@ -118,9 +119,10 @@ class Playbook extends Component {
     return dispatch(editSubmittedPlaybook(slideKey, updatedSlide));
   };
 
-  _onSubmitPlaybook = () => {
+  _onSubmitPlaybook = (slideKey) => {
     const { dispatch, playbook, params } = this.props;
-    return dispatch(submitPlaybook({submitted_doc: playbook.submitted_doc}, params.playbookID));
+    dispatch(updateMessage(null));
+    return dispatch(submitPlaybook({submitted_doc: playbook.submitted_doc}, params.playbookID, slideKey));
   };
 
   _getPlaybook = id => {
@@ -144,6 +146,7 @@ function select(state) {
     token,
     playbook: state.playbook.playbook,
     selected: state.playbook.selected,
+    message: state.playbook.message,
     img: state.uploader.img
   };
 }
