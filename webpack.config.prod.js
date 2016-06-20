@@ -5,23 +5,22 @@ const path         = require('path');
 const rucksack     = require('rucksack-css');
 const webpack      = require('webpack');
 
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 const devFlagPlugin = new webpack.DefinePlugin({
   __DEV__: JSON.stringify('false')
 });
 
 const config = {
-  devtool: 'cheap-source-map',
+  devtool: 'source-map',
   bail: true,
 
-  entry: [
-    './src/index.js'
-  ],
+  entry: './src/index.js',
 
   output: {
     path: path.join(__dirname, 'public'),
     filename: 'app.[hash].js',
-    sourceMapFilename: '[file].map',
-    publicPath: 'https://qrtrmstr.io/'
+    sourceMapFilename: 'app.[hash].js.map'
   },
 
   module: {
@@ -72,6 +71,15 @@ const config = {
   },
 
   plugins: [
+    new HtmlWebpackPlugin({
+      title: 'Quartermaster',
+      template: path.join(__dirname, 'src', 'assets', 'templates') + '/index.ejs',
+      favicon: path.join(__dirname, 'src', 'assets') + '/favicon.png',
+      inject: 'body',
+      minify: {
+        collapseWhitespace: true
+      }
+    }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.optimize.UglifyJsPlugin({
@@ -86,14 +94,6 @@ const config = {
         'ENV': JSON.stringify('production')
       }
     }),
-    function() {
-      this.plugin('done', function(stats) {
-        require('fs').writeFileSync(
-          path.join(__dirname, 'stats.json'),
-          stats.toJson().hash
-        );
-      });
-    },
     devFlagPlugin
   ],
 
