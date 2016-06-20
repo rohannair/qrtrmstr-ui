@@ -5,8 +5,6 @@ const path         = require('path');
 const rucksack     = require('rucksack-css');
 const webpack      = require('webpack');
 
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-
 const devFlagPlugin = new webpack.DefinePlugin({
   __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false'))
 });
@@ -87,14 +85,6 @@ const config = {
   },
 
   plugins: [
-    new HtmlWebpackPlugin({
-      title: 'Quartermaster',
-      template: path.join(__dirname, 'src', 'assets', 'templates') + '/index.ejs',
-      inject: 'body',
-      minify: {
-        collapseWhitespace: true
-      }
-    }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
