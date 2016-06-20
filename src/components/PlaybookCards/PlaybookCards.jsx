@@ -82,6 +82,7 @@ const PlaybookCards = (props) => {
             onChange={ onChange }
             submittedDoc={ submittedDocProp }
             message={ message }
+            loading={ props.loading }
             findSlideKey={ findSlideKey }>
             { PlaybookUploader }
           </PlaybookBio>
@@ -120,6 +121,10 @@ const PlaybookCards = (props) => {
         );
       });
 
+      const loading = props.loading && props.loading.status && props.loading.slideKey === slideKey
+      ? <div className="saveMessage">Saving...</div>
+      : null;
+
       const submitTime = props.message === slideKey
       ? <div className="saveMessage">{`Saved on ${moment().format('MMMM Do YYYY, H:mm')}`}</div>
       : null;
@@ -132,6 +137,7 @@ const PlaybookCards = (props) => {
             { opts }
           </div>
           <div className="slideFooter">
+            { loading }
             { submitTime }
             <Button classes="primary sm equipSub" onClick={ submitAction.bind(this, slideKey) }>Submit</Button>
           </div>
