@@ -22,7 +22,7 @@ const config = {
 
   output: {
     path: path.join(__dirname, 'public'),
-    filename: 'app.[hash].js',
+    filename: 'app.js',
     publicPath: '/public/',
   },
 
