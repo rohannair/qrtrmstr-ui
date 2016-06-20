@@ -18,6 +18,18 @@ import { uploadComplete } from '../../actions/uploadActions';
 
 class Playbook extends Component {
 
+  state = {
+    loading: {status: false, slideKey: null}
+  };
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.message) {
+      this.setState({
+        loading: {status: false, slideKey: null}
+      });
+    }
+  }
+
   componentWillMount() {
     const id = this.props.routeParams.playbookID || this.props.location.query.playbookId;
     this._getPlaybook(id);
@@ -40,6 +52,7 @@ class Playbook extends Component {
           img={ img }
           uploaderFn={ this._updateSubmittedDoc }
           message={ message }
+          loading={ this.state.loading }
         />
         <Footer />
       </div>
@@ -120,6 +133,9 @@ class Playbook extends Component {
   };
 
   _onSubmitPlaybook = (slideKey) => {
+    this.setState({
+      loading: {status: true, slideKey: slideKey}
+    });
     const { dispatch, playbook, params } = this.props;
     dispatch(updateMessage(null));
     return dispatch(submitPlaybook({submitted_doc: playbook.submitted_doc}, params.playbookID, slideKey));
