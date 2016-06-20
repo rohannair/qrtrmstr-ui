@@ -179,6 +179,8 @@ class PlaybookEditor extends Component {
     this.setState({
       chosenTab: null
     });
+
+    this._closeModal();
   };
 
   _closeModal = () => {
