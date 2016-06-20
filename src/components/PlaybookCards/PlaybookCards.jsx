@@ -30,6 +30,7 @@ const PlaybookCards = (props) => {
     uploaderFn,
     selected,
     playbook,
+    message,
     onEquipChange,
     onChange } = props;
   const fields = playbook.doc ? playbook.doc : {};
@@ -80,6 +81,7 @@ const PlaybookCards = (props) => {
             userInfo={ userInfo }
             onChange={ onChange }
             submittedDoc={ submittedDocProp }
+            message={ message }
             findSlideKey={ findSlideKey }>
             { PlaybookUploader }
           </PlaybookBio>
@@ -118,6 +120,10 @@ const PlaybookCards = (props) => {
         );
       });
 
+      const submitTime = props.message === slideKey
+      ? <div className="saveMessage">{`Saved on ${moment().format('MMMM Do YYYY, H:mm')}`}</div>
+      : null;
+
       return (
         <Card key={field.slide_number} footer={<div/>}>
           <h2>{field.heading}</h2>
@@ -126,7 +132,8 @@ const PlaybookCards = (props) => {
             { opts }
           </div>
           <div className="slideFooter">
-            <Button classes="primary sm equipSub" onClick={ submitAction }>Submit</Button>
+            { submitTime }
+            <Button classes="primary sm equipSub" onClick={ submitAction.bind(this, slideKey) }>Submit</Button>
           </div>
         </Card>
       );
