@@ -55,4 +55,15 @@
   &.sm {
     width: 20%;
   }
+
+  .formField {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+  }
+
+  label {
+    text-align: left;
+    margin-right: 10px;
+  }
 }
