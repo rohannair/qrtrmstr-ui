@@ -63,10 +63,6 @@ const PlaybookBio = (props) => {
   ? <div className="saveMessage">{`Saved on ${moment().format('MMMM Do YYYY, H:mm')}`}</div>
   : null;
 
-  const loading = props.loading && props.loading.status && props.loading.slideKey === slideKey
-  ? <div className="saveMessage">Saving...</div>
-  : null;
-
   return (
     <div className="playbookBio">
       <h2>{ props.body.heading }</h2>
@@ -78,7 +74,7 @@ const PlaybookBio = (props) => {
           { bio }
           { social }
           <div className="slideFooter">
-            { loading }
+            { props.loadingMessage(slideKey) }
             { submitTime }
             <Button classes="primary sm" onClick={props.onSubmit.bind(this, slideKey)}>Submit</Button>
           </div>
