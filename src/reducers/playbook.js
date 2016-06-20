@@ -1,9 +1,8 @@
 import { find } from 'lodash';
 
 const defaultState = {
-  playbook: {},
   selected: {},
-  submittedPlaybook: {}
+  playbook: {}
 };
 
 export default function playbook(state = defaultState, action) {
@@ -13,9 +12,7 @@ export default function playbook(state = defaultState, action) {
   case 'PLAYBOOK_RETRIEVED':
     return {
       ...state,
-      completePlaybook: action.playbook,
-      playbook: action.playbook.doc,
-      submittedPlaybook: action.playbook.submitted_doc
+      playbook: action.playbook
     };
 
   case 'PLAYBOOK_SELECTION':
@@ -29,22 +26,17 @@ export default function playbook(state = defaultState, action) {
 
   case 'EDIT_SUBMITTED_PLAYBOOK':
     const { slideKey, data } = action;
-    const { submittedPlaybook } = state;
+    const { playbook } = state;
 
     return {
       ...state,
-      submittedPlaybook: {
-        ...submittedPlaybook,
-        [slideKey]: data
+      playbook: {
+        ...playbook,
+        submitted_doc: {
+          ...playbook.submitted_doc,
+          [slideKey]: data
+        }
       }
-    };
-
-  case 'PLAYBOOK_SUBMITTED':
-    const { playbook } = action;
-
-    return {
-      ...state,
-      submittedPlaybook: playbook.submitted_doc
     };
 
   default:

@@ -33,6 +33,18 @@
       margin-top: 10px;
     }
   }
+
+  .formField {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  label {
+    text-align: right;
+    margin-right: 10px;
+    width: 20%;
+  }
 }
 
 .modalDialog > div {
@@ -113,14 +125,4 @@
   width: 77%;
   border-right: none;
   border-radius: 0px;
-}
-
-label {
-  display: inline-block;
-  float: left;
-  clear: left;
-  width: 30%;
-  text-align: right;
-  padding-right: 10px;
-  padding-top: 7px;
 }

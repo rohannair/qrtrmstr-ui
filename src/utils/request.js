@@ -34,7 +34,7 @@ export default function request(method, location, token, body) {
 
 export const get = (location, token) => request('GET', location, token);
 export const post = (location, token, body) => request('POST', location, token, body);
-export const put = (location, token, body) => request('PUT', location, token, body);
+export const put = (location, token, body) => request('POST', location, token, body);
 
 
 export const filePost = (location, token, form) => {

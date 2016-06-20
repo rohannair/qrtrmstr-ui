@@ -25,28 +25,28 @@ class PlaybookResults extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.completePlaybook !== this.props.completePlaybook) {
-      this._getSingleUser(nextProps.completePlaybook.assigned);
+    if (nextProps.playbook !== this.props.playbook) {
+      this._getSingleUser(nextProps.playbook.assigned);
     };
   }
 
   render() {
-    const { playbook, submittedDoc, users, completePlaybook } = this.props;
+    const { users, playbook } = this.props;
     let incompleteCards = {};
     let completedCards = {};
     let unsubmittableCards = {};
     let cardsDisplay = null;
 
-    for (let val in playbook) {
-      if (playbook[val].submittable === false) {
-        unsubmittableCards[val] = playbook[val];
+    for (let val in playbook.doc) {
+      if (playbook.doc[val].submittable === false) {
+        unsubmittableCards[val] = playbook.doc[val];
       };
     };
 
-    for (let val in submittedDoc) {
-      submittedDoc[val].submitted === true
-      ? completedCards[val] = submittedDoc[val]
-      : incompleteCards[val] = submittedDoc[val];
+    for (let val in playbook.submitted_doc) {
+      playbook.submitted_doc[val].submitted === true
+      ? completedCards[val] = playbook.submitted_doc[val]
+      : incompleteCards[val] = playbook.submitted_doc[val];
     };
 
     const totalCompleted = {
@@ -54,24 +54,26 @@ class PlaybookResults extends Component {
       ...unsubmittableCards
     };
 
-    if (users.first_name) {
+    if (users.firstName) {
       cardsDisplay = this.state.selectedTab === 'completed'
       ? <PlaybookResultsCards
           userInfo={ users }
           view={ this.state.selectedTab }
           totalCards={ totalCompleted }
+          validateLink={ this._validateLink }
         />
       : <PlaybookResultsCards
           userInfo={ users }
           view={ this.state.selectedTab }
           totalCards={ incompleteCards }
+          validateLink={ this._validateLink }
         />;
     }
 
     const userInfo = users ? <div className="textInfoUser"></div> : null;
-    const playbookName = completePlaybook ? <div className="textInfoComp"></div> : null;
-    const status = completePlaybook
-    ? completePlaybook.percent_submitted * 100 + '%'
+    const playbookName = playbook ? <div className="textInfoComp"></div> : null;
+    const status = playbook
+    ? playbook.percent_submitted * 100 + '%'
     : '';
     const comTaskClass = this.state.selectedTab === 'completed' ? 'selected' : null;
     const incomTaskClass = this.state.selectedTab === 'incomplete' ? 'selected' : null;
@@ -81,7 +83,7 @@ class PlaybookResults extends Component {
         <div className="playbook-results-info">
           <div className="playbook-results-single">
             <div className="title">Playbook:</div>
-            <div className="info">{`${users.first_name} ${users.last_name} -  ${completePlaybook ? completePlaybook.name : '' }`}</div>
+            <div className="info">{`${users.firstName} ${users.lastName} -  ${playbook ? playbook.name : '' }`}</div>
           </div>
           <div className="playbook-results-single">
             <div className="title">Status: </div>
@@ -103,6 +105,8 @@ class PlaybookResults extends Component {
       </div>
     );
   };
+
+  _validateLink = (link) => link.indexOf('https://') > -1 || link.indexOf('http://') > -1 ? link : 'https://' + link;
 
   _getPlaybook = id => {
     const { token, dispatch } = this.props;
@@ -138,9 +142,7 @@ function select(state) {
   const token = state.accountActions.token || Cookies.get('token');
   return {
     token,
-    submittedDoc: state.playbook.submittedPlaybook,
     playbook: state.playbook.playbook,
-    completePlaybook: state.playbook.completePlaybook,
     users: state.app.users
   };
 }
