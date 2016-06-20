@@ -33,6 +33,18 @@
       margin-top: 10px;
     }
   }
+
+  .formField {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  label {
+    text-align: right;
+    margin-right: 10px;
+    width: 20%;
+  }
 }
 
 .modalDialog > div {
