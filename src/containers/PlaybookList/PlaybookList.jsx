@@ -22,6 +22,7 @@ import Alert from '../../components/Alert';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
 import Table from '../../components/Table';
+import Dialog from '../../components/Dialog';
 
 import AssignPlaybookModal from '../../components/AssignPlaybookModal';
 import EditPlaybookModal from '../../components/EditPlaybookModal';
@@ -86,6 +87,16 @@ class PlaybookList extends Component {
       />
     : null;
 
+    const confirmSendPlaybookModal = visibleModal === 'confirm'
+    ? <Dialog
+        onAction={ this._sendAndClose }
+        buttonAction='Send'
+        onClose={ this._closeModal }
+        heading='Confirmation Needed'>
+        <p>{`Confirm send playbook: ${this.state.modalData.name} to ${this.state.modalData.assignedUser.firstName} ${this.state.modalData.assignedUser.lastName}?`}</p>
+      </Dialog>
+    : null;
+
     const items = [...this.props.playbookList].map(val => {
       return (<PlaybookListItem
         key={val.id}
@@ -108,19 +119,21 @@ class PlaybookList extends Component {
         { editPlaybookModal }
         { sendPlaybookModal }
         { assignPlaybookModal }
+        { confirmSendPlaybookModal }
       </div>
     );
   };
 
   _closeModal = () => this.setState({ visibleModal: null, modalData: {} });
 
-  _openModal = (visibleModal, playbook, state = null) => {
+  _openModal = (visibleModal, playbook, assignedUser = null, state = null) => {
     this.setState({
       visibleModal,
       modalData: {
         name: playbook.name,
         id: playbook.id,
-        assigned: playbook.assigned || null
+        assigned: playbook.assigned || null,
+        assignedUser: assignedUser || null
       },
       ...state });
   };
@@ -135,7 +148,7 @@ class PlaybookList extends Component {
         lastName: assignedUserOrg.lastName,
         username: assignedUserOrg.username
       };
-      return this._sendPlaybook(val.id, assignedUser);
+      return this._openModal('confirm', val, assignedUser);
     }
     const chosenPlaybook = [...this.props.playbookList]
       .filter(item => item.id === val.id)[0];
@@ -160,6 +173,11 @@ class PlaybookList extends Component {
   _closeAlert = () => {
     const { dispatch } = this.props;
     dispatch(updateMessage(null));
+  };
+
+  _sendAndClose = () => {
+    this._sendPlaybook(this.state.modalData.id, this.state.modalData.assignedUser);
+    this._closeModal();
   };
 
   _sendPlaybook = (id, selected) => {
