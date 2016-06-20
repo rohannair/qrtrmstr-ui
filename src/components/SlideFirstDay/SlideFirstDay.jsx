@@ -17,15 +17,26 @@ import MapContainer from '../../containers/MapContainer';
 import FlipMove from 'react-flip-move';
 
 class SlideFirstDay extends Component {
-  state = {
-    desc: '',
-    mapDesc: this.props.body.map || '',
-    pos: this.props.position || {lat: 43.6446447, lng: -79.39499869999997},
-    place: this.props.place || {name: 'Lighthouse Labs', formatted_address: '46 Spadina Avenue, Toronto, ON, Canada'},
-    startTime: moment(this.props.body.agenda[(this.props.body.agenda.length - 1)].finishTime).format('H:mm'),
-    finishTime: moment(this.props.body.agenda[(this.props.body.agenda.length - 1)].finishTime).add(1, 'hour').format('H:mm'),
-    errorMessage: null
-  };
+  constructor(props) {
+    super(props);
+
+    const lastAgendaItem = props.body.agenda[(props.body.agenda.length - 1)];
+    const finishTime = lastAgendaItem
+    ? lastAgendaItem.finishTime
+    : moment(this.props.date).startOf('day').toDate();
+
+    console.log(finishTime);
+
+    this.state = {
+      desc: '',
+      mapDesc: props.body.map || '',
+      pos: props.position || {lat: 43.6446447, lng: -79.39499869999997},
+      place: props.place || {name: 'Lighthouse Labs', formatted_address: '46 Spadina Avenue, Toronto, ON, Canada'},
+      startTime: moment(finishTime).format('H:mm'),
+      finishTime: moment(finishTime).add(1, 'hour').format('H:mm'),
+      errorMessage: null
+    };
+  }
 
   render() {
     const { onAdd, slide_number, body, onChange, heading, date, detailed_location, contact, couponInput } = this.props;
