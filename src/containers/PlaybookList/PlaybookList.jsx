@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Cookies from 'cookies-js';
+import ReactPaginate from 'react-paginate';
 
 // Styles
 import styles from './playbookList.css';
@@ -35,16 +36,19 @@ class PlaybookList extends Component {
   state = {
     chosenUser: {},
     loading: false,
-
     visibleModal: null,
-    modalData: {}
+    modalData: {},
+    offset: 0,
+    pageNum: 1,
+    perPage: 10
   };
 
   componentWillMount() {
     const { token, dispatch } = this.props;
+    const { offset, perPage } = this.state;
 
     // Select all playbooks
-    dispatch(getPlaybooks(token));
+    dispatch(getPlaybooks(token, offset, perPage));
     // Select all users
     dispatch(getUsers(token));
   };
@@ -105,6 +109,21 @@ class PlaybookList extends Component {
       <div className="playbookList">
         <Table headings = {['name', 'modified', 'assigned', 'status', 'actions']} >
           { items }
+          <div className="playbookList-metadata">
+            {`Total playbooks: ${this.props.playbooksTotal}`}
+            <div id="paginate">
+              <ReactPaginate  previousLabel={"<="}
+                              nextLabel={"=>"}
+                              breakLabel={<a href="">...</a>}
+                              pageNum={Math.ceil(this.props.playbooksTotal/this.state.perPage)}
+                              marginPagesDisplayed={1}
+                              pageRangeDisplayed={2}
+                              clickCallback={this._handlePageClick}
+                              containerClassName={"pagination"}
+                              subContainerClassName={"pages pagination"}
+                              activeClassName={"active"} />
+            </div>
+          </div>
         </Table>
 
         { editPlaybookModal }
@@ -194,6 +213,14 @@ class PlaybookList extends Component {
       }
     });
   };
+
+  _handlePageClick = (data) => {
+    let selected = data.selected;
+    let offset = Math.ceil(selected * this.state.perPage);
+    this.setState({ offset: offset })
+    const { token, dispatch } = this.props;
+    return dispatch(getPlaybooks(token, offset, this.state.perPage));
+  };
 };
 
 function mapStateToProps(state) {
@@ -202,6 +229,7 @@ function mapStateToProps(state) {
   return {
     token,
     playbookList: state.playbookAdmin.list,
+    playbooksTotal: state.playbookAdmin.playbooksTotal,
     users: state.app.users,
     message: state.playbookAdmin.message
   };
