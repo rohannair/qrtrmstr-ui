@@ -9,7 +9,8 @@ export default function app(state = initialState, { type, users, new_user, error
   case 'USERS_RETRIEVED':
     return {
       ...state,
-      users: users
+      users: users.results,
+      usersTotal: users.total
     };
 
   case 'NEW_USER_ERROR_RETRIEVED':

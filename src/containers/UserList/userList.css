@@ -74,6 +74,18 @@
   }
 }
 
+#paginate ul {
+    padding-left: 15px;
+    padding-right: 15px;
+    text-align: center;
+}
 
+#paginate li {
+    display: inline-block;
+    padding-left: 15px;
+    padding-right: 15px;
+}
 
-
+#paginate .break a {
+    cursor: default;
+}

@@ -14,7 +14,8 @@ export default function playbookView(state = initialState, action) {
   case 'PLAYBOOKS_RETRIEVED':
     return {
       ...state,
-      list: action.playbookList
+      list: action.playbookList.results,
+      playbooksTotal: action.playbookList.total
     };
 
   case 'SINGLE_PLAYBOOK_RETRIEVED':
