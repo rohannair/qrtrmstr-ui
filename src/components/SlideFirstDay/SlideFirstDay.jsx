@@ -25,8 +25,6 @@ class SlideFirstDay extends Component {
     ? lastAgendaItem.finishTime
     : moment(this.props.date).startOf('day').toDate();
 
-    console.log(finishTime);
-
     this.state = {
       desc: '',
       mapDesc: props.body.map || '',

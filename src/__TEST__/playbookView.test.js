@@ -42,23 +42,35 @@ test('PlaybookView', ({ test }) => {
 
     const action = {
       type: 'PLAYBOOKS_RETRIEVED',
-      playbookList: ['Playbook1', 'Playbook2', 'Playbook3']
+      playbookList: {
+        results: ['Playbook1', 'Playbook2', 'Playbook3'],
+        total: 30
+      }
     };
 
     const action_with_extra = {
       type: 'PLAYBOOKS_RETRIEVED',
-      playbookList: ['Playbook1', 'Playbook2', 'Playbook3'],
+      playbookList: {
+        results: ['Playbook1', 'Playbook2', 'Playbook3'],
+        total: 30
+      },
       THIRDPROP: 'BLABLABLA I WILL EAT YOUR SOUL'
     };
 
     const before = {
       hello: 'world',
-      list: [],
+      list: {
+        results: [],
+        total: 0
+      }
     };
 
     const after = {
       hello: 'world',
-      list: ['Playbook1', 'Playbook2', 'Playbook3']
+      list: {
+        results: ['Playbook1', 'Playbook2', 'Playbook3'],
+        total: 30
+      }
     };
 
     assert.plan(2);
@@ -111,7 +123,7 @@ test('PlaybookView', ({ test }) => {
 
   // ADD_NEW_PLAYBOOK
   test('ADD_NEW_PLAYBOOK', assert => {
-    assert.plan(1);
+    assert.plan(2);
 
     const action = {
       type: 'ADD_NEW_PLAYBOOK',
@@ -120,24 +132,32 @@ test('PlaybookView', ({ test }) => {
 
     const state = {
       name: 'My first state',
-      list: [
-        { id: 0, name: 'Object 0'}
-      ]
+      list: {
+        results: [
+          { id: 0, name: 'Object 0'}
+        ],
+        total: 1
+      }
     };
 
     const state_after = {
       name: 'My first state',
-      list: [
-        { id: 0, name: 'Object 0'},
-        { id: 1, name: 'Object 1' }
-      ]
+      list: {
+        results: [
+          { id: 0, name: 'Object 0'},
+          { id: 1, name: 'Object 1' }
+        ],
+        total: 2
+      }
     };
 
-    assert.plan(1);
+    assert.plan(2);
+
+    assert.ok(playbookView(state, action).list.total === state_after.list.total, 'Increment playbook total count' );
 
     assert.deepEqual(
-      playbookView(state, action),
-      state_after,
+      playbookView(state, action).list.results,
+      state_after.list.results,
       'New playbook should be pushed into list'
     );
 
@@ -146,13 +166,16 @@ test('PlaybookView', ({ test }) => {
 
   // ADD_NEW_PLAYBOOK
   test('ADD_NEW_PLAYBOOK', assert => {
-    assert.plan(1);
+    assert.plan(2);
 
     const firstState = {
       name: 'My first state',
-      list: [
-        { id: 0, name: 'Object 0'}
-      ]
+      list: {
+        results: [
+          { id: 0, name: 'Object 0'}
+        ],
+        total: 1
+      }
     };
 
     const action = {
@@ -165,13 +188,17 @@ test('PlaybookView', ({ test }) => {
 
     const finalAction = {
       ...firstState,
-      list: [
-        ...firstState.list,
-        action.playbook
-      ]
+      list: {
+        results: [
+          ...firstState.list.results,
+          action.playbook
+        ],
+        total: 2
+      }
     };
 
-    assert.deepEqual(playbookView(firstState, action), finalAction);
+    assert.deepEqual(playbookView(firstState, action).list.results, finalAction.list.results, 'Add new playbook');
+    assert.ok(playbookView(firstState, action).list.total === finalAction.list.total, 'Increment playbook total count' );
     assert.end();
   });
 

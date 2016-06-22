@@ -3,7 +3,7 @@ import utils from './utils';
 const getDomain = utils.getDomain;
 
 // Playbooks Retrieved action
-function playbooksRetrieved(playbookList = {}) {
+function playbooksRetrieved(playbookList = { results: [], total: 0 }) {
   return {
     type: 'PLAYBOOKS_RETRIEVED',
     playbookList
