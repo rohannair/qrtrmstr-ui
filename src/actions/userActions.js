@@ -5,7 +5,7 @@ const getDomain = utils.getDomain;
 const LOCATION_ROOT = getDomain() + API_ROOT;
 
 // Users Retrieved action
-function usersRetrieved(users = {}) {
+function usersRetrieved(users = { results: [], total: 0 }) {
   return {
     type: 'USERS_RETRIEVED',
     users

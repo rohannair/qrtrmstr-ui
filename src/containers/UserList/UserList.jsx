@@ -60,7 +60,7 @@ class UserList extends Component {
       />
     : null;
 
-    const tableBody = this.props.users.map(row => {
+    const tableBody = this.props.users.results.map(row => {
 
       const profile_img = row.profile_img || '';
       const admin_pill = row.is_admin
@@ -108,12 +108,12 @@ class UserList extends Component {
         <Table headings = {['name', 'email', 'role', 'actions']} >
           { tableBody }
           <div className="userList-metadata">
-            {`Total users: ${this.props.usersTotal}`}
+            {`Total users: ${this.props.users.total}`}
             <div id="paginate">
               <ReactPaginate  previousLabel={" "}
                               nextLabel={" "}
                               breakLabel={<a href="">...</a>}
-                              pageNum={Math.ceil(this.props.usersTotal/this.state.perPage)}
+                              pageNum={Math.ceil(this.props.users.total/this.state.perPage)}
                               marginPagesDisplayed={1}
                               pageRangeDisplayed={2}
                               clickCallback={this._handlePageClick}
@@ -228,9 +228,8 @@ class UserList extends Component {
   };
 
   _handlePageClick = (data) => {
-    let selected = data.selected;
-    let offset = Math.ceil(selected * this.state.perPage);
-    this.setState({ offset: offset })
+    const offset = Math.ceil(data.selected * this.state.perPage);
+    this.setState({ offset })
     const { token, dispatch } = this.props;
     return dispatch(getUsers(token, offset, this.state.perPage));
   };
@@ -242,7 +241,6 @@ function mapStateToProps(state) {
   return {
     token,
     users: state.app.users,
-    usersTotal: state.app.usersTotal,
     errorMessage: state.app.errorMessage,
     roles: state.app.roles
   };

@@ -74,19 +74,25 @@
   }
 }
 
-#paginate ul {
+#paginate {
+  ul {
     padding-left: 15px;
     padding-right: 15px;
     text-align: center;
-}
+  }
 
-#paginate li {
+  li {
     display: inline-block;
     padding-left: 15px;
     padding-right: 15px;
     cursor: pointer;
-}
+  }
 
-#paginate .break a {
+  &.break a {
     cursor: default;
+  }
+
+  $.active li {
+    background-color: #ccc;
+  }
 }

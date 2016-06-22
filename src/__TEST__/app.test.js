@@ -29,13 +29,19 @@ test('App reducer', next => {
 
     const action = {
       type: 'USERS_RETRIEVED',
-      users: ['foo', 'bar']
+      users: {
+        results: ['foo', 'bar'],
+        total: 10
+      }
     };
 
     const state = {};
 
     const new_state = {
-      users: ['foo', 'bar']
+      users: {
+        results: ['foo', 'bar'],
+        total: 10
+      }
     };
 
     t.plan(1);
@@ -68,21 +74,25 @@ test('App reducer', next => {
     };
 
     const state = {
-      users: [
-        'Kobe'
-      ]
+      users: {
+        results: [ 'Kobe' ],
+        total: 20
+      }
     };
 
     const state_after = {
       errorMessage: null,
-      users: ['Kobe', 'Rohan']
+      users: {
+        results: ['Kobe', 'Rohan'],
+        total: 21
+      }
     };
 
-    t.plan(1);
-    t.deepEqual(app(state, action), state_after, 'Insert new user');
+    t.plan(2);
+    t.ok(app(state, action).users.total === state_after.users.total, 'Add new user to total');
+    t.deepEqual(app(state, action).users.results, state_after.users.results, 'Insert new user');
     t.end();
 
   });
 
 });
-
