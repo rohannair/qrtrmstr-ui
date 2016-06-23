@@ -13,13 +13,16 @@ import { merge } from 'lodash';
 import Header from '../../components/Global/Header';
 import Footer from '../../components/Global/Footer';
 import Login from '../../components/Login';
+import ForgotPasswordModal from '../../components/ForgotPasswordModal';
 
 // Actions
-import { login, tryLogin, logout } from '../../actions/loginActions';
+import { login, tryLogin, logout, sendForgotPasswordEmail } from '../../actions/loginActions';
 
 class App extends Component {
 
   state = {
+    visibleModal: null,
+    modalData: {}
   };
 
   static contextTypes = {
@@ -54,17 +57,43 @@ class App extends Component {
   }
 
   render() {
-    const { token, users, error } = this.props;
+    const { token, users, error, message } = this.props;
+
+    const { visibleModal } = this.state;
+
+    const forgotPasswordModal = visibleModal === 'forgotPassword'
+    ? <ForgotPasswordModal
+        closeModal={ this._closeModal }
+        modalData={ this.state.modalData }
+        sendEmail={ this._sendForgotPasswordEmail }
+      />
+    : null;
 
     return (
       <div className="app-login">
         <Header />
         <div className="login-container">
-          <Login submitForm={this._submitForm} error={ error }/>
+          <Login
+            submitForm={this._submitForm}
+            showForgotPasswordModal={ this._showForgotPasswordModal }
+            error={ error }
+            message={ message }
+          />
         </div>
+        { forgotPasswordModal }
         <Footer />
       </div>
     );
+  };
+
+  _closeModal = () => this.setState({ visibleModal: null, modalData: {} });
+  _openModal = (visibleModal) => {
+    this.setState({
+      visibleModal,
+      modalData: {
+        email: ''
+      }
+    });
   };
 
   _submitForm = (data) => {
@@ -72,13 +101,29 @@ class App extends Component {
     return dispatch(tryLogin(data));
   };
 
+  _showForgotPasswordModal = () => {
+    this._openModal('forgotPassword')
+  };
+
+  _sendForgotPasswordEmail = (email) => {
+    const { dispatch } = this.props;
+
+    const forgotPasswordEmailParams = {
+      email,
+      emailTemplate: 'forgotPasswordEmail'
+    };
+
+    return dispatch(sendForgotPasswordEmail(forgotPasswordEmailParams));
+  };
+
 };
 
 function mapStateToProps(state) {
-  const { token, error } = state.accountActions;
+  const { token, error, message } = state.accountActions;
   return {
     token,
-    error
+    error,
+    message
   };
 }
 

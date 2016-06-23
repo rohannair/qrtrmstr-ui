@@ -36,6 +36,22 @@ const loginFail = (error) => {
   };
 };
 
+const forgotPasswordEmailSent = (message) => {
+  return {
+    type: 'FORGOT_PASSWORD_EMAIL_SENT',
+    message,
+    error: null
+  }
+}
+
+const forgotPasswordError = (error) => {
+  return {
+    type: 'FORGOT_PASSWORD_ERROR',
+    message: null,
+    error
+  }
+}
+
 // Login API call
 export const tryLogin = credentials => {
   const url = getDomain();
@@ -52,6 +68,26 @@ export const tryLogin = credentials => {
     .then(({ json, response }) => {
       if (!response.ok) return dispatch(loginFail(json.message));
       return dispatch(login(json.token));
+    });
+  };
+};
+
+
+export const sendForgotPasswordEmail = payload => {
+  const url = getDomain();
+  return dispatch => {
+    return fetch(`${url}/api/v1/forgotPassword/send`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+    .then(response => response.json().then(json => ({json, response})))
+    .then(({json, response}) => {
+      if (!response.ok) return dispatch(forgotPasswordError(json.message));
+      return dispatch(forgotPasswordEmailSent(json.message));
     });
   };
 };
