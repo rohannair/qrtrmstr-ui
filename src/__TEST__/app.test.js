@@ -84,5 +84,53 @@ test('App reducer', next => {
 
   });
 
-});
+  next.test('PASSWORD_RESET', t => {
 
+    const action = {
+      type: 'PASSWORD_RESET',
+      message: 'Password Reset Successful',
+      error_msg: null
+    };
+
+    const state = {
+      message: null,
+      errorMessage: null
+    };
+
+    const state_after = {
+      message: 'Password Reset Successful',
+      errorMessage: null
+    };
+
+    t.plan(1);
+    t.deepEqual(app(state, action), state_after, 'User reset password');
+    t.end();
+
+  });
+
+
+  next.test('PASSWORD_RESET_ERROR', t => {
+
+    const action = {
+      type: 'PASSWORD_RESET_ERROR',
+      message: null,
+      error_msg: 'Password reset failed'
+    };
+
+    const state = {
+      message: null,
+      errorMessage: null
+    };
+
+    const state_after = {
+      message: null,
+      errorMessage: 'Password reset failed'
+    };
+
+    t.plan(1);
+    t.deepEqual(app(state, action), state_after, 'User reset password error');
+    t.end();
+
+  });
+
+});

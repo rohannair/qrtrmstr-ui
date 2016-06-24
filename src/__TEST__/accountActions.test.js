@@ -4,7 +4,7 @@ import test from 'tape';
 import accountActions from '../reducers/login';
 
 test('AccountActions', t => {
-  t.plan(3);
+  t.plan(5);
 
   t.deepEqual(
     accountActions({}, { type: 'LOG_IN', token: 'ABC123'}),
@@ -30,6 +30,34 @@ test('AccountActions', t => {
     ),
     { token: null },
     'Null the token on logout and kill the state'
+  );
+
+  t.deepEqual(
+    accountActions(
+      {
+        message: null,
+        state: 'HELLO I AM STATE',
+        error: null
+      }, {
+        type: 'FORGOT_PASSWORD_EMAIL_SENT', message: 'Email Sent', error: null
+      }
+    ),
+    { message: 'Email Sent', error: null, state: 'HELLO I AM STATE' },
+    'Send the forgot password email'
+  );
+
+  t.deepEqual(
+    accountActions(
+      {
+        message: null,
+        state: 'HELLO I AM STATE',
+        error: null
+      }, {
+        type: 'FORGOT_PASSWORD_ERROR', message: null, error: 'Email failed to send'
+      }
+    ),
+    { message: null, error: 'Email failed to send', state: 'HELLO I AM STATE' },
+    'Send the forgot password email error'
   );
 
   t.end();
