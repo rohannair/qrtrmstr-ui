@@ -5,7 +5,7 @@ const getDomain = utils.getDomain;
 const LOCATION_ROOT = getDomain() + API_ROOT;
 
 // Users Retrieved action
-function usersRetrieved(users = {}) {
+function usersRetrieved(users = { results: [], total: 0 }) {
   return {
     type: 'USERS_RETRIEVED',
     users
@@ -36,8 +36,8 @@ export const newUserErrors = (error_msg) => {
 };
 
 // Get All Users
-export const getUsers = token =>
-  dispatch => get(LOCATION_ROOT + 'users', token)
+export const getUsers = (token, offset, limit) =>
+  dispatch => get(LOCATION_ROOT + `users?offset=${offset}&limit=${limit}`, token)
   .then(json => dispatch(usersRetrieved(json)));
 
 // Single User Call
