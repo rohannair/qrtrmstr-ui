@@ -22,7 +22,7 @@ export default (store) => {
   const history = syncHistoryWithStore(browserHistory, store);
 
   return (
-    <Router history={ browserHistory } >
+    <Router history={ browserHistory } onUpdate={() => window.scrollTo(0, 0)}>
       <Route path="/" component={ App }>
         <IndexRedirect to="/dashboard" />
         <Route path="dashboard" component={ Home } onEnter={ requireAuth }>
