@@ -1,6 +1,7 @@
 const initialState = {
   token: null,
-  error: null
+  error: null,
+  message: null
 };
 
 export default function accountActions(state = initialState, action) {
@@ -18,6 +19,20 @@ export default function accountActions(state = initialState, action) {
 
   case 'LOG_IN_FAILURE':
     return {
+      error: action.error
+    };
+
+  case 'FORGOT_PASSWORD_EMAIL_SENT':
+    return {
+      ...state,
+      message: action.message,
+      error: action.error
+    };
+
+  case 'FORGOT_PASSWORD_ERROR':
+    return {
+      ...state,
+      message: action.message,
       error: action.error
     };
 

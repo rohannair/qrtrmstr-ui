@@ -35,6 +35,22 @@ export const newUserErrors = (error_msg) => {
   };
 };
 
+export const passwordReset = (message) => {
+  return {
+    type: 'PASSWORD_RESET',
+    message,
+    error_msg: null
+  };
+};
+
+export const passwordResetError = (error) => {
+  return {
+    type: 'PASSWORD_RESET_ERROR',
+    message: null,
+    error_msg: error
+  };
+};
+
 // Get All Users
 export const getUsers = (token, offset, limit) =>
   dispatch => get(LOCATION_ROOT + `users?offset=${offset}&limit=${limit}`, token)
@@ -62,3 +78,8 @@ export const modifyUser = (token, payload) =>
 export const getRoles = token =>
   dispatch => get(LOCATION_ROOT + 'roles', token)
   .then(json => dispatch(rolesRetrieved(json)));
+
+export const resetPassword = (payload, userId) =>
+  dispatch => post(`${LOCATION_ROOT}users/resetPassword/${userId}`, null, payload)
+  .then(json => dispatch(passwordReset(json.message)))
+  .catch(err => dispatch(passwordResetError(json.message)));

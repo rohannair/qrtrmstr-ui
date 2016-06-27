@@ -13,6 +13,7 @@ import PlaybookList from '../containers/PlaybookList';
 import PlaybookEditor from '../containers/PlaybookEditor';
 import PlaybookResults from '../containers/PlaybookResults';
 import UserList from '../containers/UserList';
+import PasswordResetContainer from '../containers/PasswordResetContainer';
 
 // Utils
 import { hasToken, requireAuth, checkAuth } from '../utils/auth';
@@ -35,6 +36,7 @@ export default (store) => {
         <Route path="login" component={ Login } onEnter={ checkAuth } />
         <Route path="logout" component={ Login } />
         <Route path="playbook/:playbookID" component={ Playbook } />
+        <Route path="users/resetPassword/:userId" component={ PasswordResetContainer } />
         <Route path="*" component={ NotFound } />
       </Route>
     </Router>

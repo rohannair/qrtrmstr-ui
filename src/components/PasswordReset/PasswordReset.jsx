@@ -1,28 +1,26 @@
 import React, { Component, PropTypes } from 'react';
-import styles from './login.css';
+import styles from './passwordReset.css';
 
 import Alert from '../Alert';
 import Button from '../Button';
 import Card from '../Card';
 
-class Login extends Component {
+class PasswordReset extends Component {
   static propTypes = {
-    forgotPassword: PropTypes.func,
-    submitForm: PropTypes.func,
+    submitForm: PropTypes.func
   };
 
   static defaultProps = {
-    submitForm    : () => {},
-    forgotPassword: () => console.log('OOPS')
+    submitForm: () => {}
   };
 
   state = {
-    username: '',
-    password: ''
+    password: '',
+    passwordCheck: ''
   };
 
   render() {
-    const { submitForm, forgotPassword } = this.props;
+    const { submitForm } = this.props;
     const errorEl = this.props.error
     ? <Alert danger>{`ERROR: ${this.props.error}`}</Alert>
     : null;
@@ -34,8 +32,7 @@ class Login extends Component {
     return (
       <div className="login-box">
         <Card>
-          <h2>Log-in to Quartermaster</h2>
-
+          <h1>Password Reset</h1>
           <div className="errorContainer">{ errorEl }</div>
           <div className="errorContainer">{ messageEl }</div>
           <form
@@ -43,25 +40,25 @@ class Login extends Component {
           onSubmit={ this._submitForm }>
 
             <label className="inputField">
-              Username:
-              <input
-                type="email"
-                ref="username"
-                name="username"
-                placeholder="Your email"
-                value={this.state.name}
-                onChange={ e => this._changeVal(e.target.name, e.target.value) }
-                />
-            </label>
-
-            <label className="inputField">
               Password:
               <input
                 type="password"
                 ref="password"
                 name="password"
-                placeholder="Your password"
+                placeholder="New password"
                 value={this.state.password}
+                onChange={ e => this._changeVal(e.target.name, e.target.value) }
+                />
+            </label>
+
+            <label className="inputField">
+              Retype Password:
+              <input
+                type="password"
+                ref="passwordCheck"
+                name="passwordCheck"
+                placeholder="Type password again"
+                value={this.state.passwordCheck}
                 onChange={ e => this._changeVal(e.target.name, e.target.value) }
                 />
             </label>
@@ -70,11 +67,6 @@ class Login extends Component {
             <input className="btn primary lgLong" type="submit"/>
           </form>
 
-          <Button
-            onClick={this.props.showForgotPasswordModal}
-            classes={"transparent sm"}>
-            I forgot my password
-          </Button>
         </Card>
       </div>
     );
@@ -88,10 +80,10 @@ class Login extends Component {
 
   _submitForm = (e) => {
     e.preventDefault();
+    const { password, passwordCheck } = this.state;
 
-    const { username, password } = this.state;
-    return this.props.submitForm({username, password});
+    return this.props.submitForm({password});
   };
 }
 
-export default Login;
+export default PasswordReset;
