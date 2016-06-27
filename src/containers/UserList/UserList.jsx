@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import styles from './userList.css';
 import Cookies from 'cookies-js';
+import ReactPaginate from 'react-paginate';
 
 import Card from '../../components/Card';
 import Button from '../../components/Button';
@@ -16,7 +17,10 @@ class UserList extends Component {
   state = {
     newUser: {},
     loading: false,
-    errorMessage: this.props.errorMessage || null
+    errorMessage: this.props.errorMessage || null,
+    offset: 0,
+    pageNum: 1,
+    perPage: 10
   };
 
   static propTypes = {
@@ -41,7 +45,6 @@ class UserList extends Component {
   };
 
   render() {
-
     const newUserForm = Object.keys(this.state.newUser).length > 0 || this.state.errorMessage
     ? <NewUserModal
         val={this.state.newUser}
@@ -57,9 +60,7 @@ class UserList extends Component {
       />
     : null;
 
-    const userCount = Object.keys(this.props.users).length;
-
-    const tableBody = this.props.users.map(row => {
+    const tableBody = this.props.users.results.map(row => {
 
       const profile_img = row.profile_img || '';
       const admin_pill = row.is_admin
@@ -107,7 +108,21 @@ class UserList extends Component {
         <Table headings = {['name', 'email', 'role', 'actions']} >
           { tableBody }
           <div className="userList-metadata">
-            {`${userCount} users`}
+            {`Total users: ${this.props.users.total}`}
+            <div id="paginate">
+              <ReactPaginate  previousLabel={" "}
+                              nextLabel={" "}
+                              breakLabel={<a href="">...</a>}
+                              pageNum={Math.ceil(this.props.users.total/this.state.perPage)}
+                              marginPagesDisplayed={1}
+                              pageRangeDisplayed={2}
+                              clickCallback={this._handlePageClick}
+                              containerClassName={"pagination"}
+                              subContainerClassName={"pages pagination"}
+                              activeClassName={"active"}
+                              previousLinkClassName={"fa fa-arrow-left tertiary"}
+                              nextLinkClassName={"fa fa-arrow-right tertiary"} />
+            </div>
           </div>
         </Table>
 
@@ -136,7 +151,8 @@ class UserList extends Component {
 
   _renderUserList = () => {
     const { token, dispatch } = this.props;
-    return dispatch(getUsers(token));
+    const { offset, perPage } = this.state;
+    return dispatch(getUsers(token, offset, perPage));
   };
 
   _renderRolesList = () => {
@@ -210,6 +226,14 @@ class UserList extends Component {
     allErrors += formErrors ? `The fields: ${formErrors}cannot be blank. ` : '';
     allErrors.length > 0 ? dispatch(newUserErrors(allErrors)) : dispatch(createUser(token, data));
   };
+
+  _handlePageClick = (data) => {
+    const offset = Math.ceil(data.selected * this.state.perPage);
+    this.setState({ offset })
+    const { token, dispatch } = this.props;
+    return dispatch(getUsers(token, offset, this.state.perPage));
+  };
+
 }
 
 function mapStateToProps(state) {

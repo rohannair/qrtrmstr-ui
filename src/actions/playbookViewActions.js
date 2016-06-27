@@ -3,7 +3,7 @@ import utils from './utils';
 const getDomain = utils.getDomain;
 
 // Playbooks Retrieved action
-function playbooksRetrieved(playbookList = {}) {
+function playbooksRetrieved(playbookList = { results: [], total: 0 }) {
   return {
     type: 'PLAYBOOKS_RETRIEVED',
     playbookList
@@ -121,10 +121,10 @@ export const assignPlaybook = (token, id, userId) => {
 };
 
 // Get All Playbooks
-export const getPlaybooks = token => {
+export const getPlaybooks = (token, offset, limit) => {
   const url = getDomain();
   return dispatch => {
-    return fetch(`${url}/api/v1/playbooks`, {
+    return fetch(`${url}/api/v1/playbooks?offset=${offset}&limit=${limit}`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',

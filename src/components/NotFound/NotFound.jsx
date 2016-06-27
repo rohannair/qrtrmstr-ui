@@ -10,7 +10,6 @@ import UserList from '../../containers/UserList';
 // Components
 import Header from '../../components/Global/Header';
 import Footer from '../../components/Global/Footer';
-import Sidebar from '../../components/Global/Sidebar';
 import Card from '../../components/Card';
 
 const Home = () => {

@@ -2,7 +2,7 @@ import _ from 'lodash';
 
 export const initialState = {
   chosenUser: {},
-  list: [],
+  list: { results: [], total: 0 },
   playbook: {},
   openCards: [],
   message: null
@@ -27,10 +27,13 @@ export default function playbookView(state = initialState, action) {
   case 'ADD_NEW_PLAYBOOK':
     return {
       ...state,
-      list: [
-        ...state.list,
-        action.playbook
-      ]
+      list: {
+        results: [
+          ...state.list.results,
+          action.playbook
+        ],
+        total: state.list.total + 1
+      }
     };
 
   case 'PLAYBOOK_ORDER_MODIFIED':
@@ -131,7 +134,7 @@ export default function playbookView(state = initialState, action) {
     const { newPlaybook } = action;
     const { list } = state;
     let pos = null;
-    list.forEach((val, ind) => {
+    list.results.forEach((val, ind) => {
       if (val.id === newPlaybook.result.id) {
         pos = ind;
       }
@@ -140,11 +143,14 @@ export default function playbookView(state = initialState, action) {
     return {
       ...state,
       message: newPlaybook.message,
-      list: [
-        ...list.slice(0, pos),
-        newPlaybook.result,
-        ...list.slice(pos + 1)
-      ]
+      list: {
+        results: [
+          ...list.results.slice(0, pos),
+          newPlaybook.result,
+          ...list.results.slice(pos + 1)
+        ],
+        total: list.total
+      }
     };
 
   default:

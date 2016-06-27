@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Cookies from 'cookies-js';
+import ReactPaginate from 'react-paginate';
 
 // Styles
 import styles from './playbookList.css';
@@ -35,16 +36,19 @@ class PlaybookList extends Component {
   state = {
     chosenUser: {},
     loading: false,
-
     visibleModal: null,
-    modalData: {}
+    modalData: {},
+    offset: 0,
+    pageNum: 1,
+    perPage: 10
   };
 
   componentWillMount() {
     const { token, dispatch } = this.props;
+    const { offset, perPage } = this.state;
 
     // Select all playbooks
-    dispatch(getPlaybooks(token));
+    dispatch(getPlaybooks(token, offset, perPage));
     // Select all users
     dispatch(getUsers(token));
   };
@@ -72,7 +76,7 @@ class PlaybookList extends Component {
     ? <AssignPlaybookModal
         closeModal={ this._closeModal }
         playbook={ this.state.modalData }
-        users={ this.props.users }
+        users={ this.props.users.results }
         action={ this._sendPlaybook }
         title={'Send Playbook'}
       />
@@ -82,17 +86,17 @@ class PlaybookList extends Component {
     ? <AssignPlaybookModal
         closeModal={ this._closeModal }
         playbook={ this.state.modalData }
-        users={ this.props.users }
+        users={ this.props.users.results }
         action={ this._savePlaybook }
         title={'Assign Playbook'}
       />
     : null;
 
-    const items = [...this.props.playbookList].map(val => {
+    const items = [...this.props.playbookList.results].map(val => {
       return (<PlaybookListItem
         key={val.id}
         {...val}
-        users={ this.props.users }
+        users={ this.props.users.results }
         sendPlaybook={ this._sendPlaybookToAssignedUser }
         duplicatePlaybook={ this._duplicatePlaybook }
         showEditModal={ this._showEditModal }
@@ -105,6 +109,23 @@ class PlaybookList extends Component {
       <div className="playbookList">
         <Table headings = {['name', 'modified', 'assigned', 'status', 'actions']} >
           { items }
+          <div className="playbookList-metadata">
+            {`Total playbooks: ${this.props.playbookList.total}`}
+            <div id="paginate">
+              <ReactPaginate  previousLabel={" "}
+                              nextLabel={" "}
+                              breakLabel={<a href="">...</a>}
+                              pageNum={Math.ceil(this.props.playbookList.total/this.state.perPage)}
+                              marginPagesDisplayed={1}
+                              pageRangeDisplayed={2}
+                              clickCallback={this._handlePageClick}
+                              containerClassName={"pagination"}
+                              subContainerClassName={"pages pagination"}
+                              activeClassName={"active"}
+                              previousLinkClassName={"fa fa-arrow-left tertiary"}
+                              nextLinkClassName={"fa fa-arrow-right tertiary"} />
+            </div>
+          </div>
         </Table>
 
         { editPlaybookModal }
@@ -127,21 +148,21 @@ class PlaybookList extends Component {
   };
 
   _showSendModal = (val) => {
-    const chosenPlaybook = [...this.props.playbookList]
+    const chosenPlaybook = [...this.props.playbookList.results]
       .filter(item => item.id === val.id)[0];
 
     this._openModal('send', chosenPlaybook);
   };
 
   _showEditModal = (val) => {
-    const editedPlaybook = [...this.props.playbookList]
+    const editedPlaybook = [...this.props.playbookList.results]
       .filter(item => item.id === val.id)[0];
 
     this._openModal('edit', editedPlaybook);
   };
 
   _showAssignModal = (val) => {
-    const assignedPlaybook = [...this.props.playbookList]
+    const assignedPlaybook = [...this.props.playbookList.results]
       .filter(item => item.id === val.id)[0];
 
     this._openModal('assign', assignedPlaybook);
@@ -193,6 +214,13 @@ class PlaybookList extends Component {
         emailTemplate: 'welcomeEmail'
       }
     });
+  };
+
+  _handlePageClick = (data) => {
+    const offset = Math.ceil(data.selected * this.state.perPage);
+    this.setState({ offset })
+    const { token, dispatch } = this.props;
+    return dispatch(getPlaybooks(token, offset, this.state.perPage));
   };
 };
 

@@ -1,5 +1,5 @@
 const initialState = {
-  users: [],
+  users: { results: [], total: 0 },
   errorMessage: null,
   roles: [],
   message: null
@@ -10,7 +10,7 @@ export default function app(state = initialState, { type, users, new_user, error
   case 'USERS_RETRIEVED':
     return {
       ...state,
-      users: users
+      users
     };
 
   case 'NEW_USER_ERROR_RETRIEVED':
@@ -24,10 +24,13 @@ export default function app(state = initialState, { type, users, new_user, error
   case 'NEW_USER_CREATED':
     return {
       ...state,
-      users: [
-        ...state.users,
-        new_user
-      ],
+      users: {
+        results: [
+          ...state.users.results,
+          new_user
+        ],
+        total: state.users.total + 1
+      },
       errorMessage: null
     };
 

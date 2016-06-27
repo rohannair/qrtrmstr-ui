@@ -74,6 +74,25 @@
   }
 }
 
+#paginate {
+  ul {
+    padding-left: 15px;
+    padding-right: 15px;
+    text-align: center;
+  }
 
+  li {
+    display: inline-block;
+    padding-left: 15px;
+    padding-right: 15px;
+    cursor: pointer;
+  }
 
+  &.break a {
+    cursor: default;
+  }
 
+  $.active li {
+    background-color: #ccc;
+  }
+}
