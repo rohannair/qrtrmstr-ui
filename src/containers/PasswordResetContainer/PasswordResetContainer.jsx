@@ -21,6 +21,14 @@ class PasswordResetContainer extends Component {
 
   state = {};
 
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  };
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.message.length > 0) this.context.router.replace('/login');
+  };
+
   render() {
     const { errorMessage, message } = this.props;
 
