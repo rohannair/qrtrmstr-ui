@@ -141,7 +141,7 @@ export default function playbookView(state = initialState, action) {
   case 'PLAYBOOK_MODIFIED':
     const { newPlaybook } = action;
     const { list } = state;
-    let pos = null;
+    let pos = list.results.length;
     list.results.forEach((val, ind) => {
       if (val.id === newPlaybook.result.id) {
         pos = ind;
