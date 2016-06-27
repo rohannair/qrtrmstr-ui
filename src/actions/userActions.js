@@ -81,5 +81,8 @@ export const getRoles = token =>
 
 export const resetPassword = (payload, userId) =>
   dipatch => post(`${LOCATION_ROOT}users/resetPassword/${userId}`, null, payload)
-  .then(json => dipatch(passwordReset(json.message)))
+  .then(json => {
+    dipatch(passwordReset(json.message));
+    return window.location = '/login';
+  })
   .catch(err => dispatch(passwordResetError(json.message)));

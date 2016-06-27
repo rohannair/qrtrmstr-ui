@@ -57,7 +57,7 @@ class App extends Component {
   }
 
   render() {
-    const { token, users, error, message } = this.props;
+    const { token, users, error, message, resetPasswordMessage } = this.props;
 
     const { visibleModal } = this.state;
 
@@ -77,7 +77,7 @@ class App extends Component {
             submitForm={this._submitForm}
             showForgotPasswordModal={ this._showForgotPasswordModal }
             error={ error }
-            message={ message }
+            message={ message || resetPasswordMessage }
           />
         </div>
         { forgotPasswordModal }
@@ -120,10 +120,12 @@ class App extends Component {
 
 function mapStateToProps(state) {
   const { token, error, message } = state.accountActions;
+  const resetPasswordMessage = state.app.message;
   return {
     token,
     error,
-    message
+    message,
+    resetPasswordMessage
   };
 }
 
