@@ -18,7 +18,7 @@ class PlaybookListItem extends Component {
     const deactivateClasses = this.props.current_status === 'draft' ? '' : 'disabled';
 
     const canOpen = this.props.showSendModal.bind(this,
-        { id: this.props.id, name: this.props.name}
+        { id: this.props.id, name: this.props.name, assigned: this.props.assigned }
     );
 
     const currentStatusDisplay = this.props.current_status === 'in progress'
@@ -104,22 +104,6 @@ class PlaybookListItem extends Component {
       </div>
     );
   }
-
-  _sendPlaybook = (userID) => {
-    let assignedUser = null;
-
-    if (this.props.assigned) {
-      const assignedUserOrg = this.props.users.filter(val => val.id === userID)[0];
-      assignedUser = {
-        id: assignedUserOrg.id,
-        firstName: assignedUserOrg.firstName,
-        lastName: assignedUserOrg.lastName,
-        email: assignedUserOrg.username,
-        playbookID: this.props.id };
-    }
-
-    this.props.sendPlaybook(assignedUser);
-  };
 
 
 };

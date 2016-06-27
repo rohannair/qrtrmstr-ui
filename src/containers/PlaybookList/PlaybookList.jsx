@@ -22,6 +22,7 @@ import Alert from '../../components/Alert';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
 import Table from '../../components/Table';
+import Dialog from '../../components/Dialog';
 
 import AssignPlaybookModal from '../../components/AssignPlaybookModal';
 import EditPlaybookModal from '../../components/EditPlaybookModal';
@@ -33,9 +34,7 @@ import MapContainer from '../MapContainer';
 class PlaybookList extends Component {
 
   state = {
-    chosenUser: {},
     loading: false,
-
     visibleModal: null,
     modalData: {}
   };
@@ -74,7 +73,7 @@ class PlaybookList extends Component {
         playbook={ this.state.modalData }
         users={ this.props.users }
         action={ this._sendPlaybook }
-        title={'Send Playbook'}
+        title={'Send'}
       />
     : null;
 
@@ -84,8 +83,18 @@ class PlaybookList extends Component {
         playbook={ this.state.modalData }
         users={ this.props.users }
         action={ this._savePlaybook }
-        title={'Assign Playbook'}
+        title={'Assign'}
       />
+    : null;
+
+    const confirmSendPlaybookModal = visibleModal === 'confirm'
+    ? <Dialog
+        onAction={ this._sendAndClose }
+        buttonAction='Send'
+        onClose={ this._closeModal }
+        heading='Confirmation Needed'>
+        <p>{`Confirm send playbook: ${this.state.modalData.name} to ${this.state.modalData.assignedUser.firstName} ${this.state.modalData.assignedUser.lastName}?`}</p>
+      </Dialog>
     : null;
 
     const items = [...this.props.playbookList].map(val => {
@@ -110,27 +119,41 @@ class PlaybookList extends Component {
         { editPlaybookModal }
         { sendPlaybookModal }
         { assignPlaybookModal }
+        { confirmSendPlaybookModal }
       </div>
     );
   };
 
   _closeModal = () => this.setState({ visibleModal: null, modalData: {} });
-  _openModal = (visibleModal, playbook, state = null) => {
+
+  _openModal = (visibleModal, playbook, assignedUser = null, state = null) => {
     this.setState({
       visibleModal,
       modalData: {
         name: playbook.name,
         id: playbook.id,
-        assigned: playbook.assigned || null
+        assigned: playbook.assigned || null,
+        assignedUser: assignedUser || null
       },
       ...state });
   };
 
   _showSendModal = (val) => {
+    let assignedUser = null;
+    if (val.assigned) {
+      const assignedUserOrg = this.props.users.filter(value => value.id === val.assigned)[0];
+      assignedUser = {
+        id: assignedUserOrg.id,
+        firstName: assignedUserOrg.firstName,
+        lastName: assignedUserOrg.lastName,
+        username: assignedUserOrg.username
+      };
+      return this._openModal('confirm', val, assignedUser);
+    }
     const chosenPlaybook = [...this.props.playbookList]
       .filter(item => item.id === val.id)[0];
 
-    this._openModal('send', chosenPlaybook);
+    return this._openModal('send', chosenPlaybook);
   };
 
   _showEditModal = (val) => {
@@ -152,7 +175,12 @@ class PlaybookList extends Component {
     dispatch(updateMessage(null));
   };
 
-  _sendPlaybook = (id, { selected }) => {
+  _sendAndClose = () => {
+    this._sendPlaybook(this.state.modalData.id, this.state.modalData.assignedUser);
+    this._closeModal();
+  };
+
+  _sendPlaybook = (id, selected) => {
     const { token, dispatch } = this.props;
 
     const welcomeEmailParams = {
@@ -169,7 +197,8 @@ class PlaybookList extends Component {
 
   _savePlaybook = (id, payload) => {
     const { token, dispatch } = this.props;
-    return dispatch(modifyPlaybook(token, payload, id));
+    const wrapPayload = { selected: payload };
+    return dispatch(modifyPlaybook(token, wrapPayload, id));
   };
 
   _duplicatePlaybook = (id) => {
@@ -177,23 +206,6 @@ class PlaybookList extends Component {
     return dispatch(duplicatePlaybook(token, id));
   };
 
-  _sendPlaybookToAssignedUser = (value) => {
-    this._changeUserParams(value);
-    this._sendPlaybook();
-  };
-
-  _changeUserParams = (value) => {
-    this.setState({
-      chosenUser: {
-        userId: value.id,
-        firstName: value.firstName,
-        lastName: value.lastName,
-        email: value.email,
-        playbookId: value.playbookID,
-        emailTemplate: 'welcomeEmail'
-      }
-    });
-  };
 };
 
 function mapStateToProps(state) {

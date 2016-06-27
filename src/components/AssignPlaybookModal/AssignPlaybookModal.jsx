@@ -42,10 +42,10 @@ class AssignPlaybookModal extends Component {
 
     return (
       <Modal onClose={closeModal} md>
-        <h3>{`${title}: ${playbook.name}`}</h3>
+        <h3>{`${title} Playbook: ${playbook.name}`}</h3>
 
         <div className="formField">
-          <label>Assign to user: </label>
+          <label>{`${title} to user: `}</label>
             <select className="inputIcon" value={ selected.id || selected } onChange={ this._onChange }>
               { opts }
             </select>
@@ -56,7 +56,7 @@ class AssignPlaybookModal extends Component {
             <ButtonGroup>
               <Button classes="inverse sm" onClick={closeModal}>Cancel</Button>
               <Button classes="primary sm" onClick={this._actAndClose}>
-                Update
+                { title }
               </Button>
             </ButtonGroup>
           </div>
@@ -76,7 +76,7 @@ class AssignPlaybookModal extends Component {
   _actAndClose = () => {
     const { closeModal, action, playbook } = this.props;
 
-    action(playbook.id, this.state);
+    action(playbook.id, this.state.selected);
     closeModal();
   }
 
