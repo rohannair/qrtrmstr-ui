@@ -5,7 +5,8 @@ export const initialState = {
   list: { results: [], total: 0 },
   playbook: {},
   openCards: [],
-  message: null
+  message: null,
+  isSaving: false
 };
 
 export default function playbookView(state = initialState, action) {
@@ -130,6 +131,12 @@ export default function playbookView(state = initialState, action) {
       message: action.message
     };
 
+  case 'SAVING_PLAYBOOK':
+    return {
+      ...state,
+      isSaving: true
+    };
+
   case 'PLAYBOOK_MODIFIED':
     const { newPlaybook } = action;
     const { list } = state;
@@ -143,6 +150,7 @@ export default function playbookView(state = initialState, action) {
     return {
       ...state,
       message: newPlaybook.message,
+      isSaving: false,
       list: {
         results: [
           ...list.results.slice(0, pos),

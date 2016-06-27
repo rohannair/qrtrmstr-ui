@@ -13,7 +13,8 @@ import {
   addSlide,
   modifyPlaybook,
   editSlide,
-  reorderPlaybook
+  reorderPlaybook,
+  isSaving
 } from '../../actions/playbookViewActions';
 
 // Styles
@@ -54,6 +55,8 @@ class PlaybookEditor extends Component {
   };
 
   render() {
+    const { playbook, isSaving } = this.props;
+
     const RemoveEquipmentTab = this.state.showModal
     ? <Dialog
         onAction={ this._removeOption }
@@ -63,7 +66,7 @@ class PlaybookEditor extends Component {
         <p>Are you sure you want to remove this tab?</p>
       </Dialog>
     : null;
-    const { playbook } = this.props;
+
     const playbookDoc = playbook.doc && Object.keys(playbook.doc).length > 0
     ? Object.keys(playbook.doc).map(val => {
       const slide = playbook.doc[val];
@@ -143,7 +146,11 @@ class PlaybookEditor extends Component {
         <PlaybookEditorBody>
           { playbookDoc}
         </PlaybookEditorBody>
-        <PlaybookEditorSidebar save={this._savePlaybook} id={ playbookID } />
+        <PlaybookEditorSidebar
+          save={this._savePlaybook}
+          inProgress={ isSaving }
+          id={ playbookID }
+        />
         { RemoveEquipmentTab }
       </div>
       );
@@ -221,7 +228,8 @@ class PlaybookEditor extends Component {
 
   _savePlaybook = () => {
     const { token, dispatch, playbook, params } = this.props;
-    return dispatch(modifyPlaybook(token, {doc: playbook.doc}, params.playbookID));
+    dispatch(isSaving());
+    return dispatch(modifyPlaybook(token, { doc: playbook.doc }, params.playbookID));
   };
 
   _moveSlide = (i, direction) => {
@@ -252,12 +260,14 @@ class PlaybookEditor extends Component {
 
 function mapStateToProps(state, ownProps) {
   const token = state.accountActions.token || Cookies.get('token');
+  console.log('IS SAVING:', state.playbookAdmin.isSaving);
 
   return {
     openCards: state.playbookAdmin.openCards,
     playbook: state.playbookAdmin.playbook,
     playbookID: ownProps.params.id,
     users: state.playbookAdmin.users,
+    isSaving: state.playbookAdmin.isSaving,
     token
   };
 }

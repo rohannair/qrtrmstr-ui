@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 
 import Card from '../Card';
 import Button from '../Button';
+import ButtonSave from '../ButtonSave';
 import ButtonGroup from '../ButtonGroup';
 import styles from './playbookEditorSidebar.css';
 
@@ -18,10 +19,11 @@ const PlaybookEditorSidebar = (props) => {
     <div className="playbookEditor-sidebar">
       <Card title="Actions">
         <ButtonGroup vertical>
-          <Button
+          <ButtonSave
             onClick={ props.save }
             classes='primary block lglong'
-          >Save</Button>
+            inProgress={ props.inProgress }
+          >Save</ButtonSave>
           <Link
             to={`/playbook/${props.id}`}
             className="btn tertiary block md"
