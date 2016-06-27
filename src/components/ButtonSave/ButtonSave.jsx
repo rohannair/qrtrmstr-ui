@@ -1,12 +1,31 @@
 import React, { Component, PropTypes } from 'react';
-import styles from './buttonSave.css';
-
 import Button from '../Button';
 
-const ButtonSave = (props) =>
-  props.inProgress
-    ? <div className="buttonSave">Saving...</div>
-    : <Button { ...props } />;
+const ButtonSave = (props) => {
+  console.log(props.saveStatus);
+  if (props.saveStatus === 'SAVING') {
+    return (
+      <Button
+        children={`Saving ${props.saveType}`}
+        classes={props.classes}
+      />
+    );
+  } else if (props.saveStatus === 'SAVED') {
+    return (
+      <Button
+        { ...props }
+        children={`${props.saveType} Saved!`}
+        classes="md inverse"
+      />
+    );
+  };
+  return (
+    <Button
+     { ...props }
+     children={`Save ${props.saveType}`}
+    />
+  );
+};
 
 ButtonSave.propTypes = {
   center: PropTypes.bool,
@@ -14,8 +33,7 @@ ButtonSave.propTypes = {
   text: PropTypes.string,
   toolTipText: PropTypes.string,
   onClick: PropTypes.func.isRequired,
-  icon: PropTypes.string,
-  inProgress: PropTypes.bool
+  icon: PropTypes.string
 };
 
 export default ButtonSave;

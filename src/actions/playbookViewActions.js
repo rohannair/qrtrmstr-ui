@@ -5,8 +5,8 @@ const getDomain = utils.getDomain;
 export const isSaving = () => {
   return {
     type: 'SAVING_PLAYBOOK'
-  }
-}
+  };
+};
 
 // Playbooks Retrieved action
 function playbooksRetrieved(playbookList = { results: [], total: 0 }) {

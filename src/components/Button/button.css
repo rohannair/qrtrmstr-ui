@@ -9,6 +9,7 @@
   position: relative;
   vertical-align: middle;
   cursor: pointer;
+  transition: all 0.05s ease;
 
   /*****
    * Button types

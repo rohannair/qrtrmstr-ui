@@ -38,7 +38,6 @@ import SlideFirstDay from '../../components/SlideFirstDay';
 import Dialog from '../../components/Dialog';
 
 class PlaybookEditor extends Component {
-
   state = {
     showModal: false,
     removeTabInfo: {
@@ -50,12 +49,16 @@ class PlaybookEditor extends Component {
     playbook: null
   };
 
+  static propTypes = {
+    saveStatus: PropTypes.oneOf(['SAVED', 'SAVING', 'UNSAVED']).isRequired
+  }
+
   componentWillMount() {
     this._renderPlaybook();
   };
 
   render() {
-    const { playbook, isSaving } = this.props;
+    const { playbook, saveStatus } = this.props;
 
     const RemoveEquipmentTab = this.state.showModal
     ? <Dialog
@@ -148,7 +151,7 @@ class PlaybookEditor extends Component {
         </PlaybookEditorBody>
         <PlaybookEditorSidebar
           save={this._savePlaybook}
-          inProgress={ isSaving }
+          saveStatus={ saveStatus }
           id={ playbookID }
         />
         { RemoveEquipmentTab }
@@ -260,14 +263,13 @@ class PlaybookEditor extends Component {
 
 function mapStateToProps(state, ownProps) {
   const token = state.accountActions.token || Cookies.get('token');
-  console.log('IS SAVING:', state.playbookAdmin.isSaving);
 
   return {
     openCards: state.playbookAdmin.openCards,
     playbook: state.playbookAdmin.playbook,
     playbookID: ownProps.params.id,
     users: state.playbookAdmin.users,
-    isSaving: state.playbookAdmin.isSaving,
+    saveStatus: state.playbookAdmin.saveStatus,
     token
   };
 }

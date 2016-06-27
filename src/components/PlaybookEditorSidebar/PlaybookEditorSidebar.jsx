@@ -21,9 +21,10 @@ const PlaybookEditorSidebar = (props) => {
         <ButtonGroup vertical>
           <ButtonSave
             onClick={ props.save }
-            classes='primary block lglong'
-            inProgress={ props.inProgress }
-          >Save</ButtonSave>
+            classes='primary block md'
+            saveStatus={ props.saveStatus }
+            saveType='Playbook'
+          />
           <Link
             to={`/playbook/${props.id}`}
             className="btn tertiary block md"
