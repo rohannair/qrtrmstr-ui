@@ -7,14 +7,9 @@
   left: 0;
   background: rgba(0, 0, 0, 0.48);
   z-index: 99999;
-  animation: mymove 0.4s;
+  animation: modalContainer 0.4s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
-}
-
-@keyframes mymove {
-    from {top: -50px; opacity: 0;}
-    to {top: 0px; opacity: 1;}
 }
 
 .newUserModal {

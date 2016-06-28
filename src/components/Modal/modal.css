@@ -1,3 +1,13 @@
+@keyframes modalContainer {
+  from { opacity: 0; }
+  to { opacity: 1;}
+}
+
+@keyframes modalInnerAnimation {
+  from { top: -50px; }
+  to { top: 0;}
+}
+
 .modal {
   position: fixed;
   top: 0;
@@ -8,7 +18,7 @@
   flex-direction: column;
   z-index: 9999;
   background: rgba(0, 0, 0, 0.48);
-  animation: mymove 0.4s;
+  animation: modalContainer 0.4s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
 }
@@ -20,6 +30,9 @@
   border-radius: 3px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
   padding: 10px;
+  animation: modalInnerAnimation 0.6s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 
   &.xl {
     width: 80%;
@@ -37,7 +50,7 @@
   }
 
   &.sm {
-    width: 20%;
+    width: 30%;
   }
 
   .formField {
