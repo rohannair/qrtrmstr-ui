@@ -324,7 +324,8 @@ test('PlaybookView', ({ test }) => {
       slide_number: 'bbt',
       data: {
         foo: 'bar'
-      }
+      },
+      saveStatus: 'SAVED'
     };
 
     const state = {
@@ -346,7 +347,8 @@ test('PlaybookView', ({ test }) => {
           xyzzy: { name: 'hi' },
           bat: { foo: 'bar' }
         }
-      }
+      },
+      saveStatus: 'UNSAVED'
     };
 
     t.plan(2);
@@ -364,6 +366,30 @@ test('PlaybookView', ({ test }) => {
     );
 
     t.end();
+  });
+
+  // SAVING_PLAYBOOK
+  test('SAVING_PLAYBOOK', t=> {
+    const action = {
+      type: 'SAVING_PLAYBOOK'
+    };
+
+    const state = {
+      name: 'foo'
+    };
+
+    const state_after = {
+      name: 'foo',
+      saveStatus: 'SAVING'
+    };
+
+    t.plan(1);
+
+    t.deepEqual(
+      playbookView(state, action),
+      state_after,
+      'On card save, it should first go to a saving action'
+    );
   });
 
   // TOGGLE_OPEN_CARD
@@ -429,6 +455,140 @@ test('PlaybookView', ({ test }) => {
     //   state_after_2,
     //   'If modal ist open, toggle showModal to false'
     // );
+
+    t.end();
+  });
+
+  // PLAYBOOK_MODIFIED 1
+  test('PLAYBOOK_MODIFIED existing playbook', t => {
+    const action = {
+      type: 'PLAYBOOK_MODIFIED',
+      newPlaybook: {
+        result: {
+          id: 2,
+          name: 'foo'
+        },
+        message: 'this works'
+      }
+    };
+
+    const state = {
+      list: {
+        results: [
+          {
+            id: 1,
+            name: 'bar'
+          },
+          {
+            id: 2,
+            name: 'baz'
+          },
+          {
+            id: 3,
+            name: 'bam'
+          }
+        ],
+        total: 3
+      }
+    };
+
+    const stateAfter = {
+      list: {
+        results: [
+          {
+            id: 1,
+            name: 'bar'
+          },
+          {
+            id: 2,
+            name: 'foo'
+          },
+          {
+            id: 3,
+            name: 'bam'
+          }
+        ],
+        total: 3,
+      },
+      saveStatus: 'SAVED',
+      message: 'this works'
+    };
+
+    t.plan(1);
+
+    t.deepEqual(
+      playbookView(state, action),
+      stateAfter
+    );
+
+    t.end();
+  });
+
+  // PLAYBOOK_MODIFIED 2
+  test('PLAYBOOK_MODIFIED new playbook', t => {
+    const action = {
+      type: 'PLAYBOOK_MODIFIED',
+      newPlaybook: {
+        result: {
+          id: 9,
+          name: 'foo'
+        },
+        message: 'this works'
+      }
+    };
+
+    const state = {
+      list: {
+        results: [
+          {
+            id: 1,
+            name: 'bar'
+          },
+          {
+            id: 2,
+            name: 'baz'
+          },
+          {
+            id: 3,
+            name: 'bam'
+          }
+        ],
+        total: 3
+      }
+    };
+
+    const stateAfter = {
+      list: {
+        results: [
+          {
+            id: 1,
+            name: 'bar'
+          },
+          {
+            id: 2,
+            name: 'baz'
+          },
+          {
+            id: 3,
+            name: 'bam'
+          },
+          {
+            id: 9,
+            name: 'foo'
+          }
+        ],
+        total: 3,
+      },
+      saveStatus: 'SAVED',
+      message: 'this works'
+    };
+
+    t.plan(1);
+
+    t.deepEqual(
+      playbookView(state, action),
+      stateAfter
+    );
 
     t.end();
   });

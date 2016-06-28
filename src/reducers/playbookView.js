@@ -5,7 +5,8 @@ export const initialState = {
   list: { results: [], total: 0 },
   playbook: {},
   openCards: [],
-  message: null
+  message: null,
+  saveStatus: 'SAVED'
 };
 
 export default function playbookView(state = initialState, action) {
@@ -102,7 +103,8 @@ export default function playbookView(state = initialState, action) {
             ...action.data
           }
         }
-      }
+      },
+      saveStatus: 'UNSAVED',
     };
 
   case 'TOGGLE_OPEN_CARD':
@@ -130,10 +132,16 @@ export default function playbookView(state = initialState, action) {
       message: action.message
     };
 
+  case 'SAVING_PLAYBOOK':
+    return {
+      ...state,
+      saveStatus: 'SAVING'
+    };
+
   case 'PLAYBOOK_MODIFIED':
     const { newPlaybook } = action;
     const { list } = state;
-    let pos = null;
+    let pos = list.results.length;
     list.results.forEach((val, ind) => {
       if (val.id === newPlaybook.result.id) {
         pos = ind;
@@ -143,6 +151,7 @@ export default function playbookView(state = initialState, action) {
     return {
       ...state,
       message: newPlaybook.message,
+      saveStatus: 'SAVED',
       list: {
         results: [
           ...list.results.slice(0, pos),
