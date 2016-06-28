@@ -2,10 +2,11 @@ const initialState = {
   users: { results: [], total: 0 },
   errorMessage: null,
   roles: [],
-  message: null
+  message: null,
+  authUrl: null
 };
 
-export default function app(state = initialState, { type, users, new_user, error_msg, roles, message }) {
+export default function app(state = initialState, { type, users, new_user, error_msg, roles, message, authUrl }) {
   switch (type) {
   case 'USERS_RETRIEVED':
     return {
@@ -53,6 +54,26 @@ export default function app(state = initialState, { type, users, new_user, error
       message,
       errorMessage: error_msg
     };
+
+  case 'GET_GOOGLE_AUTH_URL':
+    return {
+      ...state,
+      authUrl
+    };
+
+  case 'GOOGLE_ACCOUNT_LINKED':
+    return {
+      ...state,
+      message,
+      errorMessage: null
+    };
+
+    case 'GOOGLE_ACCOUNT_LINK_FAILURE':
+      return {
+        ...state,
+        errorMessage: error_msg,
+        message: null
+      };
 
   default:
     return state;

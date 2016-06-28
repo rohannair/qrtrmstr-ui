@@ -51,6 +51,27 @@ export const passwordResetError = (error) => {
   };
 };
 
+export const googleAuthUrl = (url) => {
+  return {
+    type: 'GET_GOOGLE_AUTH_URL',
+    authUrl: url
+  }
+};
+
+export const googleAccountlinked = (message) => {
+  return {
+    type: 'GOOGLE_ACCOUNT_LINKED',
+    message
+  };
+};
+
+export const googleAccountlinkError = (message) => {
+  return {
+    type: 'GOOGLE_ACCOUNT_LINK_FAILURE',
+    error_msg: message
+  };
+};
+
 // Get All Users
 export const getUsers = (token, offset, limit) =>
   dispatch => get(LOCATION_ROOT + `users?offset=${offset}&limit=${limit}`, token)
@@ -83,3 +104,12 @@ export const resetPassword = (payload, userId) =>
   dispatch => post(`${LOCATION_ROOT}users/resetPassword/${userId}`, null, payload)
   .then(json => dispatch(passwordReset(json.message)))
   .catch(err => dispatch(passwordResetError(json.message)));
+
+export const linkGoogleAccount = (token) =>
+  dispatch => get(LOCATION_ROOT + 'auth/google', token)
+  .then(json => dispatch(googleAuthUrl(json.message)));
+
+export const sendAuthCredentials = (payload) =>
+  dispatch => post(`${LOCATION_ROOT}auth/google/`, null, payload)
+  .then(json => dispatch(googleAccountlinked(json.message)))
+  .catch(err => dispatch(googleAccountlinkError(err.message)));

@@ -12,7 +12,7 @@ For all JS style related things, refer to the [JavaScript Style Guide](https://g
 
 Other important rules
 1. Do not add a UI kit/CSS framework!
-2. 
+2.
 
 ## Set-up:
 1. `$ npm install`
@@ -25,7 +25,7 @@ Other important rules
 Read the stack trace.. fix the issue. It's probably that you need to do an `npm install` because someone added a new package
 
 2. Node is being weird
-Make sure you're on Node 6, and have installed Node via nvm. `nvm use` should fix the issue. 
+Make sure you're on Node 6, and have installed Node via nvm. `nvm use` should fix the issue.
 *NOTE: Our APIs are still using Node v4*
 
 3. NPM takes forever to install!
@@ -42,5 +42,18 @@ Known bug... unknown fix. Bounty of 1 beer to whoever solves this problem for go
 5. Grab the `app.js` url with the cache-revved hash code
 6. Replace `/public/app.js` at bottom of `public/index.html` with `/app.[whatever].js`
 7. Get Heroku static plugin: `$ heroku plugins:install heroku-cli-static`
-8. `$ heroku git:remote -a qrtrmstr-ui` 
+8. `$ heroku git:remote -a qrtrmstr-ui`
 9. `$ heroku static:deploy`
+
+
+## Staging environment
+This must be run the first time you try you deploy to staging
+1. `$ heroku login`
+2. `$ heroku git:remote -a qrtrmstr-ui-staging -r staging`
+
+These commands should be run everytime you want to deploy the dev branch to staging
+1. `$ heroku login`
+2. `$ source scripts/build-ui.sh`
+3. Grab the `app.js` url with the cache-revved hash code
+4. Replace `/public/app.js` at bottom of `public/index.html` with `/app.[whatever].js`
+5. `$ git push staging dev:master`

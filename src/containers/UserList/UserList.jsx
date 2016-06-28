@@ -11,7 +11,7 @@ import NewUserModal from '../../components/NewUserModal';
 
 import Table from '../../components/Table';
 
-import { getUsers, createUser, newUserErrors, getRoles } from '../../actions/userActions';
+import { getUsers, createUser, newUserErrors, getRoles, linkGoogleAccount } from '../../actions/userActions';
 
 class UserList extends Component {
   state = {
@@ -21,6 +21,10 @@ class UserList extends Component {
     offset: 0,
     pageNum: 1,
     perPage: 10
+  };
+
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
   };
 
   static propTypes = {
@@ -33,9 +37,16 @@ class UserList extends Component {
   componentWillMount() {
     this._renderUserList();
     this._renderRolesList();
+
   };
 
+
   componentWillReceiveProps(nextProps) {
+    if (nextProps.authUrl) {
+      window.open(nextProps.authUrl,'_blank');
+    }
+    console.log(this.props.routeParams);
+
     const { newUser, errorMessage } = this.state;
     this.setState({
       loading: false,
@@ -105,6 +116,7 @@ class UserList extends Component {
 
     return (
       <div className="userList">
+        <Button onClick={this._googleAuth} classes="primary md">Sign In with Google</Button>
         <Table headings = {['name', 'email', 'role', 'actions']} >
           { tableBody }
           <div className="userList-metadata">
@@ -234,6 +246,11 @@ class UserList extends Component {
     return dispatch(getUsers(token, offset, this.state.perPage));
   };
 
+  _googleAuth = () => {
+    const { token, dispatch } = this.props;
+    dispatch(linkGoogleAccount(token));
+  };
+
 }
 
 function mapStateToProps(state) {
@@ -242,7 +259,8 @@ function mapStateToProps(state) {
     token,
     users: state.app.users,
     errorMessage: state.app.errorMessage,
-    roles: state.app.roles
+    roles: state.app.roles,
+    authUrl: state.app.authUrl
   };
 }
 export default connect(mapStateToProps)(UserList);

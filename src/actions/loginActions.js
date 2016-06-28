@@ -8,7 +8,11 @@ export const login = (token = null, hasCookie) => {
 
   // Set cookie
   if (!hasCookie) {
-    Cookies.set('token', token, { expires: 3 * 24 * 60 * 60 * 1000});
+    debugger;
+    // console.log(document.URL);
+    // console.log(window.location.origin);
+    // document.cookie = `token=${token}; domain=localhost`;
+    Cookies.set('token', token);
   }
 
   return {
