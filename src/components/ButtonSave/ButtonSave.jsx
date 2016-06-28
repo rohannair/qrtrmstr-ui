@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import Button from '../Button';
 
 const ButtonSave = (props) => {
-  console.log(props.saveStatus);
   if (props.saveStatus === 'SAVING') {
     return (
       <Button
@@ -19,6 +18,7 @@ const ButtonSave = (props) => {
       />
     );
   };
+
   return (
     <Button
      { ...props }
