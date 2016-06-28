@@ -16,8 +16,7 @@
     "build": "NODE_ENV=production node_modules/.bin/webpack -p --config webpack.config.prod.js",
     "test": "babel-tape-runner ./src/**/*.test.js | tap-spec",
     "lint": "eslint src",
-    "lint:fix": "eslint src --fix",
-    "postinstall": "npm run build"
+    "lint:fix": "eslint src --fix"
   },
   "devDependencies": {
     "autoprefixer": "^6.2.1",
