@@ -9,14 +9,20 @@ const webpackHotMiddleware = require('webpack-hot-middleware');
 const compiler             = webpack(config);
 const app                  = express();
 
-app.use(require('morgan')('dev'));
-
 app.use(webpackDevMiddleware(compiler, {
   publicPath: config.output.publicPath,
-  noInfo: true
+  progress: true,
+  noInfo: true,
+  quiet: false,
+  stats : {
+    colours: true,
+    timings: true,
+  }
 }));
 
-app.use(webpackHotMiddleware(compiler));
+app.use(webpackHotMiddleware(compiler, {
+  log: console.log
+}));
 
 app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, 'index.html'));
