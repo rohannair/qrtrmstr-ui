@@ -229,6 +229,27 @@ export const modifyPlaybook = (token, payload, id) => {
   };
 };
 
+export const insertNewSlide = (token, id) => {
+  const url = getDomain();
+  return dispatch => {
+    return fetch(`${url}/api/v1/playbooks/addNewSlide/${id}`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': 'bearer ' + token,
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => response.json().then(json => ({json, response})))
+    .then(({json, response}) => {
+      if (!response.ok) {
+        return Promise.reject(json);
+      }
+      return dispatch(playbookModified(json));
+    });
+  };
+};
+
 // Toggle open card
 export const toggleOpenCard = (cardID) => {
   return {

@@ -14,7 +14,8 @@ import {
   modifyPlaybook,
   editSlide,
   reorderPlaybook,
-  isSaving
+  isSaving,
+  insertNewSlide
 } from '../../actions/playbookViewActions';
 
 // Styles
@@ -153,6 +154,7 @@ class PlaybookEditor extends Component {
           save={this._savePlaybook}
           saveStatus={ saveStatus }
           id={ playbookID }
+          insertNewSlide={this._insertNewSlide}
         />
         { RemoveEquipmentTab }
       </div>
@@ -259,6 +261,13 @@ class PlaybookEditor extends Component {
 
     return dispatch(addSlide(newID, slideInfo));
   };
+
+  _insertNewSlide = () => {
+    const { token, dispatch } = this.props;
+    const { playbookID } = this.props.params;
+    dispatch(insertNewSlide(token, playbookID));
+  };
+
 };
 
 function mapStateToProps(state, ownProps) {
