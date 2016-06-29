@@ -110,18 +110,20 @@ class UserList extends Component {
           <div className="userList-metadata">
             {`Total users: ${this.props.users.total}`}
             <div id="paginate">
-              <ReactPaginate  previousLabel={" "}
-                              nextLabel={" "}
-                              breakLabel={<a href="">...</a>}
-                              pageNum={Math.ceil(this.props.users.total/this.state.perPage)}
-                              marginPagesDisplayed={1}
-                              pageRangeDisplayed={2}
-                              clickCallback={this._handlePageClick}
-                              containerClassName={"pagination"}
-                              subContainerClassName={"pages pagination"}
-                              activeClassName={"active"}
-                              previousLinkClassName={"fa fa-arrow-left tertiary"}
-                              nextLinkClassName={"fa fa-arrow-right tertiary"} />
+              <ReactPaginate
+                previousLabel={" "}
+                nextLabel={" "}
+                breakLabel={<a href="">...</a>}
+                pageNum={Math.ceil(this.props.users.total / this.state.perPage)}
+                marginPagesDisplayed={1}
+                pageRangeDisplayed={2}
+                clickCallback={this._handlePageClick}
+                containerClassName={"pagination"}
+                subContainerClassName={"pages pagination"}
+                activeClassName={"active"}
+                previousLinkClassName={"fa fa-arrow-left tertiary"}
+                nextLinkClassName={"fa fa-arrow-right tertiary"}
+              />
             </div>
           </div>
         </Table>

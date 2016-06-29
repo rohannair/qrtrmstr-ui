@@ -7,6 +7,8 @@ import App from '../containers/App';
 import Home from '../components/Home';
 import Login from '../containers/Auth/Login';
 import Playbook from '../containers/Playbook';
+import EmailsList from '../containers/EmailsList';
+import EmailsContainer from '../containers/EmailsContainer';
 
 import NotFound from '../components/NotFound';
 import PlaybookList from '../containers/PlaybookList';
@@ -24,19 +26,25 @@ export default (store) => {
   return (
     <Router history={ browserHistory } >
       <Route path="/" component={ App }>
-        <IndexRedirect to="/dashboard" />
-        <Route path="dashboard" component={ Home } onEnter={ requireAuth }>
+        <IndexRedirect to="/admin" />
+
+        <Route path="admin" component={ Home } onEnter={ requireAuth }>
           <IndexRoute component={ UserList } />
           <Route path="playbooks" component={ PlaybookList } />
           <Route path="playbooks/edit/:playbookID" component={ PlaybookEditor } />
           <Route path="playbook/results/:playbookID" component={ PlaybookResults } />
           <Route path="users" component={ UserList } />
+          <Route path="emails" component={ EmailsList } />
+          <Route path="emails/edit/:emailId" component={ EmailsContainer } />
+
           <Route path="*" component={ NotFound } />
         </Route>
+
         <Route path="login" component={ Login } onEnter={ checkAuth } />
         <Route path="logout" component={ Login } />
         <Route path="playbook/:playbookID" component={ Playbook } />
-        <Route path="users/resetPassword/:userId" component={ PasswordResetContainer } />
+        <Route path="resetPassword/:userId" component={ PasswordResetContainer } />
+
         <Route path="*" component={ NotFound } />
       </Route>
     </Router>

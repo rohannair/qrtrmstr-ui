@@ -93,17 +93,19 @@ class PlaybookList extends Component {
     : null;
 
     const items = [...this.props.playbookList.results].map(val => {
-      return (<PlaybookListItem
-        key={val.id}
-        {...val}
-        users={ this.props.users.results }
-        sendPlaybook={ this._sendPlaybookToAssignedUser }
-        duplicatePlaybook={ this._duplicatePlaybook }
-        showEditModal={ this._showEditModal }
-        showAssignModal={ this._showAssignModal }
-        showSendModal={ this._showSendModal }
-      />
-    )});
+      return (
+        <PlaybookListItem
+          key={val.id}
+          {...val}
+          users={ this.props.users.results }
+          sendPlaybook={ this._sendPlaybookToAssignedUser }
+          duplicatePlaybook={ this._duplicatePlaybook }
+          showEditModal={ this._showEditModal }
+          showAssignModal={ this._showAssignModal }
+          showSendModal={ this._showSendModal }
+        />
+      );
+    });
 
     return (
       <div className="playbookList">
@@ -112,18 +114,20 @@ class PlaybookList extends Component {
           <div className="playbookList-metadata">
             {`Total playbooks: ${this.props.playbookList.total}`}
             <div id="paginate">
-              <ReactPaginate  previousLabel={" "}
-                              nextLabel={" "}
-                              breakLabel={<a href="">...</a>}
-                              pageNum={Math.ceil(this.props.playbookList.total/this.state.perPage)}
-                              marginPagesDisplayed={1}
-                              pageRangeDisplayed={2}
-                              clickCallback={this._handlePageClick}
-                              containerClassName={"pagination"}
-                              subContainerClassName={"pages pagination"}
-                              activeClassName={"active"}
-                              previousLinkClassName={"fa fa-arrow-left tertiary"}
-                              nextLinkClassName={"fa fa-arrow-right tertiary"} />
+              <ReactPaginate
+                previousLabel={" "}
+                nextLabel={" "}
+                breakLabel={<a href="">...</a>}
+                pageNum={Math.ceil(this.props.playbookList.total/this.state.perPage)}
+                marginPagesDisplayed={1}
+                pageRangeDisplayed={2}
+                clickCallback={this._handlePageClick}
+                containerClassName={"pagination"}
+                subContainerClassName={"pages pagination"}
+                activeClassName={"active"}
+                previousLinkClassName={"fa fa-arrow-left tertiary"}
+                nextLinkClassName={"fa fa-arrow-right tertiary"}
+              />
             </div>
           </div>
         </Table>
@@ -218,7 +222,7 @@ class PlaybookList extends Component {
 
   _handlePageClick = (data) => {
     const offset = Math.ceil(data.selected * this.state.perPage);
-    this.setState({ offset })
+    this.setState({ offset });
     const { token, dispatch } = this.props;
     return dispatch(getPlaybooks(token, offset, this.state.perPage));
   };
