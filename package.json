@@ -84,7 +84,6 @@
     "normalize.css": "^4.1.1",
     "react": "^15.1.0",
     "react-addons-create-fragment": "^15.1.0",
-    "react-bootstrap": "^0.29.4",
     "react-dom": "^15.1.0",
     "react-flip-move": "^2.0.5",
     "react-hot-loader": "^3.0.0-beta.2",

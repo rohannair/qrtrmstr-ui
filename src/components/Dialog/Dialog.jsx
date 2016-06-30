@@ -14,7 +14,7 @@ const Dialog = (props) => {
   : 'OK';
 
   return (
-    <Modal onClose={ props.onClose } md>
+    <Modal onClose={ props.onClose } sm>
       { heading }
       <div className="modal-body">
         { props.children }
