@@ -55,25 +55,31 @@ export default function app(state = initialState, { type, users, new_user, error
       errorMessage: error_msg
     };
 
-  case 'GET_GOOGLE_AUTH_URL':
+  case 'RECIEVE_AUTH_URL':
     return {
       ...state,
       authUrl
     };
 
-  case 'GOOGLE_ACCOUNT_LINKED':
+  case 'ACCOUNT_LINKED':
     return {
       ...state,
       message,
       errorMessage: null
     };
 
-    case 'GOOGLE_ACCOUNT_LINK_FAILURE':
-      return {
-        ...state,
-        errorMessage: error_msg,
-        message: null
-      };
+  case 'ACCOUNT_LINK_ERROR':
+    return {
+      ...state,
+      errorMessage: error_msg,
+      message: null
+    };
+
+  case 'REMOVE_AUTH_URL':
+    return {
+      ...state,
+      authUrl
+    };
 
   default:
     return state;

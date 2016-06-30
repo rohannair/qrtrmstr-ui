@@ -11,7 +11,13 @@ import NewUserModal from '../../components/NewUserModal';
 
 import Table from '../../components/Table';
 
-import { getUsers, createUser, newUserErrors, getRoles, linkGoogleAccount } from '../../actions/userActions';
+import {
+  getUsers,
+  createUser,
+  newUserErrors,
+  getRoles,
+  linkAccount
+} from '../../actions/userActions';
 
 class UserList extends Component {
   state = {
@@ -116,7 +122,9 @@ class UserList extends Component {
 
     return (
       <div className="userList">
-        <Button onClick={this._googleAuth} classes="primary md">Sign In with Google</Button>
+        <Button onClick={this._googleAuth} classes="primary md"><i className="fa fa-google" aria-hidden="true"></i>  Add Google Account</Button>
+        <Button onClick={this._slackAuth} classes="primary md"><i className="fa fa-slack" aria-hidden="true"></i>  Add to Slack</Button>
+        <Button onClick={this._linkedInAuth} classes="primary md"><i className="fa fa-linkedin" aria-hidden="true"></i>  Add LinkedIn</Button>
         <Table headings = {['name', 'email', 'role', 'actions']} >
           { tableBody }
           <div className="userList-metadata">
@@ -125,7 +133,7 @@ class UserList extends Component {
               <ReactPaginate  previousLabel={" "}
                               nextLabel={" "}
                               breakLabel={<a href="">...</a>}
-                              pageNum={Math.ceil(this.props.users.total/this.state.perPage)}
+                              pageNum={Math.ceil(this.props.users.total / this.state.perPage)}
                               marginPagesDisplayed={1}
                               pageRangeDisplayed={2}
                               clickCallback={this._handlePageClick}
@@ -241,14 +249,24 @@ class UserList extends Component {
 
   _handlePageClick = (data) => {
     const offset = Math.ceil(data.selected * this.state.perPage);
-    this.setState({ offset })
+    this.setState({ offset });
     const { token, dispatch } = this.props;
     return dispatch(getUsers(token, offset, this.state.perPage));
   };
 
   _googleAuth = () => {
     const { token, dispatch } = this.props;
-    dispatch(linkGoogleAccount(token));
+    dispatch(linkAccount(token, 'google'));
+  };
+
+  _slackAuth = () => {
+    const { token, dispatch } = this.props;
+    dispatch(linkAccount(token, 'slack'));
+  };
+
+  _linkedInAuth = () => {
+    const { token, dispatch } = this.props;
+    dispatch(linkAccount(token, 'linkedIn'));
   };
 
 }

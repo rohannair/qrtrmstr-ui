@@ -45,16 +45,16 @@ const forgotPasswordEmailSent = (message) => {
     type: 'FORGOT_PASSWORD_EMAIL_SENT',
     message,
     error: null
-  }
-}
+  };
+};
 
 const forgotPasswordError = (error) => {
   return {
     type: 'FORGOT_PASSWORD_ERROR',
     message: null,
     error
-  }
-}
+  };
+};
 
 // Login API call
 export const tryLogin = credentials => {

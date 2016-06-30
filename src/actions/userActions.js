@@ -51,23 +51,30 @@ export const passwordResetError = (error) => {
   };
 };
 
-export const googleAuthUrl = (url) => {
+export const recieveAuthUrl = (url) => {
   return {
-    type: 'GET_GOOGLE_AUTH_URL',
+    type: 'RECIEVE_AUTH_URL',
     authUrl: url
-  }
+  };
 };
 
-export const googleAccountlinked = (message) => {
+export const removeAuthLink = () => {
   return {
-    type: 'GOOGLE_ACCOUNT_LINKED',
+    type: 'REMOVE_AUTH_URL',
+    authUrl: null
+  };
+};
+
+export const Accountlinked = (message) => {
+  return {
+    type: 'ACCOUNT_LINKED',
     message
   };
 };
 
-export const googleAccountlinkError = (message) => {
+export const AccountlinkError = (message) => {
   return {
-    type: 'GOOGLE_ACCOUNT_LINK_FAILURE',
+    type: 'ACCOUNT_LINK_ERROR',
     error_msg: message
   };
 };
@@ -105,11 +112,11 @@ export const resetPassword = (payload, userId) =>
   .then(json => dispatch(passwordReset(json.message)))
   .catch(err => dispatch(passwordResetError(json.message)));
 
-export const linkGoogleAccount = (token) =>
-  dispatch => get(LOCATION_ROOT + 'auth/google', token)
-  .then(json => dispatch(googleAuthUrl(json.message)));
+export const linkAccount = (token, company) =>
+  dispatch => get(`${LOCATION_ROOT}auth/${company}`, token)
+  .then(json => dispatch(recieveAuthUrl(json.message)));
 
-export const sendAuthCredentials = (payload) =>
-  dispatch => post(`${LOCATION_ROOT}auth/google/`, null, payload)
-  .then(json => dispatch(googleAccountlinked(json.message)))
-  .catch(err => dispatch(googleAccountlinkError(err.message)));
+export const sendAuthCredentials = (payload, company) =>
+  dispatch => post(`${LOCATION_ROOT}auth/${company}`, null, payload)
+  .then(json => dispatch(Accountlinked(json.message)))
+  .catch(err => dispatch(AccountlinkError(err.message)));

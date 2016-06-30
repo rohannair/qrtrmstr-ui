@@ -36,7 +36,7 @@ export default (store) => {
         </Route>
         <Route path="login" component={ Login } onEnter={ checkAuth } />
         <Route path="logout" component={ Login } />
-        <Route path="integration" component={ Integration } />
+        <Route path="integration/:company" component={ Integration } />
         <Route path="playbook/:playbookID" component={ Playbook } />
         <Route path="users/resetPassword/:userId" component={ PasswordResetContainer } />
         <Route path="*" component={ NotFound } />
