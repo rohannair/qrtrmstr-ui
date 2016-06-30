@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styles from './playbookBio.css';
 import Button from '../Button';
+import moment from 'moment';
 
 import Uploader from '../../containers/Uploader';
 
@@ -22,52 +23,44 @@ const PlaybookBio = (props) => {
     bio = <textarea placeholder="Tell the team a little bit about yourself..."/>;
   }
 
-  const fbCurrVal = props.submittedDoc ? props.submittedDoc[slideKey].body.options.facebook : '';
-  const facebook = bodyOpts.facebook
-  ? <div className="socMedia">
-      <div className="iconBox fb">
-        <i className="fa fa-facebook"></i>
-      </div>
-      <input value={ fbCurrVal }
-        name='facebook'
-        placeholder="Facebook url"
-        onChange={ e => props.onChange(props.slide_number, e.target.name, e.target.value) } />
-    </div>
-  : null;
-  const twCurrVal = props.submittedDoc ? props.submittedDoc[slideKey].body.options.twitter : '';
-  const twitter = bodyOpts.twitter
-  ? <div className="socMedia">
-      <div className="iconBox tw">
-        <i className="fa fa-twitter"></i>
-      </div>
-      <input value={ twCurrVal }
-        name='twitter'
-        placeholder="@Twitter handle or url"
-        onChange={ e => props.onChange(props.slide_number, e.target.name, e.target.value) } />
-    </div>
-  : null;
+  const socOptions = {
+    facebook: 'Facebook Url',
+    twitter: '@Twitter handle or url',
+    linkedin: 'LinkedIn url'
+  };
 
-  const lnCurrVal = props.submittedDoc ? props.submittedDoc[slideKey].body.options.linkedin : '';
-  const linkedin = bodyOpts.linkedin
-  ? <div className="socMedia">
-      <div className="iconBox li">
-        <i className="fa fa-linkedin"></i>
-      </div>
-      <input value={ lnCurrVal }
-        name='linkedin'
-        placeholder="LinkedIn url"
-        onChange={ e => props.onChange(props.slide_number, e.target.name, e.target.value) } />
-    </div>
-  : null;
+  const socLinks = Object.keys(socOptions).map(val => {
+    const socVal = socOptions[val];
+    let socClass = val.slice(0,2);
+    const currVal = props.submittedDoc ? props.submittedDoc[slideKey].body.options[val] : '';
 
-  const social = (facebook || twitter || linkedin)
+    if (props.body.options[val] === true) {
+      return (
+        <div key={val} className="socMedia">
+          <div className={`iconBox ${socClass}`}>
+            <i className={`fa fa-${val}`}></i>
+          </div>
+          <input value={ currVal }
+            name={val}
+            placeholder={socVal}
+            onChange={ e => props.onChange(props.slide_number, e.target.name, e.target.value) } />
+        </div>
+      );
+    }
+    return null;
+
+  });
+
+  const social = socLinks
   ? (
     <div className="social-media">
-      { facebook }
-      { twitter }
-      { linkedin }
+      { socLinks }
     </div>
   )
+  : null;
+
+  const submitTime = props.message === slideKey
+  ? <div className="saveMessage">{`Saved on ${moment().format('MMMM Do YYYY, H:mm')}`}</div>
   : null;
 
   return (
@@ -81,7 +74,9 @@ const PlaybookBio = (props) => {
           { bio }
           { social }
           <div className="slideFooter">
-            <Button classes="primary sm" onClick={props.onSubmit}>Submit</Button>
+            { props.loadingMessage(slideKey) }
+            { submitTime }
+            <Button classes="primary sm" onClick={props.onSubmit.bind(this, slideKey)}>Submit</Button>
           </div>
         </div>
       </div>

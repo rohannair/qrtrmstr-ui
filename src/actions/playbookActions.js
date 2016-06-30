@@ -11,11 +11,18 @@ export const setSelection = id => {
   };
 };
 
+export const updateMessage = (message) => {
+  return {
+    type: 'UPDATE_MESSAGE',
+    message
+  };
+};
+
 export const getPlaybook = (token = '', id) =>
   dispatch => get(`${LOCATION_ROOT}playbooks/${id}`, token)
   .then(data => dispatch(playbookRetrieved(data)));
 
-export const submitPlaybook = (data, id) => {
+export const submitPlaybook = (data, id, slideKey) => {
   return dispatch => {
     return fetch(`${LOCATION_ROOT}playbooks/submit/${id}`, {
       method: 'POST',
@@ -30,7 +37,7 @@ export const submitPlaybook = (data, id) => {
       if (!response.ok) {
         return Promise.reject(json);
       }
-      return null;
+      return dispatch(updateMessage(slideKey));
     });
   };
 };

@@ -2,12 +2,19 @@ import { find } from 'lodash';
 
 const defaultState = {
   selected: {},
-  playbook: {}
+  playbook: {},
+  message: null
 };
 
 export default function playbook(state = defaultState, action) {
   const { id } = action;
   switch (action.type) {
+
+  case 'UPDATE_MESSAGE':
+    return {
+      ...state,
+      message: action.message
+    };
 
   case 'PLAYBOOK_RETRIEVED':
     return {

@@ -30,6 +30,7 @@ const PlaybookCards = (props) => {
     uploaderFn,
     selected,
     playbook,
+    message,
     onEquipChange,
     onChange } = props;
   const fields = playbook.doc ? playbook.doc : {};
@@ -61,6 +62,13 @@ const PlaybookCards = (props) => {
       </Uploader>
     );
 
+    const loadingMessage = currSlideKey => {
+      if (props.loading && props.loading.status && props.loading.slideKey === currSlideKey) {
+        return <div className="saveMessage">Saving...</div>;
+      }
+      return null;
+    };
+
     switch (field.type) {
     case 'option':
       let isSelected = selected ? selected[field.slide_number] : null;
@@ -80,6 +88,8 @@ const PlaybookCards = (props) => {
             userInfo={ userInfo }
             onChange={ onChange }
             submittedDoc={ submittedDocProp }
+            message={ message }
+            loadingMessage={ loadingMessage }
             findSlideKey={ findSlideKey }>
             { PlaybookUploader }
           </PlaybookBio>
@@ -118,6 +128,10 @@ const PlaybookCards = (props) => {
         );
       });
 
+      const submitTime = props.message === slideKey
+      ? <div className="saveMessage">{`Saved on ${moment().format('MMMM Do YYYY, H:mm')}`}</div>
+      : null;
+
       return (
         <Card key={field.slide_number} footer={<div/>}>
           <h2>{field.heading}</h2>
@@ -126,7 +140,9 @@ const PlaybookCards = (props) => {
             { opts }
           </div>
           <div className="slideFooter">
-            <Button classes="primary sm equipSub" onClick={ submitAction }>Submit</Button>
+            { loadingMessage(slideKey) }
+            { submitTime }
+            <Button classes="primary sm equipSub" onClick={ submitAction.bind(this, slideKey) }>Submit</Button>
           </div>
         </Card>
       );
