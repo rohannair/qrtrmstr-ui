@@ -1,4 +1,12 @@
 import test from 'tape';
+import {
+  USERS_RETRIEVED,
+  NEW_USER_CREATED,
+  ROLES_RETRIEVED,
+  NEW_USER_ERROR_RETRIEVED,
+  PASSWORD_RESET,
+  PASSWORD_RESET_ERROR
+} from '../constants';
 
 // Reducer
 import app from '../reducers/app';
@@ -25,10 +33,10 @@ test('App reducer', next => {
 
   });
 
-  next.test('USERS_RETRIEVED', t => {
+  next.test(USERS_RETRIEVED, t => {
 
     const action = {
-      type: 'USERS_RETRIEVED',
+      type: USERS_RETRIEVED,
       users: {
         results: ['foo', 'bar'],
         total: 10
@@ -49,27 +57,9 @@ test('App reducer', next => {
     t.end();
   });
 
-  next.test('TOGGLE_NEW_USER_MODAL', t => {
-
+  next.test(NEW_USER_CREATED, t => {
     const action = {
-      type: 'TOGGLE_NEW_USER_MODAL'
-    };
-
-    const state = {};
-    const state_after = { showModal: true };
-    const state_after_2 = { showModal: false };
-
-    t.plan(0);
-
-    // t.deepEqual(app(state, action), state_after, 'Open modal');
-    // t.deepEqual(app(state_after, action), state_after_2, 'Close modal');
-
-    t.end();
-  });
-
-  next.test('NEW_USER_CREATED', t => {
-    const action = {
-      type: 'NEW_USER_CREATED',
+      type: NEW_USER_CREATED,
       new_user: 'Rohan'
     };
 
@@ -92,13 +82,12 @@ test('App reducer', next => {
     t.ok(app(state, action).users.total === state_after.users.total, 'Add new user to total');
     t.deepEqual(app(state, action).users.results, state_after.users.results, 'Insert new user');
     t.end();
-
   });
 
-  next.test('PASSWORD_RESET', t => {
+  next.test(PASSWORD_RESET, t => {
 
     const action = {
-      type: 'PASSWORD_RESET',
+      type: PASSWORD_RESET,
       message: 'Password Reset Successful',
       error_msg: null
     };
@@ -116,14 +105,13 @@ test('App reducer', next => {
     t.plan(1);
     t.deepEqual(app(state, action), state_after, 'User reset password');
     t.end();
-
   });
 
 
-  next.test('PASSWORD_RESET_ERROR', t => {
+  next.test(PASSWORD_RESET_ERROR, t => {
 
     const action = {
-      type: 'PASSWORD_RESET_ERROR',
+      type: PASSWORD_RESET_ERROR,
       message: null,
       error_msg: 'Password reset failed'
     };
@@ -141,7 +129,6 @@ test('App reducer', next => {
     t.plan(1);
     t.deepEqual(app(state, action), state_after, 'User reset password error');
     t.end();
-
   });
 
 });

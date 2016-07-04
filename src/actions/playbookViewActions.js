@@ -20,7 +20,7 @@ const LOCATION_ROOT = getDomain() + API_ROOT;
 // Toggle open card
 export const toggleOpenCard = (cardID) => {
   return {
-    type: 'TOGGLE_OPEN_CARD',
+    type: TOGGLE_OPEN_CARD,
     cardID
   };
 };
@@ -28,7 +28,7 @@ export const toggleOpenCard = (cardID) => {
 // Add slide
 export const addSlide = (slideID, slideInfo) => {
   return {
-    type: 'ADD_SLIDE',
+    type: ADD_SLIDE,
     slideID,
     slideInfo
   };
@@ -37,14 +37,14 @@ export const addSlide = (slideID, slideInfo) => {
 // Remove slide
 export const removeSlide = (slideID) => {
   return {
-    type: 'REMOVE_SLIDE',
+    type: REMOVE_SLIDE,
     slideID
   };
 };
 
 export const updatePlaybookState = (slide_number, data) => {
   return {
-    type: 'EDIT_SLIDE',
+    type: EDIT_SLIDE,
     slide_number,
     data
   };
@@ -52,14 +52,14 @@ export const updatePlaybookState = (slide_number, data) => {
 
 export const isSaving = () => {
   return {
-    type: 'SAVING_PLAYBOOK'
+    type: SAVING_PLAYBOOK
   };
 };
 
 // Playbooks Retrieved action
 function playbooksRetrieved(playbookList = { results: [], total: 0 }) {
   return {
-    type: 'PLAYBOOKS_RETRIEVED',
+    type: PLAYBOOKS_RETRIEVED,
     playbookList
   };
 };
@@ -67,7 +67,7 @@ function playbooksRetrieved(playbookList = { results: [], total: 0 }) {
 // Single playbook retrieved for editing
 function singlePlaybookRetrieved(data) {
   return {
-    type: 'SINGLE_PLAYBOOK_RETRIEVED',
+    type: SINGLE_PLAYBOOK_RETRIEVED,
     playbook: data.playbook,
     users: data.users
   };
@@ -76,28 +76,28 @@ function singlePlaybookRetrieved(data) {
 
 function addNewPlaybook(playbook = {}) {
   return {
-    type: 'ADD_NEW_PLAYBOOK',
+    type: ADD_NEW_PLAYBOOK,
     playbook
   };
 }
 
 export const updateMessage = (message) => {
   return {
-    type: 'UPDATE_MESSAGE',
+    type: UPDATE_MESSAGE,
     message
   };
 };
 
 export const playbookModified = (newPlaybook) => {
   return {
-    type: 'PLAYBOOK_MODIFIED',
+    type: PLAYBOOK_MODIFIED,
     newPlaybook
   };
 };
 
 export const reorderPlaybook = (idx, direction) => {
   return {
-    type: 'PLAYBOOK_ORDER_MODIFIED',
+    type: PLAYBOOK_ORDER_MODIFIED,
     idx,
     direction
   };
