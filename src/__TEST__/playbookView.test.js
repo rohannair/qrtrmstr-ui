@@ -1,4 +1,17 @@
 import test from 'tape';
+import {
+  TOGGLE_OPEN_CARD,
+  ADD_SLIDE,
+  REMOVE_SLIDE,
+  SAVING_PLAYBOOK,
+  PLAYBOOKS_RETRIEVED,
+  SINGLE_PLAYBOOK_RETRIEVED,
+  EDIT_SLIDE,
+  ADD_NEW_PLAYBOOK,
+  UPDATE_MESSAGE,
+  PLAYBOOK_MODIFIED,
+  PLAYBOOK_ORDER_MODIFIED,
+} from '../constants';
 
 // Reducer
 import playbookView, { initialState } from '../reducers/playbookView';
@@ -38,10 +51,10 @@ test('PlaybookView', ({ test }) => {
   });
 
   // PLAYBOOKS_RETRIEVED
-  test('PLAYBOOKS_RETRIEVED reducer', assert => {
+  test(PLAYBOOKS_RETRIEVED, assert => {
 
     const action = {
-      type: 'PLAYBOOKS_RETRIEVED',
+      type: PLAYBOOKS_RETRIEVED,
       playbookList: {
         results: ['Playbook1', 'Playbook2', 'Playbook3'],
         total: 30
@@ -49,7 +62,7 @@ test('PlaybookView', ({ test }) => {
     };
 
     const action_with_extra = {
-      type: 'PLAYBOOKS_RETRIEVED',
+      type: PLAYBOOKS_RETRIEVED,
       playbookList: {
         results: ['Playbook1', 'Playbook2', 'Playbook3'],
         total: 30
@@ -91,9 +104,9 @@ test('PlaybookView', ({ test }) => {
   });
 
   // SINGLE_PLAYBOOK_RETRIEVED
-  test('SINGLE_PLAYBOOK_RETRIEVED reducer', assert => {
+  test(SINGLE_PLAYBOOK_RETRIEVED, assert => {
     const action = {
-      type: 'SINGLE_PLAYBOOK_RETRIEVED',
+      type: SINGLE_PLAYBOOK_RETRIEVED,
       playbook: {
         k3y: 'hello i am k3y'
       },
@@ -122,11 +135,11 @@ test('PlaybookView', ({ test }) => {
   });
 
   // ADD_NEW_PLAYBOOK
-  test('ADD_NEW_PLAYBOOK', assert => {
+  test(ADD_NEW_PLAYBOOK, assert => {
     assert.plan(2);
 
     const action = {
-      type: 'ADD_NEW_PLAYBOOK',
+      type: ADD_NEW_PLAYBOOK,
       playbook: { id: 1, name: 'Object 1' }
     };
 
@@ -153,7 +166,7 @@ test('PlaybookView', ({ test }) => {
 
     assert.plan(2);
 
-    assert.ok(playbookView(state, action).list.total === state_after.list.total, 'Increment playbook total count' );
+    assert.ok(playbookView(state, action).list.total === state_after.list.total, 'Increment playbook total count');
 
     assert.deepEqual(
       playbookView(state, action).list.results,
@@ -165,7 +178,7 @@ test('PlaybookView', ({ test }) => {
   });
 
   // ADD_NEW_PLAYBOOK
-  test('ADD_NEW_PLAYBOOK', assert => {
+  test(ADD_NEW_PLAYBOOK, assert => {
     assert.plan(2);
 
     const firstState = {
@@ -179,7 +192,7 @@ test('PlaybookView', ({ test }) => {
     };
 
     const action = {
-      type: 'ADD_NEW_PLAYBOOK',
+      type: ADD_NEW_PLAYBOOK,
       playbook: {
         id: 1,
         name: 'Object 1'
@@ -198,15 +211,15 @@ test('PlaybookView', ({ test }) => {
     };
 
     assert.deepEqual(playbookView(firstState, action).list.results, finalAction.list.results, 'Add new playbook');
-    assert.ok(playbookView(firstState, action).list.total === finalAction.list.total, 'Increment playbook total count' );
+    assert.ok(playbookView(firstState, action).list.total === finalAction.list.total, 'Increment playbook total count');
     assert.end();
   });
 
   // ADD_SLIDE
-  test('ADD_SLIDE', assert => {
+  test(ADD_SLIDE, assert => {
 
     const action = {
-      type: 'ADD_SLIDE',
+      type: ADD_SLIDE,
       slideID: 'bar',
       slideInfo: {
         val: 'b'
@@ -260,10 +273,10 @@ test('PlaybookView', ({ test }) => {
   });
 
   // REMOVE_SLIDE
-  test('REMOVE_SLIDE', t => {
+  test(REMOVE_SLIDE, t => {
 
     const action = {
-      type: 'REMOVE_SLIDE',
+      type: REMOVE_SLIDE,
       slideID: 'bar'
     };
 
@@ -309,10 +322,10 @@ test('PlaybookView', ({ test }) => {
   });
 
   // EDIT_SLIDE
-  test('EDIT_SLIDE', t => {
+  test(EDIT_SLIDE, t => {
 
     const action = {
-      type: 'EDIT_SLIDE',
+      type: EDIT_SLIDE,
       slide_number: 'bat',
       data: {
         foo: 'bar'
@@ -320,7 +333,7 @@ test('PlaybookView', ({ test }) => {
     };
 
     const bad_action = {
-      type: 'EDIT_SLIDE',
+      type: EDIT_SLIDE,
       slide_number: 'bbt',
       data: {
         foo: 'bar'
@@ -369,9 +382,9 @@ test('PlaybookView', ({ test }) => {
   });
 
   // SAVING_PLAYBOOK
-  test('SAVING_PLAYBOOK', t=> {
+  test(SAVING_PLAYBOOK, t=> {
     const action = {
-      type: 'SAVING_PLAYBOOK'
+      type: SAVING_PLAYBOOK
     };
 
     const state = {
@@ -393,9 +406,9 @@ test('PlaybookView', ({ test }) => {
   });
 
   // TOGGLE_OPEN_CARD
-  test('TOGGLE_OPEN_CARD', t => {
+  test(TOGGLE_OPEN_CARD, t => {
     const action = {
-      type: 'TOGGLE_OPEN_CARD',
+      type: TOGGLE_OPEN_CARD,
       cardID: 'foo'
     };
 
@@ -424,45 +437,13 @@ test('PlaybookView', ({ test }) => {
     );
 
     t.end();
-
   });
 
-  // TOGGLE_SEND_PLAYBOOK_MODAL
-  test('TOGGLE_SEND_PLAYBOOK_MODAL', t => {
-    const action = {
-      type: 'TOGGLE_SEND_PLAYBOOK_MODAL'
-    };
-
-    const state = {};
-
-    const state_after = {
-      showModal: true
-    };
-
-    const state_after_2 = {
-      showModal: false
-    };
-
-    t.plan(0);
-
-    // t.deepEqual(
-    //   playbookView(state,action),
-    //   state_after,
-    //   'If modal isn\'t open, toggle showModal to true'
-    // );
-    // t.deepEqual(
-    //   playbookView(state_after, action),
-    //   state_after_2,
-    //   'If modal ist open, toggle showModal to false'
-    // );
-
-    t.end();
-  });
 
   // PLAYBOOK_MODIFIED 1
-  test('PLAYBOOK_MODIFIED existing playbook', t => {
+  test(PLAYBOOK_MODIFIED, t => {
     const action = {
-      type: 'PLAYBOOK_MODIFIED',
+      type: PLAYBOOK_MODIFIED,
       newPlaybook: {
         result: {
           id: 2,
@@ -525,9 +506,9 @@ test('PlaybookView', ({ test }) => {
   });
 
   // PLAYBOOK_MODIFIED 2
-  test('PLAYBOOK_MODIFIED new playbook', t => {
+  test(PLAYBOOK_MODIFIED, t => {
     const action = {
-      type: 'PLAYBOOK_MODIFIED',
+      type: PLAYBOOK_MODIFIED,
       newPlaybook: {
         result: {
           id: 9,

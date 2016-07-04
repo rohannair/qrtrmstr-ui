@@ -9,7 +9,6 @@ import 'moment-range';
 // Components
 import Button from '../../components/Button';
 import ButtonGroup from '../../components/ButtonGroup';
-import { updatePlaybookState } from '../../actions/playbookViewActions';
 
 import TextBox from '../TextBox';
 import MapContainer from '../../containers/MapContainer';

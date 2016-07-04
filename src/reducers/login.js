@@ -1,3 +1,11 @@
+import {
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+  LOGOUT,
+  FORGOT_PASSWORD_EMAIL_SENT,
+  FORGOT_PASSWORD_ERROR
+} from '../constants';
+
 const initialState = {
   token: null,
   error: null,
@@ -6,30 +14,30 @@ const initialState = {
 
 export default function accountActions(state = initialState, action) {
   switch (action.type) {
-  case 'LOG_IN':
+  case LOGIN_SUCCESS:
     return {
       ...state,
       token: action.token
     };
 
-  case 'LOG_OUT':
-    return {
-      token: null
-    };
-
-  case 'LOG_IN_FAILURE':
+  case LOGIN_FAILURE:
     return {
       error: action.error
     };
 
-  case 'FORGOT_PASSWORD_EMAIL_SENT':
+  case LOGOUT:
+    return {
+      token: null
+    };
+
+  case FORGOT_PASSWORD_EMAIL_SENT:
     return {
       ...state,
       message: action.message,
       error: action.error
     };
 
-  case 'FORGOT_PASSWORD_ERROR':
+  case FORGOT_PASSWORD_ERROR:
     return {
       ...state,
       message: action.message,
