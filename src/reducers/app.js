@@ -14,7 +14,9 @@ const initialState = {
   message: null
 };
 
-export default function app(state = initialState, { type, users, new_user, error_msg, roles, message }) {
+export default function app(state = initialState, action) {
+  const { type, users, new_user, error_msg, roles, message }  = action;
+
   switch (type) {
   case USERS_RETRIEVED:
     return {
