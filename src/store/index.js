@@ -4,15 +4,13 @@ import { routerReducer } from 'react-router-redux';
 import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger';
 
-console.log('Dev?', !!__DEV__)
-const createStoreWithMiddleware = !!__DEV__
-? applyMiddleware(
-  thunkMiddleware,
-  createLogger()
-)(createStore)
-: applyMiddleware(
-  thunkMiddleware
-)(createStore);
+const middlewares = [thunkMiddleware];
+
+if (__DEV__) {
+  middlewares.push(createLogger())
+}
+
+const createStoreWithMiddleware = applyMiddleware(...middlewares)(createStore);
 
 export default function configure(rootReducer, initialState) {
   const create = window.devToolsExtension
