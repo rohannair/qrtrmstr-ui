@@ -1,9 +1,6 @@
 import fetch from 'isomorphic-fetch';
 import Cookies from 'cookies-js';
-import { getDomain } from './utils';
-import request, { get, post, API_ROOT } from '../utils/request';
-
-const LOCATION_ROOT = getDomain() + API_ROOT;
+import { get, post, API_ROOT } from '../utils/request';
 
 import {
   LOGIN_SUCCESS,
@@ -64,9 +61,9 @@ const forgotPasswordError = (error) => {
 
 // Login API call
 export const tryLogin = credentials =>
-  dispatch => post(`${LOCATION_ROOT}login`, null, credentials)
+  dispatch => post(`${API_ROOT}login`, null, credentials)
     .then(data => dispatch(login(data.token)));
 
 export const sendForgotPasswordEmail = payload =>
-  dispatch => post(`${LOCATION_ROOT}forgotPassword/send`, null, payload)
+  dispatch => post(`${API_ROOT}forgotPassword/send`, null, payload)
     .then(data => dispatch(forgotPasswordEmailSent(data.message)));

@@ -1,5 +1,3 @@
-import fetch from 'isomorphic-fetch';
-import { getDomain } from './utils';
 import { get, post, API_ROOT } from '../utils/request';
 import {
   TOGGLE_OPEN_CARD,
@@ -15,7 +13,6 @@ import {
   PLAYBOOK_ORDER_MODIFIED,
 } from '../constants';
 
-const LOCATION_ROOT = getDomain() + API_ROOT;
 
 // Toggle open card
 export const toggleOpenCard = (cardID) => {
@@ -105,30 +102,30 @@ export const reorderPlaybook = (idx, direction) => {
 
 // Send Playbook To User
 export const sendPlaybook = (token, payload) =>
-  dispatch => post(`${LOCATION_ROOT}playbook/send`, token, payload)
+  dispatch => post(`${API_ROOT}playbook/send`, token, payload)
   .then(data => dispatch(playbookModified(data)));
 
 export const duplicatePlaybook = (token, id) =>
-  dispatch => post(`${LOCATION_ROOT}playbooks/duplicate`, token, {id})
+  dispatch => post(`${API_ROOT}playbooks/duplicate`, token, {id})
   .then(data => dispatch(addNewPlaybook(data.result)));
 
 export const assignPlaybook = (token, id, userId) =>
-  dispatch => post(`${LOCATION_ROOT}playbooks/${id}`, token, { assigned: userId })
-  .then(data => dispatch(playbookModified(json)));
+  dispatch => post(`${API_ROOT}playbooks/${id}`, token, { assigned: userId })
+  .then(data => dispatch(playbookModified(data)));
 
 // Get All Playbooks
 export const getPlaybooks = (token, offset, limit) =>
-  dispatch => get(`${LOCATION_ROOT}playbooks?offset=${offset}&limit=${limit}`, token)
+  dispatch => get(`${API_ROOT}playbooks?offset=${offset}&limit=${limit}`, token)
   .then(data => dispatch(playbooksRetrieved(data)));
 
 // Single Playbook Call
 export const getSinglePlaybook = (token, id) =>
-  dispatch => get(`${LOCATION_ROOT}playbooks/${id}`, token)
+  dispatch => get(`${API_ROOT}playbooks/${id}`, token)
   .then(data => dispatch(singlePlaybookRetrieved(data)));
 
 // Create new Playbook
 export const createPlaybook = (token, payload) =>
-  dispatch => post(`${LOCATION_ROOT}playbooks`, token, payload)
+  dispatch => post(`${API_ROOT}playbooks`, token, payload)
   .then(data => console.log(data));
 
 
@@ -137,12 +134,16 @@ export const modifyPlaybook = (token, payload, id) => {
   let body = '';
   for (let key in payload) {
     if (key === 'selected') {
-      body += JSON.stringify({ assigned: payload[key].id});
+      body = {
+        assigned: payload[key].id
+      };
     } else {
-      body += JSON.stringify({ [key]: payload[key]});
+      body = {
+        [key]: payload[key]
+      };
     }
   }
 
-  return dispatch => post(`${LOCATION_ROOT}playbooks/${id}`, token, body)
-  .then(data => dispatch(playbookModified(json)));
+  return dispatch => post(`${API_ROOT}playbooks/${id}`, token, body)
+  .then(data => dispatch(playbookModified(data)));
 };

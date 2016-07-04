@@ -6,7 +6,7 @@
   "description": "",
   "main": "index.js",
   "engines": {
-    "node": "6.2.1"
+    "node": "6.2.2"
   },
   "scripts": {
     "prebuild": "npm run clean",
@@ -14,7 +14,7 @@
     "clean": "rimraf public/",
     "newComp": "babel-node ./scripts/newComponent.js",
     "newCont": "babel-node ./scripts/newContainer.js",
-    "dev": "NODE_ENV=development node server.js",
+    "dev": "NODE_ENV=development DEBUG=true node server.js",
     "test": "babel-tape-runner ./src/**/*.test.js | tap-spec",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix"
@@ -56,6 +56,7 @@
     "redux-devtools": "^3.0.1",
     "redux-devtools-dock-monitor": "^1.0.1",
     "redux-devtools-log-monitor": "^1.0.1",
+    "redux-logger": "^2.6.1",
     "rimraf": "^2.5.2",
     "rucksack": "^1.0.1",
     "rucksack-css": "^0.8.5",
