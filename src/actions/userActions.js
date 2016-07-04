@@ -116,7 +116,7 @@ export const linkAccount = (token, company) =>
   dispatch => get(`${LOCATION_ROOT}auth/${company}`, token)
   .then(json => dispatch(recieveAuthUrl(json.message)));
 
-export const sendAuthCredentials = (payload, company) =>
-  dispatch => post(`${LOCATION_ROOT}auth/${company}`, null, payload)
-  .then(json => dispatch(Accountlinked(json.message)))
-  .catch(err => dispatch(AccountlinkError(err.message)));
+// export const sendAuthCredentials = (payload, company) =>
+//   dispatch => post(`${LOCATION_ROOT}auth/${company}`, null, payload)
+//   .then(json => dispatch(Accountlinked(json.message)))
+//   .catch(err => dispatch(AccountlinkError(err.message)));

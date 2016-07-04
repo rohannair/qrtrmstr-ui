@@ -49,9 +49,9 @@ class UserList extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.authUrl) {
-      window.open(nextProps.authUrl,'_blank');
+      window.location = nextProps.authUrl;
+      // window.open(nextProps.authUrl,'_blank');
     }
-    console.log(this.props.routeParams);
 
     const { newUser, errorMessage } = this.state;
     this.setState({
@@ -261,7 +261,8 @@ class UserList extends Component {
 
   _slackAuth = () => {
     const { token, dispatch } = this.props;
-    dispatch(linkAccount(token, 'slack'));
+    // dispatch(linkAccount(token, 'slack'));
+    console.log('Coming Soon');
   };
 
   _linkedInAuth = () => {

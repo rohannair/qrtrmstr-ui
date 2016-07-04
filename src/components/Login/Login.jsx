@@ -5,6 +5,10 @@ import Alert from '../Alert';
 import Button from '../Button';
 import Card from '../Card';
 
+import {
+linkAccount
+} from '../../actions/userActions';
+
 class Login extends Component {
   static propTypes = {
     forgotPassword: PropTypes.func,
@@ -67,9 +71,8 @@ class Login extends Component {
             </label>
 
 
-            <input className="btn primary lgLong" type="submit"/>
+            <input value="Submit" className="btn primary lgLong" type="submit"/>
           </form>
-
           <Button
             onClick={this.props.showForgotPasswordModal}
             classes={"transparent sm"}>

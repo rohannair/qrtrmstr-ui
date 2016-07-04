@@ -56,6 +56,22 @@ const forgotPasswordError = (error) => {
   };
 };
 
+const googleLoginSuccess = (message) => {
+  return {
+    type: 'GOOGLE_LOGIN',
+    message,
+    error: null
+  };
+};
+
+const googleLoginFailure = (error) => {
+  return {
+    type: 'GOOGLE_LOGIN_FAILURE',
+    message: null,
+    error
+  };
+};
+
 // Login API call
 export const tryLogin = credentials => {
   const url = getDomain();
@@ -92,6 +108,25 @@ export const sendForgotPasswordEmail = payload => {
     .then(({json, response}) => {
       if (!response.ok) return dispatch(forgotPasswordError(json.message));
       return dispatch(forgotPasswordEmailSent(json.message));
+    });
+  };
+};
+
+export const googleLogin = () => {
+  const url = getDomain();
+  return dispatch => {
+    return fetch(`${url}/api/v1/auth/google`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body : {}
+    })
+    .then(response => response.json().then(json => ({json, response})))
+    .then(({json, response}) => {
+      if (!response.ok) return dispatch(googleLoginFailure(json.message));
+      return dispatch(googleLoginSuccess(json.message));
     });
   };
 };
