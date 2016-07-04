@@ -153,7 +153,7 @@ test('PlaybookView', ({ test }) => {
 
     assert.plan(2);
 
-    assert.ok(playbookView(state, action).list.total === state_after.list.total, 'Increment playbook total count' );
+    assert.ok(playbookView(state, action).list.total === state_after.list.total, 'Increment playbook total count');
 
     assert.deepEqual(
       playbookView(state, action).list.results,
@@ -198,7 +198,7 @@ test('PlaybookView', ({ test }) => {
     };
 
     assert.deepEqual(playbookView(firstState, action).list.results, finalAction.list.results, 'Add new playbook');
-    assert.ok(playbookView(firstState, action).list.total === finalAction.list.total, 'Increment playbook total count' );
+    assert.ok(playbookView(firstState, action).list.total === finalAction.list.total, 'Increment playbook total count');
     assert.end();
   });
 

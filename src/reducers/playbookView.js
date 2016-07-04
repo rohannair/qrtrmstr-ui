@@ -1,4 +1,17 @@
-import _ from 'lodash';
+import omit from 'lodash/omit';
+import {
+  TOGGLE_OPEN_CARD,
+  ADD_SLIDE,
+  REMOVE_SLIDE,
+  SAVING_PLAYBOOK,
+  PLAYBOOKS_RETRIEVED,
+  SINGLE_PLAYBOOK_RETRIEVED,
+  EDIT_SLIDE,
+  ADD_NEW_PLAYBOOK,
+  UPDATE_MESSAGE,
+  PLAYBOOK_MODIFIED,
+  PLAYBOOK_ORDER_MODIFIED,
+} from '../constants';
 
 export const initialState = {
   chosenUser: {},
@@ -81,7 +94,7 @@ export default function playbookView(state = initialState, action) {
       ...state,
       playbook: {
         ...state.playbook,
-        doc: _.omit(state.playbook.doc, [action.slideID])
+        doc: omit(state.playbook.doc, [action.slideID])
       }
     };
 

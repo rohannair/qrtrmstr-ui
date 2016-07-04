@@ -1,15 +1,34 @@
-import utils from './utils';
+import { getDomain } from './utils';
 import request, { get, post, API_ROOT } from '../utils/request';
+import {
+  PLAYBOOK_RETRIEVED,
+  PLAYBOOK_SELECTED,
+  SUBMITTED_PLAYBOOK_UPDATE,
+} from '../constants';
 
-const getDomain = utils.getDomain;
 const LOCATION_ROOT = getDomain() + API_ROOT;
 
 export const setSelection = id => {
   return {
-    type: 'PLAYBOOK_SELECTION',
+    type: PLAYBOOK_SELECTED,
     id
   };
 };
+
+export const editSubmittedPlaybook = (slideKey, data) => {
+  return {
+    type: SUBMITTED_PLAYBOOK_UPDATE,
+    slideKey,
+    data
+  };
+};
+
+function playbookRetrieved(data = {}) {
+  return {
+    type: PLAYBOOK_RETRIEVED,
+    playbook: data.playbook
+  };
+}
 
 export const getPlaybook = (token = '', id) =>
   dispatch => get(`${LOCATION_ROOT}playbooks/${id}`, token)
@@ -54,18 +73,3 @@ export const updatePlaybookStatus = (data, id) => {
     });
   };
 };
-
-export const editSubmittedPlaybook = (slideKey, data) => {
-  return {
-    type: 'EDIT_SUBMITTED_PLAYBOOK',
-    slideKey,
-    data
-  };
-};
-
-function playbookRetrieved(data = {}) {
-  return {
-    type: 'PLAYBOOK_RETRIEVED',
-    playbook: data.playbook
-  };
-}
