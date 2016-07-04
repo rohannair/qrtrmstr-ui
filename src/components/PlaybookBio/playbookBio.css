@@ -1,14 +1,124 @@
 .playbookBio {
 
-  .bio-info {
-    position: relative;
-  }
-
   .uploader {
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
   }
 
-  .uploader i { /* Icon */
+  .uploader i {
     font-size: 3em;
+  }
+
+  .bio {
+    display: flex;
+    flex-direction: row;
+    padding: 0 20px;
+
+    @media (max-width: 30em) {
+      flex-direction: column;
+    }
+
+    &-info {
+      width: 40%;
+      position: relative;
+
+      @media (max-width: 30em) {
+        width: 100%;
+      }
+    }
+
+    &-form {
+      width: 60%;
+
+      @media (max-width: 30em) {
+        width: 100%;
+      }
+
+      textarea {
+        margin: 10px 0 5px;
+        box-shadow: none;
+        border: 1px solid #B7B7B7;
+
+        @media (max-width: 30em) {
+          margin-bottom: 20px;
+        }
+      }
+    }
+
+    .social-media {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+
+      .socMedia {
+        display: flex;
+        flex-direction: row;
+        flex-grow: 1;
+        list-style: none;
+        margin: 0 0 0 10px;
+        align-items: center;
+        max-width: 50%;
+
+        @media (max-width: 30em) {
+          width: 100%;
+          max-width: 100%;
+          margin-bottom: 20px;
+        }
+      }
+
+      .iconBox {
+        display: flex;
+        height: 40px;
+        width: 40px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 100%;
+        color: #fff;
+        font-size: 24px;
+      }
+
+      input {
+        border-radius: 3px;
+        border: 1px solid #ccc;
+        display: flex;
+        width: calc(100% - 40px);
+        margin-left: 10px;
+        padding: 10px;
+        font-size: 1rem;
+      }
+
+      .fb {
+        background: #3b5998;
+      }
+
+      .tw {
+        background: #55acee;
+      }
+
+      .li {
+        background-color: #0077b5;
+      }
+    }
+
+    .upload-img {
+      text-align: center;
+      background: #ccc;
+      cursor: pointer;
+      border-radius: 3px;
+
+      span {
+        display: block;
+        padding: 20px 10px;
+        color: #fff;
+        font-weight: bold;
+      }
+
+      i {
+        color: #fff;
+        height: 12rem;
+        line-height: 9rem;
+        font-size: 6em;
+      }
+    }
+
   }
 }
