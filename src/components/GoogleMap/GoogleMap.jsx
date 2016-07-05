@@ -1,5 +1,6 @@
 // Deps
 import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 import styles from './googleMap.css';
 
 class GoogleMap extends Component {
