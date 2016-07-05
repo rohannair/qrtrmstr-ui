@@ -1,12 +1,13 @@
-const autoprefixer = require('autoprefixer');
-const precss       = require('precss');
-const rucksack     = require('rucksack-css');
+const precss  = require('precss');
+const cssnext = require('postcss-cssnext');
+const nano    = require('cssnano');
 
 module.exports = function() {
   return [
-    rucksack({
-      autoprefixer: true
+    precss,
+    cssnext({
+      warnForDuplicates: false
     }),
-    precss
+    nano,
   ];
 };

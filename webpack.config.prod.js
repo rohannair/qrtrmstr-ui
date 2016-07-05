@@ -1,9 +1,14 @@
+const webpack      = require('webpack');
+const path         = require('path');
+
+const plugins = require('./webpack/plugins');
+const postcss = require('./webpack/postcss');
+
+
 const autoprefixer = require('autoprefixer');
 const precss       = require('precss');
 const lost         = require('lost');
-const path         = require('path');
 const rucksack     = require('rucksack-css');
-const webpack      = require('webpack');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -17,11 +22,7 @@ const config = {
 
   entry: './src/index.js',
 
-  output: {
-    path: path.join(__dirname, 'public'),
-    filename: 'app.[hash].js',
-    sourceMapFilename: 'app.[hash].js.map'
-  },
+  output: ,
 
   module: {
 
@@ -71,41 +72,20 @@ const config = {
   },
 
   plugins: [
-    new HtmlWebpackPlugin({
-      title: 'Quartermaster',
-      template: path.join(__dirname, 'src', 'assets', 'templates') + '/index.ejs',
-      favicon: path.join(__dirname, 'src', 'assets') + '/favicon.png',
-      inject: 'body',
-      minify: {
-        collapseWhitespace: true
-      }
-    }),
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.NoErrorsPlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      compressor: {
-        warnings: false
-      }
-    }),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('production'),
-        'ENV': JSON.stringify('production')
-      }
-    }),
+
+    // new webpack.optimize.OccurenceOrderPlugin(),
+    // new webpack.NoErrorsPlugin(),
+    // new webpack.optimize.UglifyJsPlugin({
+    //   compressor: {
+    //     warnings: false
+    //   }
+    // }),
+
+    ,
     devFlagPlugin
   ],
 
-  postcss: function() {
-    return [
-      lost,
-      rucksack({
-        autoprefixer: true
-      }),
-      precss
-    ];
-  },
+  postcss: postcss,
 
   resolveLoader: {
     moduleDirectories: [
