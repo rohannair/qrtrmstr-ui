@@ -1,6 +1,9 @@
-const webpack       = require('webpack');
+const webpack = require('webpack');
+const path    = require('path');
+const root = path.resolve();
+
 const devFlagPlugin = new webpack.DefinePlugin({
-  __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false'))
+  __DEV__: process.env.DEBUG || 'false'
 });
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -11,11 +14,13 @@ const plugins = [
   new webpack.NoErrorsPlugin(),
 ];
 
+plugins.push(devFlagPlugin)
+
 if (isProd) {
   plugins.push(new HtmlWebpackPlugin({
     title: 'Quartermaster',
-    template: path.join(__dirname, 'src', 'assets', 'templates') + '/index.ejs',
-    favicon: path.join(__dirname, 'src', 'assets') + '/favicon.png',
+    template: path.join(root, 'src', 'assets', 'templates') + '/index.ejs',
+    favicon: path.join(root, 'src', 'assets') + '/favicon.png',
     inject: 'body',
     minify: {
       collapseWhitespace: true
@@ -29,7 +34,7 @@ if (isProd) {
   plugins.push(new webpack.optimize.DedupePlugin());
 } else {
   plugins.push(new webpack.HotModuleReplacementPlugin());
-  plugins.push(devFlagPlugin)
+
 }
 
 module.exports = plugins;
