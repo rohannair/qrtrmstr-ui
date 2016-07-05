@@ -1,11 +1,11 @@
 @keyframes modalContainer {
   from { opacity: 0; }
-  to { opacity: 1;}
+  to { opacity: 1; }
 }
 
 @keyframes modalInnerAnimation {
   from { top: -50px; }
-  to { top: 0;}
+  to { top: 0; }
 }
 
 .modal {
@@ -26,7 +26,7 @@
 .modal-inner {
   width: 40%;
   min-height: 150px;
-  background-color: #fff;
+  background-color: #FFF;
   border-radius: 3px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
   padding: 10px;

@@ -1,5 +1,5 @@
 .textBox {
-  background: rgba(238,243,245,0.3);
+  background: rgba(238, 243, 245, 0.3);
   padding: 0;
   border: 1px solid #CAD0D2;
   border-radius: 3px;
@@ -13,8 +13,8 @@
     cursor: pointer;
     text-decoration: none;
     padding-bottom: 1px;
-    text-shadow: 1px 1px 0 #fff, -1px 1px 0 #fff, 2px 0 0 #fff, -2px 0 0 #fff;
-    box-shadow: inset 0 -1px 0 0 #fff, inset 0 -2px 0 0 #EE6352;
+    text-shadow: 1px 1px 0 #FFF, -1px 1px 0 #FFF, 2px 0 0 #FFF, -2px 0 0 #FFF;
+    box-shadow: inset 0 -1px 0 0 #FFF, inset 0 -2px 0 0 #EE6352;
   }
 
   &-toolbar {
@@ -26,7 +26,7 @@
   .public-DraftEditor-content {
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
     border-top: 1px solid #CAD0D2;
-    background: white;
+    background: #FFF;
     padding: 20px;
     min-height: 150px;
   }
@@ -35,13 +35,14 @@
     display: flex;
     flex-direction: row;
     align-items: middle;
-    background: #fff;
+    background: #FFF;
     padding: 20px;
   }
 
   .DraftEditor-root {
 
-    ul, ol {
+    ul,
+    ol {
       list-style-position: inside;
       margin: 0 0 20px;
       padding: 0;
@@ -78,7 +79,7 @@
   }
 
   .RichEditor-activeButton {
-    color: #5890ff;
+    color: #5890FF;
   }
 
   .urlInput {
@@ -86,6 +87,6 @@
     padding: 6px 12px;
     border: 1px solid #435360;
     border-radius: 3px;
-    background-color: #fff;
+    background-color: #FFF;
   }
 }

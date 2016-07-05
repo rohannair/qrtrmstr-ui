@@ -10,7 +10,7 @@ const Pill = (props) => {
     info: props.info,
     warning: props.warning,
     danger: props.danger
-  })
+  });
   return (
     <span className={classes}>
       { props.children }

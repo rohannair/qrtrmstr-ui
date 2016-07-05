@@ -2,7 +2,13 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 
 const Header = props => {
-  const headerLink =  props.isAdmin  ?  <Link to="/dashboard"> Quartermaster</Link> : <a href="#"> Quartermaster</a>
+  const headerLink = props.isAdmin
+  ? <Link to="/dashboard"> Quartermaster</Link>
+  : <a href="#"> Quartermaster</a>;
+
+  const logoutLink = props.isAdmin
+  ? <Link to="/logout" className="right">Log Out</Link>
+  : null;
 
   return (
     <header className="appHeader">
@@ -15,7 +21,7 @@ const Header = props => {
         </div>
       </div>
       <div className="appHeader-section">
-        <Link to="/logout" className="right">Log Out</Link>
+        { logoutLink }
       </div>
     </header>
   );

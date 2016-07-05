@@ -102,7 +102,7 @@ class App extends Component {
   };
 
   _showForgotPasswordModal = () => {
-    this._openModal('forgotPassword')
+    this._openModal('forgotPassword');
   };
 
   _sendForgotPasswordEmail = (email) => {

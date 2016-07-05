@@ -103,7 +103,7 @@ class PlaybookList extends Component {
         showAssignModal={ this._showAssignModal }
         showSendModal={ this._showSendModal }
       />
-    )});
+    );});
 
     return (
       <div className="playbookList">
@@ -115,7 +115,7 @@ class PlaybookList extends Component {
               <ReactPaginate  previousLabel={" "}
                               nextLabel={" "}
                               breakLabel={<a href="">...</a>}
-                              pageNum={Math.ceil(this.props.playbookList.total/this.state.perPage)}
+                              pageNum={Math.ceil(this.props.playbookList.total / this.state.perPage)}
                               marginPagesDisplayed={1}
                               pageRangeDisplayed={2}
                               clickCallback={this._handlePageClick}
@@ -218,7 +218,7 @@ class PlaybookList extends Component {
 
   _handlePageClick = (data) => {
     const offset = Math.ceil(data.selected * this.state.perPage);
-    this.setState({ offset })
+    this.setState({ offset });
     const { token, dispatch } = this.props;
     return dispatch(getPlaybooks(token, offset, this.state.perPage));
   };

@@ -68,7 +68,7 @@ const constants = {
       style: 'UNDERLINE',
       icon: 'underline'
     }
-],
+  ],
 };
 
 export default constants;

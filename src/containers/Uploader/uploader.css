@@ -28,7 +28,7 @@
     color: lightgrey;
   }
 
-  input[type="file"] {
+  input[type='file'] {
     height: 1px;
     visibility: hidden;
   }
