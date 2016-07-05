@@ -27,17 +27,16 @@
     width: 100%;
 
     .logo {
-      color: #fff;
+      color: #FFF;
       font-size: 1.8em;
       font-weight: bold;
     }
   }
 
-  &-sidebar {
-  }
+  &-sidebar {}
 
   &-footer {
-    color: rgba(255,255,255,0.4);
+    color: rgba(255, 255, 255, 0.4);
     font-size: 0.75rem;
     margin-top: auto;
     padding: 20px;

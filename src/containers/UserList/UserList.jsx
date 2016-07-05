@@ -113,7 +113,7 @@ class UserList extends Component {
               <ReactPaginate  previousLabel={" "}
                               nextLabel={" "}
                               breakLabel={<a href="">...</a>}
-                              pageNum={Math.ceil(this.props.users.total/this.state.perPage)}
+                              pageNum={Math.ceil(this.props.users.total / this.state.perPage)}
                               marginPagesDisplayed={1}
                               pageRangeDisplayed={2}
                               clickCallback={this._handlePageClick}
@@ -229,7 +229,7 @@ class UserList extends Component {
 
   _handlePageClick = (data) => {
     const offset = Math.ceil(data.selected * this.state.perPage);
-    this.setState({ offset })
+    this.setState({ offset });
     const { token, dispatch } = this.props;
     return dispatch(getUsers(token, offset, this.state.perPage));
   };

@@ -5,9 +5,9 @@
   justify-content: center;
 
   h3 {
-    border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #E5E5E5;
     padding: 7px 12px;
-    margin-top: 0px;
+    margin-top: 0;
   }
 
   .modal-inner {

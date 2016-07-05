@@ -2,7 +2,7 @@
   font-size: 0.7rem;
   padding: 3px 5px;
   text-align: center;
-  background-color: #ccc;
+  background-color: #CCC;
   font-weight: bold;
   text-transform: uppercase;
   border-radius: 3px;
@@ -10,29 +10,29 @@
 
   &.success,
   &.success strong {
-    color: #3c763d;
-    background-color: #dff0d8;
-    border-color: #d6e9c6;
+    color: #3C763D;
+    background-color: #DFF0D8;
+    border-color: #D6E9C6;
   }
 
   &.info,
   &.info strong {
-    color: #31708f;
-    background-color: #d9edf7;
-    border-color: #bce8f1;
+    color: #31708F;
+    background-color: #D9EDF7;
+    border-color: #BCE8F1;
   }
 
   &.warning,
   &.warning strong {
-    color: #8a6d3b;
-    background-color: #fcf8e3;
-    border-color: #faebcc;
+    color: #8A6D3B;
+    background-color: #FCF8E3;
+    border-color: #FAEBCC;
   }
 
   &.danger,
   &.danger strong {
-    color: #a94442;
-    background-color: #f2dede;
-    border-color: #ebccd1;
+    color: #A94442;
+    background-color: #F2DEDE;
+    border-color: #EBCCD1;
   }
 }

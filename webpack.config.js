@@ -7,7 +7,7 @@ const postcss = require('./webpack/postcss');
 const isProd = process.env.NODE_ENV === 'production';
 const entry = isProd
 ? { app: './src/index.js' }
-: ['webpack-hot-middleware/client', 'react-hot-loader/patch', './src/index.js']
+: ['webpack-hot-middleware/client', 'react-hot-loader/patch', './src/index.js'];
 
 const config = {
   cache: !isProd,
@@ -16,6 +16,9 @@ const config = {
   bail: isProd,
 
   entry: entry,
+  eslint: {
+    configFile: './.eslintrc'
+  },
 
   output: isProd
   ? {
@@ -31,10 +34,11 @@ const config = {
   },
 
   module: {
-
+    preLoaders: [
+      { test: /\.jsx?$/, loader: 'eslint', exclude: /node_modules/ }
+    ],
     loaders: [
-      { test: /\.jsx$/, loaders: ['babel'] },
-      { test: /\.js$/, exclude: /node_modules/, loaders: ['babel'] },
+      { test: /\.jsx?$/, exclude: /node_modules/, loaders: ['babel'] },
       { test: /\.html$/, loader: 'file?name=[name].[ext]' },
       { test: /\.css$/, loader: 'style-loader!css?-minimize!postcss' },
       { test: /\.(png|jpg|jpeg|gif|svg)$/, loader: 'url-loader?prefix=img/&limit=5000' },

@@ -72,13 +72,13 @@
         align-items: center;
         justify-content: center;
         border-radius: 100%;
-        color: #fff;
+        color: #FFF;
         font-size: 24px;
       }
 
       input {
         border-radius: 3px;
-        border: 1px solid #ccc;
+        border: 1px solid #CCC;
         display: flex;
         width: calc(100% - 40px);
         margin-left: 10px;
@@ -87,33 +87,33 @@
       }
 
       .fb {
-        background: #3b5998;
+        background: #3B5998;
       }
 
       .tw {
-        background: #55acee;
+        background: #55ACEE;
       }
 
       .li {
-        background-color: #0077b5;
+        background-color: #0077B5;
       }
     }
 
     .upload-img {
       text-align: center;
-      background: #ccc;
+      background: #CCC;
       cursor: pointer;
       border-radius: 3px;
 
       span {
         display: block;
         padding: 20px 10px;
-        color: #fff;
+        color: #FFF;
         font-weight: bold;
       }
 
       i {
-        color: #fff;
+        color: #FFF;
         height: 12rem;
         line-height: 9rem;
         font-size: 6em;

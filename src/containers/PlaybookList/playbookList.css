@@ -1,4 +1,5 @@
 .playbookList {
+
   .cell {
 
     &.name {
@@ -8,9 +9,11 @@
     &.modified {
       width: 13%;
     }
+
     &.assigned {
       width: 13%;
     }
+
     &.status {
       width: 13%;
     }
@@ -31,6 +34,7 @@
 }
 
 #paginate {
+
   ul {
     padding-left: 15px;
     padding-right: 15px;
@@ -49,6 +53,6 @@
   }
 
   $.active li {
-    background-color: #ccc;
+    background-color: #CCC;
   }
 }

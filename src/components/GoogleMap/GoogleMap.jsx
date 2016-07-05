@@ -1,6 +1,5 @@
 // Deps
 import React, { Component, PropTypes } from 'react';
-import ReactDOM from 'react-dom';
 import styles from './googleMap.css';
 
 class GoogleMap extends Component {
@@ -75,9 +74,10 @@ class GoogleMap extends Component {
     };
   };
 
-  renderChildren() {
+  _renderChildren = () => {
     const {children} = this.props;
     if (!children) return;
+
     return React.Children.map(children, c => {
       return React.cloneElement(c, {
         googleMap: this.state.googleMap,
@@ -88,10 +88,11 @@ class GoogleMap extends Component {
   };
 
   render() {
+    const children = this._renderChildren();
     return (
       <div ref='googleMap' className="map">
         Loading map...
-        {this.renderChildren()}
+        { children }
       </div>
     );
   };

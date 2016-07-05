@@ -1,7 +1,7 @@
 .widget {
   width: 40%;
-  box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px;
-  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 1px 4px -1px;
+  background-color: #FFF;
   padding: 10px;
   font-family: Roboto, Arial;
   font-size: 15px;
