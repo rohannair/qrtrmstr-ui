@@ -6,7 +6,7 @@ const postcss = require('./webpack/postcss');
 
 const isProd = process.env.NODE_ENV === 'production';
 const entry = isProd
-? './src/index.js'
+? { app: './src/index.js' }
 : ['webpack-hot-middleware/client', 'react-hot-loader/patch', './src/index.js']
 
 const config = {
@@ -20,8 +20,9 @@ const config = {
   output: isProd
   ? {
     path: path.join(__dirname, 'public'),
-    filename: 'app.[hash].js',
-    sourceMapFilename: 'app.[hash].js.map'
+    filename: '[name].[hash].js',
+    sourceMapFilename: '[name].[hash].js.map',
+    chunkFilename:'[id].chunk.js',
   }
   : {
     path: path.join(__dirname, 'public'),
