@@ -1,0 +1,29 @@
+.agendaItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  /*&:nth-child(odd) {
+    background-color: #F0F0F0;
+  }*/
+
+  &-time {
+    width: 20%;
+  }
+
+  &-time-input {
+    width: 10%;
+  }
+
+  input {
+    width: 100%;
+  }
+
+  &-desc {
+    width: 70%;
+  }
+
+  &-toolButtonContainer {
+    width: 10%;
+  }
+}
