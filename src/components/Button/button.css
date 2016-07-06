@@ -105,6 +105,12 @@
     }
   }
 
+  &.success {
+    color: #3C763D;
+    background-color: #DFF0D8;
+    border-color: #D6E9C6;
+  }
+
   &.disabled {
     cursor: not-allowed;
     opacity: 0.2;

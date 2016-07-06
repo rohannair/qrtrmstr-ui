@@ -7,14 +7,19 @@ import ButtonGroup from '../ButtonGroup';
 import Pill from '../Pill';
 
 class PlaybookListItem extends Component {
+  constructor(props) {
+    super(props);
 
-  state = {
-    chosenUser: {}
-  };
+    this.state = {
+      chosenUser: {},
+      name: this.props.name || 'Unnamed',
+      editingName: false
+    };
+  }
 
   render() {
     const href = `/playbook/${this.props.id}`;
-    const assignedTo = this.props.firstName ? `${this.props.firstName} ${this.props.lastName}` : ' ';
+    const assignedTo = this.props.firstName ? `${this.props.firstName} ${this.props.lastName}` : 'Unassigned';
     const deactivateClasses = this.props.current_status === 'draft' ? '' : 'disabled';
 
     const canOpen = this.props.showSendModal.bind(this,
@@ -31,13 +36,11 @@ class PlaybookListItem extends Component {
       </Link>
     : null;
 
-    const editPlaybookButton = this.props.current_status === 'draft' ?
-      <Link to={`/dashboard/playbooks/edit/${this.props.id}`}>
+    const editPlaybookButton = this.props.current_status === 'draft'
+    ? <Link to={`/dashboard/playbooks/edit/${this.props.id}`}>
         <Button
           classes={'primary sm'}
-          icon="cog"
-          toolTipText="Edit Playbook"
-        />
+        >Edit</Button>
       </Link>
     : <Button
         classes={`primary sm ${deactivateClasses}`}
@@ -45,35 +48,62 @@ class PlaybookListItem extends Component {
         toolTipText="Edit Playbook"
       />;
 
+    const name = this.state.editingName
+    ? <input value={this.state.name} />
+    : <span onClick={(e) => this.setState({editingName: !this.state.editingName})}>{this.state.name}</span>;
+
+    // this.props.showEditModal.bind(this, { id: this.props.id, name: this.props.name} );
+
     return (
-      <div key={ this.props.id } className="table-row playbookListItem">
-        <div className="cell name">
-          { `${this.props.name}  `}
+      <div key={ this.props.id } className="playbookListItem">
+         <div className="main">
+          <div className="name">
+            { /* <Button
+              onClick={(e) => this.setState({editingName: !this.state.editingName})}
+              classes= {
+                this.state.editingName
+                ? 'success sm'
+                : `transparent sm ${deactivateClasses}`
+              }
+              icon={
+                this.state.editingName
+                ? 'check'
+                : 'pencil'
+              }
+            /> */}
+            { name }
+          </div>
+
+          <div className="meta">
+            { currentStatusDisplay }
+            <div className="assigned">
+              <strong>Assigned to: </strong>
+              { assignedTo }
+            </div>
+            <div className="assigned">
+              <strong>Created: </strong>
+              { moment(this.props.created_at).format('MMMM D') }
+            </div>
+            <div className="assigned">
+              <strong>Last Modified: </strong>
+              { moment(this.props.updated_at).fromNow() /* .format('MMMM D @ h:MM A')*/ }
+            </div>
+              { /* <Button
+                onClick={ this.props.showAssignModal.bind(this,
+                  { id: this.props.id, name: this.props.name}
+                ) }
+                classes={`transparent sm  ${deactivateClasses}`}
+                icon="user"
+                toolTipText="Assign Playbook"
+              />*/ }
+          </div>
         </div>
 
-        <div className="cell modified">
-          { moment(this.props.updated_at).fromNow() }
-        </div>
-
-        <div className="cell assigned assigned-text">
-          { assignedTo }
-        </div>
-
-        <div className="cell status">
-          { currentStatusDisplay }
-          { viewSubPlaybookBtn }
-        </div>
-
-        <div className="cell actions">
+        <div className="actions">
+          <div className="status">
+            { viewSubPlaybookBtn }
+          </div>
           <ButtonGroup>
-            <Button
-              onClick={ this.props.showEditModal.bind(this,
-                { id: this.props.id, name: this.props.name}
-              ) }
-              classes= {`inverse sm ${deactivateClasses}`}
-              icon="pencil"
-              toolTipText="Edit Name"
-            />
 
             <Button
               onClick={ this.props.duplicatePlaybook.bind(this, this.props.id) }
@@ -82,23 +112,12 @@ class PlaybookListItem extends Component {
               toolTipText="Duplicate Playbook"
             />
 
-            <Button
-              onClick={ this.props.showAssignModal.bind(this,
-                { id: this.props.id, name: this.props.name}
-              ) }
-              classes={`inverse sm  ${deactivateClasses}`}
-              icon="user"
-              toolTipText="Assign Playbook"
-            />
-
             { editPlaybookButton }
 
             <Button
               onClick={ canOpen }
-              classes={`secondary sm  ${deactivateClasses}`}
-              icon="paper-plane"
-              toolTipText="Send to User"
-            />
+              classes={`tertiary sm  ${deactivateClasses}`}
+            >Send</Button>
           </ButtonGroup>
         </div>
       </div>
@@ -120,7 +139,6 @@ class PlaybookListItem extends Component {
 
     this.props.sendPlaybook(assignedUser);
   };
-
 
 };
 

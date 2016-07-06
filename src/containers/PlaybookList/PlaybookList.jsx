@@ -107,26 +107,37 @@ class PlaybookList extends Component {
 
     return (
       <div className="playbookList">
-        <Table headings = {['name', 'modified', 'assigned', 'status', 'actions']} >
-          { items }
-          <div className="playbookList-metadata">
-            {`Total playbooks: ${this.props.playbookList.total}`}
-            <div id="paginate">
-              <ReactPaginate  previousLabel={" "}
-                              nextLabel={" "}
-                              breakLabel={<a href="">...</a>}
-                              pageNum={Math.ceil(this.props.playbookList.total / this.state.perPage)}
-                              marginPagesDisplayed={1}
-                              pageRangeDisplayed={2}
-                              clickCallback={this._handlePageClick}
-                              containerClassName={"pagination"}
-                              subContainerClassName={"pages pagination"}
-                              activeClassName={"active"}
-                              previousLinkClassName={"fa fa-arrow-left tertiary"}
-                              nextLinkClassName={"fa fa-arrow-right tertiary"} />
+
+        <div className="playbookList-sidebar">
+          <Button classes="lgLong primary">New</Button>
+        </div>
+        <div className="playbookList-body">
+          <div className="playbookList-metadata">Playbooks</div>
+            { items }
+
+            <div className="playbookList-metadata">
+              {`Total playbooks: ${this.props.playbookList.total}`}
+              <div id="paginate">
+                <ReactPaginate
+                  previousLabel={" "}
+                  nextLabel={" "}
+                  breakLabel={<a href="">...</a>}
+                  pageNum={Math.ceil(this.props.playbookList.total / this.state.perPage)}
+                  marginPagesDisplayed={1}
+                  pageRangeDisplayed={2}
+                  clickCallback={this._handlePageClick}
+                  containerClassName={"pagination"}
+                  subContainerClassName={"pages pagination"}
+                  activeClassName={"active"}
+                  previousLinkClassName={"fa fa-arrow-left tertiary"}
+                  nextLinkClassName={"fa fa-arrow-right tertiary"}
+                />
+              </div>
             </div>
-          </div>
-        </Table>
+
+
+        </div>
+
 
         { editPlaybookModal }
         { sendPlaybookModal }
