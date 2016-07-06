@@ -67,6 +67,15 @@ class NewUserModal extends Component {
                 { rolesOptions }
               </select>
             </div>
+            <div className="formField">
+              <label>Admin: </label>
+                <input
+                type="checkbox"
+                name="is_admin"
+                value={val.is_admin}
+                onChange={ e => onChange(e.target.name, e.target.checked) }
+                />
+            </div>
           </div>
           <div className="modalFooter">
             <div className="userButtonGroup">
