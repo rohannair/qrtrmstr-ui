@@ -41,7 +41,7 @@ class App extends Component {
   componentDidMount() {
     const { token, dispatch } = this.props;
     if (Cookies.get('token')) {
-      return dispatch(login(Cookies.get('token'), true));
+      dispatch(login(Cookies.get('token'), true));
     }
   };
 

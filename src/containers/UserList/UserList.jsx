@@ -11,7 +11,13 @@ import NewUserModal from '../../components/NewUserModal';
 
 import Table from '../../components/Table';
 
-import { getUsers, createUser, newUserErrors, getRoles } from '../../actions/userActions';
+import {
+  getUsers,
+  createUser,
+  newUserErrors,
+  getRoles,
+  linkAccount
+} from '../../actions/userActions';
 
 class UserList extends Component {
   state = {
@@ -21,6 +27,10 @@ class UserList extends Component {
     offset: 0,
     pageNum: 1,
     perPage: 10
+  };
+
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
   };
 
   static propTypes = {
@@ -33,9 +43,15 @@ class UserList extends Component {
   componentWillMount() {
     this._renderUserList();
     this._renderRolesList();
+
   };
 
+
   componentWillReceiveProps(nextProps) {
+    if (nextProps.authUrl) {
+      window.location = nextProps.authUrl;
+    }
+
     const { newUser, errorMessage } = this.state;
     this.setState({
       loading: false,
@@ -107,6 +123,9 @@ class UserList extends Component {
       <div className="userList">
 
       <div className="userList-actionBar">
+      {/* <Button onClick={this._googleAuth} classes="primary md"><i className="fa fa-google" aria-hidden="true"></i>  Add Google Account</Button> */}
+      {/* <Button onClick={this._slackAuth} classes="primary md"><i className="fa fa-slack" aria-hidden="true"></i>  Add to Slack</Button> */}
+      {/* <Button onClick={this._linkedInAuth} classes="primary md"><i className="fa fa-linkedin" aria-hidden="true"></i>  Add LinkedIn</Button> */}
         <Button onClick={this._renderNewUserModal} classes="primary md">New user +</Button>
       </div>
 
@@ -234,6 +253,24 @@ class UserList extends Component {
     return dispatch(getUsers(token, offset, this.state.perPage));
   };
 
+  _googleAuth = () => {
+    const { token, dispatch } = this.props;
+    // dispatch(linkAccount(token, 'google'));
+    console.log('Coming Soon');
+  };
+
+  _slackAuth = () => {
+    const { token, dispatch } = this.props;
+    // dispatch(linkAccount(token, 'slack'));
+    console.log('Coming Soon');
+  };
+
+  _linkedInAuth = () => {
+    const { token, dispatch } = this.props;
+    // dispatch(linkAccount(token, 'linkedIn'));
+    console.log('Coming Soon');
+  };
+
 }
 
 function mapStateToProps(state) {
@@ -242,7 +279,8 @@ function mapStateToProps(state) {
     token,
     users: state.app.users,
     errorMessage: state.app.errorMessage,
-    roles: state.app.roles
+    roles: state.app.roles,
+    authUrl: state.app.authUrl
   };
 }
 export default connect(mapStateToProps)(UserList);

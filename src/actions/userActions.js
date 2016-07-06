@@ -5,7 +5,8 @@ import {
   ROLES_RETRIEVED,
   NEW_USER_ERROR_RETRIEVED,
   PASSWORD_RESET,
-  PASSWORD_RESET_ERROR
+  PASSWORD_RESET_ERROR,
+  RECIEVE_AUTH_URL
 } from '../constants';
 
 // Users Retrieved action
@@ -55,6 +56,13 @@ export const passwordResetError = (error) => {
   };
 };
 
+export const recieveAuthUrl = (url) => {
+  return {
+    type: RECIEVE_AUTH_URL,
+    authUrl: url
+  };
+};
+
 // Get All Users
 export const getUsers = (token, offset, limit) =>
   dispatch => get(`${API_ROOT}users?offset=${offset}&limit=${limit}`, token)
@@ -84,3 +92,7 @@ export const resetPassword = (payload, userId) =>
   dispatch => post(`${API_ROOT}users/resetPassword/${userId}`, null, payload)
   .then(json => dispatch(passwordReset(json.message)))
   .catch(err => dispatch(passwordResetError(json.message)));
+
+export const linkAccount = (token, company) =>
+  dispatch => get(`${API_ROOT}auth/${company}`, token)
+  .then(json => dispatch(recieveAuthUrl(json.message)));

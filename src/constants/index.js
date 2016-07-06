@@ -12,6 +12,7 @@ export const ROLES_RETRIEVED = 'App/ROLES_RETRIEVED';
 export const NEW_USER_ERROR_RETRIEVED = 'App/NEW_USER_ERROR_RETRIEVED';
 export const PASSWORD_RESET = 'App/PASSWORD_RESET';
 export const PASSWORD_RESET_ERROR = 'App/PASSWORD_RESET_ERROR';
+export const RECIEVE_AUTH_URL = 'App/RECIEVE_AUTH_URL';
 
 // -------- Upload Actions
 export const UPLOAD_PENDING = 'App/UPLOAD_PENDING';
