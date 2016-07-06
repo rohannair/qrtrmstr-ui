@@ -50,7 +50,6 @@ class UserList extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.authUrl) {
       window.location = nextProps.authUrl;
-      // window.open(nextProps.authUrl,'_blank');
     }
 
     const { newUser, errorMessage } = this.state;
@@ -123,7 +122,7 @@ class UserList extends Component {
     return (
       <div className="userList">
         <Button onClick={this._googleAuth} classes="primary md"><i className="fa fa-google" aria-hidden="true"></i>  Add Google Account</Button>
-        <Button onClick={this._slackAuth} classes="primary md"><i className="fa fa-slack" aria-hidden="true"></i>  Add to Slack</Button>
+        {/* <Button onClick={this._slackAuth} classes="primary md"><i className="fa fa-slack" aria-hidden="true"></i>  Add to Slack</Button> */}
         <Button onClick={this._linkedInAuth} classes="primary md"><i className="fa fa-linkedin" aria-hidden="true"></i>  Add LinkedIn</Button>
         <Table headings = {['name', 'email', 'role', 'actions']} >
           { tableBody }

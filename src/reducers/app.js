@@ -18,7 +18,7 @@ const initialState = {
 
 
 export default function app(state = initialState, action) {
-  const { type, users, new_user, error_msg, roles, message }  = action;
+  const { type, users, new_user, error_msg, roles, message, authUrl }  = action;
 
   switch (type) {
   case USERS_RETRIEVED:
