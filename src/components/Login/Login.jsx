@@ -70,7 +70,6 @@ class Login extends Component {
                 />
             </label>
 
-
             <input value="Submit" className="btn primary lgLong" type="submit"/>
           </form>
           <Button

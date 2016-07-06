@@ -121,9 +121,9 @@ class UserList extends Component {
 
     return (
       <div className="userList">
-        <Button onClick={this._googleAuth} classes="primary md"><i className="fa fa-google" aria-hidden="true"></i>  Add Google Account</Button>
+        {/* <Button onClick={this._googleAuth} classes="primary md"><i className="fa fa-google" aria-hidden="true"></i>  Add Google Account</Button> */}
         {/* <Button onClick={this._slackAuth} classes="primary md"><i className="fa fa-slack" aria-hidden="true"></i>  Add to Slack</Button> */}
-        <Button onClick={this._linkedInAuth} classes="primary md"><i className="fa fa-linkedin" aria-hidden="true"></i>  Add LinkedIn</Button>
+        {/* <Button onClick={this._linkedInAuth} classes="primary md"><i className="fa fa-linkedin" aria-hidden="true"></i>  Add LinkedIn</Button> */}
         <Table headings = {['name', 'email', 'role', 'actions']} >
           { tableBody }
           <div className="userList-metadata">
@@ -255,7 +255,8 @@ class UserList extends Component {
 
   _googleAuth = () => {
     const { token, dispatch } = this.props;
-    dispatch(linkAccount(token, 'google'));
+    // dispatch(linkAccount(token, 'google'));
+    console.log('Coming Soon');
   };
 
   _slackAuth = () => {
@@ -266,7 +267,8 @@ class UserList extends Component {
 
   _linkedInAuth = () => {
     const { token, dispatch } = this.props;
-    dispatch(linkAccount(token, 'linkedIn'));
+    // dispatch(linkAccount(token, 'linkedIn'));
+    console.log('Coming Soon');
   };
 
 }

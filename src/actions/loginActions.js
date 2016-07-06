@@ -15,7 +15,7 @@ export const login = (token = null, hasCookie) => {
 
   // Set cookie
   if (!hasCookie) {
-    Cookies.set('token', token);
+    Cookies.set('token', token, { expires: 3 * 24 * 60 * 60 * 1000});
   }
 
   return {
