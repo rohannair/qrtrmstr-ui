@@ -219,7 +219,6 @@ class UserList extends Component {
 
     const data = {
       ...newUser,
-      is_admin: newUser.is_admin,
       username: newUser.personal_email,
       password: `${newUser.first_name.toLowerCase()}123`
     };
