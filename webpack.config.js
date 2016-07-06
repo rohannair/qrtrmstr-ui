@@ -1,105 +1,53 @@
-const autoprefixer = require('autoprefixer');
-const precss       = require('precss');
-const lost         = require('lost');
-const path         = require('path');
-const rucksack     = require('rucksack-css');
 const webpack      = require('webpack');
+const path         = require('path');
 
-const devFlagPlugin = new webpack.DefinePlugin({
-  __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false'))
-});
+const plugins = require('./webpack/plugins');
+const postcss = require('./webpack/postcss');
+
+const isProd = process.env.NODE_ENV === 'production';
+const entry = isProd
+? { app: './src/index.js' }
+: ['webpack-hot-middleware/client', 'react-hot-loader/patch', './src/index.js'];
 
 const config = {
-  cache: true,
-  debug: true,
-  devtool: 'cheap-module-eval-source-map',
+  cache: !isProd,
+  debug: !isProd,
+  devtool: isProd ? 'source-map' : 'cheap-module-eval-source-map',
+  bail: isProd,
 
-  entry: [
-    'webpack-hot-middleware/client',
-    'react-hot-loader/patch',
-    './src/index.js'
-  ],
+  entry: entry,
+  eslint: {
+    configFile: './.eslintrc'
+  },
 
-  output: {
+  output: isProd
+  ? {
+    path: path.join(__dirname, 'public'),
+    filename: '[name].[hash].js',
+    sourceMapFilename: '[name].[hash].js.map',
+    chunkFilename:'[id].chunk.js',
+  }
+  : {
     path: path.join(__dirname, 'public'),
     filename: 'app.js',
     publicPath: '/public/',
   },
 
   module: {
-
+    preLoaders: [
+      { test: /\.jsx?$/, loader: 'eslint', exclude: /node_modules/ }
+    ],
     loaders: [
-
-      {
-        test: /\.jsx$/,
-        loaders: ['babel'],
-      },
-
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loaders: ['babel'],
-      },
-
-      {
-        test: /\.html$/,
-        loader: 'file?name=[name].[ext]',
-      },
-
-      {
-        test: /\.css$/,
-        loader: 'style!css!postcss'
-      },
-
-      {
-        test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url?limit=10000&mimetype=application/font-woff'
-      },
-
-      {
-        test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url?limit=10000&mimetype=application/font-woff'
-      },
-
-      {
-        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url?limit=10000&mimetype=application/octet-stream'
-      },
-
-      {
-        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'file'
-      },
-
-      {
-        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url?limit=10000&mimetype=image/svg+xml'
-      },
-
-      {
-        test: /\.(png|jpg|gif|otf)$/,
-        loader: 'file!img'
-      }
-
+      { test: /\.jsx?$/, exclude: /node_modules/, loaders: ['babel'] },
+      { test: /\.html$/, loader: 'file?name=[name].[ext]' },
+      { test: /\.css$/, loader: 'style-loader!css?-minimize!postcss' },
+      { test: /\.(png|jpg|jpeg|gif|svg)$/, loader: 'url-loader?prefix=img/&limit=5000' },
+      { test: /\.(woff|woff2|ttf|eot)$/, loader: 'url-loader?prefix=font/&limit=5000' },
     ]
   },
 
-  plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
-    devFlagPlugin
-  ],
-
-  postcss: function() {
-    return [
-      lost,
-      rucksack({
-        autoprefixer: true
-      }),
-      precss
-    ];
-  },
+  plugins: plugins,
+  postcss: postcss,
 
   resolveLoader: {
     moduleDirectories: [
@@ -113,6 +61,7 @@ const config = {
 
   stats: {
     colors: true,
+    timings: true,
     reasons: true
   },
 

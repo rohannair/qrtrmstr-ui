@@ -7,23 +7,18 @@
   left: 0;
   background: rgba(0, 0, 0, 0.48);
   z-index: 99999;
-  animation: mymove 0.4s;
+  animation: modalContainer 0.4s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
-}
-
-@keyframes mymove {
-    from {top: -50px; opacity: 0;}
-    to {top: 0px; opacity: 1;}
 }
 
 .newUserModal {
   font-family: 'Droid Sans', sans-serif;
 
   h3 {
-    border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #E5E5E5;
     padding: 15px;
-    margin-top: 0px;
+    margin-top: 0;
   }
 
   .card-body {
@@ -74,7 +69,7 @@
     color: rgba(0, 0, 0, 0.63);
 
     p {
-      margin: 0px;
+      margin: 0;
       padding: 7px;
     }
 
@@ -83,6 +78,7 @@
     }
   }
 }
+
 .spinnerContainer {
   height: 28px;
   padding: 4px;
@@ -115,7 +111,7 @@
   border: 1px solid #435360;
   z-index: 900;
   border-radius: 3px;
-  background-color: #fff;
+  background-color: #FFF;
   display: inline-block;
   float: left;
   margin-bottom: 5px;
@@ -124,5 +120,5 @@
 .selectInput {
   width: 77%;
   border-right: none;
-  border-radius: 0px;
+  border-radius: 0;
 }

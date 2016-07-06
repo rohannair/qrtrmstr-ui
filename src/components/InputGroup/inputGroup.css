@@ -1,6 +1,8 @@
 .inputGroup {
+
   label {
     display: block;
+
     span {
       display: inline-block;
       padding-right: 1rem;
@@ -20,7 +22,7 @@
   }
 
   .input {
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #CCC;
   }
 
   .read-only {

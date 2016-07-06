@@ -1,3 +1,13 @@
+import {
+  USERS_RETRIEVED,
+  NEW_USER_CREATED,
+  ROLES_RETRIEVED,
+  NEW_USER_ERROR_RETRIEVED,
+  PASSWORD_RESET,
+  PASSWORD_RESET_ERROR,
+  RECIEVE_AUTH_URL
+} from '../constants';
+
 const initialState = {
   users: { results: [], total: 0 },
   errorMessage: null,
@@ -6,15 +16,18 @@ const initialState = {
   authUrl: null
 };
 
-export default function app(state = initialState, { type, users, new_user, error_msg, roles, message, authUrl }) {
+
+export default function app(state = initialState, action) {
+  const { type, users, new_user, error_msg, roles, message }  = action;
+
   switch (type) {
-  case 'USERS_RETRIEVED':
+  case USERS_RETRIEVED:
     return {
       ...state,
       users
     };
 
-  case 'NEW_USER_ERROR_RETRIEVED':
+  case NEW_USER_ERROR_RETRIEVED:
     const newError = (error_msg && (state.errorMessage === error_msg)) ?
       `${error_msg} (again)` : error_msg;
     return {
@@ -22,7 +35,7 @@ export default function app(state = initialState, { type, users, new_user, error
       errorMessage: newError
     };
 
-  case 'NEW_USER_CREATED':
+  case NEW_USER_CREATED:
     return {
       ...state,
       users: {
@@ -35,47 +48,27 @@ export default function app(state = initialState, { type, users, new_user, error
       errorMessage: null
     };
 
-  case 'ROLES_RETRIEVED':
+  case ROLES_RETRIEVED:
     return {
       ...state,
       roles: roles
     };
 
-  case 'PASSWORD_RESET':
+  case PASSWORD_RESET:
     return {
       ...state,
       message,
       errorMessage: error_msg
     };
 
-  case 'PASSWORD_RESET_ERROR':
+  case PASSWORD_RESET_ERROR:
     return {
       ...state,
       message,
       errorMessage: error_msg
     };
 
-  case 'RECIEVE_AUTH_URL':
-    return {
-      ...state,
-      authUrl
-    };
-
-  case 'ACCOUNT_LINKED':
-    return {
-      ...state,
-      message,
-      errorMessage: null
-    };
-
-  case 'ACCOUNT_LINK_ERROR':
-    return {
-      ...state,
-      errorMessage: error_msg,
-      message: null
-    };
-
-  case 'REMOVE_AUTH_URL':
+  case RECIEVE_AUTH_URL:
     return {
       ...state,
       authUrl

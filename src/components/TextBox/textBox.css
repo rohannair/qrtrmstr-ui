@@ -1,141 +1,92 @@
 .textBox {
-  background: #435360;
-  padding: 10px 2px 2px;
-  border-radius: 2px;
+  background: rgba(238, 243, 245, 0.3);
+  padding: 0;
+  border: 1px solid #CAD0D2;
+  border-radius: 3px;
+  position: relative;
 
-  .textBoxLink {
-    color: #EE6352;
+  .btn.transparent:hover {
+    background-color: rgba(0, 0, 0, 0.1);
   }
 
-  .buttonGroup {
-    overflow: hidden;
+  a {
+    cursor: pointer;
+    text-decoration: none;
+    padding-bottom: 1px;
+    text-shadow: 1px 1px 0 #FFF, -1px 1px 0 #FFF, 2px 0 0 #FFF, -2px 0 0 #FFF;
+    box-shadow: inset 0 -1px 0 0 #FFF, inset 0 -2px 0 0 #EE6352;
+  }
+
+  &-toolbar {
+    display: flex;
+    flex-direction: row;
+    padding: 5px 10px;
   }
 
   .public-DraftEditor-content {
-    background: white;
-    padding: 10px;
-    margin-top: 10px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-top: 1px solid #CAD0D2;
+    background: #FFF;
+    padding: 20px;
     min-height: 150px;
   }
 
-  .secondary {
-    float: left;
+  .urlInputContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: middle;
+    background: #FFF;
+    padding: 20px;
   }
 
-  .footer {
-    padding: 10px;
-    text-align: right;
-  }
-}
+  .DraftEditor-root {
 
-div.DraftEditor-root {
-  ul, ol {
-    list-style-position: inside;
-    margin: 0;
-    padding: 0;
-  }
+    ul,
+    ol {
+      list-style-position: inside;
+      margin: 0 0 20px;
+      padding: 0;
 
-  &.DraftEditor-alignCenter {
-    text-align: center;
+      li {
+        margin-bottom: 3px;
+      }
 
-    li {
+    }
+
+    &.DraftEditor-alignCenter {
       text-align: center;
+
+      li {
+        text-align: center;
+      }
     }
-  }
 
-  &.DraftEditor-alignRight {
-    text-align: right;
-
-    li {
+    &.DraftEditor-alignRight {
       text-align: right;
+
+      li {
+        text-align: right;
+      }
     }
-  }
 
-  &.DraftEditor-alignLeft {
-    text-align: left;
-
-    li {
+    &.DraftEditor-alignLeft {
       text-align: left;
+
+      li {
+        text-align: left;
+      }
     }
   }
-}
 
-.super-colors.dropdown-menu {
-  background-color: #2E404E;
-  color: #FFF;
-  font-weight: 700;
-
-  .subOptions {
-    padding: 3px;
-    font-size: 18px;
-
-    &:hover {
-      background-color: #435360;
-      border-color: #F1725F;
-      color: #FFF;
-    }
-  }
-}
-
-#dropdown-no-caret {
-  background-color: #2E404E;
-  border-color: #2E404E;
-  color: #FAFAFF;
-
-  &:hover {
-    background-color: #435360;
-    border-color: #435360;
-    color: #FFF;
-    font-weight: 700;
+  .RichEditor-activeButton {
+    color: #5890FF;
   }
 
-  &.RichEditor-styleButton {
-    color: #FFF;
-    cursor: pointer;
-    display: inline-block;
-    background-color: #2E404E;
+  .urlInput {
+    height: 30px;
+    padding: 6px 12px;
+    border: 1px solid #435360;
+    border-radius: 3px;
+    background-color: #FFF;
   }
-}
-
-.RichEditor-activeButton {
-  color: #5890ff;
-}
-
-.open>.dropdown-menu {
-  display: block;
-}
-
-.dropdown-menu {
-  position: absolute;
-  left: 30px;
-  z-index: 1000;
-  display: none;
-  float: left;
-  min-width: 10px;
-  padding: 5px;
-  margin: 2px 0 0;
-  font-size: 14px;
-  text-align: left;
-  border: 1px solid #ccc;
-  border: 1px solid rgba(0,0,0,.15);
-  border-radius: 4px;
-  box-shadow: 0 6px 12px rgba(0,0,0,.175);
-  background-clip: padding-box;
-
-  .subList {
-    margin-left: 0px;
-  }
-}
-
-ol, ul {
-  margin-top: 0;
-  margin-bottom: 10px;
-}
-
-.urlInput {
-  height: 30px;
-  padding: 6px 12px;
-  border: 1px solid #435360;
-  border-radius: 3px;
-  background-color: #fff;
 }

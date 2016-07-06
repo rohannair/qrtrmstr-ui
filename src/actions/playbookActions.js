@@ -1,63 +1,20 @@
-import utils from './utils';
-import request, { get, post, API_ROOT } from '../utils/request';
-
-const getDomain = utils.getDomain;
-const LOCATION_ROOT = getDomain() + API_ROOT;
+import { get, post, API_ROOT } from '../utils/request';
+import {
+  PLAYBOOK_RETRIEVED,
+  PLAYBOOK_SELECTED,
+  SUBMITTED_PLAYBOOK_UPDATE,
+} from '../constants';
 
 export const setSelection = id => {
   return {
-    type: 'PLAYBOOK_SELECTION',
+    type: PLAYBOOK_SELECTED,
     id
-  };
-};
-
-export const getPlaybook = (token = '', id) =>
-  dispatch => get(`${LOCATION_ROOT}playbooks/${id}`, token)
-  .then(data => dispatch(playbookRetrieved(data)));
-
-export const submitPlaybook = (data, id) => {
-  return dispatch => {
-    return fetch(`${LOCATION_ROOT}playbooks/submit/${id}`, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-    .then(response => response.json().then(json => ({json, response})))
-    .then(({json, response}) => {
-      if (!response.ok) {
-        return Promise.reject(json);
-      }
-      return null;
-    });
-  };
-};
-
-export const updatePlaybookStatus = (data, id) => {
-  return dispatch => {
-    return fetch(`${LOCATION_ROOT}playbooks/statusUpdate/${id}`, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-    .then(response => response.json().then(json => ({json, response})))
-    .then(({json, response}) => {
-      if (!response.ok) {
-        return Promise.reject(json);
-      }
-      return null;
-    });
   };
 };
 
 export const editSubmittedPlaybook = (slideKey, data) => {
   return {
-    type: 'EDIT_SUBMITTED_PLAYBOOK',
+    type: SUBMITTED_PLAYBOOK_UPDATE,
     slideKey,
     data
   };
@@ -65,7 +22,16 @@ export const editSubmittedPlaybook = (slideKey, data) => {
 
 function playbookRetrieved(data = {}) {
   return {
-    type: 'PLAYBOOK_RETRIEVED',
+    type: PLAYBOOK_RETRIEVED,
     playbook: data.playbook
   };
 }
+
+export const getPlaybook = (token = '', id) =>
+  dispatch => get(`${API_ROOT}playbooks/${id}`, token)
+  .then(data => dispatch(playbookRetrieved(data)));
+
+export const submitPlaybook = (data, id) => dispatch => post(`${API_ROOT}playbooks/submit/${id}`, null, data); // No token here so we pass in null
+
+export const updatePlaybookStatus = (data, id) =>
+  dispatch => post(`${API_ROOT}playbooks/statusUpdate/${id}`, data);

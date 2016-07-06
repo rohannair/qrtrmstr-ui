@@ -1,6 +1,6 @@
 .tooltip {
   background: #444;
-  color: #fff;
+  color: #FFF;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -13,11 +13,11 @@
   opacity: 0.85;
   margin-bottom: 7px;
 
-  &:after {
+  &::after {
     top: 100%;
     left: 50%;
     border: solid transparent;
-    content: " ";
+    content: ' ';
     height: 0;
     width: 0;
     position: absolute;
