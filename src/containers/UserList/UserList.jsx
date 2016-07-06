@@ -121,9 +121,14 @@ class UserList extends Component {
 
     return (
       <div className="userList">
-        {/* <Button onClick={this._googleAuth} classes="primary md"><i className="fa fa-google" aria-hidden="true"></i>  Add Google Account</Button> */}
-        {/* <Button onClick={this._slackAuth} classes="primary md"><i className="fa fa-slack" aria-hidden="true"></i>  Add to Slack</Button> */}
-        {/* <Button onClick={this._linkedInAuth} classes="primary md"><i className="fa fa-linkedin" aria-hidden="true"></i>  Add LinkedIn</Button> */}
+
+      <div className="userList-actionBar">
+      {/* <Button onClick={this._googleAuth} classes="primary md"><i className="fa fa-google" aria-hidden="true"></i>  Add Google Account</Button> */}
+      {/* <Button onClick={this._slackAuth} classes="primary md"><i className="fa fa-slack" aria-hidden="true"></i>  Add to Slack</Button> */}
+      {/* <Button onClick={this._linkedInAuth} classes="primary md"><i className="fa fa-linkedin" aria-hidden="true"></i>  Add LinkedIn</Button> */}
+        <Button onClick={this._renderNewUserModal} classes="primary md">New user +</Button>
+      </div>
+
         <Table headings = {['name', 'email', 'role', 'actions']} >
           { tableBody }
           <div className="userList-metadata">
@@ -144,10 +149,6 @@ class UserList extends Component {
             </div>
           </div>
         </Table>
-
-        <div className="userList-actionBar">
-          <Button onClick={this._renderNewUserModal} classes="primary md">New user +</Button>
-        </div>
 
         <div className="modalContainer">
           { newUserForm }
@@ -187,7 +188,8 @@ class UserList extends Component {
         first_name: '',
         last_name: '',
         personal_email: '',
-        role_id: ''
+        role_id: '',
+        is_admin: false
       },
       errorMessage: null
     });
@@ -216,7 +218,6 @@ class UserList extends Component {
     const { newUser } = this.state;
     let allErrors = '';
     let formErrors = '';
-
     for (let val in newUser) {
       if (newUser[val].length === 0) {
         if (val === 'role_id') {
@@ -237,9 +238,8 @@ class UserList extends Component {
 
     const data = {
       ...newUser,
-      is_admin: false,
       username: newUser.personal_email,
-      password: 'password'
+      password: `${newUser.first_name.toLowerCase()}123`
     };
 
     allErrors += formErrors ? `The fields: ${formErrors}cannot be blank. ` : '';
