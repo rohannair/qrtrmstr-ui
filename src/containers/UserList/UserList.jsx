@@ -43,9 +43,7 @@ class UserList extends Component {
   componentWillMount() {
     this._renderUserList();
     this._renderRolesList();
-
   };
-
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.authUrl) {
@@ -123,9 +121,6 @@ class UserList extends Component {
       <div className="userList">
 
       <div className="userList-actionBar">
-      {/* <Button onClick={this._googleAuth} classes="primary md"><i className="fa fa-google" aria-hidden="true"></i>  Add Google Account</Button> */}
-      {/* <Button onClick={this._slackAuth} classes="primary md"><i className="fa fa-slack" aria-hidden="true"></i>  Add to Slack</Button> */}
-      {/* <Button onClick={this._linkedInAuth} classes="primary md"><i className="fa fa-linkedin" aria-hidden="true"></i>  Add LinkedIn</Button> */}
         <Button onClick={this._renderNewUserModal} classes="primary md">New user +</Button>
       </div>
 
@@ -134,18 +129,20 @@ class UserList extends Component {
           <div className="userList-metadata">
             {`Total users: ${this.props.users.total}`}
             <div id="paginate">
-              <ReactPaginate  previousLabel={" "}
-                              nextLabel={" "}
-                              breakLabel={<a href="">...</a>}
-                              pageNum={Math.ceil(this.props.users.total / this.state.perPage)}
-                              marginPagesDisplayed={1}
-                              pageRangeDisplayed={2}
-                              clickCallback={this._handlePageClick}
-                              containerClassName={"pagination"}
-                              subContainerClassName={"pages pagination"}
-                              activeClassName={"active"}
-                              previousLinkClassName={"fa fa-arrow-left tertiary"}
-                              nextLinkClassName={"fa fa-arrow-right tertiary"} />
+              <ReactPaginate
+                previousLabel=" "
+                nextLabel=" "
+                breakLabel={<a href="">...</a>}
+                pageNum={Math.ceil(this.props.users.total / this.state.perPage)}
+                marginPagesDisplayed={1}
+                pageRangeDisplayed={2}
+                clickCallback={this._handlePageClick}
+                containerClassName="pagination"
+                subContainerClassName="pages pagination"
+                activeClassName="active"
+                previousLinkClassName="fa fa-arrow-left tertiary"
+                nextLinkClassName="fa fa-arrow-right tertiary"
+              />
             </div>
           </div>
         </Table>
@@ -183,6 +180,7 @@ class UserList extends Component {
   _renderNewUserModal = () => {
     const { token, dispatch, roles } = this.props;
     const { newUser } = this.state;
+
     this.setState({
       newUser: {
         first_name: '',

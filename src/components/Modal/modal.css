@@ -52,25 +52,29 @@
       width: 30%;
     }
 
+    h3 {
+      padding-bottom: 20px;
+    }
+
     .formField {
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 0 20px 10px;
 
       label {
         text-transform: uppercase;
         font-weight: bold;
         font-size: 0.75em;
         margin-right: 20px;
-        text-align: right;
+        text-align: left;
       }
 
       input,
       select {
         width: 80%;
-
+        margin-left: auto;
       }
 
       select {

@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import Cookies from 'cookies-js';
 
 const Header = props => {
-  const headerLink = props.isAdmin
-  ? <Link to="/dashboard"> Quartermaster</Link>
-  : <a href="#"> Quartermaster</a>;
 
-  const logoutLink = props.isAdmin
+  const token = Cookies.get('token');
+
+  const headerLink = token
+  ? <Link to="/dashboard">Quartermaster</Link>
+  : <a href="#">Quartermaster</a>;
+
+  const logoutLink = token
   ? <Link to="/logout" className="right">Log Out</Link>
   : null;
 

@@ -66,33 +66,34 @@ export const recieveAuthUrl = (url) => {
 // Get All Users
 export const getUsers = (token, offset, limit) =>
   dispatch => get(`${API_ROOT}users?offset=${offset}&limit=${limit}`, token)
-  .then(json => dispatch(usersRetrieved(json)));
+  .then(data => dispatch(usersRetrieved(data)));
 
 // Single User Call
 export const getSingleUser = (token, id) =>
   dispatch => get(`${API_ROOT}users/${id}`, token)
-  .then(json => dispatch(usersRetrieved(json)));
+  .then(data => dispatch(usersRetrieved(data)));
 
 // Create new User
 export const createUser = (token, payload) =>
   dispatch => post(`${API_ROOT}users`, token, payload)
-  .then(json => dispatch(newUserErrors(json.message)));
+  .then(data => dispatch(newUserCreated(data)))
+  .catch(err => dispatch(newUserErrors(err.message)));
 
 // Modify existing User
 export const modifyUser = (token, payload) =>
   dispatch => post(`${API_ROOT}users/${payload.id}`, token, payload)
-  .then(json => console.log(json));
+  .then(data => console.log(data));
 
 // Get All Roles
 export const getRoles = token =>
   dispatch => get(API_ROOT + 'roles', token)
-  .then(json => dispatch(rolesRetrieved(json)));
+  .then(data => dispatch(rolesRetrieved(data)));
 
 export const resetPassword = (payload, userId) =>
   dispatch => post(`${API_ROOT}users/resetPassword/${userId}`, null, payload)
-  .then(json => dispatch(passwordReset(json.message)))
-  .catch(err => dispatch(passwordResetError(json.message)));
+  .then(data => dispatch(passwordReset(data.message)))
+  .catch(err => dispatch(passwordResetError(data.message)));
 
 export const linkAccount = (token, company) =>
   dispatch => get(`${API_ROOT}auth/${company}`, token)
-  .then(json => dispatch(recieveAuthUrl(json.message)));
+  .then(data => dispatch(recieveAuthUrl(data.message)));
