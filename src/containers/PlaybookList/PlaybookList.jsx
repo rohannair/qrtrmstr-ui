@@ -78,7 +78,7 @@ class PlaybookList extends Component {
         playbook={ this.state.modalData }
         users={ this.props.users.results }
         action={ this._sendPlaybook }
-        title={'Send Playbook'}
+        title={'Send'}
       />
     : null;
 
@@ -88,7 +88,7 @@ class PlaybookList extends Component {
         playbook={ this.state.modalData }
         users={ this.props.users.results }
         action={ this._savePlaybook }
-        title={'Assign Playbook'}
+        title={'Assign'}
       />
     : null;
 
