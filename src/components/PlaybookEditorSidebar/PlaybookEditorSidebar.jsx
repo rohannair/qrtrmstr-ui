@@ -23,7 +23,7 @@ const PlaybookEditorSidebar = (props) => {
             onClick={ props.save }
             classes='primary block md'
             saveStatus={ props.saveStatus }
-            saveType='Playbook'
+            saveType=''
           />
           <Link
             to={`/playbook/${props.id}`}
@@ -31,7 +31,7 @@ const PlaybookEditorSidebar = (props) => {
             target="_blank"
             rel="noopener"
           >
-              Preview Playbook
+              Preview
           </Link>
         </ButtonGroup>
       </Card>
