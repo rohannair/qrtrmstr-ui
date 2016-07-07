@@ -64,7 +64,7 @@ class PasswordReset extends Component {
             </label>
 
 
-            <input className="btn primary lgLong" type="submit"/>
+            <input className="btn primary lgLong" value="Submit" type="submit"/>
           </form>
 
         </Card>
