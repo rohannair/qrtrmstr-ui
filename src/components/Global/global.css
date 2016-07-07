@@ -23,10 +23,12 @@ a {
   }
 }
 
-input[type='text'],
-input[type='password'],
-input[type='email'],
+input,
+input[type="text"],
+input[type="password"],
+input[type="email"],
 select {
+  background: #fff;
   border: 1px solid #CCC;
   padding: 5px;
   border-radius: 3px;
