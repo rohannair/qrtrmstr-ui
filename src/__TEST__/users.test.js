@@ -73,7 +73,7 @@ test('App reducer', next => {
     const state_after = {
       errorMessage: null,
       users: {
-        results: ['Kobe', 'Rohan'],
+        results: ['Rohan', 'Kobe'],
         total: 21
       }
     };

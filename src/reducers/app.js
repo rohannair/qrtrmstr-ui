@@ -40,8 +40,8 @@ export default function app(state = initialState, action) {
       ...state,
       users: {
         results: [
-          ...state.users.results,
-          new_user
+          new_user,
+          ...state.users.results
         ],
         total: state.users.total + 1
       },
