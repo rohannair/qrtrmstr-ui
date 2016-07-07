@@ -32,6 +32,7 @@ class EditPlaybookModal extends Component {
         <div className="formField">
           <label>Playbook Title: </label>
           <input
+            type="text"
             className="inputIcon"
             name="name"
             value= { this.state.name }
@@ -40,14 +41,12 @@ class EditPlaybookModal extends Component {
         </div>
 
         <div className="modalFooter">
-          <div className="userButtonGroup">
-            <ButtonGroup>
-              <Button classes="inverse sm" onClick={closeModal}>Cancel</Button>
-              <Button classes="primary sm" onClick={this._saveAndClose}>
-                Update
-              </Button>
-            </ButtonGroup>
-          </div>
+          <ButtonGroup>
+            <Button classes="inverse sm" onClick={closeModal}>Cancel</Button>
+            <Button classes="primary sm" onClick={this._saveAndClose}>
+              Update
+            </Button>
+          </ButtonGroup>
         </div>
       </Modal>
     );

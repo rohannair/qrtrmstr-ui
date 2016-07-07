@@ -1,8 +1,18 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import Cookies from 'cookies-js';
 
 const Header = props => {
-  const headerLink =  props.isAdmin  ?  <Link to="/dashboard"> Quartermaster</Link> : <a href="#"> Quartermaster</a>
+
+  const token = Cookies.get('token');
+
+  const headerLink = token
+  ? <Link to="/dashboard">Quartermaster</Link>
+  : <a href="#">Quartermaster</a>;
+
+  const logoutLink = token
+  ? <Link to="/logout" className="right">Log Out</Link>
+  : null;
 
   return (
     <header className="appHeader">
@@ -15,7 +25,7 @@ const Header = props => {
         </div>
       </div>
       <div className="appHeader-section">
-        <Link to="/logout" className="right">Log Out</Link>
+        { logoutLink }
       </div>
     </header>
   );

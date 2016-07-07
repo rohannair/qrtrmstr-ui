@@ -5,6 +5,10 @@ import Alert from '../Alert';
 import Button from '../Button';
 import Card from '../Card';
 
+import {
+linkAccount
+} from '../../actions/userActions';
+
 class Login extends Component {
   static propTypes = {
     forgotPassword: PropTypes.func,
@@ -23,10 +27,12 @@ class Login extends Component {
 
   render() {
     const { submitForm, forgotPassword } = this.props;
-
-    //TODO: Use Alert here when Alert is merged in
     const errorEl = this.props.error
     ? <Alert danger>{`ERROR: ${this.props.error}`}</Alert>
+    : null;
+
+    const messageEl = this.props.message
+    ? <Alert success>{`SUCCESS: ${this.props.message}`}</Alert>
     : null;
 
     return (
@@ -35,6 +41,7 @@ class Login extends Component {
           <h2>Log-in to Quartermaster</h2>
 
           <div className="errorContainer">{ errorEl }</div>
+          <div className="errorContainer">{ messageEl }</div>
           <form
           className="form"
           onSubmit={ this._submitForm }>
@@ -63,13 +70,11 @@ class Login extends Component {
                 />
             </label>
 
-
-            <input className="btn primary lgLong" type="submit"/>
+            <input value="Submit" className="btn primary lgLong" type="submit"/>
           </form>
-
           <Button
-            classes="transparent sm"
-            onClick={forgotPassword}>
+            onClick={this.props.showForgotPasswordModal}
+            classes={"transparent sm"}>
             I forgot my password
           </Button>
         </Card>

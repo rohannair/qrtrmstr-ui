@@ -1,14 +1,19 @@
 import test from 'tape';
+import {
+  PLAYBOOK_RETRIEVED,
+  PLAYBOOK_SELECTED,
+  SUBMITTED_PLAYBOOK_UPDATE,
+} from '../constants';
 
 // Reducer
 import playbook from '../reducers/playbook';
 
 test('Playbook', next => {
 
-  next.test('PLAYBOOK_RETRIEVED', t => {
+  next.test(PLAYBOOK_RETRIEVED, t => {
 
     const action = {
-      type: 'PLAYBOOK_RETRIEVED',
+      type: PLAYBOOK_RETRIEVED,
       playbook: {
         doc: {
           foo: 'bar'
@@ -45,10 +50,10 @@ test('Playbook', next => {
     t.end();
   });
 
-  next.test('EDIT_SUBMITTED_PLAYBOOK', t => {
+  next.test(SUBMITTED_PLAYBOOK_UPDATE, t => {
 
     const action = {
-      type: 'EDIT_SUBMITTED_PLAYBOOK',
+      type: SUBMITTED_PLAYBOOK_UPDATE,
       slideKey: '1',
       data: {
         body: {
@@ -104,9 +109,9 @@ test('Playbook', next => {
     t.end();
   });
 
-  next.test('PLAYBOOK_SELECTION', t => {
+  next.test(PLAYBOOK_SELECTED, t => {
     const action = {
-      type: 'PLAYBOOK_SELECTION',
+      type: PLAYBOOK_SELECTED,
       id: {
         key: 'foo',
         val: 'bar'

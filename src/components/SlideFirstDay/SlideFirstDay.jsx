@@ -9,7 +9,6 @@ import 'moment-range';
 // Components
 import Button from '../../components/Button';
 import ButtonGroup from '../../components/ButtonGroup';
-import { updatePlaybookState } from '../../actions/playbookViewActions';
 
 import TextBox from '../TextBox';
 import MapContainer from '../../containers/MapContainer';
@@ -24,8 +23,6 @@ class SlideFirstDay extends Component {
     const finishTime = lastAgendaItem
     ? lastAgendaItem.finishTime
     : moment(this.props.date).startOf('day').toDate();
-
-    console.log(finishTime);
 
     this.state = {
       desc: '',
@@ -49,7 +46,7 @@ class SlideFirstDay extends Component {
 
     const items = agenda
       ? agenda
-          .sort((a, b) => { return a.startTime-b.startTime } )
+          .sort((a, b) => a.startTime - b.startTime)
           .map((val, i) => {
             return (
               <div className="agenda-item" key={`agendaItem-${i}`}>
@@ -182,7 +179,7 @@ class SlideFirstDay extends Component {
             <div className="timeInput">
               <input name="startTime" value={ startTime } type="time" max='24:00' onChange={ this._inputChange } />
             </div>
-            <p>to</p>
+            <p> - </p>
             <div className="timeInput">
               <input name="finishTime" value={ finishTime } type="time" max='24:00' onChange={ this._inputChange } />
             </div>

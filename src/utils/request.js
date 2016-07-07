@@ -2,6 +2,7 @@ import 'isomorphic-fetch';
 import Cookies from 'cookies-js';
 
 export const API_ROOT = '/api/v1/';
+
 export default function request(method, location, token, body) {
   const serializedBody = method !== 'GET'
     ? { body: JSON.stringify(body) }

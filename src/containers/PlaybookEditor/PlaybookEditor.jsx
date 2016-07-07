@@ -12,8 +12,8 @@ import {
   toggleOpenCard,
   addSlide,
   modifyPlaybook,
-  editSlide,
-  reorderPlaybook
+  reorderPlaybook,
+  isSaving
 } from '../../actions/playbookViewActions';
 
 // Styles
@@ -37,7 +37,6 @@ import SlideFirstDay from '../../components/SlideFirstDay';
 import Dialog from '../../components/Dialog';
 
 class PlaybookEditor extends Component {
-
   state = {
     showModal: false,
     removeTabInfo: {
@@ -49,11 +48,17 @@ class PlaybookEditor extends Component {
     playbook: null
   };
 
+  static propTypes = {
+    saveStatus: PropTypes.oneOf(['SAVED', 'SAVING', 'UNSAVED']).isRequired
+  }
+
   componentWillMount() {
     this._renderPlaybook();
   };
 
   render() {
+    const { playbook, saveStatus } = this.props;
+
     const RemoveEquipmentTab = this.state.showModal
     ? <Dialog
         onAction={ this._removeOption }
@@ -63,7 +68,7 @@ class PlaybookEditor extends Component {
         <p>Are you sure you want to remove this tab?</p>
       </Dialog>
     : null;
-    const { playbook } = this.props;
+
     const playbookDoc = playbook.doc && Object.keys(playbook.doc).length > 0
     ? Object.keys(playbook.doc).map(val => {
       const slide = playbook.doc[val];
@@ -109,10 +114,9 @@ class PlaybookEditor extends Component {
 
       case 'day1agenda':
         return (
-        <Card key={val} title={ header }>
+          <Card key={val} title={ header }>
             <SlideFirstDay
               {...slide}
-              onEdit={this._editSlide}
               onAdd={this._addNewAgendaItem}
               onDelete= {this._deleteAgendaItem}
               onChange={ this._updateSlide }
@@ -143,7 +147,11 @@ class PlaybookEditor extends Component {
         <PlaybookEditorBody>
           { playbookDoc}
         </PlaybookEditorBody>
-        <PlaybookEditorSidebar save={this._savePlaybook} id={ playbookID } />
+        <PlaybookEditorSidebar
+          save={this._savePlaybook}
+          saveStatus={ saveStatus }
+          id={ playbookID }
+        />
         { RemoveEquipmentTab }
       </div>
       );
@@ -179,6 +187,8 @@ class PlaybookEditor extends Component {
     this.setState({
       chosenTab: null
     });
+
+    this._closeModal();
   };
 
   _closeModal = () => {
@@ -219,7 +229,8 @@ class PlaybookEditor extends Component {
 
   _savePlaybook = () => {
     const { token, dispatch, playbook, params } = this.props;
-    return dispatch(modifyPlaybook(token, {doc: playbook.doc}, params.playbookID));
+    dispatch(isSaving());
+    return dispatch(modifyPlaybook(token, { doc: playbook.doc }, params.playbookID));
   };
 
   _moveSlide = (i, direction) => {
@@ -256,6 +267,7 @@ function mapStateToProps(state, ownProps) {
     playbook: state.playbookAdmin.playbook,
     playbookID: ownProps.params.id,
     users: state.playbookAdmin.users,
+    saveStatus: state.playbookAdmin.saveStatus,
     token
   };
 }

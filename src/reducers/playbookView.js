@@ -1,39 +1,56 @@
-import _ from 'lodash';
+import omit from 'lodash/omit';
+import {
+  TOGGLE_OPEN_CARD,
+  ADD_SLIDE,
+  REMOVE_SLIDE,
+  SAVING_PLAYBOOK,
+  PLAYBOOKS_RETRIEVED,
+  SINGLE_PLAYBOOK_RETRIEVED,
+  EDIT_SLIDE,
+  ADD_NEW_PLAYBOOK,
+  UPDATE_MESSAGE,
+  PLAYBOOK_MODIFIED,
+  PLAYBOOK_ORDER_MODIFIED,
+} from '../constants';
 
 export const initialState = {
   chosenUser: {},
-  list: [],
+  list: { results: [], total: 0 },
   playbook: {},
   openCards: [],
-  message: null
+  message: null,
+  saveStatus: 'SAVED'
 };
 
 export default function playbookView(state = initialState, action) {
 
   switch (action.type) {
-  case 'PLAYBOOKS_RETRIEVED':
+  case PLAYBOOKS_RETRIEVED:
     return {
       ...state,
       list: action.playbookList
     };
 
-  case 'SINGLE_PLAYBOOK_RETRIEVED':
+  case SINGLE_PLAYBOOK_RETRIEVED:
     return {
       ...state,
       playbook: action.playbook,
       users: action.users
     };
 
-  case 'ADD_NEW_PLAYBOOK':
+  case ADD_NEW_PLAYBOOK:
     return {
       ...state,
-      list: [
-        ...state.list,
-        action.playbook
-      ]
+      list: {
+        results: [
+          ...state.list.results,
+          action.playbook
+        ],
+        total: state.list.total + 1
+      }
     };
 
-  case 'PLAYBOOK_ORDER_MODIFIED':
+  case PLAYBOOK_ORDER_MODIFIED:
     const { idx, direction } = action;
     const totalSlideCount = '' + Object.keys(state.playbook.doc).length - 1;
 
@@ -55,7 +72,7 @@ export default function playbookView(state = initialState, action) {
       }
     };
 
-  case 'ADD_SLIDE':
+  case ADD_SLIDE:
     const doc = {
       ...state.playbook.doc,
       [action.slideID]: {
@@ -72,16 +89,16 @@ export default function playbookView(state = initialState, action) {
       }
     };
 
-  case 'REMOVE_SLIDE':
+  case REMOVE_SLIDE:
     return {
       ...state,
       playbook: {
         ...state.playbook,
-        doc: _.omit(state.playbook.doc, [action.slideID])
+        doc: omit(state.playbook.doc, [action.slideID])
       }
     };
 
-  case 'EDIT_SLIDE':
+  case EDIT_SLIDE:
     const { slide_number, data } = action;
     const { playbook } = state;
 
@@ -99,10 +116,11 @@ export default function playbookView(state = initialState, action) {
             ...action.data
           }
         }
-      }
+      },
+      saveStatus: 'UNSAVED',
     };
 
-  case 'TOGGLE_OPEN_CARD':
+  case TOGGLE_OPEN_CARD:
     const { openCards } = state;
     const isInArray = openCards.indexOf(action.cardID);
 
@@ -121,17 +139,23 @@ export default function playbookView(state = initialState, action) {
       openCards: [...openCards].concat(action.cardID)
     };
 
-  case 'UPDATE_MESSAGE':
+  case UPDATE_MESSAGE:
     return {
       ...state,
       message: action.message
     };
 
-  case 'PLAYBOOK_MODIFIED':
+  case SAVING_PLAYBOOK:
+    return {
+      ...state,
+      saveStatus: 'SAVING'
+    };
+
+  case PLAYBOOK_MODIFIED:
     const { newPlaybook } = action;
     const { list } = state;
-    let pos = null;
-    list.forEach((val, ind) => {
+    let pos = list.results.length;
+    list.results.forEach((val, ind) => {
       if (val.id === newPlaybook.result.id) {
         pos = ind;
       }
@@ -140,11 +164,15 @@ export default function playbookView(state = initialState, action) {
     return {
       ...state,
       message: newPlaybook.message,
-      list: [
-        ...list.slice(0, pos),
-        newPlaybook.result,
-        ...list.slice(pos + 1)
-      ]
+      saveStatus: 'SAVED',
+      list: {
+        results: [
+          ...list.results.slice(0, pos),
+          newPlaybook.result,
+          ...list.results.slice(pos + 1)
+        ],
+        total: list.total
+      }
     };
 
   default:
