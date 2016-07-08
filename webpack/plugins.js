@@ -5,7 +5,7 @@ const StyleLintPlugin   = require('stylelint-webpack-plugin');
 const SplitByPathPlugin = require('webpack-split-by-path');
 
 const root = path.resolve();
-const isProd = !!process.env.NODE_ENV === 'production';
+const isProd = true || !!process.env.NODE_ENV === 'production';
 
 const devFlagPlugin = new webpack.DefinePlugin({
   __DEV__: !isProd,
