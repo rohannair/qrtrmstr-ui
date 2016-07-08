@@ -45,5 +45,5 @@ const devPlugins = [
 ];
 
 module.exports = plugins
-  .concat(isProd ? prodPlugins : [] )
-  .concat(!isProd ? devPlugins : [] );
+  .concat(isProd ? prodPlugins : [])
+  .concat(!isProd ? devPlugins : []);
