@@ -4,7 +4,7 @@ const path         = require('path');
 const plugins = require('./webpack/plugins');
 const postcss = require('./webpack/postcss');
 
-const isProd =  true || process.env.NODE_ENV === 'production';
+const isProd = process.env.NODE_ENV === 'production';
 const entry = isProd
 ? { app: './src/index.js' }
 : ['webpack-hot-middleware/client', 'react-hot-loader/patch', './src/index.js'];
