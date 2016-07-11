@@ -22,11 +22,11 @@ class PasswordReset extends Component {
   render() {
     const { submitForm } = this.props;
     const errorEl = this.props.error
-    ? <Alert danger>{`ERROR: ${this.props.error}`}</Alert>
+    ? <Alert danger>{`${this.props.error}`}</Alert>
     : null;
 
     const messageEl = this.props.message
-    ? <Alert success>{`SUCCESS: ${this.props.message}`}</Alert>
+    ? <Alert success>{`Success: ${this.props.message}`}</Alert>
     : null;
 
     return (
