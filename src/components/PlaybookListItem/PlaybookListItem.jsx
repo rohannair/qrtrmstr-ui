@@ -1,7 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import styles from './playbookListItem.css';
+
 import { Link } from 'react-router';
+import classNames from 'classnames';
 import moment from 'moment';
+
 import Button from '../Button';
 import ButtonGroup from '../ButtonGroup';
 import Pill from '../Pill';
@@ -18,41 +21,91 @@ class PlaybookListItem extends Component {
   }
 
   render() {
-    const href = `/playbook/${this.props.id}`;
-    const assignedTo = this.props.firstName ? `${this.props.firstName} ${this.props.lastName}` : 'Unassigned';
-    const deactivateClasses = this.props.current_status === 'draft' ? '' : 'disabled';
+    const { current_status, id } = this.props;
+    const playbookSent = current_status !== 'draft';
+
+    const assignedName = this.props.firstName
+    ? `${this.props.firstName} ${this.props.lastName}`
+    : 'Unassigned';
+
+    const unAssignAction = this.props.firstName
+    ? <Button onClick={ this.props.clearAssigned.bind(this, id) } classes="sm transparent">&times;</Button>
+    : null;
+
+    const btnClickHandler = this.props.showAssignModal.bind(this,
+      { id, name: this.props.name}
+    );
+
+    const assignedTo = playbookSent
+    ? <div>{assignedName}</div>
+    : (
+        <span className="flex row">
+          <div className="editable" onClick={btnClickHandler}>
+            { assignedName }
+          </div>
+          { unAssignAction }
+        </span>
+      );
+
+    const deactivateClasses = current_status === 'draft'
+    ? ''
+    : 'hidden';
 
     const canOpen = this.props.showSendModal.bind(this,
         { id: this.props.id, name: this.props.name}
     );
 
-    const currentStatusDisplay = this.props.current_status === 'in progress'
-    ? <Pill info>{`${this.props.percent_submitted * 100}% Done`}</Pill>
-    : <Pill warning>{this.props.current_status}</Pill>;
+    const statusClass = classNames({
+      info: current_status === 'sent',
+      success: current_status === 'in progress',
+      warning: current_status === 'draft'
+    });
 
-    const viewSubPlaybookBtn = this.props.current_status === 'in progress'
-    ? <Link to={`/dashboard/playbook/results/${this.props.id}`}>
-        <i className="fa fa-eye"></i>
+    const viewSubPlaybookBtn = playbookSent
+    ? <Link to={`/dashboard/playbook/results/${this.props.id}`} className="btn inverse sm">
+        View Results
+        <span>{` (${this.props.percent_submitted * 100}%)`}</span>
       </Link>
-    : null;
-
-    const editPlaybookButton = this.props.current_status === 'draft'
-    ? <Link to={`/dashboard/playbooks/edit/${this.props.id}`}>
+    : <span>
+        <Link to={`/dashboard/playbooks/edit/${this.props.id}`} className={'btn primary sm'}>Edit</Link>
         <Button
-          classes={'primary sm'}
-        >Edit</Button>
-      </Link>
-    : <Button
-        classes={`primary sm ${deactivateClasses}`}
-        icon="cog"
-        toolTipText="Edit Playbook"
-      />;
+          onClick={ canOpen }
+          classes={'tertiary sm'}
+        >Send</Button>
+      </span>;
 
-    const name = this.state.editingName
-    ? <input value={this.state.name} />
-    : <span onClick={(e) => this.setState({editingName: !this.state.editingName})}>{this.state.name}</span>;
-
-    // this.props.showEditModal.bind(this, { id: this.props.id, name: this.props.name} );
+    const name = this.state.editingName && !playbookSent
+    ? (
+        <div className="editPlaybookName" >
+          <input
+            value={this.state.name}
+            onChange={e => this.setState({ name: e.target.value })}
+          />
+          <Button
+            classes={'primary sm'}
+            icon="check"
+            onClick={this._savePlaybookName}
+          />
+        </div>
+      )
+    : (
+        <div className="playbookName" onClick={(e) => this.setState({editingName: !this.state.editingName})}>
+          <span >{this.state.name}</span>
+          <Button
+            onClick={(e) => this.setState({editingName: !this.state.editingName})}
+            classes= {
+              this.state.editingName
+              ? 'success sm'
+              : `transparent sm ${deactivateClasses}`
+            }
+            icon={
+              this.state.editingName
+              ? 'check'
+              : 'pencil'
+            }
+          />
+        </div>
+      );
 
     return (
       <div key={ this.props.id } className="playbookListItem">
@@ -75,23 +128,21 @@ class PlaybookListItem extends Component {
           </div>
 
           <div className="meta">
-            { currentStatusDisplay }
-            <div className="assigned">
+            <Pill className={statusClass}>{current_status}</Pill>
+            <div className="section">
               <strong>Assigned to: </strong>
               { assignedTo }
             </div>
-            <div className="assigned">
+            <div className="section">
               <strong>Created: </strong>
-              { moment(this.props.created_at).format('MMMM D') }
+              { moment(this.props.created_at).format('MMMM D, YYYY') }
             </div>
-            <div className="assigned">
+            <div className="section">
               <strong>Last Modified: </strong>
-              { moment(this.props.updated_at).fromNow() /* .format('MMMM D @ h:MM A')*/ }
+              { moment(this.props.updated_at).fromNow() }
             </div>
               { /* <Button
-                onClick={ this.props.showAssignModal.bind(this,
-                  { id: this.props.id, name: this.props.name}
-                ) }
+                onClick={  }
                 classes={`transparent sm  ${deactivateClasses}`}
                 icon="user"
                 toolTipText="Assign Playbook"
@@ -100,29 +151,27 @@ class PlaybookListItem extends Component {
         </div>
 
         <div className="actions">
-          <div className="status">
-            { viewSubPlaybookBtn }
-          </div>
           <ButtonGroup>
-
             <Button
               onClick={ this.props.duplicatePlaybook.bind(this, this.props.id) }
               classes='inverse sm'
               icon="copy"
               toolTipText="Duplicate Playbook"
             />
-
-            { editPlaybookButton }
-
-            <Button
-              onClick={ canOpen }
-              classes={`tertiary sm  ${deactivateClasses}`}
-            >Send</Button>
+            { viewSubPlaybookBtn }
           </ButtonGroup>
+
         </div>
       </div>
     );
-  }
+  };
+
+  _savePlaybookName = (e) => {
+    this.props.savePlaybook(this.props.id, {
+      name: this.state.name
+    });
+    this.setState({ editingName: !this.state.editingName });
+  };
 
   _sendPlaybook = (userID) => {
     let assignedUser = null;

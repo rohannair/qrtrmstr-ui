@@ -33,8 +33,6 @@
       input,
       span {
         display: flex;
-        flex-grow: 1px;
-        margin: 0 20px 0 10px;
       }
 
       input {
@@ -44,9 +42,62 @@
         width: auto;
       }
 
+      .editPlaybookName,
+      .playbookName {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: flex-start;
+        width: 98%;
+
+        .hidden {
+          display: none;
+        }
+      }
+
+      .editPlaybookName {
+
+        input {
+          flex-grow: 1;
+          margin-right: 0;
+        }
+
+        .btn {
+          padding: 7px 15px;
+          margin-left: 5px;
+          height: 100%;
+        }
+      }
+
       span {
         border-bottom: 1px solid transparent;
         padding: 5px 0;
+      }
+    }
+
+    .section {
+      display: flex;
+      flex-direction: row;
+      margin-left: 10px;
+      align-items: flex-start;
+
+      &::after {
+        content: '|';
+        margin-left: 10px;
+        color: #CCC;
+      }
+
+      .editable {
+        cursor: pointer;
+        padding-bottom: 2px;
+        color: #EE6352;
+        border-bottom: 1px dotted #EE6352;
+      }
+
+      .flex .btn {
+        position: relative;
+        transform: translateY(-50%);
       }
     }
 
@@ -55,6 +106,10 @@
       flex-direction: row;
       align-items: baseline;
       font-size: 0.85em;
+
+      strong {
+        padding-right: 5px;
+      }
     }
 
     .assigned {

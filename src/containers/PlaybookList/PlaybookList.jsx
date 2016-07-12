@@ -64,14 +64,6 @@ class PlaybookList extends Component {
   render() {
     const { visibleModal } = this.state;
 
-    const editPlaybookModal = visibleModal === 'edit'
-    ? <EditPlaybookModal
-        closeModal={ this._closeModal }
-        playbook={ this.state.modalData }
-        savePlaybook={ this._savePlaybook }
-      />
-    : null;
-
     const sendPlaybookModal = visibleModal === 'send'
     ? <AssignPlaybookModal
         closeModal={ this._closeModal }
@@ -99,9 +91,10 @@ class PlaybookList extends Component {
         users={ this.props.users.results }
         sendPlaybook={ this._sendPlaybookToAssignedUser }
         duplicatePlaybook={ this._duplicatePlaybook }
-        showEditModal={ this._showEditModal }
         showAssignModal={ this._showAssignModal }
         showSendModal={ this._showSendModal }
+        savePlaybook={ this._savePlaybook }
+        clearAssigned={ this._clearAssigned }
       />
     );});
 
@@ -109,37 +102,34 @@ class PlaybookList extends Component {
       <div className="playbookList">
 
         <div className="playbookList-sidebar">
-          <Button classes="lgLong primary">New</Button>
+          <Button classes="lgLong primary">New Playbook</Button>
         </div>
+
         <div className="playbookList-body">
           <div className="playbookList-metadata">Playbooks</div>
-            { items }
+          { items }
 
-            <div className="playbookList-metadata">
-              {`Total playbooks: ${this.props.playbookList.total}`}
-              <div id="paginate">
-                <ReactPaginate
-                  previousLabel={" "}
-                  nextLabel={" "}
-                  breakLabel={<a href="">...</a>}
-                  pageNum={Math.ceil(this.props.playbookList.total / this.state.perPage)}
-                  marginPagesDisplayed={1}
-                  pageRangeDisplayed={2}
-                  clickCallback={this._handlePageClick}
-                  containerClassName={"pagination"}
-                  subContainerClassName={"pages pagination"}
-                  activeClassName={"active"}
-                  previousLinkClassName={"fa fa-arrow-left tertiary"}
-                  nextLinkClassName={"fa fa-arrow-right tertiary"}
-                />
-              </div>
+          <div className="playbookList-metadata">
+            {`Total playbooks: ${this.props.playbookList.total}`}
+            <div id="paginate">
+              <ReactPaginate
+                previousLabel={" "}
+                nextLabel={" "}
+                breakLabel={<a href="">...</a>}
+                pageNum={Math.ceil(this.props.playbookList.total / this.state.perPage)}
+                marginPagesDisplayed={1}
+                pageRangeDisplayed={2}
+                clickCallback={this._handlePageClick}
+                containerClassName={"pagination"}
+                subContainerClassName={"pages pagination"}
+                activeClassName={"active"}
+                previousLinkClassName={"fa fa-arrow-left tertiary"}
+                nextLinkClassName={"fa fa-arrow-right tertiary"}
+              />
             </div>
-
-
+          </div>
         </div>
 
-
-        { editPlaybookModal }
         { sendPlaybookModal }
         { assignPlaybookModal }
       </div>
@@ -201,7 +191,13 @@ class PlaybookList extends Component {
 
   _savePlaybook = (id, payload) => {
     const { token, dispatch } = this.props;
+    console.log(payload);
     return dispatch(modifyPlaybook(token, payload, id));
+  };
+
+  _clearAssigned = (id, payload) => {
+    const { token, dispatch } = this.props;
+    return dispatch(modifyPlaybook(token, { selected: { id: null } }, id));
   };
 
   _duplicatePlaybook = (id) => {

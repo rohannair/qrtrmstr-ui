@@ -64,6 +64,17 @@
     padding-left: 15px;
     padding-right: 15px;
     cursor: pointer;
+
+    &.disabled,
+    &.disabled a {
+      cursor: not-allowed;
+      pointer-events: none;
+      color: #AAA;
+    }
+
+    &.active a {
+      color: #333;
+    }
   }
 
   &.break a {
