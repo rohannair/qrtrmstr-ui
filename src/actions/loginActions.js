@@ -3,12 +3,17 @@ import Cookies from 'cookies-js';
 import { get, post, API_ROOT } from '../utils/request';
 
 import {
+  LOGIN_ATTEMPT,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT,
   FORGOT_PASSWORD_EMAIL_SENT,
   FORGOT_PASSWORD_ERROR
 } from '../constants';
+
+const loginAttempt = () => ({
+  type: LOGIN_ATTEMPT
+});
 
 // Set Token
 export const login = (token = null, hasCookie) => {
@@ -64,9 +69,13 @@ const forgotPasswordError = (error) => {
 
 // Login API call
 export const tryLogin = credentials =>
-  dispatch => post(`${API_ROOT}login`, null, credentials)
+  dispatch => {
+    dispatch(loginAttempt());
+
+    return post(`${API_ROOT}login`, null, credentials)
     .then(data => dispatch(login(data.token)))
     .catch(errorText => dispatch(loginFail(errorText)));
+  };
 
 export const sendForgotPasswordEmail = payload =>
   dispatch => post(`${API_ROOT}forgotPassword/send`, null, payload)

@@ -1,9 +1,10 @@
 // -------- Login Actions
-export const LOGIN_SUCCESS = 'App/LOGIN_SUCCESS';
-export const LOGIN_FAILURE = 'APP/LOGIN_FAILURE';
-export const LOGOUT = 'App/LOGOUT';
-export const FORGOT_PASSWORD_EMAIL_SENT = 'App/FORGOT_PASSWORD_EMAIL_SENT';
-export const FORGOT_PASSWORD_ERROR = 'App/FORGOT_PASSWORD_ERROR';
+export const LOGIN_ATTEMPT = 'Auth/LOGIN_ATTEMPT';
+export const LOGIN_SUCCESS = 'Auth/LOGIN_SUCCESS';
+export const LOGIN_FAILURE = 'Auth/LOGIN_FAILURE';
+export const LOGOUT = 'Auth/LOGOUT';
+export const FORGOT_PASSWORD_EMAIL_SENT = 'Auth/FORGOT_PASSWORD_EMAIL_SENT';
+export const FORGOT_PASSWORD_ERROR = 'Auth/FORGOT_PASSWORD_ERROR';
 
 // -------- User Actions
 export const USERS_RETRIEVED = 'App/USERS_RETRIEVED';
