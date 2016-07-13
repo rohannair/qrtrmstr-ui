@@ -19,6 +19,7 @@
   .agendaDescTitle {
     width: 70%;
   }
+
   .agendaToolTitle {
     width: 10%;
   }
@@ -32,6 +33,7 @@
     &:nth-child(odd) {
       background-color: #F0F0F0;
     }
+
   }
 
 }

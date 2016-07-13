@@ -12,23 +12,38 @@ class Agenda extends Component {
   constructor(props) {
     super(props);
 
-    // const lastAgendaItem = props.agenda[(props.agenda.length - 1)];
-    // const finishTime = lastAgendaItem
-    // ? lastAgendaItem.finishTime
-    // : moment(this.props.date).startOf('day').toDate();
+    const lastAgendaItem = props.agenda[(props.agenda.length - 1)];
+    const finishTime = lastAgendaItem
+    ? lastAgendaItem.finishTime
+    : moment(this.props.date).startOf('day').toDate();
 
     this.state = {
       agenda: this.props.agenda,
-      // startTime: moment(finishTime).format('H:mm'),
-      // finishTime: moment(finishTime).add(1, 'hour').format('H:mm'),
+      date: this.props.date,
+      startTime: moment(finishTime).format('H:mm'),
+      finishTime: moment(finishTime).add(1, 'hour').format('H:mm'),
       errorMessage: null
     };
 
   }
 
+  componentWillReceiveProps(nextProps) {
+
+    const lastAgendaItem = nextProps.agenda[(nextProps.agenda.length - 1)];
+    const finishTime = lastAgendaItem
+    ? lastAgendaItem.finishTime
+    : moment(this.props.date).startOf('day').toDate();
+
+    this.setState({
+      agenda: nextProps.agenda,
+      startTime: moment(finishTime).format('H:mm'),
+      finishTime: moment(finishTime).add(1, 'hour').format('H:mm')
+    });
+  }
+
   render() {
 
-    const agenda = this.props.agenda;
+    const agenda = this.state.agenda;
 
     const items = agenda
       ? agenda
@@ -41,6 +56,7 @@ class Agenda extends Component {
                 className="agenda-item"
                 startTime={val.startTime}
                 finishTime={val.finishTime}
+                date={this.props.date}
                 desc={val.desc}
                 editItem={this._editItem}
                 deleteItem={this._deleteItem}
@@ -65,6 +81,10 @@ class Agenda extends Component {
         </FlipMove>
         <AgendaFooter
         addNew={this._addNew}
+        date={this.state.date}
+        startTime={this.state.startTime}
+        finishTime={this.state.finishTime}
+        desc={this.state.desc}
         />
 
         <div className="errorContainer">
@@ -75,6 +95,7 @@ class Agenda extends Component {
   };
 
   _deleteItem = id => {
+    debugger;
     const newAgenda = [
       ...this.props.agenda.slice(0, id),
       ...this.props.agenda.slice(id + 1)
@@ -82,36 +103,20 @@ class Agenda extends Component {
     return this.props.updateFirstDayState('agenda', newAgenda);
   };
 
-  _editItem = newItem => {
+  _editItem = (newItem, id) => {
     const { agenda } =  this.props;
-    const newAgenda = agenda.map((val,i) => {
-      if (val.desc === newItem.desc && val.startTime === newItem.startTime && val.finishTime === newItem.finishTime) return newItem;
-      return val;
-    });
-
+    let newAgenda = agenda;
+    newAgenda[id] = newItem;
     return this.props.updateFirstDayState('agenda', newAgenda);
-
   };
 
-  _addNew = e => {
-    e.preventDefault();
-
-    const { agenda } =  this.props.agenda;
-    const { desc, startTime, finishTime } = this.state;
-    const { date } = this.props;
-
-    // Validation to make sure that the start date is before the finish date
-    if (moment(date + ' ' + finishTime).diff(moment(date + ' ' + startTime)) <= 0) {
-      this.setState({
-        errorMessage: 'Start time must be before Finish time, please correct the dates and try again'
-      });
-      return;
-    }
+  _addNew = (startTime, finishTime, desc) => {
+    const { agenda, date } =  this.props;
 
     this.setState({
       ...this.state,
       desc: '',
-      startTime: finishTime,
+      startTime: moment(date + ' ' + finishTime).format('H:mm'),
       finishTime: moment(date + ' ' + finishTime).add(1, 'hour').format('H:mm'),
       errorMessage: null
     });

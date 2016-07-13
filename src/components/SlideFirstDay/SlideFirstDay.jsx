@@ -138,6 +138,7 @@ class SlideFirstDay extends Component {
            <Agenda
             agenda={this.props.body.agenda}
             updateFirstDayState={this._updateFirstDayState}
+            date={date}
           />
       </div>
     );
@@ -164,7 +165,6 @@ class SlideFirstDay extends Component {
   };
 
   _updateFirstDayState = (key, value) => {
-    debugger;
     const { onChange, body, slide_number } = this.props;
     let updatedSlide = null;
     let slideKey = null;
