@@ -6,7 +6,9 @@ import {
   NEW_USER_ERROR_RETRIEVED,
   PASSWORD_RESET,
   PASSWORD_RESET_ERROR,
-  RECIEVE_AUTH_URL
+  RECIEVE_AUTH_URL,
+  NEW_ROLE_CREATED,
+  NEW_ROLE_ERROR_RETRIEVED
 } from '../constants';
 
 // Users Retrieved action
@@ -36,6 +38,22 @@ function rolesRetrieved(roles = {}) {
 export const newUserErrors = (error_msg) => {
   return {
     type: NEW_USER_ERROR_RETRIEVED,
+    error_msg
+  };
+};
+
+// New Role successfully created and retrieved
+function newRoleCreated(role = {}) {
+  return {
+    type: NEW_ROLE_CREATED,
+    new_role: role
+  };
+}
+
+// New Role contains errors
+export const newRoleErrors = (error_msg) => {
+  return {
+    type: NEW_ROLE_ERROR_RETRIEVED,
     error_msg
   };
 };
@@ -88,6 +106,12 @@ export const modifyUser = (token, payload) =>
 export const getRoles = token =>
   dispatch => get(API_ROOT + 'roles', token)
   .then(data => dispatch(rolesRetrieved(data)));
+
+// Create new Role
+export const createRole = (token, payload) =>
+  dispatch => post(`${API_ROOT}roles`, token, payload)
+  .then(data => dispatch(newRoleCreated(data.message)))
+  .catch(err => dispatch(newRoleErrors(err.message)));
 
 export const resetPassword = (payload, userId) =>
   dispatch => post(`${API_ROOT}users/resetPassword/${userId}`, null, payload)
