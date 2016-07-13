@@ -11,7 +11,13 @@ import NewUserModal from '../../components/NewUserModal';
 
 import Table from '../../components/Table';
 
-import { getUsers, createUser, newUserErrors, getRoles } from '../../actions/userActions';
+import {
+  getUsers,
+  createUser,
+  newUserErrors,
+  getRoles,
+  linkAccount
+} from '../../actions/userActions';
 
 class UserList extends Component {
   state = {
@@ -21,6 +27,10 @@ class UserList extends Component {
     offset: 0,
     pageNum: 1,
     perPage: 10
+  };
+
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
   };
 
   static propTypes = {
@@ -36,6 +46,10 @@ class UserList extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.authUrl) {
+      window.location = nextProps.authUrl;
+    }
+
     const { newUser, errorMessage } = this.state;
     this.setState({
       loading: false,
@@ -105,30 +119,33 @@ class UserList extends Component {
 
     return (
       <div className="userList">
+
+      <div className="userList-actionBar">
+        <Button onClick={this._renderNewUserModal} classes="primary md">New user +</Button>
+      </div>
+
         <Table headings = {['name', 'email', 'role', 'actions']} >
           { tableBody }
           <div className="userList-metadata">
             {`Total users: ${this.props.users.total}`}
             <div id="paginate">
-              <ReactPaginate  previousLabel={" "}
-                              nextLabel={" "}
-                              breakLabel={<a href="">...</a>}
-                              pageNum={Math.ceil(this.props.users.total / this.state.perPage)}
-                              marginPagesDisplayed={1}
-                              pageRangeDisplayed={2}
-                              clickCallback={this._handlePageClick}
-                              containerClassName={"pagination"}
-                              subContainerClassName={"pages pagination"}
-                              activeClassName={"active"}
-                              previousLinkClassName={"fa fa-arrow-left tertiary"}
-                              nextLinkClassName={"fa fa-arrow-right tertiary"} />
+              <ReactPaginate
+                previousLabel=" "
+                nextLabel=" "
+                breakLabel={<a href="">...</a>}
+                pageNum={Math.ceil(this.props.users.total / this.state.perPage)}
+                marginPagesDisplayed={1}
+                pageRangeDisplayed={2}
+                clickCallback={this._handlePageClick}
+                containerClassName="pagination"
+                subContainerClassName="pages pagination"
+                activeClassName="active"
+                previousLinkClassName="fa fa-arrow-left tertiary"
+                nextLinkClassName="fa fa-arrow-right tertiary"
+              />
             </div>
           </div>
         </Table>
-
-        <div className="userList-actionBar">
-          <Button onClick={this._renderNewUserModal} classes="primary md">New user +</Button>
-        </div>
 
         <div className="modalContainer">
           { newUserForm }
@@ -163,12 +180,14 @@ class UserList extends Component {
   _renderNewUserModal = () => {
     const { token, dispatch, roles } = this.props;
     const { newUser } = this.state;
+
     this.setState({
       newUser: {
         first_name: '',
         last_name: '',
         personal_email: '',
-        role_id: ''
+        role_id: '',
+        is_admin: false
       },
       errorMessage: null
     });
@@ -197,7 +216,6 @@ class UserList extends Component {
     const { newUser } = this.state;
     let allErrors = '';
     let formErrors = '';
-
     for (let val in newUser) {
       if (newUser[val].length === 0) {
         if (val === 'role_id') {
@@ -218,9 +236,8 @@ class UserList extends Component {
 
     const data = {
       ...newUser,
-      is_admin: false,
       username: newUser.personal_email,
-      password: 'password'
+      password: `${newUser.first_name.toLowerCase()}123`
     };
 
     allErrors += formErrors ? `The fields: ${formErrors}cannot be blank. ` : '';
@@ -234,6 +251,24 @@ class UserList extends Component {
     return dispatch(getUsers(token, offset, this.state.perPage));
   };
 
+  _googleAuth = () => {
+    const { token, dispatch } = this.props;
+    // dispatch(linkAccount(token, 'google'));
+    console.log('Coming Soon');
+  };
+
+  _slackAuth = () => {
+    const { token, dispatch } = this.props;
+    // dispatch(linkAccount(token, 'slack'));
+    console.log('Coming Soon');
+  };
+
+  _linkedInAuth = () => {
+    const { token, dispatch } = this.props;
+    // dispatch(linkAccount(token, 'linkedIn'));
+    console.log('Coming Soon');
+  };
+
 }
 
 function mapStateToProps(state) {
@@ -242,7 +277,8 @@ function mapStateToProps(state) {
     token,
     users: state.app.users,
     errorMessage: state.app.errorMessage,
-    roles: state.app.roles
+    roles: state.app.roles,
+    authUrl: state.app.authUrl
   };
 }
 export default connect(mapStateToProps)(UserList);

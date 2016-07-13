@@ -4,18 +4,21 @@ import {
   ROLES_RETRIEVED,
   NEW_USER_ERROR_RETRIEVED,
   PASSWORD_RESET,
-  PASSWORD_RESET_ERROR
+  PASSWORD_RESET_ERROR,
+  RECIEVE_AUTH_URL
 } from '../constants';
 
 const initialState = {
   users: { results: [], total: 0 },
   errorMessage: null,
   roles: [],
-  message: null
+  message: null,
+  authUrl: null
 };
 
+
 export default function app(state = initialState, action) {
-  const { type, users, new_user, error_msg, roles, message }  = action;
+  const { type, users, new_user, error_msg, roles, message, authUrl }  = action;
 
   switch (type) {
   case USERS_RETRIEVED:
@@ -37,8 +40,8 @@ export default function app(state = initialState, action) {
       ...state,
       users: {
         results: [
-          ...state.users.results,
-          new_user
+          new_user,
+          ...state.users.results
         ],
         total: state.users.total + 1
       },
@@ -63,6 +66,12 @@ export default function app(state = initialState, action) {
       ...state,
       message,
       errorMessage: error_msg
+    };
+
+  case RECIEVE_AUTH_URL:
+    return {
+      ...state,
+      authUrl
     };
 
   default:

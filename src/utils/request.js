@@ -23,14 +23,8 @@ export default function request(method, location, token, body) {
   };
 
   return fetch(location, config)
-    .then(response => {
-      if (response.status === 401) {
-        Cookies.set('token', '', { expires: -1 });
-        return window.location = '';
-      }
-      return response.json();
-    })
-    .catch(err => console.error(err));
+    .then(handleErrors)
+    .then(response => response);
 }
 
 export const get = (location, token) => request('GET', location, token);
@@ -61,3 +55,15 @@ export const filePost = (location, token, form) => {
     })
     .catch(err => console.error(err));
 };
+
+// Function to handle errors for fetch requests
+function handleErrors(response) {
+  return response.json()
+    .then((responseData) => {
+    // If response has a status outside 200-299 then it will be caught here
+      if (!response.ok) {
+        throw Error(responseData.message);
+      }
+      return responseData;
+    });
+}

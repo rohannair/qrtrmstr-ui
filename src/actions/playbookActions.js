@@ -34,4 +34,4 @@ export const getPlaybook = (token = '', id) =>
 export const submitPlaybook = (data, id) => dispatch => post(`${API_ROOT}playbooks/submit/${id}`, null, data); // No token here so we pass in null
 
 export const updatePlaybookStatus = (data, id) =>
-  dispatch => post(`${API_ROOT}playbooks/statusUpdate/${id}`, data);
+  dispatch => post(`${API_ROOT}playbooks/statusUpdate/${id}`, null, data);

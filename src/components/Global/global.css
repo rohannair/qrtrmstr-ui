@@ -23,6 +23,21 @@ a {
   }
 }
 
+input,
+input[type="text"],
+input[type="password"],
+input[type="email"],
+select {
+  background: #FFF;
+  border: 1px solid #CCC;
+  padding: 5px;
+  border-radius: 3px;
+}
+
+select {
+  appearance: menulist-button;
+}
+
 .app-login {
   display: flex;
   flex-direction: column;

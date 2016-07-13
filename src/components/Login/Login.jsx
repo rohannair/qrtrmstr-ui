@@ -5,6 +5,10 @@ import Alert from '../Alert';
 import Button from '../Button';
 import Card from '../Card';
 
+import {
+linkAccount
+} from '../../actions/userActions';
+
 class Login extends Component {
   static propTypes = {
     forgotPassword: PropTypes.func,
@@ -24,11 +28,11 @@ class Login extends Component {
   render() {
     const { submitForm, forgotPassword } = this.props;
     const errorEl = this.props.error
-    ? <Alert danger>{`ERROR: ${this.props.error}`}</Alert>
+    ? <Alert danger>{`${this.props.error}`}</Alert>
     : null;
 
     const messageEl = this.props.message
-    ? <Alert success>{`SUCCESS: ${this.props.message}`}</Alert>
+    ? <Alert success>{`Success: ${this.props.message}`}</Alert>
     : null;
 
     return (
@@ -66,10 +70,8 @@ class Login extends Component {
                 />
             </label>
 
-
-            <input className="btn primary lgLong" type="submit"/>
+            <input value="Submit" className="btn primary lgLong" type="submit"/>
           </form>
-
           <Button
             onClick={this.props.showForgotPasswordModal}
             classes={"transparent sm"}>

@@ -55,4 +55,10 @@
   $.active li {
     background-color: #CCC;
   }
+
+  .active a {
+    font-weight: bold;
+    background-color: white;
+    padding: 5px;
+  }
 }
