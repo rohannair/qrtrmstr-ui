@@ -86,8 +86,7 @@ class NewUserModal extends Component {
               { rolesOptions }
             </select>
           </div>
-
-          {/* <div className="formField">
+           <div className="formField">
             <label>Admin: </label>
               <input
               type="checkbox"
@@ -95,7 +94,7 @@ class NewUserModal extends Component {
               value={val.is_admin}
               onChange={ e => onChange(e.target.name, e.target.checked) }
               />
-          </div> */}
+          </div>
         </div>
         <div className="modalFooter">
           <div className="userButtonGroup">
