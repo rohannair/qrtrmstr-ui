@@ -116,4 +116,15 @@
       margin-left: 20px;
     }
   }
+
+  .actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    .indicator {
+      margin-left: 10px;
+    }
+  }
 }

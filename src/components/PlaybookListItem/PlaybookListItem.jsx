@@ -7,7 +7,8 @@ import moment from 'moment';
 
 import Button from '../Button';
 import ButtonGroup from '../ButtonGroup';
-import Pill from '../Pill';
+import Indicator from '../Indicator';
+import Tooltip from '../Tooltip';
 
 class PlaybookListItem extends Component {
   constructor(props) {
@@ -16,7 +17,8 @@ class PlaybookListItem extends Component {
     this.state = {
       chosenUser: {},
       name: this.props.name || 'Unnamed',
-      editingName: false
+      editingName: false,
+      showTooltip: false
     };
   }
 
@@ -54,12 +56,6 @@ class PlaybookListItem extends Component {
     const canOpen = this.props.showSendModal.bind(this,
         { id: this.props.id, name: this.props.name}
     );
-
-    const statusClass = classNames({
-      info: current_status === 'sent',
-      success: current_status === 'in progress',
-      warning: current_status === 'draft'
-    });
 
     const viewSubPlaybookBtn = playbookSent
     ? <Link to={`/dashboard/playbook/results/${this.props.id}`} className="btn inverse sm">
@@ -110,25 +106,9 @@ class PlaybookListItem extends Component {
     return (
       <div key={ this.props.id } className="playbookListItem">
          <div className="main">
-          <div className="name">
-            { /* <Button
-              onClick={(e) => this.setState({editingName: !this.state.editingName})}
-              classes= {
-                this.state.editingName
-                ? 'success sm'
-                : `transparent sm ${deactivateClasses}`
-              }
-              icon={
-                this.state.editingName
-                ? 'check'
-                : 'pencil'
-              }
-            /> */}
-            { name }
-          </div>
+          <div className="name">{ name }</div>
 
           <div className="meta">
-            <Pill className={statusClass}>{current_status}</Pill>
             <div className="section">
               <strong>Assigned to: </strong>
               { assignedTo }
@@ -141,12 +121,6 @@ class PlaybookListItem extends Component {
               <strong>Last Modified: </strong>
               { moment(this.props.updated_at).fromNow() }
             </div>
-              { /* <Button
-                onClick={  }
-                classes={`transparent sm  ${deactivateClasses}`}
-                icon="user"
-                toolTipText="Assign Playbook"
-              />*/ }
           </div>
         </div>
 
@@ -160,7 +134,19 @@ class PlaybookListItem extends Component {
             />
             { viewSubPlaybookBtn }
           </ButtonGroup>
-
+          <Indicator
+            info={current_status === 'sent'}
+            success={current_status === 'in progress'}
+            warning={current_status === 'draft'}
+            onHover={ this._showTooltip }
+            onOut={ this._hideTooltip }
+          >
+            {
+              this.state.showTooltip
+              ? <Tooltip>{current_status}</Tooltip>
+              : null
+            }
+          </Indicator>
         </div>
       </div>
     );
@@ -171,6 +157,18 @@ class PlaybookListItem extends Component {
       name: this.state.name
     });
     this.setState({ editingName: !this.state.editingName });
+  };
+
+  _showTooltip = () => {
+    this.setState({
+      showTooltip: true
+    });
+  };
+
+  _hideTooltip = () => {
+    this.setState({
+      showTooltip: false
+    });
   };
 
   _sendPlaybook = (userID) => {

@@ -44,6 +44,12 @@ select {
   appearance: menulist-button;
 }
 
+.container {
+  width: 80%;
+  min-width: 1280px;
+  padding: 30px;
+}
+
 .app-login {
   display: flex;
   flex-direction: column;

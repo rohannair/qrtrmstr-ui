@@ -101,10 +101,6 @@ class PlaybookList extends Component {
     return (
       <div className="playbookList">
 
-        <div className="playbookList-sidebar">
-          <Button classes="lgLong primary">New Playbook</Button>
-        </div>
-
         <div className="playbookList-body">
           <div className="playbookList-metadata">Playbooks</div>
           { items }
@@ -128,6 +124,10 @@ class PlaybookList extends Component {
               />
             </div>
           </div>
+        </div>
+
+        <div className="playbookList-sidebar">
+          <Button classes="lgLong primary">New Playbook</Button>
         </div>
 
         { sendPlaybookModal }
