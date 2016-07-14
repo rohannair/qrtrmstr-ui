@@ -1,4 +1,22 @@
 .playbookList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-grow: 1;
+
+  &-sidebar {
+    padding-top: 40px;
+    width: 25%;
+    background-color: #EBECEE;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  &-body {
+    width: calc(75%);
+    padding: 40px 30px;
+  }
 
   .cell {
 
@@ -46,6 +64,17 @@
     padding-left: 15px;
     padding-right: 15px;
     cursor: pointer;
+
+    &.disabled,
+    &.disabled a {
+      cursor: not-allowed;
+      pointer-events: none;
+      color: #AAA;
+    }
+
+    &.active a {
+      color: #333;
+    }
   }
 
   &.break a {

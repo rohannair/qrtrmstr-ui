@@ -131,6 +131,7 @@ export const createPlaybook = (token, payload) =>
 
 // Modify existing Playbook
 export const modifyPlaybook = (token, payload, id) => {
+  console.log(payload);
   let body = '';
   for (let key in payload) {
     if (key === 'selected') {

@@ -118,11 +118,11 @@ class UserList extends Component {
     });
 
     return (
-      <div className="userList">
+      <div className="userList container">
 
-      <div className="userList-actionBar">
-        <Button onClick={this._renderNewUserModal} classes="primary md">New user +</Button>
-      </div>
+        <div className="userList-actionBar">
+          <Button onClick={this._renderNewUserModal} classes="primary md">New user +</Button>
+        </div>
 
         <Table headings = {['name', 'email', 'role', 'actions']} >
           { tableBody }

@@ -27,9 +27,9 @@
     }
 
     &:active {
-      background-color: #BBB;
-      border-color: #BBB;
-      color: #666;
+      background-color: #EA5747;
+      border-color: #EA5747;
+      color: #FFF;
     }
   }
 
@@ -103,6 +103,12 @@
       border-color: transparent;
       color: #666;
     }
+  }
+
+  &.success {
+    color: #3C763D;
+    background-color: #DFF0D8;
+    border-color: #D6E9C6;
   }
 
   &.disabled {
