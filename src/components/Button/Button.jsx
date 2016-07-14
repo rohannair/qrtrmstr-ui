@@ -5,9 +5,15 @@ import styles from './button.css';
 import Tooltip from '../../components/Tooltip';
 
 class Button extends Component {
-  state = {
-    showTooltip: false
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showTooltip: false
+    };
+
+    debugger;
+  }
 
   render() {
     const {
