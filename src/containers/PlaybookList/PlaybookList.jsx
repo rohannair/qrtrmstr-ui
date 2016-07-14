@@ -109,25 +109,28 @@ class PlaybookList extends Component {
             {`Total playbooks: ${this.props.playbookList.total}`}
             <div id="paginate">
               <ReactPaginate
-                previousLabel={" "}
-                nextLabel={" "}
+                previousLabel={' '}
+                nextLabel={' '}
                 breakLabel={<a href="">...</a>}
                 pageNum={Math.ceil(this.props.playbookList.total / this.state.perPage)}
                 marginPagesDisplayed={1}
                 pageRangeDisplayed={2}
                 clickCallback={this._handlePageClick}
-                containerClassName={"pagination"}
-                subContainerClassName={"pages pagination"}
-                activeClassName={"active"}
-                previousLinkClassName={"fa fa-arrow-left tertiary"}
-                nextLinkClassName={"fa fa-arrow-right tertiary"}
+                containerClassName={'pagination'}
+                subContainerClassName={'pages pagination'}
+                activeClassName={'active'}
+                previousLinkClassName={'fa fa-arrow-left tertiary'}
+                nextLinkClassName={'fa fa-arrow-right tertiary'}
               />
             </div>
           </div>
         </div>
 
         <div className="playbookList-sidebar">
-          <Button classes="lgLong primary">New Playbook</Button>
+          <Button
+            classes="lgLong primary disabled"
+            toolTipText="Coming soon!"
+          >New Playbook</Button>
         </div>
 
         { sendPlaybookModal }
