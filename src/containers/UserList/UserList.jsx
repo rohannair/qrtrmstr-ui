@@ -110,6 +110,8 @@ class UserList extends Component {
               <Button
                 classes= { `sm tertiary ${deactivateClasses}` }
                 disabled={row.is_admin}
+                onClick={this._deleteUser}
+                value={row.id}
                 icon="times"/>
             </ButtonGroup>
           </div>
@@ -243,6 +245,16 @@ class UserList extends Component {
     allErrors += formErrors ? `The fields: ${formErrors}cannot be blank. ` : '';
     allErrors.length > 0 ? dispatch(newUserErrors(allErrors)) : dispatch(createUser(token, data));
   };
+
+  _deleteUser = (e) => {
+    const { token, dispatch } = this.props;
+    console.log();
+    const deleteConfirm = confirm('Are you sure you want to delete the user?');
+    if (deleteConfirm) console.log('Delete user #');
+    else {
+      console.log('Choose not to delete the user');
+    }
+  }
 
   _handlePageClick = (data) => {
     const offset = Math.ceil(data.selected * this.state.perPage);
