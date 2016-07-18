@@ -5,24 +5,11 @@ import Button from '../Button';
 import ButtonGroup from '../ButtonGroup';
 
 class UserListItem extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      id: this.props.id,
-      is_admin: this.props.is_admin,
-      profile_img: this.props.profile_img || '',
-      firstName: this.props.firstName,
-      lastName: this.props.lastName,
-      username: this.props.username,
-      rolename: this.props.rolename,
-    };
-  }
-
 
   render() {
 
-    const { id, profile_img, firstName, lastName, is_admin, username , rolename } = this.state;
-
+    const { id, firstName, lastName, is_admin, username , rolename } = this.props;
+    const profile_img = this.props.profile_img || '';
     const admin_pill = is_admin ? <span className="admin">Admin</span> : '';
     const deactivateClasses = is_admin ? 'disabled' : null;
 
