@@ -159,7 +159,7 @@ const PlaybookCards = (props) => {
 
       return (
         <Card key={field.slide_number} footer={<div/>}>
-          <h2>{field.heading} - <span>{moment(field.date).format("MMMM D YYYY")}</span></h2>
+          <h2>{field.heading} - <span>{moment(field.date).format('MMMM D YYYY')}</span></h2>
           <div className="day1-body">
             <div className="day1-map">
               <div className="mapContainerDiv">

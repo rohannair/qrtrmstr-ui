@@ -8,19 +8,32 @@ import Card from '../../components/Card';
 import Button from '../../components/Button';
 import ButtonGroup from '../../components/ButtonGroup';
 import NewUserModal from '../../components/NewUserModal';
+import NewRoleModal from '../../components/NewRoleModal';
 
 import Table from '../../components/Table';
 
-import { getUsers, createUser, newUserErrors, getRoles } from '../../actions/userActions';
+import {
+  getUsers,
+  createUser,
+  createRole,
+  newUserErrors,
+  getRoles,
+  linkAccount
+} from '../../actions/userActions';
 
 class UserList extends Component {
   state = {
     newUser: {},
+    newRole: {},
     loading: false,
     errorMessage: this.props.errorMessage || null,
     offset: 0,
     pageNum: 1,
     perPage: 10
+  };
+
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
   };
 
   static propTypes = {
@@ -36,11 +49,16 @@ class UserList extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    const { newUser, errorMessage } = this.state;
+    if (nextProps.authUrl) {
+      window.location = nextProps.authUrl;
+    }
+
+    const { newUser, newRole, errorMessage } = this.state;
     this.setState({
       loading: false,
       newUser: nextProps.errorMessage ? newUser : {},
-      errorMessage: nextProps.errorMessage
+      errorMessage: nextProps.errorMessage,
+      newRole: nextProps.errorMessage ? newRole : {}
     });
   };
 
@@ -52,11 +70,24 @@ class UserList extends Component {
         renderModal={this._renderNewUserModal}
         submitNewUser={this._addNewUser}
         onChange={this._changeUserParams}
-        closeModal={this._closePlaybookModal}
+        closeModal={this._closeUserModal}
         loading={this.state.loading}
         errorMessage={this.state.errorMessage}
         roles={this.props.roles}
         chosenRole={this.state.newUser.role_id}
+      />
+    : null;
+
+    const newRoleForm = Object.keys(this.state.newRole).length > 0 || this.state.errorMessage
+    ? <NewRoleModal
+        val={this.state.newRole}
+        showModal={true}
+        renderModal={this._renderNewRoleModal}
+        submitNewRole={this._addNewRole}
+        onChange={this._changeRoleParams}
+        closeModal={this._closeRoleModal}
+        loading={this.state.loading}
+        errorMessage={this.state.errorMessage}
       />
     : null;
 
@@ -105,33 +136,38 @@ class UserList extends Component {
 
     return (
       <div className="userList">
+
+      <div className="userList-actionBar">
+        <Button onClick={this._renderNewRoleModal} classes="primary md">New Role +</Button>
+        <Button onClick={this._renderNewUserModal} classes="primary md">New User +</Button>
+      </div>
+
         <Table headings = {['name', 'email', 'role', 'actions']} >
           { tableBody }
           <div className="userList-metadata">
             {`Total users: ${this.props.users.total}`}
             <div id="paginate">
-              <ReactPaginate  previousLabel={" "}
-                              nextLabel={" "}
-                              breakLabel={<a href="">...</a>}
-                              pageNum={Math.ceil(this.props.users.total/this.state.perPage)}
-                              marginPagesDisplayed={1}
-                              pageRangeDisplayed={2}
-                              clickCallback={this._handlePageClick}
-                              containerClassName={"pagination"}
-                              subContainerClassName={"pages pagination"}
-                              activeClassName={"active"}
-                              previousLinkClassName={"fa fa-arrow-left tertiary"}
-                              nextLinkClassName={"fa fa-arrow-right tertiary"} />
+              <ReactPaginate
+                previousLabel=" "
+                nextLabel=" "
+                breakLabel={<a href="">...</a>}
+                pageNum={Math.ceil(this.props.users.total / this.state.perPage)}
+                marginPagesDisplayed={1}
+                pageRangeDisplayed={2}
+                clickCallback={this._handlePageClick}
+                containerClassName="pagination"
+                subContainerClassName="pages pagination"
+                activeClassName="active"
+                previousLinkClassName="fa fa-arrow-left tertiary"
+                nextLinkClassName="fa fa-arrow-right tertiary"
+              />
             </div>
           </div>
         </Table>
 
-        <div className="userList-actionBar">
-          <Button onClick={this._renderNewUserModal} classes="primary md">New user +</Button>
-        </div>
-
         <div className="modalContainer">
           { newUserForm }
+          { newRoleForm }
         </div>
       </div>
     );
@@ -142,9 +178,16 @@ class UserList extends Component {
     dispatch(newUserErrors(null));
   };
 
-  _closePlaybookModal = () => {
+  _closeUserModal = () => {
     this.setState({
       newUser: {}
+    });
+    this._clearUserErrors();
+  };
+
+  _closeRoleModal = () => {
+    this.setState({
+      newRole: {}
     });
     this._clearUserErrors();
   };
@@ -163,12 +206,24 @@ class UserList extends Component {
   _renderNewUserModal = () => {
     const { token, dispatch, roles } = this.props;
     const { newUser } = this.state;
+
     this.setState({
       newUser: {
         first_name: '',
         last_name: '',
         personal_email: '',
-        role_id: ''
+        role_id: '',
+        is_admin: false
+      },
+      errorMessage: null
+    });
+  };
+
+  _renderNewRoleModal = () => {
+
+    this.setState({
+      newRole: {
+        name: ''
       },
       errorMessage: null
     });
@@ -184,6 +239,14 @@ class UserList extends Component {
     });
   };
 
+  _changeRoleParams = (name) => {
+    this.setState({
+      newRole: {
+        name: name
+      }
+    });
+  };
+
   _validateField = (val) => !!val;
 
   _addNewUser = () => {
@@ -192,12 +255,22 @@ class UserList extends Component {
     }, this._processNewUser());
   };
 
+  _addNewRole = () => {
+    this.setState({
+      loading: true
+    }, this._processNewRole());
+  };
+
+  _processNewRole = () => {
+    const { token, dispatch } = this.props;
+    return dispatch(createRole(token, this.state.newRole));
+  };
+
   _processNewUser = () => {
     const { token, dispatch } = this.props;
     const { newUser } = this.state;
     let allErrors = '';
     let formErrors = '';
-
     for (let val in newUser) {
       if (newUser[val].length === 0) {
         if (val === 'role_id') {
@@ -218,9 +291,8 @@ class UserList extends Component {
 
     const data = {
       ...newUser,
-      is_admin: false,
       username: newUser.personal_email,
-      password: 'password'
+      password: `${newUser.first_name.toLowerCase()}123`
     };
 
     allErrors += formErrors ? `The fields: ${formErrors}cannot be blank. ` : '';
@@ -229,9 +301,27 @@ class UserList extends Component {
 
   _handlePageClick = (data) => {
     const offset = Math.ceil(data.selected * this.state.perPage);
-    this.setState({ offset })
+    this.setState({ offset });
     const { token, dispatch } = this.props;
     return dispatch(getUsers(token, offset, this.state.perPage));
+  };
+
+  _googleAuth = () => {
+    const { token, dispatch } = this.props;
+    // dispatch(linkAccount(token, 'google'));
+    console.log('Coming Soon');
+  };
+
+  _slackAuth = () => {
+    const { token, dispatch } = this.props;
+    // dispatch(linkAccount(token, 'slack'));
+    console.log('Coming Soon');
+  };
+
+  _linkedInAuth = () => {
+    const { token, dispatch } = this.props;
+    // dispatch(linkAccount(token, 'linkedIn'));
+    console.log('Coming Soon');
   };
 
 }
@@ -242,7 +332,8 @@ function mapStateToProps(state) {
     token,
     users: state.app.users,
     errorMessage: state.app.errorMessage,
-    roles: state.app.roles
+    roles: state.app.roles,
+    authUrl: state.app.authUrl
   };
 }
 export default connect(mapStateToProps)(UserList);

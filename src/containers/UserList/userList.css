@@ -11,6 +11,7 @@
 
   &-actionBar {
     text-align: right;
+    padding-bottom: 10px;
   }
 
   &-metadata {
@@ -49,8 +50,8 @@
       float: left;
       width: 36px;
       height: 36px;
-      background: #ccc;
-      overflow:hidden;
+      background: #CCC;
+      overflow: hidden;
       border-radius: 100%;
       margin-right: 10px;
 
@@ -75,6 +76,7 @@
 }
 
 #paginate {
+
   ul {
     padding-left: 15px;
     padding-right: 15px;
@@ -93,6 +95,13 @@
   }
 
   $.active li {
-    background-color: #ccc;
+    background-color: #CCC;
+    color: white;
+  }
+
+  .active a {
+    font-weight: bold;
+    background-color: white;
+    padding: 5px;
   }
 }

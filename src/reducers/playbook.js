@@ -1,4 +1,9 @@
 import { find } from 'lodash';
+import {
+  PLAYBOOK_RETRIEVED,
+  PLAYBOOK_SELECTED,
+  SUBMITTED_PLAYBOOK_UPDATE,
+} from '../constants';
 
 const defaultState = {
   selected: {},
@@ -9,13 +14,13 @@ export default function playbook(state = defaultState, action) {
   const { id } = action;
   switch (action.type) {
 
-  case 'PLAYBOOK_RETRIEVED':
+  case PLAYBOOK_RETRIEVED:
     return {
       ...state,
       playbook: action.playbook
     };
 
-  case 'PLAYBOOK_SELECTION':
+  case PLAYBOOK_SELECTED:
     return {
       ...state,
       selected: {
@@ -24,7 +29,7 @@ export default function playbook(state = defaultState, action) {
       }
     };
 
-  case 'EDIT_SUBMITTED_PLAYBOOK':
+  case SUBMITTED_PLAYBOOK_UPDATE:
     const { slideKey, data } = action;
     const { playbook } = state;
 

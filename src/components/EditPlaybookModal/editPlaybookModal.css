@@ -1,4 +1,4 @@
-.userButtonGroup {
+/* .userButtonGroup {
   float: right;
 }
 
@@ -18,7 +18,7 @@
     color: rgba(0, 0, 0, 0.63);
 
     p {
-      margin: 0px;
+      margin: 0;
       padding: 7px;
     }
 
@@ -27,6 +27,7 @@
     }
   }
 }
+
 .spinnerContainer {
   height: 28px;
   padding: 4px;
@@ -59,7 +60,7 @@
   border: 1px solid #435360;
   z-index: 900;
   border-radius: 3px;
-  background-color: #fff;
+  background-color: #FFF;
   display: inline-block;
   float: left;
   margin-bottom: 5px;
@@ -68,5 +69,6 @@
 .selectInput {
   width: 77%;
   border-right: none;
-  border-radius: 0px;
+  border-radius: 0;
 }
+ */

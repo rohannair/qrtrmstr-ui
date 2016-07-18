@@ -1,5 +1,5 @@
 .slideEquipmentBody {
-  margin:  0;
+  margin: 0;
   background: #ECF5FF;
   padding: 20px;
   overflow: hidden;
@@ -25,6 +25,7 @@
 
   td {
     background: transparent;
+
     &.removeButton {
       text-align: left;
 

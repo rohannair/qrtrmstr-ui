@@ -1,8 +1,7 @@
 .card {
   display: flex;
   flex-direction: column;
-
-  background: #fff;
+  background: #FFF;
   border: 1px solid #CAD0D2;
   border-radius: 3px;
   margin: 0 0 20px;
@@ -23,9 +22,14 @@
     color: #57727C;
     font-size: 1.2em;
     font-weight: bold;
+    padding: 20px 0;
   }
 
   &-body {
+
+    h2 {
+      margin: 10px 0 20px;
+    }
 
   }
 
@@ -35,6 +39,7 @@
 }
 
 .card-noPadding {
+
   .card-header,
   .card-body,
   .card-footer {

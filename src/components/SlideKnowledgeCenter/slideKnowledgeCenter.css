@@ -35,7 +35,8 @@
     width: 100%;
   }
 
-  label, input {
+  label,
+  input {
     display: block;
     width: 100%;
   }
@@ -49,7 +50,7 @@
 
   &-link {
     height: 150px;
-    background-color: #ccc;
+    background-color: #CCC;
     display: flex;
     justify-content: center;
     align-items: center;

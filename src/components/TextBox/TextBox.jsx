@@ -1,18 +1,42 @@
 import React, { Component } from 'react';
 import styles from './textBox.css';
 
+// SubComponent
+import StyleControls from './StyleControls';
+
+import constants from './constants';
+const {
+  BLOCK_TYPES,
+  LIST_TYPES,
+  HEADER_TYPES,
+  TEXT_ALIGN_TYPES,
+  INLINE_STYLES
+} = constants;
+
 // Libs
-import { Editor, EditorState, RichUtils, ContentState, convertToRaw, Entity, CompositeDecorator } from 'draft-js';
+import {
+  convertToRaw,
+  CompositeDecorator,
+  ContentState,
+  Editor,
+  EditorState,
+  RichUtils,
+  Entity,
+} from 'draft-js';
+
+// DraftJS Plugins
 import { stateFromHTML } from 'draft-js-import-html';
 import { stateToHTML } from 'draft-js-export-html';
-import { ButtonToolbar, MenuItem, Dropdown } from 'react-bootstrap';
 
+// Components
 import Button from '../../components/Button';
 import ButtonGroup from '../../components/ButtonGroup';
+import Dialog from '../../components/Dialog';
 
 class TextBox extends Component {
   constructor(props) {
     super(props);
+
     this.onToggle = (e) => {
       e.preventDefault();
       this.props.onToggle(this.props.style);
@@ -29,59 +53,138 @@ class TextBox extends Component {
     this.state = {
       showURLInput: false,
       urlValue: '',
-      slideNum: props.slideNum,
       textAlign: props.textAlign || 'left',
       editorState: EditorState.createWithContent(stateFromHTML(body), decorator)
     };
 
     this.focus = () => this.refs.editor.focus();
-    this.onChange = (editorState) => {
-      this.setState({ editorState });
-      const updatedIntro = this._outputHtml();
-      if (props.bodyKey) return props.updateSlide(props.bodyKey, updatedIntro);
-      return props.updateSlide('body', updatedIntro, this.state.slideNum);
-    };
-
-    this.handleKeyCommand = (command) => this._handleKeyCommand(command);
-    this.toggleBlockType = (type) => this._toggleBlockType(type);
-    this.toggleInlineStyle = (style) => this._toggleInlineStyle(style);
-    this.changeBlockStyle = (block) => this._changeBlockStyle(block);
-    this.promptForLink = this._promptForLink.bind(this);
-    this.onURLChange = (e) => this.setState({urlValue: e.target.value});
-    this.confirmLink = this._confirmLink.bind(this);
-    this.onLinkInputKeyDown = this._onLinkInputKeyDown.bind(this);
-    this.removeLink = this._removeLink.bind(this);
   };
 
-  _toggleBlockType(blockType) {
-    this.onChange(
+  render() {
+    const { editorState, showURLInput } = this.state;
+    const urlInput = showURLInput
+    ? (
+      <Dialog
+        className="urlInputContainer"
+        onClose={ () => this.setState({ showURLInput: false }) }
+        onAction={ this._confirmLink }
+        heading='Insert link'
+      >
+        <label className="formField">
+          <span>Link:</span>
+          <input
+            ref="url"
+            onChange={ this._onURLChange }
+            className="urlInput"
+            type="text"
+            value={ this.state.urlValue }
+            onKeyDown={ this._onLinkInputKeyDown }
+          />
+        </label>
+      </Dialog>
+    )
+    : null;
+
+    return (
+      <div className="textBox">
+        <div className="textBox-toolbar">
+          <StyleControls
+            editorState={ editorState }
+            onToggle={ this._toggleBlockType }
+            blockTypes={ HEADER_TYPES }
+          />
+
+          <StyleControls
+            editorState={ editorState }
+            onToggle={ this._toggleBlockType }
+            blockTypes={ LIST_TYPES }
+          />
+
+          <StyleControls
+            editorState={ editorState }
+            onToggle={ this._toggleInlineStyle }
+            blockTypes={ INLINE_STYLES }
+          />
+
+          <StyleControls
+            editorState={ editorState }
+            onToggle={ this._toggleBlockType }
+            blockTypes={ BLOCK_TYPES }
+          />
+
+          <StyleControls
+            editorState={ editorState }
+            onToggle={ this._changeBlockStyle }
+            blockTypes={ TEXT_ALIGN_TYPES }
+          />
+
+          <Button
+            center
+            onClick={ this._promptForLink }
+            classes='transparent'
+            icon='link'
+          />
+
+          <Button
+            center
+            onClick={ this._removeLink }
+            classes='transparent'
+            icon='chain-broken'
+          />
+
+          { urlInput }
+        </div>
+
+        <Editor
+          spellCheck
+          textAlignment={ this.state.textAlign }
+          contentEditable
+          suppressContentEditableWarning
+          editorState={ editorState }
+          handleKeyCommand={ this._handleKeyCommand }
+          onChange={ this._onChange }
+          ref="editor"
+        />
+      </div>
+    );
+  };
+
+  _onChange = (editorState) => {
+    this.setState({ editorState });
+    const updatedIntro = this._outputHtml();
+    if (this.props.bodyKey) return this.props.updateSlide(this.props.bodyKey, updatedIntro);
+    return this.props.updateSlide('body', updatedIntro, this.props.slideNum);
+  };
+
+  _toggleBlockType = (blockType) => {
+    this._onChange(
       RichUtils.toggleBlockType(
         this.state.editorState,
         blockType
       )
     );
-  }
+  };
 
-  _toggleInlineStyle(inlineStyle) {
-    this.onChange(
+  _toggleInlineStyle = (inlineStyle) => {
+    this._onChange(
       RichUtils.toggleInlineStyle(
         this.state.editorState,
         inlineStyle
       )
     );
-  }
+  };
 
-  _changeBlockStyle(block) {
+  _changeBlockStyle = (block) => {
     this.setState({
       textAlign: block
     });
     if (this.props.bodyKey) return this.props.updateSlide('textAlign', block);
-    return this.props.updateSlide('textAlign', block, this.state.slideNum);
+    return this.props.updateSlide('textAlign', block, this.props.slideNum);
   };
 
-  _promptForLink(e) {
+  _promptForLink = (e) => {
     e.preventDefault();
-    const {editorState} = this.state;
+    const { editorState } = this.state;
     const selection = editorState.getSelection();
     if (!selection.isCollapsed()) {
       this.setState({
@@ -89,12 +192,18 @@ class TextBox extends Component {
         urlValue: '',
       });
     }
-  }
+  };
 
-  _confirmLink(e) {
+  _confirmLink = (e) => {
     e.preventDefault();
-    const {editorState, urlValue} = this.state;
-    const entityKey = Entity.create('LINK', 'MUTABLE', {url: urlValue});
+
+    const { editorState, urlValue } = this.state;
+    const url = urlValue.indexOf('//') > -1
+    ? urlValue
+    : '//' + urlValue;
+
+    const entityKey = Entity.create('LINK', 'MUTABLE', { url });
+
     this.setState({
       editorState: RichUtils.toggleLink(
         editorState,
@@ -104,145 +213,36 @@ class TextBox extends Component {
       showURLInput: false,
       urlValue: '',
     }, this.refs.editor.focus());
-  }
+  };
 
-  _onLinkInputKeyDown(e) {
-    if (e.which === 13) {
-      this._confirmLink(e);
-    }
-  }
+  _onLinkInputKeyDown = (e) => e.which === 13 ? this._confirmLink(e) : '';
 
-  _removeLink(e) {
+  _removeLink = (e) => {
     e.preventDefault();
-    const {editorState} = this.state;
+    const { editorState } = this.state;
     const selection = editorState.getSelection();
+
     if (!selection.isCollapsed()) {
       this.setState({
         editorState: RichUtils.toggleLink(editorState, selection, null),
       }, this.refs.editor.focus());
     }
-  }
-
-  render() {
-    const { editorState } = this.state;
-    let urlInput;
-    if (this.state.showURLInput) {
-      urlInput =
-        <div className="urlInputContainer">
-          <input
-            onChange={this.onURLChange}
-            ref="url"
-            className="urlInput"
-            type="text"
-            value={this.state.urlValue}
-            onKeyDown={this.onLinkInputKeyDown}
-          />
-          <Button
-            center={true}
-            onClick={this.confirmLink}
-            classes='secondary subList'
-            icon='check-circle'>
-          </Button>
-        </div>;
-    }
-    let preventDefault = e => e.preventDefault();
-
-    return (
-      <div className="textBox">
-        <ButtonGroup>
-          <ButtonToolbar>
-            <Dropdown id="dropdown-no-caret">
-              <Dropdown.Toggle>
-                <i className={'fa fa-header'} />
-              </Dropdown.Toggle>
-              <Dropdown.Menu className="super-colors">
-                <HeaderStyleControls
-                  classes='secondary'
-                  editorState={editorState}
-                  onToggle={this.toggleBlockType}
-                />
-              </Dropdown.Menu>
-            </Dropdown>
-          </ButtonToolbar>
-
-          <ButtonToolbar>
-            <Dropdown id="dropdown-no-caret">
-              <Dropdown.Toggle>
-                <i className={'fa fa-list'} />
-              </Dropdown.Toggle>
-              <Dropdown.Menu className="super-colors">
-                <ListStyleControls
-                  classes='secondary'
-                  editorState={editorState}
-                  onToggle={this.toggleBlockType}
-                />
-              </Dropdown.Menu>
-            </Dropdown>
-          </ButtonToolbar>
-
-          <InlineStyleControls
-            classes='secondary'
-            editorState={editorState}
-            onToggle={this.toggleInlineStyle}
-          />
-
-          <BlockStyleControls
-            classes='secondary'
-            editorState={editorState}
-            onToggle={this.toggleBlockType}
-          />
-
-          <TextAlignStyleControls
-            classes='secondary'
-            editorState={editorState}
-            onToggle={this.changeBlockStyle}
-          />
-
-          <Button
-            center={true}
-            onClick={this.promptForLink}
-            classes='secondary subList'
-            icon='link'>
-          </Button>
-          <Button
-            center={true}
-            onClick={this.removeLink}
-            classes='secondary subList'
-            icon='chain-broken'>
-          </Button>
-          {urlInput}
-
-        </ButtonGroup>
-        <Editor
-          spellCheck={true}
-          textAlignment={this.state.textAlign}
-          contentEditable={true}
-          suppressContentEditableWarning={true}
-          editorState={editorState}
-          handleKeyCommand={this.handleKeyCommand}
-          onChange={this.onChange}
-          ref="editor"
-        />
-      </div>
-    );
   };
 
-  _outputHtml = () => {
-    const html = stateToHTML(this.state.editorState.getCurrentContent());
-    // const htmlProc = JSON.stringify(html.toString());
-    const htmlProc = html.toString();
-    return htmlProc;
-  };
+  _outputHtml = () => stateToHTML(this.state.editorState.getCurrentContent()).toString();
 
   _handleKeyCommand = (command) => {
     const { editorState } = this.state;
     const newState = RichUtils.handleKeyCommand(editorState, command);
+
     if (newState) {
-      this.onChange(newState);
+      this._onChange(newState);
       return true;
     }
     return false;
   };
+
+  _onURLChange = (e) => this.setState({ urlValue: e.target.value });
 };
 
 function findLinkEntities(contentBlock, callback) {
@@ -261,196 +261,9 @@ function findLinkEntities(contentBlock, callback) {
 const Link = (props) => {
   const {url} = Entity.get(props.entityKey).getData();
   return (
-    <a href={url} style={styless.link}>
-      {props.children}
+    <a href={url} target="_blank">
+      { props.children }
     </a>
-  );
-};
-
-const styless = {
-  link: {
-    color: '#3b5998',
-    textDecoration: 'underline',
-  },
-};
-
-class StyleButton extends React.Component {
-  constructor() {
-    super();
-    this.onToggle = (e) => {
-      e.preventDefault();
-      this.props.onToggle(this.props.style);
-    };
-  }
-
-  render() {
-    let className = this.props.icon ? 'secondary RichEditor-styleButton' : 'RichEditor-styleButton' ;
-    if (this.props.active) {
-      className += ' RichEditor-activeButton';
-    }
-
-    return (
-      <span className={className} onMouseDown={this.onToggle}>
-       { this.props.icon ? <Button center={true} classes='secondary subList' icon={this.props.icon}/>
-        : <span className="subOptions">{this.props.label}</span> }
-      </span>
-    );
-  }
-};
-
-const BLOCK_TYPES = [
-  {label: 'Blockquote', style: 'blockquote', icon: 'quote-left'},
-  {label: 'Code Block', style: 'code-block', icon: 'code'}
-];
-
-const LIST_TYPES = [
-  {label: 'UL', style: 'unordered-list-item', icon: 'list-ul'},
-  {label: 'OL', style: 'ordered-list-item', icon: 'list-ol'}
-];
-
-const HEADER_TYPES = [
-  {label: 'P', style:  'paragraph'},
-  {label: 'H1', style: 'header-one'},
-  {label: 'H2', style: 'header-two'},
-  {label: 'H3', style: 'header-three'},
-  {label: 'H4', style: 'header-four'},
-  {label: 'H5', style: 'header-five'},
-  {label: 'H6', style: 'header-six'}
-];
-
-const TEXT_ALIGN_TYPES = [
-  {label: 'align-left', style:  'left', icon: 'align-left'},
-  {label: 'align-center', style: 'center', icon: 'align-center'},
-  {label: 'align-right', style: 'right', icon: 'align-right'}
-];
-
-const INLINE_STYLES = [
-  {label: 'Bold', style: 'BOLD', icon: 'bold'},
-  {label: 'Italic', style: 'ITALIC', icon: 'italic'},
-  {label: 'Underline', style: 'UNDERLINE', icon: 'underline'}
-];
-
-const TextAlignStyleControls = (props) => {
-  const {editorState} = props;
-  const selection = editorState.getSelection();
-  const blockType = editorState
-    .getCurrentContent()
-    .getBlockForKey(selection.getStartKey())
-    .getType();
-
-  const textAlignTypes = TEXT_ALIGN_TYPES.map((type) =>
-    <StyleButton
-      key={type.label}
-      active={type.style === blockType}
-      label={type.label}
-      onToggle={props.onToggle}
-      style={type.style}
-      icon={type.icon}
-    />
-  );
-
-  return (
-    <div classes='secondary'>
-      { textAlignTypes }
-    </div>
-  );
-};
-
-const ListStyleControls = (props) => {
-  const {editorState} = props;
-  const selection = editorState.getSelection();
-  const blockType = editorState
-    .getCurrentContent()
-    .getBlockForKey(selection.getStartKey())
-    .getType();
-
-  const listTypes = LIST_TYPES.map((type) =>
-    <StyleButton
-      key={type.label}
-      active={type.style === blockType}
-      label={type.label}
-      onToggle={props.onToggle}
-      style={type.style}
-      icon={type.icon}
-    />
-  );
-
-  return (
-    <div classes='secondary'>
-      { listTypes }
-    </div>
-  );
-};
-
-const HeaderStyleControls = (props) => {
-  const {editorState} = props;
-  const selection = editorState.getSelection();
-  const blockType = editorState
-    .getCurrentContent()
-    .getBlockForKey(selection.getStartKey())
-    .getType();
-
-  const headerTypes = HEADER_TYPES.map((type) =>
-    <StyleButton
-      key={type.label}
-      active={type.style === blockType}
-      label={type.label}
-      onToggle={props.onToggle}
-      style={type.style}
-    />
-  );
-
-  return (
-    <div classes='secondary'>
-      { headerTypes }
-    </div>
-  );
-};
-
-const BlockStyleControls = (props) => {
-  const {editorState} = props;
-  const selection = editorState.getSelection();
-  const blockType = editorState
-    .getCurrentContent()
-    .getBlockForKey(selection.getStartKey())
-    .getType();
-
-  const blockTypes = BLOCK_TYPES.map((type) =>
-    <StyleButton
-      key={type.label}
-      active={type.style === blockType}
-      label={type.label}
-      onToggle={props.onToggle}
-      style={type.style}
-      icon={type.icon}
-    />
-  );
-
-  return (
-    <div classes='secondary'>
-      { blockTypes }
-    </div>
-  );
-};
-
-const InlineStyleControls = (props) => {
-  var currentStyle = props.editorState.getCurrentInlineStyle();
-
-  const inlineTypes = INLINE_STYLES.map(type =>
-    <StyleButton
-      key={type.label}
-      active={currentStyle.has(type.style)}
-      label={type.label}
-      onToggle={props.onToggle}
-      style={type.style}
-      icon={type.icon}
-    />
-  );
-
-  return (
-    <div classes='secondary'>
-      { inlineTypes }
-    </div>
   );
 };
 

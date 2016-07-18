@@ -6,21 +6,22 @@
   "description": "",
   "main": "index.js",
   "engines": {
-    "node": "6.2.1"
+    "node": "6.2.2"
   },
   "scripts": {
     "prebuild": "npm run clean",
-    "build": "NODE_ENV=production node_modules/.bin/webpack -p --config webpack.config.prod.js",
+    "build": "NODE_ENV=production node_modules/.bin/webpack -p",
     "clean": "rimraf public/",
     "newComp": "babel-node ./scripts/newComponent.js",
     "newCont": "babel-node ./scripts/newContainer.js",
     "dev": "NODE_ENV=development node server.js",
-    "test": "babel-tape-runner ./src/**/*.test.js | tap-spec",
-    "lint": "eslint src",
-    "lint:fix": "eslint src --fix"
+    "test": "ava --tap | faucet",
+    "lint": "eslint --ext .js --ext .jsx src",
+    "lint:fix": "eslint --ext .js --ext .jsx src --fix"
   },
   "devDependencies": {
     "autoprefixer": "^6.2.1",
+    "ava": "0.15.2",
     "babel-cli": "^6.6.5",
     "babel-core": "^6.3.21",
     "babel-eslint": "^6.0.2",
@@ -35,10 +36,13 @@
     "chalk": "^1.1.3",
     "cheerio": "^0.20.0",
     "css-loader": "^0.23.1",
+    "cssnano": "^3.7.1",
     "eslint": "^2.7.0",
+    "eslint-loader": "1.4.0",
     "eslint-plugin-jsx-a11y": "^1.2.2",
     "eslint-plugin-react": "^5.0.0",
     "express": "^4.13.3",
+    "express-http-proxy": "^0.7.2",
     "faucet": "0.0.1",
     "file-loader": "^0.8.5",
     "fs": "0.0.2",
@@ -51,15 +55,18 @@
     "open": "0.0.5",
     "path": "^0.12.7",
     "postcss": "^5.0.13",
+    "postcss-cssnext": "^2.7.0",
     "postcss-loader": "^0.9.1",
     "precss": "^1.3.0",
     "redux-devtools": "^3.0.1",
     "redux-devtools-dock-monitor": "^1.0.1",
     "redux-devtools-log-monitor": "^1.0.1",
+    "redux-logger": "^2.6.1",
     "rimraf": "^2.5.2",
     "rucksack": "^1.0.1",
     "rucksack-css": "^0.8.5",
     "style-loader": "^0.13.1",
+    "stylelint-webpack-plugin": "^0.2.0",
     "tap-spec": "^4.1.1",
     "tape": "^4.4.0",
     "url-loader": "^0.5.7",
@@ -67,7 +74,8 @@
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.10.0",
     "webpack-manifest-plugin": "^1.0.1",
-    "webpack-path-rewriter": "^1.1.4"
+    "webpack-path-rewriter": "^1.1.4",
+    "webpack-split-by-path": "0.0.10"
   },
   "dependencies": {
     "classnames": "^2.2.3",
@@ -75,17 +83,17 @@
     "draft-js": "^0.7.0",
     "draft-js-export-html": "^0.2.2",
     "draft-js-import-html": "^0.1.6",
+    "enzyme": "2.4.1",
     "form-data": "^1.0.0-rc4",
     "isomorphic-fetch": "^2.2.0",
     "jwt-decode": "^2.0.1",
     "lodash": "^4.11.1",
     "moment": "^2.13.0",
     "moment-range": "^2.2.0",
-    "normalize.css": "^4.1.1",
-    "react": "^15.1.0",
+    "react": "15.2.1",
     "react-addons-create-fragment": "^15.1.0",
-    "react-bootstrap": "^0.29.4",
-    "react-dom": "^15.1.0",
+    "react-addons-test-utils": "15.2.1",
+    "react-dom": "15.2.1",
     "react-flip-move": "^2.0.5",
     "react-hot-loader": "^3.0.0-beta.2",
     "react-paginate": "^2.1.1",
@@ -93,6 +101,23 @@
     "react-router": "^2.4.0",
     "react-router-redux": "^4.0.5",
     "redux": "^3.4.0",
-    "redux-thunk": "^2.0.1"
+    "redux-thunk": "^2.0.1",
+    "ress": "^1.0.1"
+  },
+  "ava": {
+    "files": [
+      "src/__TEST__/*.test.js"
+    ],
+    "source": [
+      "**/*.{js,jsx}",
+      "!dist/**/*"
+    ],
+    "concurrency": 5,
+    "failFast": true,
+    "tap": true,
+    "require": [
+      "babel-register"
+    ],
+    "babel": "inherit"
   }
 }

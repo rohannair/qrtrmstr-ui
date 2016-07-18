@@ -8,7 +8,6 @@ import styles from './slideEquipment.css';
 // SubComponents
 import SlideEquipmentHeader from '../SlideEquipmentHeader';
 import SlideEquipmentBody from '../SlideEquipmentBody';
-import { updatePlaybookState } from '../../actions/playbookViewActions';
 import TextBox from '../TextBox';
 
 class SlideEquipment extends Component {

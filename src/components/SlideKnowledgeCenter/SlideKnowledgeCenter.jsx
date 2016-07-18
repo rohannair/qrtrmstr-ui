@@ -6,7 +6,6 @@ import ButtonGroup from '../ButtonGroup';
 import Card from '../Card';
 import SlideKnowledgeCenterVideo from '../SlideKnowledgeCenterVideo';
 import SlideKnowledgeCenterLink from '../SlideKnowledgeCenterLink';
-import { updatePlaybookState } from '../../actions/playbookViewActions';
 import TextBox from '../TextBox';
 
 class SlideKnowledgeCenter extends Component {

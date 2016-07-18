@@ -12,7 +12,6 @@ import {
   toggleOpenCard,
   addSlide,
   modifyPlaybook,
-  editSlide,
   reorderPlaybook,
   isSaving,
   insertNewSlide
@@ -116,10 +115,9 @@ class PlaybookEditor extends Component {
 
       case 'day1agenda':
         return (
-        <Card key={val} title={ header }>
+          <Card key={val} title={ header }>
             <SlideFirstDay
               {...slide}
-              onEdit={this._editSlide}
               onAdd={this._addNewAgendaItem}
               onDelete= {this._deleteAgendaItem}
               onChange={ this._updateSlide }

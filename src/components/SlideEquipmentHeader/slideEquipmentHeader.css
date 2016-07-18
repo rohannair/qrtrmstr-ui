@@ -31,7 +31,7 @@
 
     &.newTab {
       padding: 10px 20px;
-      color: #bbb;
+      color: #BBB;
       font-weight: bold;
 
       &:hover {
@@ -44,7 +44,8 @@
     display: flex;
     flex-direction: column;
 
-    .removeBtn, .editBtn {
+    .removeBtn,
+    .editBtn {
       text-align: center;
       padding: 0 5px;
       flex-grow: 1;

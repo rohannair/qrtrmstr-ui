@@ -32,10 +32,10 @@
       }
     }
 
-    .profileDesc, .socialMedia {
+    .profileDesc,
+    .socialMedia {
       width: 100%;
     }
-
 
   }
 
@@ -64,8 +64,8 @@
 
     text-transform: uppercase;
 
-
-    .comTask, .incomTask {
+    .comTask,
+    .incomTask {
       width: 50%;
       text-align: center;
       cursor: pointer;
