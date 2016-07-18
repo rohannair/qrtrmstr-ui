@@ -9,12 +9,14 @@ import Button from '../../components/Button';
 import ButtonGroup from '../../components/ButtonGroup';
 import NewUserModal from '../../components/NewUserModal';
 import UserListItem from '../../components/UserListItem';
+import NewRoleModal from '../../components/NewRoleModal';
 
 import Table from '../../components/Table';
 
 import {
   getUsers,
   createUser,
+  createRole,
   newUserErrors,
   getRoles,
   linkAccount,
@@ -24,6 +26,7 @@ import {
 class UserList extends Component {
   state = {
     newUser: {},
+    newRole: {},
     loading: false,
     errorMessage: this.props.errorMessage || null,
     offset: 0,
@@ -52,11 +55,12 @@ class UserList extends Component {
       window.location = nextProps.authUrl;
     }
 
-    const { newUser, errorMessage } = this.state;
+    const { newUser, newRole, errorMessage } = this.state;
     this.setState({
       loading: false,
       newUser: nextProps.errorMessage ? newUser : {},
-      errorMessage: nextProps.errorMessage
+      errorMessage: nextProps.errorMessage,
+      newRole: nextProps.errorMessage ? newRole : {}
     });
   };
 
@@ -68,7 +72,7 @@ class UserList extends Component {
         renderModal={this._renderNewUserModal}
         submitNewUser={this._addNewUser}
         onChange={this._changeUserParams}
-        closeModal={this._closePlaybookModal}
+        closeModal={this._closeUserModal}
         loading={this.state.loading}
         errorMessage={this.state.errorMessage}
         roles={this.props.roles}
@@ -76,6 +80,18 @@ class UserList extends Component {
       />
     : null;
 
+    const newRoleForm = Object.keys(this.state.newRole).length > 0 || this.state.errorMessage
+    ? <NewRoleModal
+        val={this.state.newRole}
+        showModal={true}
+        renderModal={this._renderNewRoleModal}
+        submitNewRole={this._addNewRole}
+        onChange={this._changeRoleParams}
+        closeModal={this._closeRoleModal}
+        loading={this.state.loading}
+        errorMessage={this.state.errorMessage}
+      />
+    : null;
 
     const tableBody = this.props.users.results.map((row, i) => {
       return (
@@ -90,7 +106,8 @@ class UserList extends Component {
     return (
       <div className="userList">
       <div className="userList-actionBar">
-        <Button onClick={this._renderNewUserModal} classes="primary md">New user +</Button>
+        <Button onClick={this._renderNewRoleModal} classes="primary md">New Role +</Button>
+        <Button onClick={this._renderNewUserModal} classes="primary md">New User +</Button>
       </div>
 
         <Table headings = {['name', 'email', 'role', 'actions']} >
@@ -118,6 +135,7 @@ class UserList extends Component {
 
         <div className="modalContainer">
           { newUserForm }
+          { newRoleForm }
         </div>
       </div>
     );
@@ -128,9 +146,16 @@ class UserList extends Component {
     dispatch(newUserErrors(null));
   };
 
-  _closePlaybookModal = () => {
+  _closeUserModal = () => {
     this.setState({
       newUser: {}
+    });
+    this._clearUserErrors();
+  };
+
+  _closeRoleModal = () => {
+    this.setState({
+      newRole: {}
     });
     this._clearUserErrors();
   };
@@ -162,6 +187,16 @@ class UserList extends Component {
     });
   };
 
+  _renderNewRoleModal = () => {
+
+    this.setState({
+      newRole: {
+        name: ''
+      },
+      errorMessage: null
+    });
+  };
+
   _changeUserParams = (key, val) => {
     const { newUser } = this.state;
     this.setState({
@@ -172,12 +207,31 @@ class UserList extends Component {
     });
   };
 
+  _changeRoleParams = (name) => {
+    this.setState({
+      newRole: {
+        name: name
+      }
+    });
+  };
+
   _validateField = (val) => !!val;
 
   _addNewUser = () => {
     this.setState({
       loading: true
     }, this._processNewUser());
+  };
+
+  _addNewRole = () => {
+    this.setState({
+      loading: true
+    }, this._processNewRole());
+  };
+
+  _processNewRole = () => {
+    const { token, dispatch } = this.props;
+    return dispatch(createRole(token, this.state.newRole));
   };
 
   _processNewUser = () => {

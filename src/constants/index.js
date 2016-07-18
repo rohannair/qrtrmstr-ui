@@ -15,6 +15,8 @@ export const PASSWORD_RESET_ERROR = 'App/PASSWORD_RESET_ERROR';
 export const RECIEVE_AUTH_URL = 'App/RECIEVE_AUTH_URL';
 export const USER_DELETED = 'App/USER_DELETED';
 export const USER_DELETE_ERROR = 'App/USER_DELETE_ERROR';
+export const NEW_ROLE_CREATED = 'App/NEW_ROLE_CREATED';
+export const NEW_ROLE_ERROR_RETRIEVED = 'App/NEW_ROLE_ERROR_RETRIEVED';
 
 // -------- Upload Actions
 export const UPLOAD_PENDING = 'App/UPLOAD_PENDING';
