@@ -44,7 +44,7 @@ class NewUserModal extends Component {
     <Modal md>
       <div className="newUserModal">
         <h3>Add Team Member</h3>
-        <div class="modal-body">
+        <div className="modal-body">
 
           <div className="formField">
             <label>First Name: </label>
@@ -86,8 +86,7 @@ class NewUserModal extends Component {
               { rolesOptions }
             </select>
           </div>
-
-          <div className="formField">
+           <div className="formField">
             <label>Admin: </label>
               <input
               type="checkbox"
