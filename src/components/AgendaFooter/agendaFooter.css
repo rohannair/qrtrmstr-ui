@@ -9,10 +9,13 @@
 
   .descInput {
     width: 70%;
+    height: 100%;
+    padding: 0;
   }
 
   .toolButtonContainer {
     width: 10%;
+    padding-left: 10px;
   }
 
   input {

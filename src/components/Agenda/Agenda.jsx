@@ -42,7 +42,7 @@ class Agenda extends Component {
   }
 
   render() {
-
+    console.log('Re-rendering');
     const agenda = this.state.agenda;
 
     const items = agenda
@@ -53,17 +53,16 @@ class Agenda extends Component {
               <AgendaListItem
                 key={i}
                 id={i}
+                { ...val }
                 className="agenda-item"
-                startTime={val.startTime}
-                finishTime={val.finishTime}
                 date={this.props.date}
-                desc={val.desc}
                 editItem={this._editItem}
                 deleteItem={this._deleteItem}
               />
             );
           })
       : null;
+
 
 
     return (
@@ -74,11 +73,12 @@ class Agenda extends Component {
           <div className="agendaToolTitle">Tools</div>
         </div>
         <div className="agenda-items">
-          {items}
+          <FlipMove enterAnimation="fade" leaveAnimation="fade">
+            { items }
+          </FlipMove>
         </div>
 
-        <FlipMove enterAnimation="fade" leaveAnimation="fade">
-        </FlipMove>
+
         <AgendaFooter
         addNew={this._addNew}
         date={this.state.date}
@@ -95,7 +95,6 @@ class Agenda extends Component {
   };
 
   _deleteItem = id => {
-    debugger;
     const newAgenda = [
       ...this.props.agenda.slice(0, id),
       ...this.props.agenda.slice(id + 1)
@@ -104,10 +103,13 @@ class Agenda extends Component {
   };
 
   _editItem = (newItem, id) => {
-    const { agenda } =  this.props;
-    let newAgenda = agenda;
-    newAgenda[id] = newItem;
-    return this.props.updateFirstDayState('agenda', newAgenda);
+    const { agenda } = this.props;
+    // if (!parseInt(id)) return;
+    return this.props.updateFirstDayState('agenda', [
+      ...agenda.slice(0, id),
+      newItem,
+      ...agenda.slice(id + 1)
+    ]);
   };
 
   _addNew = (startTime, finishTime, desc) => {

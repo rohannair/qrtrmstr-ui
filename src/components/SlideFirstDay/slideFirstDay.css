@@ -14,66 +14,6 @@
       width: auto;
     }
   }
-/*
-  .agenda {
-    width: 100%;
-    margin: 20px 0;
-
-    > *,
-    .agenda-item {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      width: 100%;
-      align-items: left;
-    }
-
-    &-header {
-      color: #FFF;
-      background-color: #2E404E;
-      font-weight: bold;
-    }
-
-    &-item {
-
-      &:nth-child(odd) {
-        background-color: #F0F0F0;
-      }
-    }
-
-    .timeInput,
-    .desc {
-      padding: 10px;
-    }
-
-    .timeInput {
-      text-align: left;
-    }
-
-    .agendaTimeItem,
-    .agendaTimeTitle {
-      width: 315px;
-    }
-
-    .desc {
-      flex-grow: 1;
-      width: auto;
-    }
-
-    .buttonContainer {
-      margin-left: auto;
-    }
-
-    input {
-      width: 100%;
-      height: 100%;
-    }
-
-    p {
-      line-height: 45px;
-    }
-  }
-  */
 
   .addItemBtn {
     margin-top: 9px;
