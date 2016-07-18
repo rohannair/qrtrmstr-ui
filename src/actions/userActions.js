@@ -6,7 +6,9 @@ import {
   NEW_USER_ERROR_RETRIEVED,
   PASSWORD_RESET,
   PASSWORD_RESET_ERROR,
-  RECIEVE_AUTH_URL
+  RECIEVE_AUTH_URL,
+  USER_DELETED,
+  USER_DELETE_ERROR
 } from '../constants';
 
 // Users Retrieved action
@@ -63,6 +65,24 @@ export const recieveAuthUrl = (url) => {
   };
 };
 
+
+export const userDeleted = (data) => {
+  return {
+    type: USER_DELETED,
+    message: data.message,
+    deletedUserId: data.id,
+    error_msg: null
+  };
+};
+
+export const userDeleteError = (error_msg) => {
+  return {
+    type: USER_DELETE_ERROR,
+    message: null,
+    error_msg
+  };
+};
+
 // Get All Users
 export const getUsers = (token, offset, limit) =>
   dispatch => get(`${API_ROOT}users?offset=${offset}&limit=${limit}`, token)
@@ -83,6 +103,12 @@ export const createUser = (token, payload) =>
 export const modifyUser = (token, payload) =>
   dispatch => post(`${API_ROOT}users/${payload.id}`, token, payload)
   .then(data => console.log(data));
+
+// Delete existing User
+export const deleteUser = (token, id) =>
+  dispatch => post(`${API_ROOT}users/delete/${id}`, token)
+  .then(data => dispatch(userDeleted(data)))
+  .catch(err => dispatch(userDeleteError(err)));
 
 // Get All Roles
 export const getRoles = token =>

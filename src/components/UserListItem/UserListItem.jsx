@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import styles from './userListItem.css';
 
+import Button from '../Button';
+import ButtonGroup from '../ButtonGroup';
 
 class UserListItem extends Component {
   constructor(props) {
@@ -8,33 +10,21 @@ class UserListItem extends Component {
     this.state = {
       id: this.props.id,
       is_admin: this.props.is_admin,
-      profile_img: this.props.profile_img,
+      profile_img: this.props.profile_img || '',
       firstName: this.props.firstName,
       lastName: this.props.lastName,
       username: this.props.username,
       rolename: this.props.rolename,
-
     };
   }
 
-  <UserListItem
-    key={index}
-    id={row.id}
-    is_admin={row.is_admin}
-    profile_img={row.profile_img || ''}
-    firstName={row.firstName}
-    lastName={row.lastName}
-    username={row.username}
-    rolename={row.rolename}
-  />
 
   render() {
 
-    const { profile_img, firstName, lastName, is_admin, username , rolename } = this.state;
+    const { id, profile_img, firstName, lastName, is_admin, username , rolename } = this.state;
 
     const admin_pill = is_admin ? <span className="admin">Admin</span> : '';
     const deactivateClasses = is_admin ? 'disabled' : null;
-
 
     return (
       <div className="table-row">
@@ -62,7 +52,7 @@ class UserListItem extends Component {
             <Button
               classes= { `sm tertiary ${deactivateClasses}` }
               disabled={is_admin}
-              onClick={this._deleteUser}
+              onClick={() => this.props.deleteUser(id, firstName, lastName)}
               icon="times"/>
           </ButtonGroup>
         </div>

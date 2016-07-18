@@ -5,7 +5,9 @@ import {
   NEW_USER_ERROR_RETRIEVED,
   PASSWORD_RESET,
   PASSWORD_RESET_ERROR,
-  RECIEVE_AUTH_URL
+  RECIEVE_AUTH_URL,
+  USER_DELETED,
+  USER_DELETE_ERROR
 } from '../constants';
 
 const initialState = {
@@ -18,7 +20,7 @@ const initialState = {
 
 
 export default function app(state = initialState, action) {
-  const { type, users, new_user, error_msg, roles, message, authUrl }  = action;
+  const { type, users, new_user, error_msg, roles, message, authUrl, deletedUserId }  = action;
 
   switch (type) {
   case USERS_RETRIEVED:
@@ -72,6 +74,25 @@ export default function app(state = initialState, action) {
     return {
       ...state,
       authUrl
+    };
+
+  case USER_DELETED:
+    debugger;
+    return {
+      ...state,
+      message,
+      error_msg: null,
+      users: {
+        results: state.users.results.filter((val, index) => val.id !== deletedUserId),
+        total: state.users.total - 1
+      }
+    };
+
+  case USER_DELETE_ERROR:
+    return {
+      ...state,
+      message: null,
+      errorMessage: error_msg
     };
 
   default:

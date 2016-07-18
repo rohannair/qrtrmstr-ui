@@ -8,6 +8,7 @@ import Card from '../../components/Card';
 import Button from '../../components/Button';
 import ButtonGroup from '../../components/ButtonGroup';
 import NewUserModal from '../../components/NewUserModal';
+import UserListItem from '../../components/UserListItem';
 
 import Table from '../../components/Table';
 
@@ -16,7 +17,8 @@ import {
   createUser,
   newUserErrors,
   getRoles,
-  linkAccount
+  linkAccount,
+  deleteUser
 } from '../../actions/userActions';
 
 class UserList extends Component {
@@ -74,54 +76,19 @@ class UserList extends Component {
       />
     : null;
 
-    const tableBody = this.props.users.results.map(row => {
 
-      const profile_img = row.profile_img || '';
-      const admin_pill = row.is_admin
-      ? <span className="admin">Admin</span>
-      : '';
-      const deactivateClasses = row.is_admin
-      ? 'disabled'
-      : null;
-
+    const tableBody = this.props.users.results.map((row, i) => {
       return (
-        <div key={ row.id } className="table-row">
-          <div className="cell name">
-            <div className="profile-img">
-              <img src={row.profile_img} alt=""/>
-            </div>
-
-            { `${row.firstName} ${row.lastName}` } { admin_pill }
-          </div>
-
-          <div className="cell email">
-            <a href={`mailto:${row.username}`}>{row.username}</a>
-          </div>
-
-          <div className="cell role">
-            { row.rolename }
-          </div>
-
-          <div className="cell actions">
-            <ButtonGroup>
-              <Button
-                classes='sm tertiary'
-                icon="pencil" />
-              <Button
-                classes= { `sm tertiary ${deactivateClasses}` }
-                disabled={row.is_admin}
-                onClick={this._deleteUser}
-                value={row.id}
-                icon="times"/>
-            </ButtonGroup>
-          </div>
-        </div>
+        <UserListItem
+          key={i}
+          { ...row }
+          deleteUser={this._deleteUser}
+        />
       );
     });
 
     return (
       <div className="userList">
-
       <div className="userList-actionBar">
         <Button onClick={this._renderNewUserModal} classes="primary md">New user +</Button>
       </div>
@@ -246,14 +213,10 @@ class UserList extends Component {
     allErrors.length > 0 ? dispatch(newUserErrors(allErrors)) : dispatch(createUser(token, data));
   };
 
-  _deleteUser = (e) => {
+  _deleteUser = (id, firstName, lastName) => {
     const { token, dispatch } = this.props;
-    console.log();
-    const deleteConfirm = confirm('Are you sure you want to delete the user?');
-    if (deleteConfirm) console.log('Delete user #');
-    else {
-      console.log('Choose not to delete the user');
-    }
+    const deleteConfirm = confirm(`Are you sure you want to delete ${firstName} ${lastName}?`);
+    if (deleteConfirm) dispatch(deleteUser(token, id));
   }
 
   _handlePageClick = (data) => {
