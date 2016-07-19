@@ -4,6 +4,14 @@
   align-items: center;
   padding: 10px;
 
+  &-date {
+    width: 15%;
+  }
+
+  &-date-input {
+    width: 15%;
+  }
+
   &-time {
     width: 20%;
   }
@@ -18,7 +26,11 @@
   }
 
   &-desc {
-    width: 70%;
+    width: 55%;
+  }
+  
+  &-desc-input {
+    width: 55%;
   }
 
   &-toolButtonContainer {

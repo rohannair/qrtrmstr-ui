@@ -47,6 +47,8 @@ class Agenda extends Component {
 
     const items = agenda
       ? agenda
+          // TODO I need to impove this sort, first by date then by start time and end time
+          .sort((a,b) => a.date - b.data)
           .sort((a, b) => a.startTime - b.startTime)
           .map((val, i) => {
             return (
@@ -68,6 +70,7 @@ class Agenda extends Component {
     return (
       <div className="agenda">
         <div className="agenda-header">
+          <div className="agendaDateTitle">Date</div>
           <div className="agendaTimeTitle">Time</div>
           <div className="agendaDescTitle">Description</div>
           <div className="agendaToolTitle">Tools</div>

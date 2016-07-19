@@ -13,12 +13,16 @@
     padding-left: 10px;
   }
 
+  .agendaDateTitle {
+    width: 15%;
+  }
+
   .agendaTimeTitle {
     width: 20%;
   }
 
   .agendaDescTitle {
-    width: 70%;
+    width: 55%;
   }
 
   .agendaToolTitle {

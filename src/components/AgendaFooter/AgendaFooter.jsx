@@ -9,6 +9,7 @@ class AgendaFooter extends Component {
     super(props);
 
     this.state = {
+      itemDate: this.props.itemDate,
       startTime: this.props.startTime,
       finishTime: this.props.finishTime,
       desc: this.props.desc
@@ -18,6 +19,9 @@ class AgendaFooter extends Component {
   render() {
     return (
       <div className="agenda-footer">
+        <div className="dateInput">
+          <input type="date" value={this.state.date} name="date" onChange={ e => this.setState({ date: e.target.value}) } />
+        </div>
         <div className="timeInput">
           <input name="startTime" value={ this.state.startTime } type="time" max='24:00' onChange={ this._inputChange } />
         </div>
