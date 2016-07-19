@@ -105,33 +105,33 @@ class UserList extends Component {
 
     return (
       <div className="userList">
-      <div className="userList-actionBar">
-        <ButtonGroup>
-          <Button onClick={this._renderNewRoleModal} classes="inverse lg">New Role +</Button>
-          <Button onClick={this._renderNewUserModal} classes="primary lg">New User +</Button>
-        </ButtonGroup>
-      </div>
+        <div className="userList-actionBar">
+          <h2 className="heading">Users</h2>
+
+          <ButtonGroup>
+            <Button onClick={this._renderNewRoleModal} classes="inverse lg">New Role +</Button>
+            <Button onClick={this._renderNewUserModal} classes="primary lg">New User +</Button>
+          </ButtonGroup>
+        </div>
 
         <Table headings = {['name', 'email', 'role', 'actions']} >
           { tableBody }
           <div className="userList-metadata">
             {`Total users: ${this.props.users.total}`}
-            <div id="paginate">
-              <ReactPaginate
-                previousLabel=" "
-                nextLabel=" "
-                breakLabel={<a href="">...</a>}
-                pageNum={Math.ceil(this.props.users.total / this.state.perPage)}
-                marginPagesDisplayed={1}
-                pageRangeDisplayed={2}
-                clickCallback={this._handlePageClick}
-                containerClassName="pagination"
-                subContainerClassName="pages pagination"
-                activeClassName="active"
-                previousLinkClassName="fa fa-arrow-left tertiary"
-                nextLinkClassName="fa fa-arrow-right tertiary"
-              />
-            </div>
+            <ReactPaginate
+              previousLabel=" "
+              nextLabel=" "
+              breakLabel={<a href="">...</a>}
+              pageNum={Math.ceil(this.props.users.total / this.state.perPage)}
+              marginPagesDisplayed={1}
+              pageRangeDisplayed={2}
+              clickCallback={this._handlePageClick}
+              containerClassName="pagination"
+              subContainerClassName="pages pagination"
+              activeClassName="active"
+              previousLinkClassName="fa fa-arrow-left tertiary"
+              nextLinkClassName="fa fa-arrow-right tertiary"
+            />
           </div>
         </Table>
 
