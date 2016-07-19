@@ -449,6 +449,10 @@ test(PLAYBOOK_MODIFIED, t => {
         }
       ],
       total: 3
+    },
+    playbook: {
+      id: 2,
+      name: 'baz'
     }
   };
 
@@ -471,7 +475,11 @@ test(PLAYBOOK_MODIFIED, t => {
       total: 3,
     },
     saveStatus: 'SAVED',
-    message: 'this works'
+    message: 'this works',
+    playbook: {
+      id: 2,
+      name: 'foo'
+    }
   };
 
   t.plan(1);
@@ -514,6 +522,10 @@ test(PLAYBOOK_MODIFIED, t => {
         }
       ],
       total: 3
+    },
+    playbook: {
+      id: 2,
+      name: 'baz'
     }
   };
 
@@ -540,7 +552,11 @@ test(PLAYBOOK_MODIFIED, t => {
       total: 3,
     },
     saveStatus: 'SAVED',
-    message: 'this works'
+    message: 'this works',
+    playbook: {
+      id: 9,
+      name: 'foo'
+    }
   };
 
   t.plan(1);
@@ -552,4 +568,3 @@ test(PLAYBOOK_MODIFIED, t => {
 
 
 });
-

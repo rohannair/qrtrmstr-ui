@@ -147,3 +147,8 @@ export const modifyPlaybook = (token, payload, id) => {
   return dispatch => post(`${API_ROOT}playbooks/${id}`, token, body)
   .then(data => dispatch(playbookModified(data)));
 };
+
+export const insertNewSlide = (token, id) =>
+  dispatch => post(`${API_ROOT}playbooks/addNewSlide/${id}`, token)
+  .then(data => dispatch(playbookModified(data)))
+  .catch(err => console.log(err));
