@@ -27,6 +27,7 @@ const PlaybookEditorSidebar = (props) => {
           />
         <Button
           onClick={ props.insertNewSlide }
+          classes='primary block md'
           >
           Insert New Slide
         </Button>
