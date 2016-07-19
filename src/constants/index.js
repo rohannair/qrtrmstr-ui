@@ -30,7 +30,6 @@ export const PLAYBOOK_SELECTED = 'App/PLAYBOOK_SELECTED';
 export const SUBMITTED_PLAYBOOK_UPDATE = 'App/SUBMITTED_PLAYBOOK_UPDATE';
 
 // -------- Playbook View Actions
-export const TOGGLE_OPEN_CARD = 'App/TOGGLE_OPEN_CARD';
 export const ADD_SLIDE = 'App/ADD_SLIDE';
 export const REMOVE_SLIDE = 'App/REMOVE_SLIDE';
 export const SAVING_PLAYBOOK = 'App/SAVING_PLAYBOOK';
