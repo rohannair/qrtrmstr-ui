@@ -40,7 +40,8 @@ Known bug... unknown fix. Bounty of 1 beer to whoever solves this problem for go
 3. `$ heroku login`
 4. Get Heroku static plugin: `$ heroku plugins:install heroku-cli-static`
 5. `$ heroku git:remote -a qrtrmstr-ui`
-6. `$ heroku static:deploy --remote master`
+6. `$ npm run build`
+7. `$ heroku static:deploy --remote master`
 
 
 ## Staging environment
@@ -50,5 +51,6 @@ This must be run the first time you try you deploy to staging
 3. `$ heroku git:remote -a qrtrmstr-ui-staging -r staging`
 
 These commands should be run everytime you want to deploy the dev branch to staging
+1. `$ npm run build`
 1. `$ heroku login`
 2. `$ heroku static:deploy --remote staging`
