@@ -39,7 +39,7 @@ test(LOGOUT, t => {
         type: LOGOUT, token: 'ABC123'
       }
     ),
-    { token: null },
+    null,
     'Null the token on logout and kill the state'
   );
 });

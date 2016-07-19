@@ -104,7 +104,7 @@ class UserList extends Component {
     });
 
     return (
-      <div className="userList">
+      <div className="userList container">
         <div className="userList-actionBar">
           <h2 className="heading">Users</h2>
 
