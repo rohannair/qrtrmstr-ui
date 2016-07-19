@@ -95,6 +95,7 @@ const PlaybookResultsCards = (props) => {
       const agenda = field.body.agenda.map((val, i) => {
         return (
           <div className="agendaItem" key={`agendaItem-${i}`}>
+            <span className="agendaItem-time">{moment(val.startTime).format('MMM Do')}</span>
             <span className="agendaItem-time">{moment(val.startTime).format('h:mm')} - {moment(val.finishTime).format('h:mm A')}</span>
             <span className="agendaItem-desc">{val.desc}</span>
           </div>
