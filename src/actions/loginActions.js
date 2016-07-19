@@ -8,6 +8,7 @@ import {
   LOGIN_FAILURE,
   LOGOUT,
   FORGOT_PASSWORD_EMAIL_SENT,
+  FORGOT_PASSWORD_LOADING,
   FORGOT_PASSWORD_ERROR
 } from '../constants';
 
@@ -59,6 +60,14 @@ const forgotPasswordEmailSent = (message) => {
   };
 };
 
+export const forgotPasswordCheck = () => {
+  return {
+    type: FORGOT_PASSWORD_LOADING,
+    message: null,
+    error_msg: null
+  };
+};
+
 const forgotPasswordError = (error) => {
   return {
     type: FORGOT_PASSWORD_ERROR,
@@ -78,6 +87,10 @@ export const tryLogin = credentials =>
   };
 
 export const sendForgotPasswordEmail = payload =>
-  dispatch => post(`${API_ROOT}forgotPassword/send`, null, payload)
+  dispatch => {
+    dispatch(forgotPasswordCheck());
+
+    post(`${API_ROOT}forgotPassword/send`, null, payload)
     .then(data => dispatch(forgotPasswordEmailSent(data.message)))
     .catch(errorText => dispatch(forgotPasswordError(errorText)));
+  };

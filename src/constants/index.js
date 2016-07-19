@@ -4,6 +4,7 @@ export const LOGIN_SUCCESS = 'Auth/LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'Auth/LOGIN_FAILURE';
 export const LOGOUT = 'Auth/LOGOUT';
 export const FORGOT_PASSWORD_EMAIL_SENT = 'Auth/FORGOT_PASSWORD_EMAIL_SENT';
+export const FORGOT_PASSWORD_LOADING = 'Auth/FORGOT_PASSWORD_LOADING';
 export const FORGOT_PASSWORD_ERROR = 'Auth/FORGOT_PASSWORD_ERROR';
 
 // -------- User Actions

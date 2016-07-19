@@ -4,6 +4,7 @@ import {
   LOGIN_FAILURE,
   LOGOUT,
   FORGOT_PASSWORD_EMAIL_SENT,
+  FORGOT_PASSWORD_LOADING,
   FORGOT_PASSWORD_ERROR
 } from '../constants';
 
@@ -39,6 +40,13 @@ export default function accountActions(state = initialState, action) {
     return null;
 
   case FORGOT_PASSWORD_EMAIL_SENT:
+    return {
+      ...state,
+      message: action.message,
+      error: action.error
+    };
+
+  case FORGOT_PASSWORD_LOADING:
     return {
       ...state,
       message: action.message,
