@@ -1,16 +1,24 @@
 import React from 'react';
 import styles from './playbookEditorHeader.css';
+import classNames from 'classnames';
 
 import ButtonGroup from '../ButtonGroup';
 import Button from '../Button';
 
 const PlaybookEditorHeader = (props) => {
   const downClick = (dir) => props.moveSlide(props.val, dir);
-  const visiblity = !!props.hidden;
-  const visibilityMessage = visiblity ? 'Show Card' : 'Hide Card';
+  const visibility = !!props.hidden;
+  const visibilityMessage = visibility ? 'Show Card' : 'Hide Card';
+
+  const classes = classNames(
+    'playbookEditorHeader',
+    {
+      isHidden: visibility
+    }
+  );
 
   return (
-    <div className="playbookEditorHeader">
+    <div className={classes}>
 
       <div className="arrows">
         <ButtonGroup vertical>
@@ -20,6 +28,7 @@ const PlaybookEditorHeader = (props) => {
       </div>
 
       { `Section ${parseInt(props.val) + 1} (${props.slideType})` }
+      { visibility ? <span className="danger"> HIDDEN CARD</span> : '' }
 
       <div className="actions">
         <ButtonGroup>
