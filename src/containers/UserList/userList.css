@@ -12,6 +12,10 @@
   &-actionBar {
     text-align: right;
     padding-bottom: 10px;
+
+    .buttonGroup {
+      justify-content: flex-end;
+    }
   }
 
   &-metadata {

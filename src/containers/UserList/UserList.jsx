@@ -106,8 +106,10 @@ class UserList extends Component {
     return (
       <div className="userList">
       <div className="userList-actionBar">
-        <Button onClick={this._renderNewRoleModal} classes="primary md">New Role +</Button>
-        <Button onClick={this._renderNewUserModal} classes="primary md">New User +</Button>
+        <ButtonGroup>
+          <Button onClick={this._renderNewRoleModal} classes="inverse lg">New Role +</Button>
+          <Button onClick={this._renderNewUserModal} classes="primary lg">New User +</Button>
+        </ButtonGroup>
       </div>
 
         <Table headings = {['name', 'email', 'role', 'actions']} >
