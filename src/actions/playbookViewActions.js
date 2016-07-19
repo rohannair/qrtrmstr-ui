@@ -1,51 +1,10 @@
 import { get, post, API_ROOT } from '../utils/request';
 import {
-  TOGGLE_OPEN_CARD,
-  ADD_SLIDE,
-  REMOVE_SLIDE,
-  SAVING_PLAYBOOK,
   PLAYBOOKS_RETRIEVED,
-  SINGLE_PLAYBOOK_RETRIEVED,
-  EDIT_SLIDE,
   ADD_NEW_PLAYBOOK,
   UPDATE_MESSAGE,
   PLAYBOOK_MODIFIED,
-  PLAYBOOK_ORDER_MODIFIED,
 } from '../constants';
-
-
-// Toggle open card
-export const toggleOpenCard = (cardID) => {
-  return {
-    type: TOGGLE_OPEN_CARD,
-    cardID
-  };
-};
-
-// Add slide
-export const addSlide = (slideID, slideInfo) => {
-  return {
-    type: ADD_SLIDE,
-    slideID,
-    slideInfo
-  };
-};
-
-// Remove slide
-export const removeSlide = (slideID) => {
-  return {
-    type: REMOVE_SLIDE,
-    slideID
-  };
-};
-
-export const updatePlaybookState = (slide_number, data) => {
-  return {
-    type: EDIT_SLIDE,
-    slide_number,
-    data
-  };
-};
 
 export const isSaving = () => {
   return {
@@ -60,16 +19,6 @@ function playbooksRetrieved(playbookList = { results: [], total: 0 }) {
     playbookList
   };
 };
-
-// Single playbook retrieved for editing
-function singlePlaybookRetrieved(data) {
-  return {
-    type: SINGLE_PLAYBOOK_RETRIEVED,
-    playbook: data.playbook,
-    users: data.users
-  };
-};
-
 
 function addNewPlaybook(playbook = {}) {
   return {
@@ -118,16 +67,10 @@ export const getPlaybooks = (token, offset, limit) =>
   dispatch => get(`${API_ROOT}playbooks?offset=${offset}&limit=${limit}`, token)
   .then(data => dispatch(playbooksRetrieved(data)));
 
-// Single Playbook Call
-export const getSinglePlaybook = (token, id) =>
-  dispatch => get(`${API_ROOT}playbooks/${id}`, token)
-  .then(data => dispatch(singlePlaybookRetrieved(data)));
-
 // Create new Playbook
 export const createPlaybook = (token, payload) =>
   dispatch => post(`${API_ROOT}playbooks`, token, payload)
   .then(data => console.log(data));
-
 
 // Modify existing Playbook
 export const modifyPlaybook = (token, payload, id) => {
@@ -147,3 +90,8 @@ export const modifyPlaybook = (token, payload, id) => {
   return dispatch => post(`${API_ROOT}playbooks/${id}`, token, body)
   .then(data => dispatch(playbookModified(data)));
 };
+
+export const insertNewSlide = (token, id) =>
+  dispatch => post(`${API_ROOT}playbooks/addNewSlide/${id}`, token)
+  .then(data => dispatch(playbookModified(data)))
+  .catch(err => console.log(err));
