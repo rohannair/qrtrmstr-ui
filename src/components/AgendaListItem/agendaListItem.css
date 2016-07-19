@@ -1,0 +1,48 @@
+.agendaItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+  padding-bottom: 20px;
+
+  &-date {
+    width: 14%;
+  }
+
+  &-date-input {
+    width: 14%;
+  }
+
+  &-time {
+    width: 11%;
+  }
+
+  &-time-input {
+    width: 11%;
+  }
+
+  input {
+    width: 100%;
+    height: 100%;
+    height: 36px;
+  }
+
+  &-desc {
+    width: 54%;
+  }
+
+  &-desc-input {
+    width: 54%;
+  }
+
+  &-toolButtonContainer {
+    width: 10%;
+    padding-left: 10px;
+  }
+
+  &-confirmEditBtn {
+    width: 10%;
+    padding-left: 12px;
+  }
+
+}

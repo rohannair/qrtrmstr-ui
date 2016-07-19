@@ -1,0 +1,30 @@
+.agenda-footer {
+  padding-top: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .dateInput {
+    width: 15%;
+  }
+
+  .timeInput {
+    width: 11%;
+  }
+
+  .descInput {
+    width: 54%;
+    height: 100%;
+    padding: 0;
+  }
+
+  .toolButtonContainer {
+    width: 10%;
+    padding-left: 10px;
+  }
+
+  input {
+    width: 100%;
+    height: 36px;
+  }
+}
