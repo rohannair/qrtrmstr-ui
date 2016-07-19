@@ -111,20 +111,20 @@ class PlaybookList extends Component {
           { items }
           <div className="playbookList-metadata">
             {`Total playbooks: ${this.props.playbookList.total}`}
-            <div id="paginate">
-              <ReactPaginate  previousLabel={" "}
-                              nextLabel={" "}
-                              breakLabel={<a href="">...</a>}
-                              pageNum={Math.ceil(this.props.playbookList.total / this.state.perPage)}
-                              marginPagesDisplayed={1}
-                              pageRangeDisplayed={2}
-                              clickCallback={this._handlePageClick}
-                              containerClassName={"pagination"}
-                              subContainerClassName={"pages pagination"}
-                              activeClassName={"active"}
-                              previousLinkClassName={"fa fa-arrow-left tertiary"}
-                              nextLinkClassName={"fa fa-arrow-right tertiary"} />
-            </div>
+            <ReactPaginate
+              previousLabel={" "}
+              nextLabel={" "}
+              breakLabel={<a href="">...</a>}
+              pageNum={Math.ceil(this.props.playbookList.total / this.state.perPage)}
+              marginPagesDisplayed={1}
+              pageRangeDisplayed={2}
+              clickCallback={this._handlePageClick}
+              containerClassName={"pagination"}
+              subContainerClassName={"pages pagination"}
+              activeClassName={"active"}
+              previousLinkClassName={"fa fa-arrow-left tertiary"}
+              nextLinkClassName={"fa fa-arrow-right tertiary"}
+            />
           </div>
         </Table>
 
