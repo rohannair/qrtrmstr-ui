@@ -35,6 +35,7 @@ export default function app(state = initialState, action) {
   case NEW_USER_ERROR_RETRIEVED:
     const newError = (error_msg && (state.errorMessage === error_msg)) ?
       `${error_msg} (again)` : error_msg;
+
     return {
       ...state,
       errorMessage: newError
@@ -69,7 +70,7 @@ export default function app(state = initialState, action) {
   case NEW_ROLE_ERROR_RETRIEVED:
     return {
       ...state,
-      errorMessage: error_msg
+      roleErrorMessage: error_msg
     };
 
   case ROLES_RETRIEVED:

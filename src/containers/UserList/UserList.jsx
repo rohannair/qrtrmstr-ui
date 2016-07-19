@@ -31,7 +31,8 @@ class UserList extends Component {
     errorMessage: this.props.errorMessage || null,
     offset: 0,
     pageNum: 1,
-    perPage: 10
+    perPage: 10,
+    roleErrorMessage: this.props.roleErrorMessage || null
   };
 
   static contextTypes = {
@@ -80,7 +81,7 @@ class UserList extends Component {
       />
     : null;
 
-    const newRoleForm = Object.keys(this.state.newRole).length > 0 || this.state.errorMessage
+    const newRoleForm = Object.keys(this.state.newRole).length > 0 || this.state.roleErrorMessage
     ? <NewRoleModal
         val={this.state.newRole}
         showModal={true}
@@ -89,7 +90,7 @@ class UserList extends Component {
         onChange={this._changeRoleParams}
         closeModal={this._closeRoleModal}
         loading={this.state.loading}
-        errorMessage={this.state.errorMessage}
+        errorMessage={this.state.roleErrorMessage}
       />
     : null;
 
@@ -308,6 +309,7 @@ function mapStateToProps(state) {
     token,
     users: state.app.users,
     errorMessage: state.app.errorMessage,
+    roleErrorMessage: state.app.roleErrorMessage,
     roles: state.app.roles,
     authUrl: state.app.authUrl
   };
