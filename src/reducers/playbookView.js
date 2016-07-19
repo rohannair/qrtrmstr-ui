@@ -157,7 +157,8 @@ export default function playbookView(state = initialState, action) {
           ...list.results.slice(pos + 1)
         ],
         total: list.total
-      }
+      },
+      playbook: newPlaybook.result
     };
 
   default:
