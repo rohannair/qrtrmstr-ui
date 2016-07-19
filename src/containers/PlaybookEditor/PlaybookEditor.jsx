@@ -15,9 +15,10 @@ import {
   addSlide,
   modifyPlaybook,
   reorderPlaybook,
-  isSaving,
-  insertNewSlide
-} from '../../actions/playbookViewActions';
+  isSaving
+} from '../../actions/playbookEditorActions';
+
+import { insertNewSlide } from '../../actions/playbookViewActions';
 
 // Styles
 import styles from './playbookEditor.css';

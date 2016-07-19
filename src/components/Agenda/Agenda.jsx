@@ -25,7 +25,6 @@ class Agenda extends Component {
       finishTime: moment(finishTime).add(1, 'hour').format('HH:mm'),
       errorMessage: null
     };
-
   }
 
   componentWillReceiveProps(nextProps) {
@@ -64,8 +63,6 @@ class Agenda extends Component {
           })
       : null;
 
-
-
     return (
       <div className="agenda">
         <div className="agenda-header">
@@ -76,18 +73,15 @@ class Agenda extends Component {
           <div className="agendaToolTitle">Tools</div>
         </div>
         <div className="agenda-items">
-          <FlipMove enterAnimation="fade" leaveAnimation="fade">
-            { items }
-          </FlipMove>
+          { items }
         </div>
 
-        <hr />
         <AgendaFooter
-        addNew={this._addNew}
-        startTime={this.state.startTime}
-        finishTime={this.state.finishTime}
-        desc={this.state.desc}
-        itemDate={this.state.itemDate}
+          addNew={this._addNew}
+          startTime={this.state.startTime}
+          finishTime={this.state.finishTime}
+          desc={this.state.desc}
+          itemDate={this.state.itemDate}
         />
 
         <div className="errorContainer">

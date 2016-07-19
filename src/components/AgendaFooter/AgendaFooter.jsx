@@ -16,9 +16,7 @@ class AgendaFooter extends Component {
     };
   }
 
-
   componentWillReceiveProps(nextProps) {
-
     this.setState({
       desc: nextProps.desc,
       itemDate: nextProps.itemDate,
@@ -33,15 +31,19 @@ class AgendaFooter extends Component {
     return (
       <div className="agenda-footer">
         <div className="dateInput">
+          <span>Date:</span>
           <input type="date" value={this.state.itemDate} name="date" onChange={ e => this.setState({ itemDate: e.target.value}) } />
         </div>
         <div className="timeInput">
+          <span>Start Time:</span>
           <input name="startTime" value={ this.state.startTime } type="time" max='24:00' onChange={ this._inputChange } />
         </div>
         <div className="timeInput">
+          <span>End Time:</span>
           <input name="finishTime" value={ this.state.finishTime } type="time" max='24:00' onChange={ this._inputChange } />
         </div>
         <div className="descInput">
+          <span> Description:</span>
           <input name="desc" value={ this.state.desc } type="text" onChange={ this._inputChange } />
         </div>
         <div className="toolButtonContainer">
