@@ -17,7 +17,7 @@ export const isSaving = () => {
 };
 
 // Update state
-export const updatePlaybookState = (slide_number, data) => {
+export const editPlaybook = (slide_number, data) => {
   return {
     type: EDIT_SLIDE,
     slide_number,
@@ -51,7 +51,6 @@ export const reorderPlaybook = (idx, direction) => {
   };
 };
 
-
 // Single playbook retrieved for editing
 function singlePlaybookRetrieved(data) {
   return {
@@ -60,7 +59,6 @@ function singlePlaybookRetrieved(data) {
     users: data.users
   };
 };
-
 
 // Single Playbook Call
 export const getSinglePlaybook = (token, id) =>
