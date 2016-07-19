@@ -21,8 +21,8 @@ class Agenda extends Component {
       agenda: this.props.agenda,
       date: this.props.date,
       itemDate: moment(finishTime).format('YYYY-MM-DD'),
-      startTime: moment(finishTime).format('H:mm'),
-      finishTime: moment(finishTime).add(1, 'hour').format('H:mm'),
+      startTime: moment(finishTime).format('HH:mm'),
+      finishTime: moment(finishTime).add(1, 'hour').format('HH:mm'),
       errorMessage: null
     };
 
@@ -38,8 +38,8 @@ class Agenda extends Component {
     this.setState({
       agenda: nextProps.agenda,
       itemDate: moment(finishTime).format('YYYY-MM-DD'),
-      startTime: moment(finishTime).format('H:mm'),
-      finishTime: moment(finishTime).add(1, 'hour').format('H:mm')
+      startTime: moment(finishTime).format('HH:mm'),
+      finishTime: moment(finishTime).add(1, 'hour').format('HH:mm')
     });
   }
 
@@ -122,8 +122,8 @@ class Agenda extends Component {
     this.setState({
       ...this.state,
       desc: '',
-      startTime: moment(itemDate + ' ' + finishTime).format('H:mm'),
-      finishTime: moment(itemDate + ' ' + finishTime).add(1, 'hour').format('H:mm'),
+      startTime: moment(itemDate + ' ' + finishTime).format('HH:mm'),
+      finishTime: moment(itemDate + ' ' + finishTime).add(1, 'hour').format('HH:mm'),
       errorMessage: null
     });
 

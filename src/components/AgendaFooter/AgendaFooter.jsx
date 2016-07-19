@@ -65,12 +65,15 @@ class AgendaFooter extends Component {
     const { startTime, finishTime, desc, itemDate } = this.state;
     // const { date } = this.props;
     // Validation to make sure that the start date is before the finish date
-    if (moment(itemDate + ' ' + finishTime).diff(moment(itemDate + ' ' + startTime)) <= 0) {
+    if (moment(itemDate + ' ' + finishTime).diff(moment(itemDate + ' ' + startTime)) < 0) {
       this.setState({
         errorMessage: 'Start time must be before Finish time, please correct the dates and try again'
       });
       return;
     }
+
+    // Check is the user is making an all day task
+    if (startTime === '' && finishTime === '') return this.props.addNew('00:00', '23:59', itemDate, desc);
 
     return this.props.addNew(startTime, finishTime, itemDate, desc);
   };
