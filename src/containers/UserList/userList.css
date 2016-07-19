@@ -10,8 +10,15 @@
   }
 
   &-actionBar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     text-align: right;
     padding-bottom: 10px;
+
+    .buttonGroup {
+      margin-left: auto;
+    }
   }
 
   &-metadata {
@@ -72,29 +79,5 @@
     background-color: #EE6352;
     color: white;
     border-radius: 2px;
-  }
-}
-
-#paginate {
-
-  ul {
-    padding-left: 15px;
-    padding-right: 15px;
-    text-align: center;
-  }
-
-  li {
-    display: inline-block;
-    padding-left: 15px;
-    padding-right: 15px;
-    cursor: pointer;
-  }
-
-  &.break a {
-    cursor: default;
-  }
-
-  $.active li {
-    background-color: #CCC;
   }
 }

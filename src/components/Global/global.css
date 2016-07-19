@@ -185,6 +185,65 @@ select {
   }
 }
 
+.pagination {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  justify-content: center;
+  align-items: baseline;
+
+  li {
+    list-style: none;
+    margin: 0 5px;
+    align-self: stretch;
+    border-radius: 3px;
+    overflow: hidden;
+
+    &:hover {
+      background-color: #FFF;
+    }
+
+    a {
+      padding: 15px;
+      display: block;
+      text-decoration: none;
+      cursor: pointer;
+
+    }
+  }
+
+  .break a {
+    cursor: default;
+  }
+
+  .disabled,
+  .active {
+    pointer-events: none;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+
+  .disabled {
+    cursor: not-allowed;
+    opacity: 0.2;
+
+    a {
+      color: #777;
+    }
+  }
+
+  .active {
+    cursor: default;
+
+    a {
+      font-weight: bold;
+      color: #444;
+    }
+  }
+}
+
 .flex {
   display: flex;
 
@@ -192,5 +251,4 @@ select {
     flex-direction: row;
     align-items: flex-start;
   }
-
 }

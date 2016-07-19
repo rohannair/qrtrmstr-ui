@@ -1,4 +1,4 @@
-import test from 'tape';
+import test from 'ava';
 import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
@@ -10,8 +10,8 @@ import {
 // Reducer
 import accountActions from '../reducers/login';
 
-test('AccountActions', t => {
-  t.plan(5);
+test(LOGIN_SUCCESS, t => {
+  t.plan(2);
 
   t.deepEqual(
     accountActions({}, { type: LOGIN_SUCCESS, token: 'ABC123'}),
@@ -24,6 +24,10 @@ test('AccountActions', t => {
     { foo: 'bar', token: 'ABC123' },
     'If state existed before login, maintain it'
   );
+});
+
+test(LOGOUT, t => {
+  t.plan(1);
 
   t.deepEqual(
     accountActions(
@@ -38,6 +42,10 @@ test('AccountActions', t => {
     null,
     'Null the token on logout and kill the state'
   );
+});
+
+test(FORGOT_PASSWORD_EMAIL_SENT, t => {
+  t.plan(1);
 
   t.deepEqual(
     accountActions(
@@ -52,6 +60,10 @@ test('AccountActions', t => {
     { message: 'Email Sent', error: null, state: 'HELLO I AM STATE' },
     'Send the forgot password email'
   );
+});
+
+test(FORGOT_PASSWORD_ERROR, t => {
+  t.plan(1);
 
   t.deepEqual(
     accountActions(
@@ -66,6 +78,4 @@ test('AccountActions', t => {
     { message: null, error: 'Email failed to send', state: 'HELLO I AM STATE' },
     'Send the forgot password email error'
   );
-
-  t.end();
 });

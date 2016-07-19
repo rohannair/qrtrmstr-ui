@@ -6,7 +6,11 @@ import {
   NEW_USER_ERROR_RETRIEVED,
   PASSWORD_RESET,
   PASSWORD_RESET_ERROR,
-  RECIEVE_AUTH_URL
+  RECIEVE_AUTH_URL,
+  USER_DELETED,
+  USER_DELETE_ERROR,
+  NEW_ROLE_CREATED,
+  NEW_ROLE_ERROR_RETRIEVED
 } from '../constants';
 
 // Users Retrieved action
@@ -40,6 +44,22 @@ export const newUserErrors = (error_msg) => {
   };
 };
 
+// New Role successfully created and retrieved
+function newRoleCreated(role = {}) {
+  return {
+    type: NEW_ROLE_CREATED,
+    new_role: role
+  };
+}
+
+// New Role contains errors
+export const newRoleErrors = (error_msg) => {
+  return {
+    type: NEW_ROLE_ERROR_RETRIEVED,
+    error_msg
+  };
+};
+
 export const passwordReset = (message) => {
   return {
     type: PASSWORD_RESET,
@@ -60,6 +80,24 @@ export const recieveAuthUrl = (url) => {
   return {
     type: RECIEVE_AUTH_URL,
     authUrl: url
+  };
+};
+
+
+export const userDeleted = (data) => {
+  return {
+    type: USER_DELETED,
+    message: data.message,
+    deletedUserId: data.id,
+    error_msg: null
+  };
+};
+
+export const userDeleteError = (error_msg) => {
+  return {
+    type: USER_DELETE_ERROR,
+    message: null,
+    error_msg
   };
 };
 
@@ -84,10 +122,22 @@ export const modifyUser = (token, payload) =>
   dispatch => post(`${API_ROOT}users/${payload.id}`, token, payload)
   .then(data => console.log(data));
 
+// Delete existing User
+export const deleteUser = (token, id) =>
+  dispatch => post(`${API_ROOT}users/delete/${id}`, token)
+  .then(data => dispatch(userDeleted(data)))
+  .catch(err => dispatch(userDeleteError(err)));
+
 // Get All Roles
 export const getRoles = token =>
   dispatch => get(API_ROOT + 'roles', token)
   .then(data => dispatch(rolesRetrieved(data)));
+
+// Create new Role
+export const createRole = (token, payload) =>
+  dispatch => post(`${API_ROOT}roles`, token, payload)
+  .then(data => dispatch(newRoleCreated(data.message)))
+  .catch(err => dispatch(newRoleErrors(err.message)));
 
 export const resetPassword = (payload, userId) =>
   dispatch => post(`${API_ROOT}users/resetPassword/${userId}`, null, payload)
