@@ -33,8 +33,8 @@ class AgendaListItem extends Component {
 
   render() {
 
-    const item = this.state.editing
-    ? (
+    if (this.state.editing) {
+      return (
         <div className="agendaItem">
           <div className="agendaItem-date-input">
             <input type="date" value={this.state.itemDate} name="date" onChange={ e => this.setState({ itemDate: e.target.value}) } />
@@ -49,11 +49,13 @@ class AgendaListItem extends Component {
             <input name="desc" value={ this.state.desc } onChange={ e => this.setState({ desc: e.target.value})  } />
           </div>
           <div className="agendaItem-confirmEditBtn">
-            <Button classes="primary sm" icon="plus" onClick={ e => this._updateItem() } />
+            <Button classes="success sm" icon="check" onClick={ e => this._updateItem() } />
           </div>
         </div>
-      )
-    : (
+      );
+    }
+
+    return (
         <div className="agendaItem">
           <div className="agendaItem-date">{ moment(this.props.startTime).format('MMM DD, YYYY') }</div>
           <div className="agendaItem-time">{moment(this.props.startTime).format('h:mm A')}</div>
@@ -73,11 +75,6 @@ class AgendaListItem extends Component {
           </div>
         </div>
       );
-    return (
-      <div>
-        { item }
-      </div>
-    );
   };
 
   _updateItem = () => {

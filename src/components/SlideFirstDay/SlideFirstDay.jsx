@@ -14,7 +14,6 @@ import TextBox from '../TextBox';
 import MapContainer from '../../containers/MapContainer';
 import Agenda from '../../components/Agenda';
 
-
 class SlideFirstDay extends Component {
   constructor(props) {
     super(props);

@@ -1,9 +1,12 @@
 .agendaItem {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  padding: 10px;
-  padding-bottom: 20px;
+  padding: 20px 10px;
+  width: 100%;
+
+  border-bottom: 1px solid #ccc;
 
   &-date {
     width: 14%;
@@ -36,8 +39,8 @@
   }
 
   &-toolButtonContainer {
-    width: 10%;
     padding-left: 10px;
+    margin-left: auto;
   }
 
   &-confirmEditBtn {
