@@ -1,7 +1,13 @@
 .playbookEditorHeader {
+  display: flex;
+  flex-direction: row;
 
   .arrows {
-    float: right;
+    margin-right: 10px;
+  }
+
+  .actions {
+    margin-left: auto;
   }
 
 }

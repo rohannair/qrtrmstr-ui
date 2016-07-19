@@ -1,6 +1,5 @@
 import omit from 'lodash/omit';
 import {
-  TOGGLE_OPEN_CARD,
   ADD_SLIDE,
   REMOVE_SLIDE,
   SAVING_PLAYBOOK,
@@ -119,20 +118,6 @@ export default function playbookView(state = initialState, action) {
       },
       saveStatus: 'UNSAVED',
     };
-
-  case TOGGLE_OPEN_CARD:
-    const { openCards } = state;
-    const isInArray = openCards.indexOf(action.cardID);
-
-    if (isInArray > -1) {
-      return {
-        ...state,
-        openCards: [
-          ...openCards.slice(0, isInArray),
-          ...openCards.slice(isInArray + 1)
-        ]
-      };
-    }
 
     return {
       ...state,

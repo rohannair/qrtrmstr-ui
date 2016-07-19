@@ -9,12 +9,11 @@ import moment from 'moment';
 import {
   updatePlaybookState,
   getSinglePlaybook,
-  toggleOpenCard,
   addSlide,
   modifyPlaybook,
   reorderPlaybook,
   isSaving
-} from '../../actions/playbookViewActions';
+} from '../../actions/playbookEditorActions';
 
 // Styles
 import styles from './playbookEditor.css';
@@ -238,9 +237,9 @@ class PlaybookEditor extends Component {
     return dispatch(reorderPlaybook(i, direction));
   };
 
-  _toggleOpen = (e) => {
+  _toggleSlideVisibility = (i) => {
     const { dispatch } = this.props;
-    return dispatch(toggleOpenCard(e.target.id));
+    return;
   };
 
   _addNewSlide = (e) => {
