@@ -1,4 +1,5 @@
 .agenda-footer {
+  padding-top: 10px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -8,11 +9,11 @@
   }
 
   .timeInput {
-    width: 10%;
+    width: 11%;
   }
 
   .descInput {
-    width: 55%;
+    width: 54%;
     height: 100%;
     padding: 0;
   }

@@ -12,7 +12,7 @@ class AgendaListItem extends Component {
     this.state = {
       id: this.props.id,
       desc: this.props.desc,
-      itemDate: moment(this.props.itemDate).format('YYYY-MM-DD'),
+      itemDate: moment(this.props.startTime).format('YYYY-MM-DD'),
       startTime: moment(this.props.startTime).format('HH:mm'),
       finishTime: moment(this.props.finishTime).format('HH:mm'),
       editing: false
@@ -23,7 +23,7 @@ class AgendaListItem extends Component {
     this.setState({
       desc: nextProps.desc,
       id: nextProps.id,
-      itemDate: moment(nextProps.itemDate).format('YYYY-MM-DD'),
+      itemDate: moment(nextProps.startTime).format('YYYY-MM-DD'),
       startTime: moment(nextProps.startTime).format('HH:mm'),
       finishTime: moment(nextProps.finishTime).format('HH:mm'),
       editing: false
@@ -48,15 +48,16 @@ class AgendaListItem extends Component {
           <div className="agendaItem-desc">
             <input name="desc" value={ this.state.desc } onChange={ e => this.setState({ desc: e.target.value})  } />
           </div>
-          <div className="toolButtonContainer">
+          <div className="agendaItem-confirmEditBtn">
             <Button classes="primary sm" icon="plus" onClick={ e => this._updateItem() } />
           </div>
         </div>
       )
     : (
         <div className="agendaItem">
-          <div className="agendaItem-date">{ this.state.itemDate }</div>
-          <div className="agendaItem-time">{moment(this.props.startTime).format('h:mm A')} - {moment(this.props.finishTime).format('h:mm A')}</div>
+          <div className="agendaItem-date">{ moment(this.props.startTime).format('MMM DD, YYYY') }</div>
+          <div className="agendaItem-time">{moment(this.props.startTime).format('h:mm A')}</div>
+          <div className="agendaItem-time">{moment(this.props.finishTime).format('h:mm A')}</div>
           <div className="agendaItem-desc">{this.state.desc}</div>
           <div className="agendaItem-toolButtonContainer">
             <Button
@@ -82,8 +83,8 @@ class AgendaListItem extends Component {
   _updateItem = () => {
     const { id, desc } = this.state;
     const { date } = this.props;
-    const startTime = +moment(this.state.date + ' ' + this.state.startTime).format('x');
-    const finishTime = +moment(this.state.date + ' ' + this.state.finishTime).format('x');
+    const startTime = +moment(this.state.itemDate + ' ' + this.state.startTime).format('x');
+    const finishTime = +moment(this.state.itemDate + ' ' + this.state.finishTime).format('x');
     this.props.editItem({ startTime, finishTime, desc}, id);
     return this.setState({editing: false});
   }

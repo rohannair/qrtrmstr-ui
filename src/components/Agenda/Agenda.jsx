@@ -20,6 +20,7 @@ class Agenda extends Component {
     this.state = {
       agenda: this.props.agenda,
       date: this.props.date,
+      itemDate: moment(finishTime).format('YYYY-MM-DD'),
       startTime: moment(finishTime).format('H:mm'),
       finishTime: moment(finishTime).add(1, 'hour').format('H:mm'),
       errorMessage: null
@@ -36,6 +37,7 @@ class Agenda extends Component {
 
     this.setState({
       agenda: nextProps.agenda,
+      itemDate: moment(finishTime).format('YYYY-MM-DD'),
       startTime: moment(finishTime).format('H:mm'),
       finishTime: moment(finishTime).add(1, 'hour').format('H:mm')
     });
@@ -47,8 +49,6 @@ class Agenda extends Component {
 
     const items = agenda
       ? agenda
-          // TODO I need to impove this sort, first by date then by start time and end time
-          .sort((a,b) => a.date - b.data)
           .sort((a, b) => a.startTime - b.startTime)
           .map((val, i) => {
             return (
@@ -71,7 +71,8 @@ class Agenda extends Component {
       <div className="agenda">
         <div className="agenda-header">
           <div className="agendaDateTitle">Date</div>
-          <div className="agendaTimeTitle">Time</div>
+          <div className="agendaTimeTitle">Start</div>
+          <div className="agendaTimeTitle">End</div>
           <div className="agendaDescTitle">Description</div>
           <div className="agendaToolTitle">Tools</div>
         </div>
@@ -81,13 +82,13 @@ class Agenda extends Component {
           </FlipMove>
         </div>
 
-
+        <hr />
         <AgendaFooter
         addNew={this._addNew}
-        date={this.state.date}
         startTime={this.state.startTime}
         finishTime={this.state.finishTime}
         desc={this.state.desc}
+        itemDate={this.state.itemDate}
         />
 
         <div className="errorContainer">
@@ -115,20 +116,20 @@ class Agenda extends Component {
     ]);
   };
 
-  _addNew = (startTime, finishTime, desc) => {
-    const { agenda, date } =  this.props;
+  _addNew = (startTime, finishTime, itemDate, desc) => {
+    const { agenda } =  this.props;
 
     this.setState({
       ...this.state,
       desc: '',
-      startTime: moment(date + ' ' + finishTime).format('H:mm'),
-      finishTime: moment(date + ' ' + finishTime).add(1, 'hour').format('H:mm'),
+      startTime: moment(itemDate + ' ' + finishTime).format('H:mm'),
+      finishTime: moment(itemDate + ' ' + finishTime).add(1, 'hour').format('H:mm'),
       errorMessage: null
     });
 
     const newAgenda = [
       ...agenda,
-      { desc, startTime: +moment(date + ' ' + startTime).format('x'), finishTime: +moment(date + ' ' + finishTime).format('x') }
+      { desc, startTime: +moment(itemDate + ' ' + startTime).format('x'), finishTime: +moment(itemDate + ' ' + finishTime).format('x') }
     ];
 
     return this.props.updateFirstDayState('agenda', newAgenda);
