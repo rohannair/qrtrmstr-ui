@@ -153,7 +153,7 @@ class PlaybookEditor extends Component {
     : '';
 
     return (
-      <div className="playbookEditor">
+      <div className="playbookEditor container">
         <PlaybookEditorBody>
           { playbookDoc}
         </PlaybookEditorBody>

@@ -64,14 +64,6 @@ class PlaybookList extends Component {
   render() {
     const { visibleModal } = this.state;
 
-    const editPlaybookModal = visibleModal === 'edit'
-    ? <EditPlaybookModal
-        closeModal={ this._closeModal }
-        playbook={ this.state.modalData }
-        savePlaybook={ this._savePlaybook }
-      />
-    : null;
-
     const sendPlaybookModal = visibleModal === 'send'
     ? <AssignPlaybookModal
         closeModal={ this._closeModal }
@@ -99,16 +91,20 @@ class PlaybookList extends Component {
         users={ this.props.users.results }
         sendPlaybook={ this._sendPlaybookToAssignedUser }
         duplicatePlaybook={ this._duplicatePlaybook }
-        showEditModal={ this._showEditModal }
         showAssignModal={ this._showAssignModal }
         showSendModal={ this._showSendModal }
+        savePlaybook={ this._savePlaybook }
+        clearAssigned={ this._clearAssigned }
       />
     );});
 
     return (
       <div className="playbookList">
-        <Table headings = {['name', 'modified', 'assigned', 'status', 'actions']} >
+
+        <div className="playbookList-body">
+          <div className="playbookList-metadata">Playbooks</div>
           { items }
+
           <div className="playbookList-metadata">
             {`Total playbooks: ${this.props.playbookList.total}`}
             <ReactPaginate
@@ -126,9 +122,15 @@ class PlaybookList extends Component {
               nextLinkClassName={"fa fa-arrow-right tertiary"}
             />
           </div>
-        </Table>
+        </div>
 
-        { editPlaybookModal }
+        <div className="playbookList-sidebar">
+          <Button
+            classes="lgLong primary disabled"
+            toolTipText="Coming soon!"
+          >New Playbook</Button>
+        </div>
+
         { sendPlaybookModal }
         { assignPlaybookModal }
       </div>
@@ -190,7 +192,13 @@ class PlaybookList extends Component {
 
   _savePlaybook = (id, payload) => {
     const { token, dispatch } = this.props;
+    console.log(payload);
     return dispatch(modifyPlaybook(token, payload, id));
+  };
+
+  _clearAssigned = (id, payload) => {
+    const { token, dispatch } = this.props;
+    return dispatch(modifyPlaybook(token, { selected: { id: null } }, id));
   };
 
   _duplicatePlaybook = (id) => {
