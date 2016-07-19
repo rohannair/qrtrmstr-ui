@@ -12,6 +12,11 @@
   &-actionBar {
     text-align: right;
     padding-bottom: 10px;
+
+    .newRoleBtn {
+      margin-right: 10px;
+    }
+
   }
 
   &-metadata {
