@@ -12,57 +12,28 @@ import ButtonGroup from '../../components/ButtonGroup';
 
 import TextBox from '../TextBox';
 import MapContainer from '../../containers/MapContainer';
+import Agenda from '../../components/Agenda';
 
-import FlipMove from 'react-flip-move';
 
 class SlideFirstDay extends Component {
   constructor(props) {
     super(props);
 
-    const lastAgendaItem = props.body.agenda[(props.body.agenda.length - 1)];
-    const finishTime = lastAgendaItem
-    ? lastAgendaItem.finishTime
-    : moment(this.props.date).startOf('day').toDate();
-
     this.state = {
       desc: '',
       mapDesc: props.body.map || '',
       pos: props.position || {lat: 43.6446447, lng: -79.39499869999997},
-      place: props.place || {name: 'Lighthouse Labs', formatted_address: '46 Spadina Avenue, Toronto, ON, Canada'},
-      startTime: moment(finishTime).format('H:mm'),
-      finishTime: moment(finishTime).add(1, 'hour').format('H:mm'),
-      errorMessage: null
+      place: props.place || {name: 'Lighthouse Labs', formatted_address: '46 Spadina Avenue, Toronto, ON, Canada'}
     };
   }
 
   render() {
     const { onAdd, slide_number, body, onChange, heading, date, detailed_location, contact, couponInput } = this.props;
     const detLoc = detailed_location ? detailed_location : this.state.place.formatted_address;
-    const { agenda } =  this.props.body;
     const mapBody = this.props.body.map;
     const { mapDesc, startTime, finishTime, desc, errorMessage } = this.state;
-    const deleteItem = this._deleteItem;
-    const errorText = errorMessage ? <div className="errorText"><p className="errorMsg">{errorMessage}</p></div> : null;
 
-    const items = agenda
-      ? agenda
-          .sort((a, b) => a.startTime - b.startTime)
-          .map((val, i) => {
-            return (
-              <div className="agenda-item" key={`agendaItem-${i}`}>
-                <div className="timeInput agendaTimeItem">{moment(val.startTime).format('h:mm A')} - {moment(val.finishTime).format('h:mm A')} </div>
-                <div className="desc">{val.desc}</div>
-                <div className="buttonContainer">
-                  <Button
-                    classes="transparent"
-                    icon="times"
-                    onClick={ deleteItem.bind(this, i) }
-                  />
-                </div>
-              </div>
-            );
-          })
-      : null;
+    const errorText = errorMessage ? <div className="errorText"><p className="errorMsg">{errorMessage}</p></div> : null;
 
     const couponInputFields = couponInput.show
     ?  <div className="slideEquipment">
@@ -164,47 +135,13 @@ class SlideFirstDay extends Component {
             { couponInputFields }
           </div>
         </div>
-
-        <divl className="agenda">
-          <div className="agenda-header">
-            <div className="timeInput agendaTimeTitle">Time</div>
-            <div className="desc">Description</div>
-          </div>
-
-          <FlipMove enterAnimation="fade" leaveAnimation="fade">
-            { items }
-          </FlipMove>
-
-          <div className="agenda-footer">
-            <div className="timeInput">
-              <input name="startTime" value={ startTime } type="time" max='24:00' onChange={ this._inputChange } />
-            </div>
-            <p> - </p>
-            <div className="timeInput">
-              <input name="finishTime" value={ finishTime } type="time" max='24:00' onChange={ this._inputChange } />
-            </div>
-            <div className="desc">
-              <input name="desc" value={ desc } onChange={ this._inputChange } />
-            </div>
-            <div className="buttonContainer">
-              <Button classes="primary md addItemBtn" icon="plus" onClick={ this._addNew }/>
-            </div>
-          </div>
-          <div className="errorContainer">
-            { errorText }
-          </div>
-        </divl>
+           <Agenda
+            agenda={this.props.body.agenda}
+            updateFirstDayState={this._updateFirstDayState}
+            date={date}
+          />
       </div>
     );
-  };
-
-  _deleteItem = id => {
-    const newAgenda = [
-      ...this.props.body.agenda.slice(0, id),
-      ...this.props.body.agenda.slice(id + 1)
-    ];
-
-    return this._updateFirstDayState('agenda', newAgenda);
   };
 
   _toggleCouponInput = () => {
@@ -245,45 +182,6 @@ class SlideFirstDay extends Component {
     return onChange(slideKey, updatedSlide, slide_number);
   };
 
-  _inputChange = e => {
-    const { agenda } =  this.props.body;
-    const { name, value } = e.target;
-
-    this.setState({
-      [name]: value
-    });
-  };
-
-  _addNew = e => {
-    e.preventDefault();
-
-    const { agenda } =  this.props.body;
-    const { desc, startTime, finishTime } = this.state;
-    const { date } = this.props;
-
-    // Validation to make sure that the start date is before the finish date
-    if (moment(date + ' ' + finishTime).diff(moment(date + ' ' + startTime)) <= 0) {
-      this.setState({
-        errorMessage: 'Start time must be before Finish time, please correct the dates and try again'
-      });
-      return;
-    }
-
-    this.setState({
-      ...this.state,
-      desc: '',
-      startTime: finishTime,
-      finishTime: moment(date + ' ' + finishTime).add(1, 'hour').format('H:mm'),
-      errorMessage: null
-    });
-
-    const newAgenda = [
-      ...agenda,
-      { desc, startTime: +moment(date + ' ' + startTime).format('x'), finishTime: +moment(date + ' ' + finishTime).format('x') }
-    ];
-
-    return this._updateFirstDayState('agenda', newAgenda);
-  };
 };
 
 export default SlideFirstDay;
