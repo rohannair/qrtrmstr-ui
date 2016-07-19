@@ -15,12 +15,6 @@ import PlaybookKnowledgeCentre from '../../components/PlaybookKnowledgeCentre';
 import PlaybookBio from '../../components/PlaybookBio';
 import MapContainer from '../../containers/MapContainer';
 
-// Mock
-const userInfo = {
-  firstName: 'JerKhurram',
-  lastName: 'Shakirani'
-};
-
 const PlaybookCards = (props) => {
 
   const {
@@ -77,7 +71,6 @@ const PlaybookCards = (props) => {
           <PlaybookBio
             { ...field }
             onSubmit={ submitAction }
-            userInfo={ userInfo }
             onChange={ onChange }
             submittedDoc={ submittedDocProp }
             findSlideKey={ findSlideKey }>
@@ -202,11 +195,8 @@ const PlaybookCards = (props) => {
 
 
     case 'intro':
-      const introFilled = {
-        ...field,
-        heading: field.heading.replace('\${user}', userInfo.firstName).replace('Scotia Bank', 'Scotiabank')
-      };
-      return <PlaybookTextCard key={field.slide_number} {...introFilled} />;
+      return <PlaybookTextCard key={field.slide_number} {...field} />;
+
     default:
       return null;
     }

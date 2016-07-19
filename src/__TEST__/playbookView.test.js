@@ -1,6 +1,5 @@
 import test from 'ava';
 import {
-  TOGGLE_OPEN_CARD,
   ADD_SLIDE,
   REMOVE_SLIDE,
   SAVING_PLAYBOOK,
@@ -384,41 +383,6 @@ test(SAVING_PLAYBOOK, t=> {
   );
 });
 
-// TOGGLE_OPEN_CARD
-test(TOGGLE_OPEN_CARD, t => {
-  const action = {
-    type: TOGGLE_OPEN_CARD,
-    cardID: 'foo'
-  };
-
-  const state = {
-    name: 'bar',
-    openCards: []
-  };
-
-  const state_after = {
-    name: 'bar',
-    openCards: ['foo']
-  };
-
-  t.plan(2);
-
-  t.deepEqual(
-    playbookView(state, action),
-    state_after,
-    'CardID needs to be added to state.openCards if it isn\'t there'
-  );
-
-  t.deepEqual(
-    playbookView(state_after, action),
-    state,
-    'CardID needs to be removed from state.openCards if it\'s already there'
-  );
-
-
-});
-
-
 // PLAYBOOK_MODIFIED 1
 test(PLAYBOOK_MODIFIED, t => {
   const action = {
@@ -449,6 +413,10 @@ test(PLAYBOOK_MODIFIED, t => {
         }
       ],
       total: 3
+    },
+    playbook: {
+      id: 2,
+      name: 'baz'
     }
   };
 
@@ -471,7 +439,11 @@ test(PLAYBOOK_MODIFIED, t => {
       total: 3,
     },
     saveStatus: 'SAVED',
-    message: 'this works'
+    message: 'this works',
+    playbook: {
+      id: 2,
+      name: 'foo'
+    }
   };
 
   t.plan(1);
@@ -514,6 +486,10 @@ test(PLAYBOOK_MODIFIED, t => {
         }
       ],
       total: 3
+    },
+    playbook: {
+      id: 2,
+      name: 'baz'
     }
   };
 
@@ -540,7 +516,11 @@ test(PLAYBOOK_MODIFIED, t => {
       total: 3,
     },
     saveStatus: 'SAVED',
-    message: 'this works'
+    message: 'this works',
+    playbook: {
+      id: 9,
+      name: 'foo'
+    }
   };
 
   t.plan(1);
@@ -552,4 +532,3 @@ test(PLAYBOOK_MODIFIED, t => {
 
 
 });
-
