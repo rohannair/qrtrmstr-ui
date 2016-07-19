@@ -38,22 +38,17 @@ Known bug... unknown fix. Bounty of 1 beer to whoever solves this problem for go
 1. Get Heroku toolbelt (`$ brew install heroku-toolbelt`)
 2. Make sure you have Heroku credentials for UI repo
 3. `$ heroku login`
-4. `$ source scripts/build-ui.sh`
-5. Grab the `app.js` url with the cache-revved hash code
-6. Replace `/public/app.js` at bottom of `public/index.html` with `/app.[whatever].js`
-7. Get Heroku static plugin: `$ heroku plugins:install heroku-cli-static`
-8. `$ heroku git:remote -a qrtrmstr-ui`
-9. `$ heroku static:deploy`
+4. Get Heroku static plugin: `$ heroku plugins:install heroku-cli-static`
+5. `$ heroku git:remote -a qrtrmstr-ui`
+6. `$ heroku static:deploy --remote master`
 
 
 ## Staging environment
 This must be run the first time you try you deploy to staging
 1. `$ heroku login`
-2. `$ heroku git:remote -a qrtrmstr-ui-staging -r staging`
+2. Get Heroku static plugin: `$ heroku plugins:install heroku-cli-static`
+3. `$ heroku git:remote -a qrtrmstr-ui-staging -r staging`
 
 These commands should be run everytime you want to deploy the dev branch to staging
 1. `$ heroku login`
-2. `$ source scripts/build-ui.sh`
-3. Grab the `app.js` url with the cache-revved hash code
-4. Replace `/public/app.js` at bottom of `public/index.html` with `/app.[whatever].js`
-5. `$ git push staging dev:master`
+2. `$ heroku static:deploy --remote staging`
