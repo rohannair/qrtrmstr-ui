@@ -44,7 +44,6 @@ class Agenda extends Component {
   }
 
   render() {
-    console.log('Re-rendering');
     const agenda = this.state.agenda;
 
     const items = agenda
