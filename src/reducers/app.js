@@ -99,7 +99,6 @@ export default function app(state = initialState, action) {
     };
 
   case USER_DELETED:
-    debugger;
     return {
       ...state,
       message,
