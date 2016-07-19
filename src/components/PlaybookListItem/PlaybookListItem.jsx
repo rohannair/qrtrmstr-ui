@@ -87,19 +87,6 @@ class PlaybookListItem extends Component {
     : (
         <div className="playbookName" onClick={(e) => this.setState({editingName: !this.state.editingName})}>
           <span >{this.state.name}</span>
-          <Button
-            onClick={(e) => this.setState({editingName: !this.state.editingName})}
-            classes= {
-              this.state.editingName
-              ? 'success sm'
-              : `transparent sm ${deactivateClasses}`
-            }
-            icon={
-              this.state.editingName
-              ? 'check'
-              : 'pencil'
-            }
-          />
         </div>
       );
 
