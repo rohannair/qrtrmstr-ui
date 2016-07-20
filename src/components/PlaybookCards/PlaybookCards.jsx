@@ -141,8 +141,8 @@ const PlaybookCards = (props) => {
         const items = groupedDates[item].map((val, i) => {
           return (
             <div className="agendaItem-details" key={i}>
-              <span className="agendaItem-time">{moment(val.startTime).format('h:mm')} - {moment(val.finishTime).format('h:mm A')}</span>
-              <span className="agendaItem-desc">{val.desc}</span>
+              <div className="agendaItem-time">{moment(val.startTime).format('h:mm')} - {moment(val.finishTime).format('h:mm A')}</div>
+              <div className="agendaItem-desc">{val.desc}</div>
             </div>
           );
         });
