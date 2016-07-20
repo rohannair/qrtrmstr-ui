@@ -2,6 +2,7 @@ import React from 'react';
 import classnames from 'classnames';
 import styles from './playbookCard.css';
 import moment from 'moment';
+import groupBy from 'lodash/groupBy';
 
 // Containers
 import Uploader from '../../containers/Uploader';
@@ -132,12 +133,24 @@ const PlaybookCards = (props) => {
       );
 
     case 'day1agenda':
-      const agenda = field.body.agenda.map((val, i) => {
+
+      const groupedDates = groupBy(field.body.agenda, (x) => moment(x.startTime).format('MMM Do'));
+
+      const things = Object.keys(groupedDates).map((item, index) => {
+
+        const items = groupedDates[item].map((val, i) => {
+          return (
+            <div className="agendaItem-details" key={i}>
+              <span className="agendaItem-time">{moment(val.startTime).format('h:mm')} - {moment(val.finishTime).format('h:mm A')}</span>
+              <span className="agendaItem-desc">{val.desc}</span>
+            </div>
+          );
+        });
+
         return (
-          <div className="agendaItem" key={`agendaItem-${i}`}>
-            <span className="agendaItem-time">{moment(val.startTime).format('MMM Do')}</span>
-            <span className="agendaItem-time">{moment(val.startTime).format('h:mm')} - {moment(val.finishTime).format('h:mm A')}</span>
-            <span className="agendaItem-desc">{val.desc}</span>
+          <div className="agendaItem-container" key={index}>
+            <div className="agendaItem-header">{moment(groupedDates[item][0].startTime).format('MMM Do, YYYY')}</div>
+            { items }
           </div>
         );
       });
@@ -187,7 +200,9 @@ const PlaybookCards = (props) => {
               <div className="header">
                 Agenda
               </div>
-              { agenda }
+              <div className="agendaItem">
+                { things }
+              </div>
             </div>
           </div>
         </Card>
