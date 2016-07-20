@@ -3,39 +3,33 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 10px;
+  padding: 10px 0;
   width: 100%;
 
   border-bottom: 1px solid #CCC;
 
-  &-date {
-    width: 14%;
+  > div {
+    display: flex;
+    padding: 10px;
   }
 
-  &-date-input {
-    width: 14%;
-  }
+  .dates {
+    flex-direction: column;
+    font-size: 0.85em;
+    margin-right: 10px;
 
-  &-time {
-    width: 11%;
-  }
-
-  &-time-input {
-    width: 11%;
+    .date {
+      font-weight: bold;
+      font-size: 0.95rem;
+    }
   }
 
   input {
     width: 100%;
-    height: 100%;
-    height: 36px;
   }
 
   &-desc {
-    width: 54%;
-  }
-
-  &-desc-input {
-    width: 54%;
+    flex-grow: 1;
   }
 
   &-toolButtonContainer {
@@ -46,6 +40,25 @@
   &-confirmEditBtn {
     width: 10%;
     padding-left: 12px;
+  }
+
+  &.editing {
+
+    .dates {
+      flex-direction: row;
+    }
+
+    label {
+      margin-right: 10px;
+      font-size: 0.95em;
+      color: #444;
+      margin-bottom: 2px;
+
+      span {
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+    }
   }
 
 }

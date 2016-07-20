@@ -1,4 +1,5 @@
 .agenda-footer {
+  width: 100%;
   border-top: 1px solid #CCC;
   padding-top: 20px;
   display: flex;
@@ -37,4 +38,10 @@
     width: 100%;
     height: 36px;
   }
+}
+
+.agenda-items .agenda-footer {
+  margin-top: 0;
+  padding: 10px;
+  border-top: 0;
 }
