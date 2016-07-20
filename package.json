@@ -15,12 +15,13 @@
     "newComp": "babel-node ./scripts/newComponent.js",
     "newCont": "babel-node ./scripts/newContainer.js",
     "dev": "NODE_ENV=development node server.js",
-    "test": "babel-tape-runner ./src/**/*.test.js | tap-spec",
+    "test": "ava --tap | faucet",
     "lint": "eslint --ext .js --ext .jsx src",
     "lint:fix": "eslint --ext .js --ext .jsx src --fix"
   },
   "devDependencies": {
     "autoprefixer": "^6.2.1",
+    "ava": "0.15.2",
     "babel-cli": "^6.6.5",
     "babel-core": "^6.3.21",
     "babel-eslint": "^6.0.2",
@@ -77,20 +78,23 @@
     "webpack-split-by-path": "0.0.10"
   },
   "dependencies": {
+    "babel-polyfill": "6.9.1",
     "classnames": "^2.2.3",
     "cookies-js": "^1.2.2",
     "draft-js": "^0.7.0",
     "draft-js-export-html": "^0.2.2",
     "draft-js-import-html": "^0.1.6",
+    "enzyme": "2.4.1",
     "form-data": "^1.0.0-rc4",
     "isomorphic-fetch": "^2.2.0",
     "jwt-decode": "^2.0.1",
     "lodash": "^4.11.1",
     "moment": "^2.13.0",
     "moment-range": "^2.2.0",
-    "react": "15.2.0",
+    "react": "15.2.1",
     "react-addons-create-fragment": "^15.1.0",
-    "react-dom": "15.2.0",
+    "react-addons-test-utils": "15.2.1",
+    "react-dom": "15.2.1",
     "react-flip-move": "^2.0.5",
     "react-hot-loader": "^3.0.0-beta.2",
     "react-paginate": "^2.1.1",
@@ -100,5 +104,21 @@
     "redux": "^3.4.0",
     "redux-thunk": "^2.0.1",
     "ress": "^1.0.1"
+  },
+  "ava": {
+    "files": [
+      "src/__TEST__/*.test.js"
+    ],
+    "source": [
+      "**/*.{js,jsx}",
+      "!dist/**/*"
+    ],
+    "concurrency": 5,
+    "failFast": true,
+    "tap": true,
+    "require": [
+      "babel-register"
+    ],
+    "babel": "inherit"
   }
 }

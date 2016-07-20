@@ -1,0 +1,48 @@
+.agenda {
+  width: 100%;
+  margin: 20px 0;
+
+  &-header {
+    display: flex;
+    flex-direction: row;
+    height: 35px;
+    align-items: center;
+    color: #FFF;
+    background-color: #2E404E;
+    font-weight: bold;
+    padding-left: 10px;
+  }
+
+  .agendaDateTitle {
+    width: 14%;
+  }
+
+  .agendaTimeTitle {
+    width: 11%;
+  }
+
+  .agendaDescTitle {
+    width: 54%;
+  }
+
+  .agendaToolTitle {
+    width: 10%;
+  }
+
+  &-items {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: left;
+
+    &:nth-child(odd) {
+      background-color: #F0F0F0;
+    }
+  }
+
+  > .agenda-footer {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
+}

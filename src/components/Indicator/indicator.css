@@ -1,0 +1,28 @@
+.indicator {
+  background-color: #FFF;
+  border-radius: 100%;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+  height: 12px;
+  position: relative;
+  width: 12px;
+
+  &.success,
+  &.success strong {
+    background-color: #73E275;
+  }
+
+  &.info,
+  &.info strong {
+    background-color: #5ED7F6;
+  }
+
+  &.warning,
+  &.warning strong {
+    background-color: #F5D171;
+  }
+
+  &.danger,
+  &.danger strong {
+    background-color: #F8827E;
+  }
+}

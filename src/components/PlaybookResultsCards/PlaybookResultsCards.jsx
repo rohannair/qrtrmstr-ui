@@ -47,10 +47,8 @@ const PlaybookResultsCards = (props) => {
       : null;
 
       return (
-        <Card key={ field.slide_number } footer={<div/>}>
+        <Card key={ field.slide_number } title={field.body.heading}>
           <div className="bio-results">
-            <h2>{field.body.heading}</h2>
-
             <div className="profileImage">
               <img src={ field.body.options.profile_image.url } />
             </div>
@@ -72,14 +70,14 @@ const PlaybookResultsCards = (props) => {
 
         return (
           <div key={val.id} className="equipment-choice">
-            <span>{val.name + ': ' + field.body.options[ind].optNames }</span>
+            <span>{val.name + ': '}</span>
+            { field.body.options[ind].optNames }
           </div>
         );
       });
 
       return (
-        <Card key={field.slide_number} footer={<div/>}>
-          <h2>{field.heading}</h2>
+        <Card key={field.slide_number} title={field.heading}>
           <div className="equipment-form">
             { opts }
           </div>
@@ -88,7 +86,7 @@ const PlaybookResultsCards = (props) => {
 
     case 'knowledgectr':
       return (
-        <Card key={field.slide_number} footer={<div/>}>
+        <Card key={field.slide_number}>
           <PlaybookKnowledgeCentre { ...field } />
         </Card>
       );
@@ -97,6 +95,7 @@ const PlaybookResultsCards = (props) => {
       const agenda = field.body.agenda.map((val, i) => {
         return (
           <div className="agendaItem" key={`agendaItem-${i}`}>
+            <span className="agendaItem-time">{moment(val.startTime).format('MMM Do')}</span>
             <span className="agendaItem-time">{moment(val.startTime).format('h:mm')} - {moment(val.finishTime).format('h:mm A')}</span>
             <span className="agendaItem-desc">{val.desc}</span>
           </div>
@@ -113,7 +112,7 @@ const PlaybookResultsCards = (props) => {
       : null;
 
       return (
-        <Card key={field.slide_number} footer={<div/>}>
+        <Card key={field.slide_number}>
           <h2>{field.heading} - <span>{moment(field.date).format('MMMM D YYYY')}</span></h2>
           <div className="day1-body">
             <div className="day1-map">
@@ -167,7 +166,7 @@ const PlaybookResultsCards = (props) => {
   });
 
   return (
-    <div className="PlaybookResultsCards">
+    <div className="playbookResultsCards">
       { cards }
     </div>
   );

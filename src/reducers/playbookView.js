@@ -1,6 +1,5 @@
 import omit from 'lodash/omit';
 import {
-  TOGGLE_OPEN_CARD,
   ADD_SLIDE,
   REMOVE_SLIDE,
   SAVING_PLAYBOOK,
@@ -104,7 +103,6 @@ export default function playbookView(state = initialState, action) {
 
     // If slide doesn't exist (which is weird...)
     if (!(slide_number in playbook.doc)) return state;
-
     return {
       ...state,
       playbook: {
@@ -119,20 +117,6 @@ export default function playbookView(state = initialState, action) {
       },
       saveStatus: 'UNSAVED',
     };
-
-  case TOGGLE_OPEN_CARD:
-    const { openCards } = state;
-    const isInArray = openCards.indexOf(action.cardID);
-
-    if (isInArray > -1) {
-      return {
-        ...state,
-        openCards: [
-          ...openCards.slice(0, isInArray),
-          ...openCards.slice(isInArray + 1)
-        ]
-      };
-    }
 
     return {
       ...state,
@@ -172,7 +156,8 @@ export default function playbookView(state = initialState, action) {
           ...list.results.slice(pos + 1)
         ],
         total: list.total
-      }
+      },
+      playbook: newPlaybook.result
     };
 
   default:

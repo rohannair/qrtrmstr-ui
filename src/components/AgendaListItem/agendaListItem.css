@@ -1,0 +1,64 @@
+.agendaItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  width: 100%;
+
+  border-bottom: 1px solid #CCC;
+
+  > div {
+    display: flex;
+    padding: 10px;
+  }
+
+  .dates {
+    flex-direction: column;
+    font-size: 0.85em;
+    margin-right: 10px;
+
+    .date {
+      font-weight: bold;
+      font-size: 0.95rem;
+    }
+  }
+
+  input {
+    width: 100%;
+  }
+
+  &-desc {
+    flex-grow: 1;
+  }
+
+  &-toolButtonContainer {
+    padding-left: 10px;
+    margin-left: auto;
+  }
+
+  &-confirmEditBtn {
+    width: 10%;
+    padding-left: 12px;
+  }
+
+  &.editing {
+
+    .dates {
+      flex-direction: row;
+    }
+
+    label {
+      margin-right: 10px;
+      font-size: 0.95em;
+      color: #444;
+      margin-bottom: 2px;
+
+      span {
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+    }
+  }
+
+}

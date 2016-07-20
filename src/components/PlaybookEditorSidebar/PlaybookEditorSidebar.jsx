@@ -25,6 +25,7 @@ const PlaybookEditorSidebar = (props) => {
             saveStatus={ props.saveStatus }
             saveType=''
           />
+
           <Link
             to={`/playbook/${props.id}`}
             className="btn tertiary block md"
@@ -33,6 +34,17 @@ const PlaybookEditorSidebar = (props) => {
           >
               Preview
           </Link>
+        </ButtonGroup>
+      </Card>
+
+      <Card>
+        <ButtonGroup vertical>
+          <Button
+            onClick={ props.insertNewSlide }
+            classes='tertiary block md'
+            >
+            Insert Text Slide
+          </Button>
         </ButtonGroup>
       </Card>
     </div>

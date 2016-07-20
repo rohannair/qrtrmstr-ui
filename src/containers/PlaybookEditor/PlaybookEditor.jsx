@@ -5,16 +5,20 @@ import { Link } from 'react-router';
 import Cookies from 'cookies-js';
 import moment from 'moment';
 
+// Constants
+import slideTypes from '../../constants/slideTypes';
+
 // Containers
 import {
-  updatePlaybookState,
+  editPlaybook,
   getSinglePlaybook,
-  toggleOpenCard,
   addSlide,
   modifyPlaybook,
   reorderPlaybook,
   isSaving
-} from '../../actions/playbookViewActions';
+} from '../../actions/playbookEditorActions';
+
+import { insertNewSlide } from '../../actions/playbookViewActions';
 
 // Styles
 import styles from './playbookEditor.css';
@@ -59,7 +63,7 @@ class PlaybookEditor extends Component {
   render() {
     const { playbook, saveStatus } = this.props;
 
-    const RemoveEquipmentTab = this.state.showModal
+    const RemoveEquipmentDialog = this.state.showModal
     ? <Dialog
         onAction={ this._removeOption }
         buttonAction='Remove'
@@ -71,24 +75,28 @@ class PlaybookEditor extends Component {
 
     const playbookDoc = playbook.doc && Object.keys(playbook.doc).length > 0
     ? Object.keys(playbook.doc).map(val => {
+
       const slide = playbook.doc[val];
-      let header = (
-        <PlaybookEditorHeader val={ val } moveSlide={this._moveSlide}>
-          {`Section ${parseInt(val) + 1}`}
-        </PlaybookEditorHeader>);
+      const header = <PlaybookEditorHeader val={ val } moveSlide={ this._moveSlide } slideType={ slideTypes[slide.type] || '' } hidden={slide.hidden} toggleVisibility={ this._toggleSlideVisibility } />;
 
       switch (slide.type) {
       case 'intro':
         return (
           <Card key={val} title={ header }>
-            <SlideIntro key={ val } { ...slide } onChange={ this._updateSlide } />
+            <SlideIntro
+              { ...slide }
+              onChange={ this._updateSlide }
+            />
           </Card>
         );
 
       case 'bio':
         return (
-        <Card key={val} title={ header }>
-            <SlideBio key={ val } {...slide} onChange={ this._updateSlide } />
+          <Card key={val} title={ header }>
+            <SlideBio
+              {...slide}
+              onChange={ this._updateSlide }
+            />
           </Card>
         );
 
@@ -108,7 +116,10 @@ class PlaybookEditor extends Component {
       case 'knowledgectr':
         return (
         <Card key={val} title={ header }>
-            <SlideKnowledgeCenter {...slide} onChange={ this._updateSlide } />
+            <SlideKnowledgeCenter
+              {...slide}
+              onChange={ this._updateSlide }
+            />
           </Card>
         );
 
@@ -143,7 +154,7 @@ class PlaybookEditor extends Component {
     : '';
 
     return (
-      <div className="playbookEditor">
+      <div className="playbookEditor container">
         <PlaybookEditorBody>
           { playbookDoc}
         </PlaybookEditorBody>
@@ -151,8 +162,9 @@ class PlaybookEditor extends Component {
           save={this._savePlaybook}
           saveStatus={ saveStatus }
           id={ playbookID }
+          insertNewSlide={this._insertNewSlide}
         />
-        { RemoveEquipmentTab }
+        { RemoveEquipmentDialog }
       </div>
       );
   };
@@ -224,7 +236,7 @@ class PlaybookEditor extends Component {
     const updatedSlide = {
       [key]: value
     };
-    return dispatch(updatePlaybookState(slideKey, updatedSlide));
+    return dispatch(editPlaybook(slideKey, updatedSlide));
   };
 
   _savePlaybook = () => {
@@ -238,9 +250,16 @@ class PlaybookEditor extends Component {
     return dispatch(reorderPlaybook(i, direction));
   };
 
-  _toggleOpen = (e) => {
-    const { dispatch } = this.props;
-    return dispatch(toggleOpenCard(e.target.id));
+  _toggleSlideVisibility = (n) => {
+    const { token, dispatch, playbook, params } = this.props;
+    const slide = playbook.doc[n];
+
+    const updatedSlide = {
+      ...slide,
+      hidden: !slide.hidden
+    };
+
+    return dispatch(editPlaybook(n, updatedSlide));
   };
 
   _addNewSlide = (e) => {
@@ -256,6 +275,12 @@ class PlaybookEditor extends Component {
     };
 
     return dispatch(addSlide(newID, slideInfo));
+  };
+
+  _insertNewSlide = () => {
+    const { token, dispatch } = this.props;
+    const { playbookID } = this.props.params;
+    dispatch(insertNewSlide(token, playbookID));
   };
 };
 

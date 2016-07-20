@@ -8,25 +8,31 @@ import Card from '../../components/Card';
 import Button from '../../components/Button';
 import ButtonGroup from '../../components/ButtonGroup';
 import NewUserModal from '../../components/NewUserModal';
+import UserListItem from '../../components/UserListItem';
+import NewRoleModal from '../../components/NewRoleModal';
 
 import Table from '../../components/Table';
 
 import {
   getUsers,
   createUser,
+  createRole,
   newUserErrors,
   getRoles,
-  linkAccount
+  linkAccount,
+  deleteUser
 } from '../../actions/userActions';
 
 class UserList extends Component {
   state = {
     newUser: {},
+    newRole: {},
     loading: false,
     errorMessage: this.props.errorMessage || null,
     offset: 0,
     pageNum: 1,
-    perPage: 10
+    perPage: 10,
+    roleErrorMessage: this.props.roleErrorMessage || null
   };
 
   static contextTypes = {
@@ -50,11 +56,12 @@ class UserList extends Component {
       window.location = nextProps.authUrl;
     }
 
-    const { newUser, errorMessage } = this.state;
+    const { newUser, newRole, errorMessage } = this.state;
     this.setState({
       loading: false,
       newUser: nextProps.errorMessage ? newUser : {},
-      errorMessage: nextProps.errorMessage
+      errorMessage: nextProps.errorMessage,
+      newRole: nextProps.errorMessage ? newRole : {}
     });
   };
 
@@ -66,7 +73,7 @@ class UserList extends Component {
         renderModal={this._renderNewUserModal}
         submitNewUser={this._addNewUser}
         onChange={this._changeUserParams}
-        closeModal={this._closePlaybookModal}
+        closeModal={this._closeUserModal}
         loading={this.state.loading}
         errorMessage={this.state.errorMessage}
         roles={this.props.roles}
@@ -74,81 +81,64 @@ class UserList extends Component {
       />
     : null;
 
-    const tableBody = this.props.users.results.map(row => {
+    const newRoleForm = Object.keys(this.state.newRole).length > 0 || this.state.roleErrorMessage
+    ? <NewRoleModal
+        val={this.state.newRole}
+        showModal={true}
+        renderModal={this._renderNewRoleModal}
+        submitNewRole={this._addNewRole}
+        onChange={this._changeRoleParams}
+        closeModal={this._closeRoleModal}
+        loading={this.state.loading}
+        errorMessage={this.state.roleErrorMessage}
+      />
+    : null;
 
-      const profile_img = row.profile_img || '';
-      const admin_pill = row.is_admin
-      ? <span className="admin">Admin</span>
-      : '';
-      const deactivateClasses = row.is_admin
-      ? 'disabled'
-      : null;
-
+    const tableBody = this.props.users.results.map((row, i) => {
       return (
-        <div key={ row.id } className="table-row">
-          <div className="cell name">
-            <div className="profile-img">
-              <img src={row.profile_img} alt=""/>
-            </div>
-
-            { `${row.firstName} ${row.lastName}` } { admin_pill }
-          </div>
-
-          <div className="cell email">
-            <a href={`mailto:${row.username}`}>{row.username}</a>
-          </div>
-
-          <div className="cell role">
-            { row.rolename }
-          </div>
-
-          <div className="cell actions">
-            <ButtonGroup>
-              <Button
-                classes='sm tertiary'
-                icon="pencil" />
-              <Button
-                classes= { `sm tertiary ${deactivateClasses}` }
-                disabled={row.is_admin}
-                icon="times"/>
-            </ButtonGroup>
-          </div>
-        </div>
+        <UserListItem
+          key={i}
+          { ...row }
+          deleteUser={this._deleteUser}
+        />
       );
     });
 
     return (
-      <div className="userList">
+      <div className="userList container">
+        <div className="userList-actionBar">
+          <h2 className="heading">Users</h2>
 
-      <div className="userList-actionBar">
-        <Button onClick={this._renderNewUserModal} classes="primary md">New user +</Button>
-      </div>
+          <ButtonGroup>
+            <Button onClick={this._renderNewRoleModal} classes="inverse lg">New Role +</Button>
+            <Button onClick={this._renderNewUserModal} classes="primary lg">New User +</Button>
+          </ButtonGroup>
+        </div>
 
         <Table headings = {['name', 'email', 'role', 'actions']} >
           { tableBody }
           <div className="userList-metadata">
             {`Total users: ${this.props.users.total}`}
-            <div id="paginate">
-              <ReactPaginate
-                previousLabel=" "
-                nextLabel=" "
-                breakLabel={<a href="">...</a>}
-                pageNum={Math.ceil(this.props.users.total / this.state.perPage)}
-                marginPagesDisplayed={1}
-                pageRangeDisplayed={2}
-                clickCallback={this._handlePageClick}
-                containerClassName="pagination"
-                subContainerClassName="pages pagination"
-                activeClassName="active"
-                previousLinkClassName="fa fa-arrow-left tertiary"
-                nextLinkClassName="fa fa-arrow-right tertiary"
-              />
-            </div>
+            <ReactPaginate
+              previousLabel=" "
+              nextLabel=" "
+              breakLabel={<a href="">...</a>}
+              pageNum={Math.ceil(this.props.users.total / this.state.perPage)}
+              marginPagesDisplayed={1}
+              pageRangeDisplayed={2}
+              clickCallback={this._handlePageClick}
+              containerClassName="pagination"
+              subContainerClassName="pages pagination"
+              activeClassName="active"
+              previousLinkClassName="fa fa-arrow-left tertiary"
+              nextLinkClassName="fa fa-arrow-right tertiary"
+            />
           </div>
         </Table>
 
         <div className="modalContainer">
           { newUserForm }
+          { newRoleForm }
         </div>
       </div>
     );
@@ -159,9 +149,16 @@ class UserList extends Component {
     dispatch(newUserErrors(null));
   };
 
-  _closePlaybookModal = () => {
+  _closeUserModal = () => {
     this.setState({
       newUser: {}
+    });
+    this._clearUserErrors();
+  };
+
+  _closeRoleModal = () => {
+    this.setState({
+      newRole: {}
     });
     this._clearUserErrors();
   };
@@ -193,6 +190,16 @@ class UserList extends Component {
     });
   };
 
+  _renderNewRoleModal = () => {
+
+    this.setState({
+      newRole: {
+        name: ''
+      },
+      errorMessage: null
+    });
+  };
+
   _changeUserParams = (key, val) => {
     const { newUser } = this.state;
     this.setState({
@@ -203,12 +210,31 @@ class UserList extends Component {
     });
   };
 
+  _changeRoleParams = (name) => {
+    this.setState({
+      newRole: {
+        name: name
+      }
+    });
+  };
+
   _validateField = (val) => !!val;
 
   _addNewUser = () => {
     this.setState({
       loading: true
     }, this._processNewUser());
+  };
+
+  _addNewRole = () => {
+    this.setState({
+      loading: true
+    }, this._processNewRole());
+  };
+
+  _processNewRole = () => {
+    const { token, dispatch } = this.props;
+    return dispatch(createRole(token, this.state.newRole));
   };
 
   _processNewUser = () => {
@@ -244,6 +270,12 @@ class UserList extends Component {
     allErrors.length > 0 ? dispatch(newUserErrors(allErrors)) : dispatch(createUser(token, data));
   };
 
+  _deleteUser = (id, firstName, lastName) => {
+    const { token, dispatch } = this.props;
+    const deleteConfirm = confirm(`Are you sure you want to delete ${firstName} ${lastName}?`);
+    if (deleteConfirm) dispatch(deleteUser(token, id));
+  }
+
   _handlePageClick = (data) => {
     const offset = Math.ceil(data.selected * this.state.perPage);
     this.setState({ offset });
@@ -277,6 +309,7 @@ function mapStateToProps(state) {
     token,
     users: state.app.users,
     errorMessage: state.app.errorMessage,
+    roleErrorMessage: state.app.roleErrorMessage,
     roles: state.app.roles,
     authUrl: state.app.authUrl
   };
