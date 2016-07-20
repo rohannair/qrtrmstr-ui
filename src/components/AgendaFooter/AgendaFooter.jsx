@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styles from './agendaFooter.css';
 
 import moment from 'moment';
+import classNames from 'classnames';
 import Button from '../Button';
 
 class AgendaFooter extends Component {
@@ -28,6 +29,18 @@ class AgendaFooter extends Component {
 
 
   render() {
+    const icon = this.props.icon === 'check'
+    ? 'check'
+    : 'plus';
+
+    const buttonClasses = classNames(
+      'md',
+      {
+        success: this.props.icon === 'check',
+        primary: this.props.icon !== 'check'
+      }
+    );
+
     return (
       <div className="agenda-footer">
         <div className="dateInput">
@@ -47,7 +60,7 @@ class AgendaFooter extends Component {
           <input name="desc" value={ this.state.desc } type="text" onChange={ this._inputChange } />
         </div>
         <div className="toolButtonContainer">
-          <Button classes="primary md" icon="plus" onClick={ e => this.addItem(e) }/>
+          <Button classes={buttonClasses} icon={icon} onClick={ e => this.addItem(e) }/>
         </div>
       </div>
     );

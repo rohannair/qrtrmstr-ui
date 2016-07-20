@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import styles from './agendaListItem.css';
 
 import Button from '../Button';
+import AgendaFooter from '../AgendaFooter';
+
 import moment from 'moment';
 
 class AgendaListItem extends Component {
@@ -30,60 +32,54 @@ class AgendaListItem extends Component {
     });
   };
 
-
   render() {
 
     if (this.state.editing) {
-      return (
-        <div className="agendaItem">
-          <div className="agendaItem-date-input">
-            <input type="date" value={this.state.itemDate} name="date" onChange={ e => this.setState({ itemDate: e.target.value}) } />
-          </div>
-          <div className="agendaItem-time-input">
-            <input name="startTime" value={ this.state.startTime } type="time" max='24:00' onChange={ e => this.setState({ startTime: e.target.value}) } />
-          </div>
-          <div className="agendaItem-time-input">
-            <input name="finishTime" value={ this.state.finishTime } type="time" max='24:00' onChange={ e => this.setState({ finishTime: e.target.value})  } />
-          </div>
-          <div className="agendaItem-desc">
-            <input name="desc" value={ this.state.desc } onChange={ e => this.setState({ desc: e.target.value})  } />
-          </div>
-          <div className="agendaItem-confirmEditBtn">
-            <Button classes="success sm" icon="check" onClick={ e => this._updateItem() } />
-          </div>
-        </div>
-      );
+      return <AgendaFooter
+        startTime={moment(this.props.startTime).format('HH:mm')}
+        finishTime={moment(this.props.finishTime).format('HH:mm')}
+        itemDate={moment(this.props.itemDate).format('YYYY-MM-DD')}
+        desc={this.props.desc}
+        addNew={ this._editItem }
+        icon="check"
+      />;
     }
 
     return (
-        <div className="agendaItem">
-          <div className="agendaItem-date">{ moment(this.props.startTime).format('MMM DD, YYYY') }</div>
-          <div className="agendaItem-time">{moment(this.props.startTime).format('h:mm A')}</div>
-          <div className="agendaItem-time">{moment(this.props.finishTime).format('h:mm A')}</div>
-          <div className="agendaItem-desc">{this.state.desc}</div>
-          <div className="agendaItem-toolButtonContainer">
-            <Button
-              classes="transparent"
-              icon="pencil"
-              onClick={ e => this.setState({ editing: true}) }
-            />
-            <Button
-              classes="transparent"
-              icon="times"
-              onClick={ e => this.props.deleteItem(this.state.id) }
-            />
-          </div>
+      <div className="agendaItem">
+        <div className="dates">
+          <div className="date">{ moment(this.props.startTime).format('MMM DD, YYYY') }</div>
+          { moment(this.props.startTime).format('hh:mm A') + ' to ' + moment(this.props.finishTime).format('hh:mm A')}
         </div>
-      );
+        <div className="agendaItem-desc">{this.state.desc}</div>
+        <div className="agendaItem-toolButtonContainer">
+          <Button
+            classes="transparent"
+            icon="pencil"
+            onClick={ e => this.setState({ editing: true}) }
+          />
+          <Button
+            classes="transparent"
+            icon="times"
+            onClick={ e => this.props.deleteItem(this.state.id) }
+          />
+        </div>
+      </div>
+    );
   };
 
-  _updateItem = () => {
-    const { id, desc } = this.state;
+  _editItem = (start, finish, itemDate, desc) => {
+    const { id } = this.state;
     const { date } = this.props;
-    const startTime = +moment(this.state.itemDate + ' ' + this.state.startTime).format('x');
-    const finishTime = +moment(this.state.itemDate + ' ' + this.state.finishTime).format('x');
+
+    const startTime = +moment(itemDate + ' ' + start).format('x');
+    const finishTime = +moment(itemDate + ' ' + finish).format('x');
+
     this.props.editItem({ startTime, finishTime, desc}, id);
-    return this.setState({editing: false});
+
+    return this.setState({
+      editing: false
+    });
   }
 }
 
