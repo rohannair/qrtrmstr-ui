@@ -46,8 +46,11 @@ select {
 
 .container {
   width: 80%;
-  min-width: 1280px;
   padding: 30px;
+
+  @media (max-width: 30em) {
+    min-width: 1280px;
+  }
 }
 
 .app-login {
