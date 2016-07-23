@@ -37,5 +37,5 @@ app.listen(8080, 'localhost', function(err) {
     return;
   }
 
-  console.log('App served at localhost:8080. Remember to use a subdomain!');
+  console.log('🐑 💨 💨 App served at http://localhost:8080.');
 });
