@@ -7,14 +7,14 @@
   "main": "index.js",
   "engines": {
     "node": "6.2.2"
-  },
+},
   "scripts": {
     "prebuild": "npm run clean",
     "build": "NODE_ENV=production node_modules/.bin/webpack -p",
     "clean": "rimraf public/",
     "newComp": "babel-node ./scripts/newComponent.js",
     "newCont": "babel-node ./scripts/newContainer.js",
-    "dev": "NODE_ENV=development node server.js",
+    "dev": "NODE_ENV=development DEBUG=webpack:* node server.js",
     "test": "ava --tap | faucet",
     "lint": "eslint --ext .js --ext .jsx src",
     "lint:fix": "eslint --ext .js --ext .jsx src --fix"
