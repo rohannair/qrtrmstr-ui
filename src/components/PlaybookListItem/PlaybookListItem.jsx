@@ -58,28 +58,39 @@ class PlaybookListItem extends Component {
         { id: this.props.id, name: this.props.name}
     );
 
-    const viewSubPlaybookBtn = playbookSent
-    ? (!playbookScheduled
-        ? <Link to={`/dashboard/playbook/results/${this.props.id}`} className="btn inverse sm">
-          View Results
-          <span>{` (${this.props.percent_submitted * 100}%)`}</span>
+    const viewSubPlaybookBtn = () => {
+      switch (current_status) {
+      case 'sent':
+        return (
+          <Link to={`/dashboard/playbook/results/${this.props.id}`} className="btn inverse sm">
+            View Results
+            <span>{` (${this.props.percent_submitted * 100}%)`}</span>
           </Link>
-        : <Button
+        );
+      case 'scheduled':
+        return (
+          <Button
             onClick={ () => this.props.cancelScheduledPlaybook(this.props.id) }
             classes={'tertiary sm'}
-          >Cancel</Button>)
-    : <span>
-        <Link to={`/dashboard/playbooks/edit/${this.props.id}`} className={'btn primary sm'}>Edit</Link>
-        <Button
-          onClick={ canOpen }
-          classes={'tertiary sm'}
-        >Send Now</Button>
-        <Button
-          onClick={ this.props.showScheduleModal.bind(this, { id: this.props.id, name: this.props.name}) }
-          classes='inverse sm'
-          toolTipText="Schedule Playbook"
-        >Schedule</Button>
-      </span>;
+          >Cancel</Button>
+        );
+      default:
+        return (
+          <span>
+            <Link to={`/dashboard/playbooks/edit/${this.props.id}`} className={'btn primary sm'}>Edit</Link>
+            <Button
+              onClick={ canOpen }
+              classes={'tertiary sm'}
+            >Send Now</Button>
+            <Button
+              onClick={ this.props.showScheduleModal.bind(this, { id: this.props.id, name: this.props.name}) }
+              classes='inverse sm'
+              toolTipText="Schedule Playbook"
+            >Schedule</Button>
+          </span>
+        );
+      };
+    };
 
     const scheduledNotification = playbookScheduled
     ? <div className="section"> <strong>Scheduled For:</strong> { moment(+this.props.scheduledFor).format('dddd, MMMM Do YYYY, h:mm a') }</div>
@@ -135,7 +146,8 @@ class PlaybookListItem extends Component {
               icon="copy"
               toolTipText="Duplicate Playbook"
             />
-            { viewSubPlaybookBtn }
+             { viewSubPlaybookBtn() }
+
           </ButtonGroup>
           <Indicator
             info={current_status === 'sent'}
