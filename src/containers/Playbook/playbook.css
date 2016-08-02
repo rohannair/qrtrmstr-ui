@@ -3,7 +3,6 @@
 
   .app-header .logo {
     font-size: 3em;
-    font-family: Poppins;
   }
 
   .app-footer {
@@ -20,81 +19,14 @@ h5,
 h6,
 strong {
   color: #30343F;
-  font-weight: 500;
 }
 
 .slideFooter {
-  float: right;
-  margin: 10px 5px;
+  width: 100%;
+  margin: 10px 0;
+  text-align: right;
 
   .btn.equipSub {
-    float: right;
-    margin-right: 15px;
-  }
-}
-
-.progressbar {
-  display: flex;
-  flex-direction: row;
-  margin: 0;
-  justify-content: space-between;
-
-  &-item {
-    flex-grow: 1;
-    transform: translateX(12.5px);
-
-    &:last-child {
-      flex-grow: 0;
-      margin-right: 12.5px;
-
-      span {
-        width: calc(100% - 15px);
-      }
-    }
-
-    &::after {
-      display: flex;
-      flex-grow: 1;
-      content: '';
-      height: 15px;
-      width: 25px;
-      height: 25px;
-      border: 5px solid #CCC;
-      background: #FFF;
-      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
-      border-radius: 9999px;
-      transform: translateX(-12.5px);
-      z-index: 5;
-    }
-
-    &.active {
-
-      &::after {
-        border-color: #EE6352;
-      }
-    }
-
-    &.done {
-
-      &::after {
-        border-color: #E95041;
-        background: #444;
-      }
-
-      span {
-        background: #EE6352;
-      }
-    }
-
-    span {
-      display: block;
-      width: 100%;
-      height: 10px;
-      background: #DDD;
-      top: 17px;
-      position: relative;
-      z-index: 0;
-    }
   }
 }
 
@@ -105,7 +37,7 @@ strong {
   margin: 0 auto;
   padding: 40px 0;
 
-  @media(max-width: 30em) {
+  @media(max-width: 64em) {
     width: 100%;
     padding: 40px 20px;
   }
@@ -134,21 +66,6 @@ strong {
   ul,
   ol {
     line-height: 1.5;
-  }
-
-  p {
-
-    a:link,
-    a:visited {
-      color: #337AB7;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    a:hover {
-      padding-bottom: 2px;
-      border-bottom: 2px solid #337AB7;
-    }
   }
 
   ul {
@@ -201,7 +118,9 @@ strong {
 
     &.selected {
       border-color: #337AB7;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(255, 255, 255, 0.9) inset;
+      box-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.2),
+        0 1px 0 rgba(255, 255, 255, 0.9) inset;
       color: #337AB7;
     }
 
@@ -217,7 +136,6 @@ strong {
 
     p {
       font-size: 14px;
-
     }
 
     img,
@@ -229,7 +147,6 @@ strong {
 
     .img-placeholder {
       min-height: 120px;
-
     }
 
     &:hover {
@@ -249,14 +166,14 @@ strong {
 
 .day1-map {
   font-size: 18px;
-  padding: 0 20px;
+  padding: 0 20px 0 0;
+  flex-grow: 1;
 
   @media (max-width: 30em) {
     padding: 0;
   }
 
   &.mapDesc {
-    margin-left: 5%;
 
     @media (max-width: 30em) {
       margin-left: 0;
@@ -277,8 +194,7 @@ strong {
     }
 
     a {
-      font-weight: normal;
-      color: #337AB7;
+
       font-weight: bold;
 
       &:hover {
@@ -297,27 +213,29 @@ strong {
   }
 
   .uber-promo {
-    background: #30343F;
+    background: #F8F8F9;
     border-radius: 3px;
-    color: #FFF;
-    text-align: center;
-    padding: 20px;
+    border: 1px solid color(#F8F8F9 lightness(-5%));
+    box-shadow: 0 2px 0 color(#F8F8F9 lightness(-5%));
+    color: #30343f;
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 0.9em;
     font-weight: normal;
-    margin-top: 30px;
+    text-align: center;
 
     strong {
       display: block;
       font-weight: bold;
-      color: #EE6352;
+      color: #337ab7;
       font-size: 1.2em;
-      margin: 3px 3px 0;
     }
   }
 }
 
 .day1-agenda {
   width: 50%;
-  padding: 0 20px;
+  padding: 0 0 0 20px;
   font-size: 18px;
 
   @media (max-width: 30em) {
@@ -347,8 +265,7 @@ strong {
   .agendaItem {
     display: flex;
     flex-direction: column;
-    margin-left: 10px;
-    padding: 0 10px 20px;
+    padding: 0 0 20px;
     margin-bottom: 20px;
     border-bottom: 1px solid #E3E3E3;
 
@@ -364,40 +281,38 @@ strong {
     }
 
     &-header {
-      background-color: #EE6352;
+      background-color: #30343f;
       height: 40px;
+      line-height: 40px;
       color: #FFF;
       font-weight: bold;
-      padding-top: 10px;
-      padding-left: 10px;
-      border-radius: 3px;
-
+      text-align: center;
     }
 
     &-details {
-      margin-top: 10px;
-      margin-bottom: 10px;
       display: flex;
       flex-direction: row;
+      padding: 10px 0;
+
+      &:nth-child(odd) {
+        background-color: #f1f1f1;
+      }
     }
 
     &-time {
       text-align: right;
       width: 35%;
-      padding-right: 20px;
-      margin-left: 5px;
+      padding: 0 10px;
       font-weight: bold;
+      font-size: 0.9em;
       color: #30343F;
-
     }
 
     &-desc {
-      width: 50%;
-      padding-left: 20px;
-
+      width: 65%;
+      padding-left: 10px;
     }
   }
-
 }
 
 .equipment-form {
@@ -421,7 +336,6 @@ strong {
 
   select {
     display: block;
-    padding: 5px;
     width: 100%;
     height: 2em;
     line-height: 2em;
