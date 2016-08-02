@@ -4,6 +4,10 @@
   flex-wrap: wrap;
   flex-grow: 1;
 
+  @media (max-width: 30em) {
+    flex-direction: column;
+  }
+
   &-sidebar {
     padding-top: 40px;
     width: 25%;
@@ -11,11 +15,23 @@
     align-items: center;
     justify-content: center;
     text-align: center;
+
+    @media (max-width: 30em) {
+      width: 100%;
+      order: 0;
+      padding: 20px 0;
+    }
   }
 
   &-body {
     width: calc(75%);
     padding: 40px 30px;
+
+    @media (max-width: 30em) {
+      padding: 20px 10px;
+      width: 100%;
+      order: 2;
+    }
   }
 
   .cell {
