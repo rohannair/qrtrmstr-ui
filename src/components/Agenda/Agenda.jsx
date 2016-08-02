@@ -67,8 +67,6 @@ class Agenda extends Component {
       <div className="agenda">
         <div className="agenda-header">
           <div className="agendaDateTitle">Date</div>
-          <div className="agendaTimeTitle">Start</div>
-          <div className="agendaTimeTitle">End</div>
           <div className="agendaDescTitle">Description</div>
           <div className="agendaToolTitle">Tools</div>
         </div>
