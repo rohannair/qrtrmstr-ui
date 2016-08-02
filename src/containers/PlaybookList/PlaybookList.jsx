@@ -12,6 +12,8 @@ import styles from './playbookList.css';
 import {
   getPlaybooks,
   sendPlaybook,
+  schedulePlaybook,
+  cancelPlaybookEmail,
   duplicatePlaybook,
   assignPlaybook,
   updateMessage,
@@ -25,6 +27,7 @@ import Card from '../../components/Card';
 import Table from '../../components/Table';
 
 import AssignPlaybookModal from '../../components/AssignPlaybookModal';
+import SchedulePlaybookModal from '../../components/SchedulePlaybookModal';
 import EditPlaybookModal from '../../components/EditPlaybookModal';
 import PlaybookListItem from '../../components/PlaybookListItem';
 
@@ -74,6 +77,16 @@ class PlaybookList extends Component {
       />
     : null;
 
+    const schedulePlaybookModal = visibleModal === 'schedule'
+    ? <SchedulePlaybookModal
+        closeModal={ this._closeModal }
+        playbook={ this.state.modalData }
+        users={ this.props.users.results }
+        action={ this._schedulePlaybook }
+        title={'Schedule'}
+      />
+    : null;
+
     const assignPlaybookModal = visibleModal === 'assign'
     ? <AssignPlaybookModal
         closeModal={ this._closeModal }
@@ -91,8 +104,10 @@ class PlaybookList extends Component {
         users={ this.props.users.results }
         sendPlaybook={ this._sendPlaybookToAssignedUser }
         duplicatePlaybook={ this._duplicatePlaybook }
+        cancelScheduledPlaybook={ this._cancelScheduledPlaybook }
         showAssignModal={ this._showAssignModal }
         showSendModal={ this._showSendModal }
+        showScheduleModal={ this._showScheduleModal }
         savePlaybook={ this._savePlaybook }
         clearAssigned={ this._clearAssigned }
       />
@@ -132,12 +147,14 @@ class PlaybookList extends Component {
         </div>
 
         { sendPlaybookModal }
+        { schedulePlaybookModal }
         { assignPlaybookModal }
       </div>
     );
   };
 
   _closeModal = () => this.setState({ visibleModal: null, modalData: {} });
+
   _openModal = (visibleModal, playbook, state = null) => {
     this.setState({
       visibleModal,
@@ -170,6 +187,13 @@ class PlaybookList extends Component {
     this._openModal('assign', assignedPlaybook);
   };
 
+  _showScheduleModal = (val) => {
+    const scheduledPlaybook = [...this.props.playbookList.results]
+      .filter(item => item.id === val.id)[0];
+
+    this._openModal('schedule', scheduledPlaybook);
+  };
+
   _closeAlert = () => {
     const { dispatch } = this.props;
     dispatch(updateMessage(null));
@@ -188,6 +212,28 @@ class PlaybookList extends Component {
     };
 
     return dispatch(sendPlaybook(token, welcomeEmailParams));
+  };
+
+  _schedulePlaybook = (id, { selected }, sendAt) => {
+    const { token, dispatch } = this.props;
+
+    const welcomeEmailParams = {
+      userId: selected.id,
+      firstName: selected.firstName,
+      lastName: selected.lastName,
+      email: selected.username,
+      playbookId: id,
+      emailTemplate: 'welcomeEmail',
+      sendAt
+    };
+
+    return dispatch(schedulePlaybook(token, welcomeEmailParams));
+  };
+
+  _cancelScheduledPlaybook = (id) => {
+    const { token, dispatch } = this.props;
+    const deleteCheck = confirm('Are you sure you want to cancel this scheduled email?');
+    if (deleteCheck) return dispatch(cancelPlaybookEmail(token, { playbookId: id }));
   };
 
   _savePlaybook = (id, payload) => {

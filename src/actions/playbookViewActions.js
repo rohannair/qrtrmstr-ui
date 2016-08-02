@@ -54,6 +54,14 @@ export const sendPlaybook = (token, payload) =>
   dispatch => post(`${API_ROOT}playbook/send`, token, payload)
   .then(data => dispatch(playbookModified(data)));
 
+export const schedulePlaybook = (token, payload) =>
+  dispatch => post(`${API_ROOT}playbook/schedule`, token, payload)
+  .then(data => dispatch(playbookModified(data)));
+
+export const cancelPlaybookEmail = (token, payload) =>
+  dispatch => post(`${API_ROOT}playbook/schedule/cancel`, token, payload)
+  .then(data => dispatch(playbookModified(data)));
+
 export const duplicatePlaybook = (token, id) =>
   dispatch => post(`${API_ROOT}playbooks/duplicate`, token, {id})
   .then(data => dispatch(addNewPlaybook(data.result)));

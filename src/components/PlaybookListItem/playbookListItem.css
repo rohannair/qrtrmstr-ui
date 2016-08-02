@@ -6,7 +6,7 @@
   border-bottom: 1px solid #F2F3F6;
 
   @media (max-width: 30em) {
-    border: 1px solid #ccc;
+    border: 1px solid #CCC;
     margin-top: 10px;
     border-radius: 3px;
     padding: 10px;
