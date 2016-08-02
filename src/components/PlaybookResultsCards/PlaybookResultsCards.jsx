@@ -130,7 +130,7 @@ const PlaybookResultsCards = (props) => {
                 <div className="day1-item">
                   <i className="material-icons">location_on</i>
                   { field.detailed_location }
-                  <a href={ dirLoc }> Get Directions</a>
+                  <a href={ dirLoc }>Get Directions</a>
                 </div>
                 <div className="day1-item">
                   <i className="material-icons">person</i>

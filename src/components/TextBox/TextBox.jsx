@@ -245,7 +245,7 @@ class TextBox extends Component {
   _onURLChange = (e) => this.setState({ urlValue: e.target.value });
 };
 
-function findLinkEntities(contentBlock, callback) {
+function findLinkEntities(contentBlock, cb) {
   contentBlock.findEntityRanges(
     (character) => {
       const entityKey = character.getEntity();
@@ -254,7 +254,8 @@ function findLinkEntities(contentBlock, callback) {
         Entity.get(entityKey).getType() === 'LINK'
       );
     },
-    callback
+
+    cb
   );
 }
 
