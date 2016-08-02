@@ -62,6 +62,7 @@ export const wrapper = (options) => (WrappedComponent) => {
         google: this.state.google,
         mapComponent: this.refs.map
       });
+
       return (
         <div>
           <WrappedComponent {...props} />

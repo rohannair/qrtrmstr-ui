@@ -36,7 +36,7 @@ const devPlugins = [
   new StyleLintPlugin({
     configFile: './.stylelintrc',
     files: ['src/**/*.css'],
-    failOnError: false,
+    failOnError: false
   }),
   new webpack.HotModuleReplacementPlugin()
 ];
