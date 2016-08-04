@@ -36,7 +36,7 @@ class PlaybookListItem extends Component {
     : null;
 
     const btnClickHandler = this.props.showAssignModal.bind(this,
-      { id, name: this.props.name}
+      { id, name: this.props.name }
     );
 
     const assignedTo = playbookSent

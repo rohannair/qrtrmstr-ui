@@ -107,7 +107,7 @@ class PlaybookList extends Component {
         closeModal={ this._closeModal }
         playbook={ this.state.modalData }
         users={ this.props.users.results }
-        action={ this._savePlaybook }
+        action={ this._assignPlaybook }
         title={'Assign'}
       />
     : null;
@@ -212,6 +212,12 @@ class PlaybookList extends Component {
   _closeAlert = () => {
     const { dispatch } = this.props;
     dispatch(updateMessage(null));
+  };
+
+  _assignPlaybook = (id, { selected }) => {
+    const { id: userId } = selected;
+    const { token, dispatch } = this.props;
+    return dispatch(assignPlaybook(token, id, userId));
   };
 
   _sendPlaybook = (id, { selected, emailTemplate }) => {

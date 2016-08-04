@@ -4,6 +4,8 @@ import {
   ADD_NEW_PLAYBOOK,
   UPDATE_MESSAGE,
   PLAYBOOK_MODIFIED,
+  PLAYBOOK_ASSIGNMENT_SUCCESS,
+  PLAYBOOK_ASSIGNMENT_PENDING,
 } from '../constants';
 
 export const isSaving = () => {
@@ -11,6 +13,19 @@ export const isSaving = () => {
     type: SAVING_PLAYBOOK
   };
 };
+
+const playbookAssigned = () =>
+  ({ type: PLAYBOOK_ASSIGNMENT_SUCCESS, payload: {...arguments} });
+const attemptPlaybookAssignment = () =>
+  ({ type: PLAYBOOK_ASSIGNMENT_PENDING });
+
+// Playbook Assignment
+export const assignPlaybook = (token, playbookId, userId) =>
+  dispatch => {
+    dispatch(attemptPlaybookAssignment());
+    return post(`${API_ROOT}assignPlaybook`, token, { userId, playbookId })
+    .then(data => dispatch(playbookAssigned(userId, playbookId)));
+  };
 
 // Playbooks Retrieved action
 function playbooksRetrieved(playbookList = { results: [], total: 0 }) {
@@ -65,10 +80,6 @@ export const cancelPlaybookEmail = (token, payload) =>
 export const duplicatePlaybook = (token, id) =>
   dispatch => post(`${API_ROOT}playbooks/duplicate`, token, {id})
   .then(data => dispatch(addNewPlaybook(data.result)));
-
-export const assignPlaybook = (token, id, userId) =>
-  dispatch => post(`${API_ROOT}playbooks/${id}`, token, { assigned: userId })
-  .then(data => dispatch(playbookModified(data)));
 
 // Get All Playbooks
 export const getPlaybooks = (token, offset, limit) =>
