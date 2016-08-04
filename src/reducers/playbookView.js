@@ -36,6 +36,7 @@ export default function playbookView(state = initialState, action) {
     playbookList,
     slideID,
     slideInfo,
+    slide_number,
     type,
     userId
   } = action;
@@ -52,8 +53,7 @@ export default function playbookView(state = initialState, action) {
   case SINGLE_PLAYBOOK_RETRIEVED:
     return {
       ...state,
-      playbook: playbook,
-      users: users
+      playbook: playbook
     };
 
   case ADD_NEW_PLAYBOOK:
@@ -115,15 +115,15 @@ export default function playbookView(state = initialState, action) {
 
   case EDIT_SLIDE:
     // If slide doesn't exist (which is weird...)
-    if (!(slide_number in playbook.doc)) return state;
+    if (!(slide_number in state.playbook.doc)) return state;
     return {
       ...state,
       playbook: {
         ...state.playbook,
         doc: {
-          ...playbook.doc,
+          ...state.playbook.doc,
           [slide_number]: {
-            ...playbook.doc[slide_number],
+            ...state.playbook.doc[slide_number],
             ...data
           }
         }

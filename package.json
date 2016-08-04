@@ -15,7 +15,7 @@
     "newComp": "babel-node ./scripts/newComponent.js",
     "newCont": "babel-node ./scripts/newContainer.js",
     "dev": "NODE_ENV=development DEBUG=webpack:* node server.js",
-    "test": "ava --tap | faucet",
+    "test": "ava",
     "lint": "eslint --ext .js --ext .jsx src",
     "lint:fix": "eslint --ext .js --ext .jsx src --fix"
   },
@@ -103,7 +103,8 @@
     "react-router-redux": "^4.0.5",
     "redux": "^3.5.2",
     "redux-thunk": "^2.0.1",
-    "ress": "^1.0.1"
+    "ress": "^1.0.1",
+    "sort-keys": "1.1.2"
   },
   "ava": {
     "files": [
@@ -115,7 +116,6 @@
     ],
     "concurrency": 5,
     "failFast": true,
-    "tap": true,
     "require": [
       "babel-register"
     ],
