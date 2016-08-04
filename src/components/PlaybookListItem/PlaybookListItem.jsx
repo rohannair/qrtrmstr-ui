@@ -23,15 +23,16 @@ class PlaybookListItem extends Component {
   }
 
   render() {
-    const { current_status, id } = this.props;
+    const { current_status, id, users, assigned } = this.props;
     const playbookSent = current_status !== 'draft';
     const playbookScheduled  = current_status === 'scheduled';
+    const assignedUser = users.filter(val => val.id === assigned)[0];
 
-    const assignedName = this.props.firstName
-    ? `${this.props.firstName} ${this.props.lastName}`
+    const assignedName = this.props.assigned
+    ? `${assignedUser.firstName} ${assignedUser.lastName}`
     : 'Unassigned';
 
-    const unAssignAction = this.props.firstName
+    const unAssignAction = this.props.assigned
     ? <Button onClick={ this.props.clearAssigned.bind(this, id) } classes="sm transparent">&times;</Button>
     : null;
 
