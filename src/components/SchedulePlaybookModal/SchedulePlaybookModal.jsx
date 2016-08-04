@@ -47,7 +47,7 @@ class SchedulePlaybookModal extends Component {
 
     const emailOpts = Object.keys(emailTemplates).map(idx => {
       let template = emailTemplates[idx];
-      return <option key={template.id} value={template.id}>{template.name}</option>;
+      return <option key={template.id} value={template.id}>{template.displayName}</option>;
     });
 
     return (

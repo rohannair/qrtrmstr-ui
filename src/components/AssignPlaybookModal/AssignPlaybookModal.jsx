@@ -15,8 +15,7 @@ import Modal from '../Modal';
 class AssignPlaybookModal extends Component {
 
   state = {
-    selected: this.props.users[0] || {},
-    emailTemplate: this.props.emailTemplates[0] || ''
+    selected: this.props.users[0] || {}
   }
 
   componentDidMount() {
@@ -32,19 +31,13 @@ class AssignPlaybookModal extends Component {
       playbook,
       closeModal,
       users,
-      title,
-      emailTemplates
+      title
     } = this.props;
-    const { selected, emailTemplate } = this.state;
+    const { selected } = this.state;
 
     const opts = Object.keys(users).map(idx => {
       let user = users[idx];
       return <option key={user.id} value={user.id}>{user.firstName + ' ' + user.lastName}</option>;
-    });
-
-    const emailOpts = Object.keys(emailTemplates).map(idx => {
-      let template = emailTemplates[idx];
-      return <option key={template.id} value={template.id}>{template.name}</option>;
     });
 
     return (
@@ -53,15 +46,8 @@ class AssignPlaybookModal extends Component {
 
         <div className="formField">
           <label>{title} to user: </label>
-            <select className="inputIcon" value={ selected.id || selected } onChange={ this._onChangeUser }>
+            <select className="inputIcon" value={ selected.id || selected } onChange={ this._onChange }>
               { opts }
-            </select>
-        </div>
-
-        <div className="formField">
-          <label>Email Template: </label>
-            <select className="inputIcon" value={ emailTemplate.id || emailTemplate } onChange={ this._onChangeEmailTemplate }>
-              { emailOpts }
             </select>
         </div>
 
@@ -77,7 +63,7 @@ class AssignPlaybookModal extends Component {
     );
   };
 
-  _onChangeUser = e => {
+  _onChange = e => {
     e.stopPropagation();
     const selected = this.props.users.filter(val => val.id === e.target.value)[0];
     this.setState({
@@ -85,18 +71,10 @@ class AssignPlaybookModal extends Component {
     });
   };
 
-  _onChangeEmailTemplate = e => {
-    e.stopPropagation();
-    const emailTemplate = this.props.emailTemplates.filter(val => val.id === e.target.value)[0];
-    this.setState({
-      emailTemplate
-    });
-  };
-
   _actAndClose = () => {
     const { closeModal, action, playbook } = this.props;
 
-    action(playbook.id, this.state.selected);
+    action(playbook.id, this.state);
     closeModal();
   }
 

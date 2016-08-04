@@ -16,8 +16,7 @@ class SendPlaybookModal extends Component {
 
   state = {
     selected: this.props.users[0] || {},
-    time: '',
-    date: '',
+    emailTemplate: this.props.emailTemplates[0] || ''
   }
 
   componentDidMount() {
@@ -33,13 +32,19 @@ class SendPlaybookModal extends Component {
       playbook,
       closeModal,
       users,
-      title
+      title,
+      emailTemplates
     } = this.props;
-    const { selected } = this.state;
+    const { selected, emailTemplate } = this.state;
 
     const opts = Object.keys(users).map(idx => {
       let user = users[idx];
       return <option key={user.id} value={user.id}>{user.firstName + ' ' + user.lastName}</option>;
+    });
+
+    const emailOpts = Object.keys(emailTemplates).map(idx => {
+      let template = emailTemplates[idx];
+      return <option key={template.id} value={template.id}>{template.displayName}</option>;
     });
 
     return (
@@ -48,17 +53,16 @@ class SendPlaybookModal extends Component {
 
         <div className="formField">
           <label>{title} to user: </label>
-            <select className="inputIcon" value={ selected.id || selected } onChange={ this._onChange }>
+            <select className="inputIcon" value={ selected.id || selected } onChange={ this._onChangeUser }>
               { opts }
             </select>
         </div>
 
         <div className="formField">
-          <label>Schedule </label>
-            <span>Date:</span>
-            <input type="date" value={this.state.date} name="date" onChange={ e => this.setState({ date: e.target.value}) } />
-            <span>Time:</span>
-            <input name="startTime" value={ this.state.time } type="time" max='24:00' onChange={ e => this.setState({ time: e.target.value}) } />
+          <label>Email Template: </label>
+            <select className="inputIcon" value={ emailTemplate.id || emailTemplate } onChange={ this._onChangeEmailTemplate }>
+              { emailOpts }
+            </select>
         </div>
 
         <div className="modalFooter">
@@ -73,11 +77,19 @@ class SendPlaybookModal extends Component {
     );
   };
 
-  _onChange = e => {
-    // e.stopPropagation();
+  _onChangeUser = e => {
+    e.stopPropagation();
     const selected = this.props.users.filter(val => val.id === e.target.value)[0];
     this.setState({
       selected
+    });
+  };
+
+  _onChangeEmailTemplate = e => {
+    e.stopPropagation();
+    const emailTemplate = this.props.emailTemplates.filter(val => val.id === e.target.value)[0];
+    this.setState({
+      emailTemplate
     });
   };
 
