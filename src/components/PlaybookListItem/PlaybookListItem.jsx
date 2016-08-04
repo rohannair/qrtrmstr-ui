@@ -23,21 +23,32 @@ class PlaybookListItem extends Component {
   }
 
   render() {
-    const { current_status, id, users, assigned } = this.props;
+    const {
+      assigned,
+      cancelScheduledPlaybook,
+      clearAssigned,
+      current_status,
+      id,
+      name,
+      percent_submitted,
+      showAssignModal,
+      users,
+    } = this.props;
+
     const playbookSent = current_status !== 'draft';
     const playbookScheduled  = current_status === 'scheduled';
     const assignedUser = users.filter(val => val.id === assigned)[0];
 
-    const assignedName = this.props.assigned
+    const assignedName = assigned
     ? `${assignedUser.firstName} ${assignedUser.lastName}`
     : 'Unassigned';
 
-    const unAssignAction = this.props.assigned
-    ? <Button onClick={ this.props.clearAssigned.bind(this, id) } classes="sm transparent">&times;</Button>
+    const unAssignAction = assigned
+    ? <Button onClick={ clearAssigned.bind(this, id) } classes="sm transparent">&times;</Button>
     : null;
 
-    const btnClickHandler = this.props.showAssignModal.bind(this,
-      { id, name: this.props.name }
+    const btnClickHandler = showAssignModal.bind(this,
+      { id, name: name }
     );
 
     const assignedTo = playbookSent
@@ -55,36 +66,36 @@ class PlaybookListItem extends Component {
     ? ''
     : 'hidden';
 
-    const canOpen = this.props.showSendModal.bind(this,
-        { id: this.props.id, name: this.props.name}
-    );
+    const canOpen = this.props.showSendModal.bind(this, { id, name});
 
     const viewSubPlaybookBtn = () => {
       switch (current_status) {
       case 'sent':
         return (
-          <Link to={`/dashboard/playbook/results/${this.props.id}`} className="btn inverse sm">
+          <Link to={`/dashboard/playbook/results/${id}`} className="btn inverse sm">
             View Results
-            <span>{` (${this.props.percent_submitted * 100}%)`}</span>
+            <span>{` (${percent_submitted * 100}%)`}</span>
           </Link>
         );
+
       case 'scheduled':
         return (
           <Button
-            onClick={ () => this.props.cancelScheduledPlaybook(this.props.id) }
+            onClick={ () => cancelScheduledPlaybook(this.props.id) }
             classes={'tertiary sm'}
           >Cancel</Button>
         );
+
       default:
         return (
           <span>
-            <Link to={`/dashboard/playbooks/edit/${this.props.id}`} className={'btn primary sm'}>Edit</Link>
+            <Link to={`/dashboard/playbooks/edit/${id}`} className={'btn primary sm'}>Edit</Link>
             <Button
               onClick={ canOpen }
               classes={'tertiary sm'}
             >Send Now</Button>
             <Button
-              onClick={ this.props.showScheduleModal.bind(this, { id: this.props.id, name: this.props.name}) }
+              onClick={ this.props.showScheduleModal.bind(this, { id, name }) }
               classes='inverse sm'
               toolTipText="Schedule Playbook"
             >Schedule</Button>
@@ -97,7 +108,7 @@ class PlaybookListItem extends Component {
     ? <div className="section"> <strong>Scheduled For:</strong> { moment(+this.props.scheduledFor).format('dddd, MMMM Do YYYY, h:mm a') }</div>
     : null;
 
-    const name = this.state.editingName && !playbookSent
+    const playbookName = this.state.editingName && !playbookSent
     ? (
         <div className="editPlaybookName" >
           <input
@@ -120,7 +131,7 @@ class PlaybookListItem extends Component {
     return (
       <div key={ this.props.id } className="playbookListItem">
          <div className="main">
-          <div className="name">{ name }</div>
+          <div className="name">{ playbookName }</div>
 
           <div className="meta">
             <div className="section">
@@ -191,7 +202,7 @@ class PlaybookListItem extends Component {
   _sendPlaybook = (userID) => {
     let assignedUser = null;
 
-    if (this.props.assigned) {
+    if (assigned) {
       const assignedUserOrg = this.props.users.filter(val => val.id === userID)[0];
       assignedUser = {
         id: assignedUserOrg.id,
