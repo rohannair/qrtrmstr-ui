@@ -16,6 +16,7 @@ import {
   cancelPlaybookEmail,
   duplicatePlaybook,
   assignPlaybook,
+  unAssignPlaybook,
   updateMessage,
   modifyPlaybook } from '../../actions/playbookViewActions';
 import { getUsers } from '../../actions/userActions';
@@ -124,7 +125,7 @@ class PlaybookList extends Component {
         showSendModal={ this._showSendModal }
         showScheduleModal={ this._showScheduleModal }
         savePlaybook={ this._savePlaybook }
-        clearAssigned={ this._clearAssigned }
+        clearAssigned={ this._unassignPlaybook }
       />
     );});
 
@@ -218,6 +219,11 @@ class PlaybookList extends Component {
     const { id: userId } = selected;
     const { token, dispatch } = this.props;
     return dispatch(assignPlaybook(token, id, userId));
+  };
+
+  _unassignPlaybook = (id) => {
+    const { token, dispatch } = this.props;
+    return dispatch(unAssignPlaybook(token, id));
   };
 
   _sendPlaybook = (id, { selected, emailTemplate }) => {

@@ -14,17 +14,26 @@ export const isSaving = () => {
   };
 };
 
-const playbookAssigned = () =>
-  ({ type: PLAYBOOK_ASSIGNMENT_SUCCESS, payload: {...arguments} });
+const playbookAssigned = (userId, playbookId) =>
+  ({ type: PLAYBOOK_ASSIGNMENT_SUCCESS, userId, playbookId });
 const attemptPlaybookAssignment = () =>
   ({ type: PLAYBOOK_ASSIGNMENT_PENDING });
+const playbookUnAssigned = (id) =>
+  ({ type: PLAYBOOK_UNASSIGNMENT_PENDING, playbookId: id });
 
 // Playbook Assignment
 export const assignPlaybook = (token, playbookId, userId) =>
   dispatch => {
     dispatch(attemptPlaybookAssignment());
-    return post(`${API_ROOT}assignPlaybook`, token, { userId, playbookId })
+    return post(`${API_ROOT}playbooks/assign`, token, { userId, playbookId })
     .then(data => dispatch(playbookAssigned(userId, playbookId)));
+  };
+
+export const unAssignPlaybook = (token, playbookId) =>
+  dispatch => {
+    dispatch(attemptPlaybookAssignment());
+    return post(`${API_ROOT}playbooks/assign/delete`, token, { playbookId })
+    .then(data => dispatch(playbookUnAssigned(id)));
   };
 
 // Playbooks Retrieved action

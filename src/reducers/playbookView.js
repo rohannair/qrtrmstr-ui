@@ -10,6 +10,8 @@ import {
   UPDATE_MESSAGE,
   PLAYBOOK_MODIFIED,
   PLAYBOOK_ORDER_MODIFIED,
+  PLAYBOOK_ASSIGNMENT_SUCCESS,
+  PLAYBOOK_ASSIGNMENT_PENDING,
 } from '../constants';
 
 export const initialState = {
@@ -22,6 +24,8 @@ export const initialState = {
 };
 
 export default function playbookView(state = initialState, action) {
+
+  const { list } = state;
 
   switch (action.type) {
   case PLAYBOOKS_RETRIEVED:
@@ -135,9 +139,34 @@ export default function playbookView(state = initialState, action) {
       saveStatus: 'SAVING'
     };
 
+  case PLAYBOOK_ASSIGNMENT_SUCCESS:
+    const { userId, playbookId } = action;
+
+    const position = list.results.findIndex(val => {
+      debugger;
+      return val.id === playbookId;
+    });
+
+    const updatedPlaybook = {
+      ...list.results[position],
+      assigned: userId
+    };
+
+    // TODO: return updated list
+    return {
+      ...state,
+      list: {
+        ...state.list,
+        results: [
+          ...list.results.slice(0, position),
+          updatedPlaybook,
+          ...list.results.slice(position + 1)
+        ]
+      }
+    };
+
   case PLAYBOOK_MODIFIED:
     const { newPlaybook } = action;
-    const { list } = state;
     let pos = list.results.length;
     list.results.forEach((val, ind) => {
       if (val.id === newPlaybook.result.id) {
@@ -160,6 +189,7 @@ export default function playbookView(state = initialState, action) {
       playbook: newPlaybook.result
     };
 
+  case PLAYBOOK_ASSIGNMENT_PENDING:
   default:
     return state;
   }
