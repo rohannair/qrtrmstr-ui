@@ -18,7 +18,8 @@ class SchedulePlaybookModal extends Component {
   state = {
     selected: this.props.users[0] || {},
     time: '',
-    date: ''
+    date: '',
+    emailTemplate: this.props.emailTemplates[0] || ''
   }
 
   componentDidMount() {
@@ -34,13 +35,19 @@ class SchedulePlaybookModal extends Component {
       playbook,
       closeModal,
       users,
-      title
+      title,
+      emailTemplates
     } = this.props;
-    const { selected } = this.state;
+    const { selected, emailTemplate } = this.state;
 
-    const opts = Object.keys(users).map(idx => {
+    const userOpts = Object.keys(users).map(idx => {
       let user = users[idx];
       return <option key={user.id} value={user.id}>{user.firstName + ' ' + user.lastName}</option>;
+    });
+
+    const emailOpts = Object.keys(emailTemplates).map(idx => {
+      let template = emailTemplates[idx];
+      return <option key={template.id} value={template.id}>{template.displayName}</option>;
     });
 
     return (
@@ -49,8 +56,15 @@ class SchedulePlaybookModal extends Component {
 
         <div className="formField">
           <label>For user: </label>
-            <select className="inputIcon" value={ selected.id || selected } onChange={ this._onChange }>
-              { opts }
+            <select className="inputIcon" value={ selected.id || selected } onChange={ this._onChangeUser }>
+              { userOpts }
+            </select>
+        </div>
+
+        <div className="formField">
+          <label>Email Template: </label>
+            <select className="inputIcon" value={ emailTemplate.id || emailTemplate } onChange={ this._onChangeEmailTemplate }>
+              { emailOpts }
             </select>
         </div>
 
@@ -74,11 +88,19 @@ class SchedulePlaybookModal extends Component {
     );
   };
 
-  _onChange = e => {
-    // e.stopPropagation();
+  _onChangeUser = e => {
+    e.stopPropagation();
     const selected = this.props.users.filter(val => val.id === e.target.value)[0];
     this.setState({
       selected
+    });
+  };
+
+  _onChangeEmailTemplate = e => {
+    e.stopPropagation();
+    const emailTemplate = this.props.emailTemplates.filter(val => val.id === e.target.value)[0];
+    this.setState({
+      emailTemplate
     });
   };
 

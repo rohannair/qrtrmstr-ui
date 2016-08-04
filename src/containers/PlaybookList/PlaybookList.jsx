@@ -27,6 +27,7 @@ import Card from '../../components/Card';
 import Table from '../../components/Table';
 
 import AssignPlaybookModal from '../../components/AssignPlaybookModal';
+import SendPlaybookModal from '../../components/SendPlaybookModal';
 import SchedulePlaybookModal from '../../components/SchedulePlaybookModal';
 import EditPlaybookModal from '../../components/EditPlaybookModal';
 import PlaybookListItem from '../../components/PlaybookListItem';
@@ -43,7 +44,19 @@ class PlaybookList extends Component {
     modalData: {},
     offset: 0,
     pageNum: 1,
-    perPage: 10
+    perPage: 10,
+    emailTemplates : [
+      {
+        id: '1',
+        displayName: 'Welcome',
+        name: 'welcomeEmail'
+      },
+      {
+        id: '2',
+        displayName: 'General',
+        name: 'generalEmail'
+      }
+    ]
   };
 
   componentWillMount() {
@@ -68,10 +81,11 @@ class PlaybookList extends Component {
     const { visibleModal } = this.state;
 
     const sendPlaybookModal = visibleModal === 'send'
-    ? <AssignPlaybookModal
+    ? <SendPlaybookModal
         closeModal={ this._closeModal }
         playbook={ this.state.modalData }
         users={ this.props.users.results }
+        emailTemplates={ this.state.emailTemplates }
         action={ this._sendPlaybook }
         title={'Send'}
       />
@@ -82,6 +96,7 @@ class PlaybookList extends Component {
         closeModal={ this._closeModal }
         playbook={ this.state.modalData }
         users={ this.props.users.results }
+        emailTemplates={ this.state.emailTemplates }
         action={ this._schedulePlaybook }
         title={'Schedule'}
       />
@@ -199,35 +214,35 @@ class PlaybookList extends Component {
     dispatch(updateMessage(null));
   };
 
-  _sendPlaybook = (id, { selected }) => {
+  _sendPlaybook = (id, { selected, emailTemplate }) => {
     const { token, dispatch } = this.props;
 
-    const welcomeEmailParams = {
+    const emailParams = {
       userId: selected.id,
       firstName: selected.firstName,
       lastName: selected.lastName,
       email: selected.username,
       playbookId: id,
-      emailTemplate: 'welcomeEmail'
+      emailTemplate: emailTemplate.name
     };
 
-    return dispatch(sendPlaybook(token, welcomeEmailParams));
+    return dispatch(sendPlaybook(token, emailParams));
   };
 
-  _schedulePlaybook = (id, { selected }, sendAt) => {
+  _schedulePlaybook = (id, { selected, emailTemplate }, sendAt) => {
     const { token, dispatch } = this.props;
 
-    const welcomeEmailParams = {
+    const emailParams = {
       userId: selected.id,
       firstName: selected.firstName,
       lastName: selected.lastName,
       email: selected.username,
       playbookId: id,
-      emailTemplate: 'welcomeEmail',
+      emailTemplate: emailTemplate.name,
       sendAt
     };
 
-    return dispatch(schedulePlaybook(token, welcomeEmailParams));
+    return dispatch(schedulePlaybook(token, emailParams));
   };
 
   _cancelScheduledPlaybook = (id) => {
@@ -238,7 +253,6 @@ class PlaybookList extends Component {
 
   _savePlaybook = (id, payload) => {
     const { token, dispatch } = this.props;
-    console.log(payload);
     return dispatch(modifyPlaybook(token, payload, id));
   };
 
@@ -265,7 +279,7 @@ class PlaybookList extends Component {
         lastName: value.lastName,
         email: value.email,
         playbookId: value.playbookID,
-        emailTemplate: 'welcomeEmail'
+        emailTemplate: value.emailTemplate
       }
     });
   };
