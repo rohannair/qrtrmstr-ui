@@ -43,7 +43,17 @@ class PlaybookList extends Component {
     modalData: {},
     offset: 0,
     pageNum: 1,
-    perPage: 10
+    perPage: 10,
+    emailTemplates : [
+      {
+        id: '1',
+        name: 'welcomeEmail'
+      },
+      {
+        id: '2',
+        name: 'generalEmail'
+      }
+    ]
   };
 
   componentWillMount() {
@@ -72,6 +82,7 @@ class PlaybookList extends Component {
         closeModal={ this._closeModal }
         playbook={ this.state.modalData }
         users={ this.props.users.results }
+        emailTemplates={ this.state.emailTemplates }
         action={ this._sendPlaybook }
         title={'Send'}
       />
@@ -82,6 +93,7 @@ class PlaybookList extends Component {
         closeModal={ this._closeModal }
         playbook={ this.state.modalData }
         users={ this.props.users.results }
+        emailTemplates={ this.state.emailTemplates }
         action={ this._schedulePlaybook }
         title={'Schedule'}
       />
@@ -92,6 +104,7 @@ class PlaybookList extends Component {
         closeModal={ this._closeModal }
         playbook={ this.state.modalData }
         users={ this.props.users.results }
+        emailTemplates={ this.state.emailTemplates }
         action={ this._savePlaybook }
         title={'Assign'}
       />
@@ -208,7 +221,7 @@ class PlaybookList extends Component {
       lastName: selected.lastName,
       email: selected.username,
       playbookId: id,
-      emailTemplate: 'welcomeEmail'
+      emailTemplate: selected.emailTemplate
     };
 
     return dispatch(sendPlaybook(token, welcomeEmailParams));
@@ -223,7 +236,7 @@ class PlaybookList extends Component {
       lastName: selected.lastName,
       email: selected.username,
       playbookId: id,
-      emailTemplate: 'welcomeEmail',
+      emailTemplate: selected.emailTemplate,
       sendAt
     };
 
