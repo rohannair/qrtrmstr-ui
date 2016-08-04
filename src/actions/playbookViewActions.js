@@ -6,6 +6,7 @@ import {
   PLAYBOOK_MODIFIED,
   PLAYBOOK_ASSIGNMENT_SUCCESS,
   PLAYBOOK_ASSIGNMENT_PENDING,
+  PLAYBOOK_UNASSIGNMENT_SUCCESS
 } from '../constants';
 
 export const isSaving = () => {
@@ -19,7 +20,7 @@ const playbookAssigned = (userId, playbookId) =>
 const attemptPlaybookAssignment = () =>
   ({ type: PLAYBOOK_ASSIGNMENT_PENDING });
 const playbookUnAssigned = (id) =>
-  ({ type: PLAYBOOK_UNASSIGNMENT_PENDING, playbookId: id });
+  ({ type: PLAYBOOK_UNASSIGNMENT_SUCCESS, playbookId: id });
 
 // Playbook Assignment
 export const assignPlaybook = (token, playbookId, userId) =>
@@ -33,7 +34,7 @@ export const unAssignPlaybook = (token, playbookId) =>
   dispatch => {
     dispatch(attemptPlaybookAssignment());
     return post(`${API_ROOT}playbooks/assign/delete`, token, { playbookId })
-    .then(data => dispatch(playbookUnAssigned(id)));
+    .then(({id}) => dispatch(playbookUnAssigned(id)));
   };
 
 // Playbooks Retrieved action
