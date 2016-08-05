@@ -14,34 +14,23 @@ const componentName   = _.flowRight(_.upperFirst, _.camelCase)(name);
 const componentNameLC = _.camelCase(name);
 const dest            = path.join(__dirname, '..', 'src', 'components', componentName);
 
-const tests = `import test from 'tape';
-import dom from 'cheerio';
+const tests = `// Testing ${componentName}
+import test from 'ava';
 import React from 'react';
+import { shallow } from 'enzyme';
 
 import ${componentName} from './index.jsx';
+const wrapper = shallow(<${componentName}/>);
 
-const renderText = React.renderToStaticMarkup;
-
-test('${componentName}', next => {
-
-  next.test('...with no props', assert => {
-
-    const actual   = 'What is actual output';
-    const expected = 'What is expected output';
-
-    assert.equal(actual, expected,
-      'What should the feature do?');
-
-    assert.end();
-  });
+test('${componentName} does not explode', t => {
+  t.plan(1);
+  t.deepEqual(wrapper.length, 1, 'It exploded...');
 });
 `;
 
-const styleFile = `.${componentNameLC} {
+const styleFile = `.${componentNameLC} {}`;
 
-}`;
-
-const componentFile = `import React from 'react';
+const componentFile = `import React, { Proptypes } from 'react';
 import styles from './${componentNameLC}.css';
 
 const ${componentName} = (props) => {
@@ -50,6 +39,8 @@ const ${componentName} = (props) => {
     </div>
   );
 };
+
+${componentName}.proptypes = {};
 
 export default ${componentName};
 `;

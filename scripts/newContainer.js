@@ -14,26 +14,17 @@ const containerName   = _.flowRight(_.upperFirst, _.camelCase)(name);
 const containerNameLC = _.camelCase(name);
 const dest            = path.join(__dirname, '..', 'src', 'containers', containerName);
 
-const tests = `import test from 'tape';
-import dom from 'cheerio';
+const tests = `// Testing ${containerName}
+import test from 'ava';
 import React from 'react';
+import { shallow } from 'enzyme';
 
 import ${containerName} from './index.jsx';
+const wrapper = shallow(<${containerName}/>);
 
-const renderText = React.renderToStaticMarkup;
-
-test('${containerName}', next => {
-
-  next.test('...with no props', assert => {
-
-    const actual   = 'What is actual output';
-    const expected = 'What is expected output';
-
-    assert.equal(actual, expected,
-      'What should the feature do?');
-
-    assert.end();
-  });
+test('${containerName} does not explode', t => {
+  t.plan(1);
+  t.deepEqual(wrapper.length, 1, 'It exploded...');
 });
 `;
 
@@ -47,6 +38,27 @@ import { connect } from 'react-redux';
 import styles from './${containerNameLC}.css';
 
 class ${containerName} extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {};
+  }
+
+  static defaultProps = {
+
+  }
+
+  static propTypes = {
+
+  }
+
+  componentWillMount() {
+
+  }
+
+  componentDidMount() {
+
+  }
 
   render() {
     return (
