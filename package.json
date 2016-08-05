@@ -110,7 +110,7 @@
     "concurrency": 5,
     "failFast": true,
     "files": [
-      "src/__TEST__/*.test.js"
+      "src/**/*.test.js"
     ],
     "require": [
       "babel-register",
