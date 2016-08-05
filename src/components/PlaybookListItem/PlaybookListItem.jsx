@@ -70,6 +70,7 @@ class PlaybookListItem extends Component {
 
     const viewSubPlaybookBtn = () => {
       switch (current_status) {
+      case 'in progress':
       case 'sent':
         return (
           <Link to={`/dashboard/playbook/results/${id}`} className="btn inverse sm">
