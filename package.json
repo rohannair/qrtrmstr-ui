@@ -15,7 +15,7 @@
     "newComp": "babel-node ./scripts/newComponent.js",
     "newCont": "babel-node ./scripts/newContainer.js",
     "dev": "NODE_ENV=development DEBUG=webpack:* node server.js",
-    "test": "ava --tap | faucet",
+    "test": "ava --verbose",
     "lint": "eslint --ext .js --ext .jsx src",
     "lint:fix": "eslint --ext .js --ext .jsx src --fix"
   },
@@ -106,19 +106,19 @@
     "ress": "^1.0.1"
   },
   "ava": {
+    "babel": "inherit",
+    "concurrency": 5,
+    "failFast": true,
     "files": [
       "src/__TEST__/*.test.js"
+    ],
+    "require": [
+      "babel-register",
+      "ignore-styles"
     ],
     "source": [
       "**/*.{js,jsx}",
       "!dist/**/*"
-    ],
-    "concurrency": 5,
-    "failFast": true,
-    "tap": true,
-    "require": [
-      "babel-register"
-    ],
-    "babel": "inherit"
+    ]
   }
 }
