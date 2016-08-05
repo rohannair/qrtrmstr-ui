@@ -1,21 +1,12 @@
-import test from 'tape';
-import dom from 'cheerio';
+// Testing SlideIntro
+import test from 'ava';
 import React from 'react';
+import { shallow } from 'enzyme';
 
 import SlideIntro from './index.jsx';
+const wrapper = shallow(<SlideIntro/>);
 
-const renderText = React.renderToStaticMarkup;
-
-test('SlideIntro', next => {
-
-  next.test('...with no props', assert => {
-
-    const actual   = 'What is actual output';
-    const expected = 'What is expected output';
-
-    assert.equal(actual, expected,
-      'What should the feature do?');
-
-    assert.end();
-  });
+test('SlideIntro does not explode', t => {
+  t.plan(1);
+  t.deepEqual(wrapper.length, 1, 'It exploded...');
 });

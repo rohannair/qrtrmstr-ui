@@ -1,21 +1,12 @@
-import test from 'tape';
-import dom from 'cheerio';
+// Testing UserList
+import test from 'ava';
 import React from 'react';
+import { shallow } from 'enzyme';
 
 import UserList from './index.jsx';
+const wrapper = shallow(<UserList/>);
 
-const renderText = React.renderToStaticMarkup;
-
-test('UserList', next => {
-
-  next.test('...with no props', assert => {
-
-    const actual   = 'What is actual output';
-    const expected = 'What is expected output';
-
-    assert.equal(actual, expected,
-      'What should the feature do?');
-
-    assert.end();
-  });
+test('UserList does not explode', t => {
+  t.plan(1);
+  t.deepEqual(wrapper.length, 1, 'It exploded...');
 });

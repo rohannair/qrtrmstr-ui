@@ -1,21 +1,12 @@
-import test from 'tape';
-import dom from 'cheerio';
+// Testing Playbook
+import test from 'ava';
 import React from 'react';
+import { shallow } from 'enzyme';
 
-import * as Playbook from './index.jsx';
+import Playbook from './index.jsx';
+const wrapper = shallow(<Playbook/>);
 
-const renderText = React.renderToStaticMarkup;
-
-test('Playbook', next => {
-
-  next.test('...with no props', assert => {
-
-    const actual   = 'Output';
-    const expected = 'Output';
-
-    assert.equal(actual, expected,
-      'What should the feature do?');
-
-    assert.end();
-  });
+test('Playbook does not explode', t => {
+  t.plan(1);
+  t.deepEqual(wrapper.length, 1, 'It exploded...');
 });

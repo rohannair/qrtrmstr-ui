@@ -1,21 +1,12 @@
-import test from 'tape';
-import dom from 'cheerio';
+// Testing Card
+import test from 'ava';
 import React from 'react';
+import { shallow } from 'enzyme';
 
 import Card from './index.jsx';
+const wrapper = shallow(<Card/>);
 
-const renderText = React.renderToStaticMarkup;
-
-test('Card', next => {
-
-  next.test('...with no props', assert => {
-
-    const actual   = 'What is actual output';
-    const expected = 'What is expected output';
-
-    assert.equal(actual, expected,
-      'What should the feature do?');
-
-    assert.end();
-  });
+test('Card does not explode', t => {
+  t.plan(1);
+  t.deepEqual(wrapper.length, 1, 'It exploded...');
 });

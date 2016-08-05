@@ -1,21 +1,12 @@
-import test from 'tape';
-import dom from 'cheerio';
+// Testing PlaybookTextCard
+import test from 'ava';
 import React from 'react';
+import { shallow } from 'enzyme';
 
 import PlaybookTextCard from './index.jsx';
+const wrapper = shallow(<PlaybookTextCard/>);
 
-const renderText = React.renderToStaticMarkup;
-
-test('PlaybookTextCard', next => {
-
-  next.test('...with no props', assert => {
-
-    const actual   = 'What is actual output';
-    const expected = 'What is expected output';
-
-    assert.equal(actual, expected,
-      'What should the feature do?');
-
-    assert.end();
-  });
+test('PlaybookTextCard does not explode', t => {
+  t.plan(1);
+  t.deepEqual(wrapper.length, 1, 'It exploded...');
 });

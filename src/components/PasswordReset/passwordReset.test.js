@@ -1,21 +1,12 @@
-import test from 'tape';
-import dom from 'cheerio';
+// Testing PasswordReset
+import test from 'ava';
 import React from 'react';
+import { shallow } from 'enzyme';
 
 import PasswordReset from './index.jsx';
+const wrapper = shallow(<PasswordReset/>);
 
-const renderText = React.renderToStaticMarkup;
-
-test('PasswordReset', next => {
-
-  next.test('...with no props', assert => {
-
-    const actual   = 'What is actual output';
-    const expected = 'What is expected output';
-
-    assert.equal(actual, expected,
-      'What should the feature do?');
-
-    assert.end();
-  });
+test('PasswordReset does not explode', t => {
+  t.plan(1);
+  t.deepEqual(wrapper.length, 1, 'It exploded...');
 });

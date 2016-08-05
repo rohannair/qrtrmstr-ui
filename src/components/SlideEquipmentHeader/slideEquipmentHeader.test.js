@@ -1,21 +1,12 @@
-import test from 'tape';
-import dom from 'cheerio';
+// Testing SlideEquipmentHeader
+import test from 'ava';
 import React from 'react';
+import { shallow } from 'enzyme';
 
 import SlideEquipmentHeader from './index.jsx';
+const wrapper = shallow(<SlideEquipmentHeader/>);
 
-const renderText = React.renderToStaticMarkup;
-
-test('SlideEquipmentHeader', next => {
-
-  next.test('...with no props', assert => {
-
-    const actual   = 'What is actual output';
-    const expected = 'What is expected output';
-
-    assert.equal(actual, expected,
-      'What should the feature do?');
-
-    assert.end();
-  });
+test('SlideEquipmentHeader does not explode', t => {
+  t.plan(1);
+  t.deepEqual(wrapper.length, 1, 'It exploded...');
 });
