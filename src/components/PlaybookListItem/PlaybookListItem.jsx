@@ -45,7 +45,10 @@ class PlaybookListItem extends Component {
 
     const playbookSent = current_status !== 'draft';
     const playbookScheduled  = current_status === 'scheduled';
-    const assignedUser = users.filter(val => val.id === assigned)[0];
+    const assignedUser = users.filter(val => val.id === assigned)[0] || {
+      firstName: 'Unknown',
+      lastName: 'User'
+    };
 
     const assignedName = assigned
     ? `${assignedUser.firstName} ${assignedUser.lastName}`

@@ -79,7 +79,7 @@ class PlaybookList extends Component {
 
     console.log('------- TIME FOR CHECKS');
     console.log('Users', users);
-    if (users.results.length === 0) dispatch(getUsers(token));
+    if (users.results.length === 0) dispatch(getUsers(token, 0, 100));
 
     console.log('Playbook List', playbookList);
     if (playbookList.results.length === 0) dispatch(getPlaybooks(token, offset, perPage));
