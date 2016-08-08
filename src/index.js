@@ -30,9 +30,7 @@ render(
 
 // Hot Module Reloading
 if (__DEV__ && module.hot) {
-  console.warn('in!');
   module.hot.accept('./containers/Root', () => {
-    console.warn('hot! ./containers/Root');
     const NextRoot = require('./containers/Root').default;
 
     render(

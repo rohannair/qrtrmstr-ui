@@ -26,7 +26,7 @@ class SlideBio extends Component {
       return (
         <label key={val}>
           <input
-            for={val}
+            htmlFor={val}
             type="checkbox"
             checked={opt}
             onChange={ self._updateSlideOption.bind(self, val) }

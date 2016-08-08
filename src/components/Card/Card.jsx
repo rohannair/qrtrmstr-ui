@@ -32,7 +32,7 @@ const Header = (props) => {
 };
 
 const Footer = (props) => {
-  if (!props.children) return <span/>;
+  if (!props.children) return <span />;
   return <footer className="card-footer">{ props.children }</footer>;
 };
 

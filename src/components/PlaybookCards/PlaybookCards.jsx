@@ -68,7 +68,7 @@ const PlaybookCards = (props) => {
 
     case 'bio':
       return (
-        <Card key={ field.slide_number } footer={<div/>}>
+        <Card key={ field.slide_number }>
           <PlaybookBio
             { ...field }
             onSubmit={ submitAction }
@@ -113,7 +113,7 @@ const PlaybookCards = (props) => {
       });
 
       return (
-        <Card key={field.slide_number} footer={<div/>}>
+        <Card key={field.slide_number}>
           <h2>{field.heading}</h2>
           <div className = {field.body.textAlign || ''} dangerouslySetInnerHTML={{__html: field.body.desc}} />
           <div className="equipment-form">
@@ -127,7 +127,7 @@ const PlaybookCards = (props) => {
 
     case 'knowledgectr':
       return (
-        <Card key={field.slide_number} footer={<div/>}>
+        <Card key={field.slide_number}>
           <PlaybookKnowledgeCentre { ...field } />
         </Card>
       );
@@ -165,7 +165,7 @@ const PlaybookCards = (props) => {
       : null;
 
       return (
-        <Card key={field.slide_number} footer={<div/>}>
+        <Card key={field.slide_number}>
           <h2>{field.heading} - <span>{moment(field.date).format('MMMM D YYYY')}</span></h2>
           <div className="day1-body">
             <div className="day1-map">
@@ -179,11 +179,11 @@ const PlaybookCards = (props) => {
                   />
                 </div>
               </div>
-              <div className="day1-map mapDesc">
+              <div className="mapDesc">
                 <div className="day1-item">
                   <i className="material-icons">location_on</i>
                   { field.detailed_location }
-                  <a href={ dirLoc }> Get Directions</a>
+                  <a href={ dirLoc }>Get Directions</a>
                 </div>
                 <div className="day1-item">
                   <i className="material-icons">person</i>
