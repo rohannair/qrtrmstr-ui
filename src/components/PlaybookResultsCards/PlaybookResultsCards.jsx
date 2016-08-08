@@ -13,7 +13,7 @@ import styles from './playbookResultsCards.css';
 
 const PlaybookResultsCards = (props) => {
 
-  const { totalCards, userInfo, view, validateLink } = props;
+  const { totalCards, view, validateLink } = props;
   const cards = Object.keys(totalCards).map((val) => {
 
     let field = totalCards[val];
@@ -155,11 +155,7 @@ const PlaybookResultsCards = (props) => {
 
 
     case 'intro':
-      const introFilled = {
-        ...field,
-        heading: field.heading.replace('\${user}', userInfo.firstName).replace('Scotia Bank', 'Scotiabank')
-      };
-      return <PlaybookTextCard key={field.slide_number} {...introFilled} />;
+      return <PlaybookTextCard key={field.slide_number} {...field} />;
     default:
       return null;
     }

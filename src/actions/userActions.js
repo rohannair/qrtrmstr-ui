@@ -10,7 +10,8 @@ import {
   USER_DELETED,
   USER_DELETE_ERROR,
   NEW_ROLE_CREATED,
-  NEW_ROLE_ERROR_RETRIEVED
+  NEW_ROLE_ERROR_RETRIEVED,
+  SINGLE_USER_RETRIEVED
 } from '../constants';
 
 // Users Retrieved action
@@ -20,6 +21,15 @@ function usersRetrieved(users = { results: [], total: 0 }) {
     users
   };
 }
+
+function singleUserRetrieved(user = {}) {
+  return {
+    type: SINGLE_USER_RETRIEVED,
+    assignedUser: user
+  };
+}
+
+const retrieveUsers = () => ({type: 'App/RETRIEVING USERS'});
 
 // New User successfully created and retrieved
 function newUserCreated(new_user = {}) {
@@ -103,13 +113,21 @@ export const userDeleteError = (error_msg) => {
 
 // Get All Users
 export const getUsers = (token, offset, limit) =>
-  dispatch => get(`${API_ROOT}users?offset=${offset}&limit=${limit}`, token)
-  .then(data => dispatch(usersRetrieved(data)));
+  dispatch => {
+    dispatch(retrieveUsers());
+
+    get(`${API_ROOT}users?offset=${offset}&limit=${limit}`, token)
+      .then(data => dispatch(usersRetrieved(data)));
+  };
 
 // Single User Call
 export const getSingleUser = (token, id) =>
-  dispatch => get(`${API_ROOT}users/${id}`, token)
-  .then(data => dispatch(usersRetrieved(data)));
+  dispatch => {
+    dispatch({type: 'GETTING SINGLE USERS'});
+
+    get(`${API_ROOT}users/${id}`, token)
+    .then(data => dispatch(singleUserRetrieved(data)));
+  };
 
 // Create new User
 export const createUser = (token, payload) =>

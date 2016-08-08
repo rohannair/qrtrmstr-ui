@@ -9,7 +9,8 @@ import {
   USER_DELETED,
   USER_DELETE_ERROR,
   NEW_ROLE_CREATED,
-  NEW_ROLE_ERROR_RETRIEVED
+  NEW_ROLE_ERROR_RETRIEVED,
+  SINGLE_USER_RETRIEVED
 } from '../constants';
 
 const initialState = {
@@ -23,7 +24,17 @@ const initialState = {
 
 export default function app(state = initialState, action) {
 
-  const { type, users, new_user, error_msg, roles, message, authUrl, deletedUserId, new_role }  = action;
+  const {
+    type,
+    users,
+    new_user,
+    error_msg,
+    roles,
+    message,
+    authUrl,
+    deletedUserId,
+    new_role,
+    assignedUser } = action;
 
   switch (type) {
   case USERS_RETRIEVED:
@@ -115,6 +126,12 @@ export default function app(state = initialState, action) {
       ...state,
       message: null,
       errorMessage: error_msg
+    };
+
+  case SINGLE_USER_RETRIEVED:
+    return {
+      ...state,
+      assignedUser
     };
 
   default:
