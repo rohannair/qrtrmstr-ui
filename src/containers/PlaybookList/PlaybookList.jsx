@@ -37,37 +37,52 @@ import PlaybookListItem from '../../components/PlaybookListItem';
 import MapContainer from '../MapContainer';
 
 class PlaybookList extends Component {
+  constructor(props) {
+    super(props);
 
-  state = {
-    chosenUser: {},
-    loading: false,
-    visibleModal: null,
-    modalData: {},
-    offset: 0,
-    pageNum: 1,
-    perPage: 10,
-    emailTemplates : [
-      {
-        id: '1',
-        displayName: 'Welcome',
-        name: 'welcomeEmail'
-      },
-      {
-        id: '2',
-        displayName: 'General',
-        name: 'generalEmail'
-      }
-    ]
+    this.state = {
+      chosenUser: {},
+      loading: false,
+      visibleModal: null,
+      modalData: {},
+      offset: 0,
+      pageNum: 1,
+      perPage: 10,
+      emailTemplates : [
+        {
+          id: '1',
+          displayName: 'Welcome',
+          name: 'welcomeEmail'
+        },
+        {
+          id: '2',
+          displayName: 'General',
+          name: 'generalEmail'
+        }
+      ]
+    };
   };
 
+  static defaultProps = {
+    users: {
+      results: []
+    },
+
+    playbookList: {
+      results: []
+    }
+  }
+
   componentWillMount() {
-    const { token, dispatch } = this.props;
+    const { token, dispatch, users, playbookList } = this.props;
     const { offset, perPage } = this.state;
 
-    // Select all users
-    dispatch(getUsers(token));
-    // Select all playbooks
-    dispatch(getPlaybooks(token, offset, perPage));
+    console.log('------- TIME FOR CHECKS');
+    console.log('Users', users);
+    if (users.results.length === 0) dispatch(getUsers(token));
+
+    console.log('Playbook List', playbookList);
+    if (playbookList.results.length === 0) dispatch(getPlaybooks(token, offset, perPage));
   };
 
   componentWillReceiveProps(nextProps) {
@@ -77,6 +92,18 @@ class PlaybookList extends Component {
     })
     : null;
   };
+
+  componentDidUpdate() {
+    const { token, dispatch, users, playbookList } = this.props;
+    const { offset, perPage } = this.state;
+
+    console.log('------- TIME FOR CHECKS');
+    console.log('Users', users);
+    if (users.results.length === 0) dispatch(getUsers(token));
+
+    console.log('Playbook List', playbookList);
+    if (playbookList.results.length === 0) dispatch(getPlaybooks(token, offset, perPage));
+  }
 
   render() {
     const { visibleModal } = this.state;

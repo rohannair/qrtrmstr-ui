@@ -15,6 +15,8 @@ export const isSaving = () => {
   };
 };
 
+const retrievePlaybooks = () => ({type: 'App/RETRIEVING PLAYBOOKS'});
+
 const playbookAssigned = (userId, playbookId) =>
   ({ type: PLAYBOOK_ASSIGNMENT_SUCCESS, userId, playbookId });
 const attemptPlaybookAssignment = () =>
@@ -93,8 +95,12 @@ export const duplicatePlaybook = (token, id) =>
 
 // Get All Playbooks
 export const getPlaybooks = (token, offset, limit) =>
-  dispatch => get(`${API_ROOT}playbooks?offset=${offset}&limit=${limit}`, token)
-  .then(data => dispatch(playbooksRetrieved(data)));
+  dispatch => {
+    dispatch(retrievePlaybooks());
+
+    get(`${API_ROOT}playbooks?offset=${offset}&limit=${limit}`, token)
+    .then(data => dispatch(playbooksRetrieved(data)));
+  };
 
 // Create new Playbook
 export const createPlaybook = (token, payload) =>

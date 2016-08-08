@@ -22,6 +22,14 @@ class PlaybookListItem extends Component {
     };
   }
 
+  static defaultProps = {
+    users: []
+  }
+
+  static propTypes = {
+    users: PropTypes.array
+  }
+
   render() {
     const {
       assigned,
