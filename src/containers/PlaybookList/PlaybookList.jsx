@@ -64,10 +64,10 @@ class PlaybookList extends Component {
     const { token, dispatch } = this.props;
     const { offset, perPage } = this.state;
 
-    // Select all playbooks
-    dispatch(getPlaybooks(token, offset, perPage));
     // Select all users
     dispatch(getUsers(token));
+    // Select all playbooks
+    dispatch(getPlaybooks(token, offset, perPage));
   };
 
   componentWillReceiveProps(nextProps) {
