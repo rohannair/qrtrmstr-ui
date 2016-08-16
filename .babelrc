@@ -1,5 +1,5 @@
 {
-  "presets": ["es2015", "stage-0", "react"],
+  "presets": ["modern-browsers", "modern-browsers/safari9", "stage-0", "react"],
   "env": {
     "development": {
       "plugins": [

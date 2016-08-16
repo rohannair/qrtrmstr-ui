@@ -36,10 +36,31 @@ const config = {
 
   module: {
     preLoaders: [
-      { test: /\.jsx?$/, loader: 'eslint', exclude: /node_modules/ }
+      {
+        test: /\.jsx?$/,
+        loader: 'eslint',
+        include: [
+          path.join(__dirname, 'src')
+        ],
+        exclude: [
+          path.join(__dirname, 'node_modules')
+        ]
+      }
     ],
     loaders: [
-      { test: /\.jsx?$/, exclude: /node_modules/, loaders: ['babel'] },
+      {
+        test: /\.jsx?$/,
+        include: [
+          path.join(__dirname, 'src')
+        ],
+        exclude: [
+          path.join(__dirname, 'node_modules')
+        ],
+        loader: 'babel',
+        query: {
+          cacheDirectory: true
+        }
+      },
       { test: /\.html$/, loader: 'file?name=[name].[ext]' },
       { test: /\.css$/, loader: 'style-loader!css?-minimize!postcss' },
       { test: /\.(png|jpg|jpeg|gif|svg)$/, loader: 'url-loader?prefix=img/&limit=5000' },
