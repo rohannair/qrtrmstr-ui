@@ -1,6 +1,6 @@
 const slideTypes = {
   intro: 'Text',
-  bio: 'Biography',
+  bio: 'Input',
   equipment: 'Multi-select',
   knowledgectr: 'Knowledge Center',
   day1agenda: 'Agenda'

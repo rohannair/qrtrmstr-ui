@@ -54,7 +54,7 @@ const PlaybookResultsCards = (props) => {
             </div>
             <div className="body">
               <div className="profileDesc">
-                <strong>Biography:</strong>
+                <strong>Input:</strong>
                 { field.body.options.bio }
               </div>
               <div className="socialMedia">

@@ -27,7 +27,6 @@ const PlaybookBio = (props) => {
         value={ currentBio }
         name='bio'
         onChange={ e => props.onChange(props.slide_number, e.target.name, e.target.value) }
-        placeholder="Tell the team a little bit about yourself..."
       />
     )
   : null;
