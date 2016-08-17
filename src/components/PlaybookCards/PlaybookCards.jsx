@@ -112,6 +112,10 @@ const PlaybookCards = (props) => {
         );
       });
 
+      const status = submittedDocProp[field.slide_number].submitted
+      ? <p>Submitted!</p>
+      : null;
+
       return (
         <Card key={field.slide_number}>
           <h2>{field.heading}</h2>
@@ -120,7 +124,8 @@ const PlaybookCards = (props) => {
             { opts }
           </div>
           <div className="slideFooter">
-            <Button classes="primary sm equipSub" onClick={ submitAction }>Submit</Button>
+            { status }
+            <Button classes="primary sm equipSub" onClick={ () => submitAction(field.slide_number) }>Submit</Button>
           </div>
         </Card>
       );
