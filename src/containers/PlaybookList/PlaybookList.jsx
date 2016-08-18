@@ -12,6 +12,7 @@ import styles from './playbookList.css';
 import {
   getPlaybooks,
   sendPlaybook,
+  reSendPlaybookEmail,
   schedulePlaybook,
   cancelPlaybookEmail,
   duplicatePlaybook,
@@ -146,6 +147,7 @@ class PlaybookList extends Component {
         {...val}
         users={ this.props.users.results }
         sendPlaybook={ this._sendPlaybookToAssignedUser }
+        reSendPlaybook={ this._reSendPlaybook }
         duplicatePlaybook={ this._duplicatePlaybook }
         cancelScheduledPlaybook={ this._cancelScheduledPlaybook }
         showAssignModal={ this._showAssignModal }
@@ -266,6 +268,11 @@ class PlaybookList extends Component {
     };
 
     return dispatch(sendPlaybook(token, emailParams));
+  };
+
+  _reSendPlaybook = (id, userId) => {
+    const { token, dispatch } = this.props;
+    return dispatch(reSendPlaybookEmail(token, id, { userId }));
   };
 
   _schedulePlaybook = (id, { selected, emailTemplate }, sendAt) => {

@@ -81,6 +81,10 @@ export const sendPlaybook = (token, payload) =>
   dispatch => post(`${API_ROOT}playbook/send`, token, payload)
   .then(data => dispatch(playbookModified(data)));
 
+export const reSendPlaybookEmail = (token, id, payload) =>
+  dispatch => post(`${API_ROOT}playbook/resend/${id}`, token, payload)
+  .then(data => dispatch(playbookModified(data)));
+
 export const schedulePlaybook = (token, payload) =>
   dispatch => post(`${API_ROOT}playbook/schedule`, token, payload)
   .then(data => dispatch(playbookModified(data)));
