@@ -46,12 +46,14 @@ const PlaybookResultsCards = (props) => {
       )
       : null;
 
+      const profileImage = field.body.options.profile_image
+      ? <div className="profileImage"><img src={ field.body.options.profile_image.url  } /></div>
+      : null
+
       return (
         <Card key={ field.slide_number } title={field.body.heading}>
           <div className="bio-results">
-            <div className="profileImage">
-              <img src={ field.body.options.profile_image.url } />
-            </div>
+            { profileImage }
             <div className="body">
               <div className="profileDesc">
                 <strong>Input:</strong>
