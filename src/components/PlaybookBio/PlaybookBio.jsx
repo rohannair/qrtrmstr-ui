@@ -12,6 +12,14 @@ const PlaybookBio = (props) => {
   ? props.submittedDoc[slideKey].body.options.bio
   : '';
 
+  const submitStatus = props.submittedDoc
+  ? props.submittedDoc[slideKey].submitted
+  : null;
+
+  const status = submitStatus
+  ? <p>Submitted!</p>
+  : null;
+
   const profilePic = options.profile_image
   ? (
       <Uploader>
@@ -103,7 +111,8 @@ const PlaybookBio = (props) => {
           { bio }
           { social }
           <div className="slideFooter">
-            <Button classes="primary sm" onClick={ props.onSubmit }>Submit</Button>
+            { status }
+            <Button classes="primary sm" onClick={ () => props.onSubmit(props.slide_number) }>Submit</Button>
           </div>
         </div>
       </div>
