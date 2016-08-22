@@ -22,10 +22,12 @@ const PlaybookBio = (props) => {
 
   const profilePic = options.profile_image
   ? (
-      <Uploader>
-        <i className="material-icons">cloud_upload</i>
-        <span>Upload a profile picture</span>
-      </Uploader>
+      <div className="bio-info">
+        <Uploader>
+          <i className="material-icons">cloud_upload</i>
+          <span>Upload a profile picture</span>
+        </Uploader>
+      </div>
     )
   : null;
 
@@ -104,9 +106,7 @@ const PlaybookBio = (props) => {
     <div className="playbookBio">
       <h2>{ props.body.heading }</h2>
       <div className="bio">
-        <div className="bio-info">
-          { props.children }
-        </div>
+        { profilePic }
         <div className="bio-form">
           { bio }
           { social }
