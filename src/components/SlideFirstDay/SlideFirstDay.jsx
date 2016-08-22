@@ -28,7 +28,6 @@ class SlideFirstDay extends Component {
 
   render() {
     const { onAdd, slide_number, body, onChange, heading, date, detailed_location, contact, couponInput } = this.props;
-    const detLoc = detailed_location ? detailed_location : this.state.place.formatted_address;
     const mapBody = this.props.body.map;
     const { mapDesc, startTime, finishTime, desc, errorMessage } = this.state;
 
@@ -77,20 +76,12 @@ class SlideFirstDay extends Component {
               editing={true}
               pos={this.state.pos}
               place={this.state.place}
+              detailed_location={detailed_location}
             />
           </div>
         </div>
         <div className="bodyMap">
           <div className="slideEquipment">
-            <div className="slide-input">
-              <strong>Detailed Location:</strong>
-              <input
-                name="detailed_location"
-                type="text"
-                value={ detLoc }
-                onChange={ e => this._updateFirstDayState(e.target.name, e.target.value) }
-              />
-            </div>
             <div className="slide-input">
               <strong>Contact Title:</strong>
               <input
