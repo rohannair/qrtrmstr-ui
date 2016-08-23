@@ -20,11 +20,11 @@
 
   &-sidebar-container {
     padding-left: 20px;
-    width: 15%;
     margin-top: 20px;
   }
 
   &-sidebar {
+    position: fixed;
 
     @media (max-width: 30em) {
       position: static;
