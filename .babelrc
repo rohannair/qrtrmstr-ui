@@ -1,18 +1,21 @@
 {
   "presets": ["es2015", "stage-0", "react"],
+
   "env": {
     "development": {
       "plugins": [
         "transform-object-rest-spread",
         "transform-class-properties",
-        "react-hot-loader/babel"
+        "react-hot-loader/babel",
+        "babel-plugin-lodash"
       ]
     },
     "production": {
       "plugins": [
         "transform-object-rest-spread",
         "transform-class-properties",
-        "transform-remove-console"
+        "transform-remove-console",
+        "babel-plugin-lodash"
       ]
     }
   }

@@ -4,6 +4,9 @@ import {
   ADD_NEW_PLAYBOOK,
   UPDATE_MESSAGE,
   PLAYBOOK_MODIFIED,
+  PLAYBOOK_ASSIGNMENT_SUCCESS,
+  PLAYBOOK_ASSIGNMENT_PENDING,
+  PLAYBOOK_UNASSIGNMENT_SUCCESS
 } from '../constants';
 
 export const isSaving = () => {
@@ -11,6 +14,30 @@ export const isSaving = () => {
     type: SAVING_PLAYBOOK
   };
 };
+
+const retrievePlaybooks = () => ({type: 'App/RETRIEVING PLAYBOOKS'});
+
+const playbookAssigned = (userId, playbookId) =>
+  ({ type: PLAYBOOK_ASSIGNMENT_SUCCESS, userId, playbookId });
+const attemptPlaybookAssignment = () =>
+  ({ type: PLAYBOOK_ASSIGNMENT_PENDING });
+const playbookUnAssigned = (id) =>
+  ({ type: PLAYBOOK_UNASSIGNMENT_SUCCESS, playbookId: id });
+
+// Playbook Assignment
+export const assignPlaybook = (token, playbookId, userId) =>
+  dispatch => {
+    dispatch(attemptPlaybookAssignment());
+    return post(`${API_ROOT}playbooks/assign`, token, { userId, playbookId })
+    .then(data => dispatch(playbookAssigned(userId, playbookId)));
+  };
+
+export const unAssignPlaybook = (token, playbookId) =>
+  dispatch => {
+    dispatch(attemptPlaybookAssignment());
+    return post(`${API_ROOT}playbooks/assign/delete`, token, { playbookId })
+    .then(({id}) => dispatch(playbookUnAssigned(id)));
+  };
 
 // Playbooks Retrieved action
 function playbooksRetrieved(playbookList = { results: [], total: 0 }) {
@@ -66,14 +93,14 @@ export const duplicatePlaybook = (token, id) =>
   dispatch => post(`${API_ROOT}playbooks/duplicate`, token, {id})
   .then(data => dispatch(addNewPlaybook(data.result)));
 
-export const assignPlaybook = (token, id, userId) =>
-  dispatch => post(`${API_ROOT}playbooks/${id}`, token, { assigned: userId })
-  .then(data => dispatch(playbookModified(data)));
-
 // Get All Playbooks
 export const getPlaybooks = (token, offset, limit) =>
-  dispatch => get(`${API_ROOT}playbooks?offset=${offset}&limit=${limit}`, token)
-  .then(data => dispatch(playbooksRetrieved(data)));
+  dispatch => {
+    dispatch(retrievePlaybooks());
+
+    get(`${API_ROOT}playbooks?offset=${offset}&limit=${limit}`, token)
+    .then(data => dispatch(playbooksRetrieved(data)));
+  };
 
 // Create new Playbook
 export const createPlaybook = (token, payload) =>

@@ -13,7 +13,7 @@ import styles from './playbookResultsCards.css';
 
 const PlaybookResultsCards = (props) => {
 
-  const { totalCards, userInfo, view, validateLink } = props;
+  const { totalCards, view, validateLink } = props;
   const cards = Object.keys(totalCards).map((val) => {
 
     let field = totalCards[val];
@@ -46,15 +46,17 @@ const PlaybookResultsCards = (props) => {
       )
       : null;
 
+      const profileImage = field.body.options.profile_image
+      ? <div className="profileImage"><img src={ field.body.options.profile_image.url  } /></div>
+      : null;
+
       return (
         <Card key={ field.slide_number } title={field.body.heading}>
           <div className="bio-results">
-            <div className="profileImage">
-              <img src={ field.body.options.profile_image.url } />
-            </div>
+            { profileImage }
             <div className="body">
               <div className="profileDesc">
-                <strong>Biography:</strong>
+                <strong>Input:</strong>
                 { field.body.options.bio }
               </div>
               <div className="socialMedia">
@@ -155,11 +157,7 @@ const PlaybookResultsCards = (props) => {
 
 
     case 'intro':
-      const introFilled = {
-        ...field,
-        heading: field.heading.replace('\${user}', userInfo.firstName).replace('Scotia Bank', 'Scotiabank')
-      };
-      return <PlaybookTextCard key={field.slide_number} {...introFilled} />;
+      return <PlaybookTextCard key={field.slide_number} {...field} />;
     default:
       return null;
     }

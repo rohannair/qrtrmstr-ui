@@ -55,8 +55,7 @@ export const reorderPlaybook = (idx, direction) => {
 function singlePlaybookRetrieved(data) {
   return {
     type: SINGLE_PLAYBOOK_RETRIEVED,
-    playbook: data.playbook,
-    users: data.users
+    playbook: data.playbook
   };
 };
 

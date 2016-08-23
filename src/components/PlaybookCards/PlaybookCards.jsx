@@ -44,17 +44,7 @@ const PlaybookCards = (props) => {
 
     let field = fields[val];
     const { slideKey } = findSlideKey(field.slide_number);
-    const submittedPic = slideKey && submittedDocProp[slideKey].body.options.profile_image
-    ? submittedDocProp[slideKey].body.options.profile_image
-    : null;
-    let wrapped = (img) => uploaderFn(field.slide_number, 'profile_image', img);
-    let PlaybookUploader = (
-      <Uploader
-        savedPic={ submittedPic }
-        updateState={ wrapped } >
-        <i className="material-icons">cloud_upload</i>
-      </Uploader>
-    );
+
 
     switch (field.type) {
     case 'option':
@@ -67,6 +57,18 @@ const PlaybookCards = (props) => {
       />);
 
     case 'bio':
+      const submittedPic = slideKey && submittedDocProp[slideKey].body.options.profile_image
+      ? submittedDocProp[slideKey].body.options.profile_image
+      : null;
+      let wrapped = (img) => uploaderFn(field.slide_number, 'profile_image', img);
+      let PlaybookUploader = (
+        <Uploader
+          savedPic={ submittedPic }
+          updateState={ wrapped } >
+          <i className="material-icons">cloud_upload</i>
+        </Uploader>
+      );
+
       return (
         <Card key={ field.slide_number }>
           <PlaybookBio
@@ -74,9 +76,9 @@ const PlaybookCards = (props) => {
             onSubmit={ submitAction }
             onChange={ onChange }
             submittedDoc={ submittedDocProp }
-            findSlideKey={ findSlideKey }>
-            { PlaybookUploader }
-          </PlaybookBio>
+            findSlideKey={ findSlideKey }
+            uploader= { PlaybookUploader }
+          />
         </Card>
       );
 
@@ -112,6 +114,10 @@ const PlaybookCards = (props) => {
         );
       });
 
+      const status = submittedDocProp && submittedDocProp[field.slide_number].submitted
+      ? <p>Submitted!</p>
+      : null;
+
       return (
         <Card key={field.slide_number}>
           <h2>{field.heading}</h2>
@@ -120,7 +126,8 @@ const PlaybookCards = (props) => {
             { opts }
           </div>
           <div className="slideFooter">
-            <Button classes="primary sm equipSub" onClick={ submitAction }>Submit</Button>
+            { status }
+            <Button classes="primary sm equipSub" onClick={ () => submitAction(field.slide_number) }>Submit</Button>
           </div>
         </Card>
       );

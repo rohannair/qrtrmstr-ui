@@ -14,9 +14,20 @@ import { getSingleUser } from '../../actions/userActions';
 import styles from './playbookResults.css';
 
 class PlaybookResults extends Component {
+  constructor(props) {
+    super(props);
 
-  state = {
-    selectedTab: 'completed'
+    this.state = {
+      selectedTab: 'completed'
+    };
+  }
+
+  static defaultProps = {
+    user: {
+      firstName: '',
+      lastName: '',
+    },
+    playbook: {}
   };
 
   componentWillMount() {
@@ -31,7 +42,7 @@ class PlaybookResults extends Component {
   }
 
   render() {
-    const { users, playbook } = this.props;
+    const { user, playbook } = this.props;
     let incompleteCards = {};
     let completedCards = {};
     let unsubmittableCards = {};
@@ -54,36 +65,32 @@ class PlaybookResults extends Component {
       ...unsubmittableCards
     };
 
-    if (users.firstName) {
-      cardsDisplay = this.state.selectedTab === 'completed'
-      ? <PlaybookResultsCards
-          userInfo={ users }
-          view={ this.state.selectedTab }
-          totalCards={ totalCompleted }
-          validateLink={ this._validateLink }
-        />
-      : <PlaybookResultsCards
-          userInfo={ users }
-          view={ this.state.selectedTab }
-          totalCards={ incompleteCards }
-          validateLink={ this._validateLink }
-        />;
-    }
+    cardsDisplay = this.state.selectedTab === 'completed'
+    ? <PlaybookResultsCards
+        view={ this.state.selectedTab }
+        totalCards={ totalCompleted }
+        validateLink={ this._validateLink }
+      />
+    : <PlaybookResultsCards
+        view={ this.state.selectedTab }
+        totalCards={ incompleteCards }
+        validateLink={ this._validateLink }
+      />;
 
-    const userInfo = users ? <div className="textInfoUser"></div> : null;
-    const playbookName = playbook ? <div className="textInfoComp"></div> : null;
+    const userInfo = user ? <div className="textInfoUser"></div> : false;
+    const playbookName = playbook ? <div className="textInfoComp"></div> : false;
     const status = playbook
     ? playbook.percent_submitted * 100 + '%'
     : '';
-    const comTaskClass = this.state.selectedTab === 'completed' ? 'selected' : null;
-    const incomTaskClass = this.state.selectedTab === 'incomplete' ? 'selected' : null;
+    const comTaskClass = this.state.selectedTab === 'completed' ? 'selected' : false;
+    const incomTaskClass = this.state.selectedTab === 'incomplete' ? 'selected' : false;
 
     return (
       <div className="playbook-results">
         <div className="playbook-results-info">
           <div className="playbook-results-single">
             <div className="title">Playbook:</div>
-            <div className="info">{`${users.firstName} ${users.lastName} -  ${playbook ? playbook.name : '' }`}</div>
+            <div className="info">{`${user.firstName} ${user.lastName} -  ${playbook ? playbook.name : '' }`}</div>
           </div>
           <div className="playbook-results-single">
             <div className="title">Status: </div>
@@ -143,7 +150,7 @@ function select(state) {
   return {
     token,
     playbook: state.playbook.playbook,
-    users: state.app.users
+    user: state.app.assignedUser
   };
 }
 
