@@ -27,8 +27,11 @@ export const initialState = {
 export default function playbookView(state = initialState, action) {
 
   const { list } = state;
-  const { cardID,
+  const {
+    cardID,
+    direction,
     data,
+    idx,
     message,
     newPlaybook,
     playbook,
