@@ -46,3 +46,10 @@ ol {
     }
   }
 }
+
+.day1-item {
+
+  p {
+    padding-left: 0;
+  }
+}

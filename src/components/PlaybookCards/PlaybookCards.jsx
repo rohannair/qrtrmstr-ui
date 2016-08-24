@@ -114,7 +114,11 @@ const PlaybookCards = (props) => {
         );
       });
 
-      const status = submittedDocProp && submittedDocProp[field.slide_number].submitted
+      const submitStatus = submittedDocProp
+      ? submittedDocProp[field.slide_number].submitted
+      : null;
+
+      const status = submitStatus
       ? <p>Submitted!</p>
       : null;
 
@@ -171,6 +175,10 @@ const PlaybookCards = (props) => {
         </div>
       : null;
 
+      const fullLocation = field.detailed_location
+      ? `${field.place.formatted_address} - ${field.detailed_location} `
+      : `${field.place.formatted_address}`;
+
       return (
         <Card key={field.slide_number}>
           <h2>{field.heading} - <span>{moment(field.date).format('MMMM D YYYY')}</span></h2>
@@ -188,9 +196,10 @@ const PlaybookCards = (props) => {
               </div>
               <div className="mapDesc">
                 <div className="day1-item">
-                  <i className="material-icons">location_on</i>
-                  { field.detailed_location }
-                  <a href={ dirLoc }>Get Directions</a>
+                  <p><i className="material-icons">location_on</i>
+                  { fullLocation }
+                  </p>
+                  <p><a href={ dirLoc }>Get Directions</a></p>
                 </div>
                 <div className="day1-item">
                   <i className="material-icons">person</i>
