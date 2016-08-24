@@ -33,6 +33,7 @@ export class MapContainer extends React.Component {
             google={this.props.google}
             mapPos={this.props.pos}
             place={this.props.place}
+            detailed_location={this.props.detailed_location}
             editing={this.props.editing} />
         </div>
       );
