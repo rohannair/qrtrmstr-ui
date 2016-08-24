@@ -85,7 +85,7 @@ class PlaybookListItem extends Component {
       case 'sent':
       case 'in progress':
         return (
-          <span>
+          <ButtonGroup>
             <Link to={`/dashboard/playbook/results/${id}`} className="btn inverse sm">
               View Results
               <span>{` (${percent_submitted * 100}%)`}</span>
@@ -94,7 +94,7 @@ class PlaybookListItem extends Component {
               onClick={ () => this.props.reSendPlaybook(this.props.id, this.props.assigned) }
               classes={'tertiary sm'}
             >Re-Send</Button>
-            </span>
+          </ButtonGroup>
         );
 
       case 'scheduled':

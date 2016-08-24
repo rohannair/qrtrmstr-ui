@@ -6,7 +6,8 @@ import {
   PLAYBOOK_MODIFIED,
   PLAYBOOK_ASSIGNMENT_SUCCESS,
   PLAYBOOK_ASSIGNMENT_PENDING,
-  PLAYBOOK_UNASSIGNMENT_SUCCESS
+  PLAYBOOK_UNASSIGNMENT_SUCCESS,
+  ATTEMPT_SENDING_EMAIL
 } from '../constants';
 
 export const isSaving = () => {
@@ -76,14 +77,25 @@ export const reorderPlaybook = (idx, direction) => {
   };
 };
 
+export const attemptSendingPlaybook = () => ({type: ATTEMPT_SENDING_EMAIL});
+
 // Send Playbook To User
 export const sendPlaybook = (token, payload) =>
-  dispatch => post(`${API_ROOT}playbook/send`, token, payload)
-  .then(data => dispatch(playbookModified(data)));
+  dispatch => {
+    dispatch(attemptSendingPlaybook());
+
+    post(`${API_ROOT}playbook/send`, token, payload)
+      .then(data => dispatch(playbookModified(data)));
+  };
+
 
 export const reSendPlaybookEmail = (token, id, payload) =>
-  dispatch => post(`${API_ROOT}playbook/resend/${id}`, token, payload)
-  .then(data => dispatch(playbookModified(data)));
+  dispatch => {
+    dispatch(attemptSendingPlaybook());
+
+    post(`${API_ROOT}playbook/resend/${id}`, token, payload)
+    .then(data => dispatch(playbookModified(data)));
+  };
 
 export const schedulePlaybook = (token, payload) =>
   dispatch => post(`${API_ROOT}playbook/schedule`, token, payload)
