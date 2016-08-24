@@ -27,8 +27,11 @@ export const initialState = {
 export default function playbookView(state = initialState, action) {
 
   const { list } = state;
-  const { cardID,
+  const {
+    cardID,
+    direction,
     data,
+    idx,
     message,
     newPlaybook,
     playbook,
@@ -61,8 +64,8 @@ export default function playbookView(state = initialState, action) {
       ...state,
       list: {
         results: [
-          ...list.results,
-          playbook
+          playbook,
+          ...list.results
         ],
         total: list.total + 1
       }

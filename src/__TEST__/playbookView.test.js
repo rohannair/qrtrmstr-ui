@@ -133,21 +133,22 @@ test(ADD_NEW_PLAYBOOK, t => {
     name: 'My first state',
     list: {
       results: [
-        { id: 0, name: 'Object 0'},
-        { id: 1, name: 'Object 1' }
+        { id: 1, name: 'Object 1'},
+        { id: 0, name: 'Object 0'}
       ],
       total: 2
     }
   };
 
-  t.plan(2);
+  t.plan(3);
 
   t.truthy(playbookView(state, action).list.total === state_after.list.total, 'Increment playbook total count');
+  t.truthy(playbookView(state, action).list.results.length === state_after.list.total, 'Increment playbook total count');
 
   t.deepEqual(
-    playbookView(state, action).list.results,
-    state_after.list.results,
-    'New playbook should be pushed into list'
+    playbookView(state, action),
+    state_after,
+    'New playbook should be pushed onto top of list'
   );
 
 });
@@ -178,8 +179,8 @@ test(ADD_NEW_PLAYBOOK, t => {
     ...firstState,
     list: {
       results: [
-        ...firstState.list.results,
-        action.playbook
+        action.playbook,
+        ...firstState.list.results
       ],
       total: 2
     }
