@@ -64,8 +64,8 @@ export default function playbookView(state = initialState, action) {
       ...state,
       list: {
         results: [
-          ...list.results,
-          playbook
+          playbook,
+          ...list.results
         ],
         total: list.total + 1
       }
