@@ -121,7 +121,8 @@
     "concurrency": 5,
     "failFast": true,
     "require": [
-      "babel-register"
+      "babel-register",
+      "ignore-styles"
     ],
     "babel": "inherit"
   }
