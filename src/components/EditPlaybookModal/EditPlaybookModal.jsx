@@ -13,9 +13,18 @@ import Modal from '../Modal';
 import ButtonGroup from '../ButtonGroup';
 
 class EditPlaybookModal extends Component {
+  constructor(props) {
+    super(props);
 
-  state = {
-    name: this.props.playbook.name || ''
+    this.state = {
+      name: this.props.playbook.name
+    }
+  }
+
+  static defaultProps = {
+    playbook: {
+      name: ''
+    }
   }
 
   render() {
