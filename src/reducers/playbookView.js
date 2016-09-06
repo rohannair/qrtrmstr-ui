@@ -10,6 +10,9 @@ import {
   UPDATE_MESSAGE,
   PLAYBOOK_MODIFIED,
   PLAYBOOK_ORDER_MODIFIED,
+  PLAYBOOK_ASSIGNMENT_SUCCESS,
+  PLAYBOOK_ASSIGNMENT_PENDING,
+  PLAYBOOK_UNASSIGNMENT_SUCCESS
 } from '../constants';
 
 export const initialState = {
@@ -23,18 +26,37 @@ export const initialState = {
 
 export default function playbookView(state = initialState, action) {
 
-  switch (action.type) {
+  const { list } = state;
+  const {
+    cardID,
+    direction,
+    data,
+    idx,
+    message,
+    newPlaybook,
+    playbook,
+    playbookId,
+    playbookList,
+    slideID,
+    slideInfo,
+    slide_number,
+    type,
+    userId
+  } = action;
+
+  let pos, updatedPlaybook; // For position
+
+  switch (type) {
   case PLAYBOOKS_RETRIEVED:
     return {
       ...state,
-      list: action.playbookList
+      list: playbookList
     };
 
   case SINGLE_PLAYBOOK_RETRIEVED:
     return {
       ...state,
-      playbook: action.playbook,
-      users: action.users
+      playbook: playbook
     };
 
   case ADD_NEW_PLAYBOOK:
@@ -42,15 +64,14 @@ export default function playbookView(state = initialState, action) {
       ...state,
       list: {
         results: [
-          ...state.list.results,
-          action.playbook
+          playbook,
+          ...list.results
         ],
-        total: state.list.total + 1
+        total: list.total + 1
       }
     };
 
   case PLAYBOOK_ORDER_MODIFIED:
-    const { idx, direction } = action;
     const totalSlideCount = '' + Object.keys(state.playbook.doc).length - 1;
 
     if ((idx === '0' && direction === 0) || (idx === totalSlideCount && direction === 1)) return state;
@@ -72,19 +93,17 @@ export default function playbookView(state = initialState, action) {
     };
 
   case ADD_SLIDE:
-    const doc = {
-      ...state.playbook.doc,
-      [action.slideID]: {
-        ...action.slideInfo,
-        slide_number: Object.keys(state.playbook.doc).length + 1
-      }
-    };
-
     return {
       ...state,
       playbook: {
         ...state.playbook,
-        doc
+        doc: {
+          ...state.playbook.doc,
+          [slideID]: {
+            ...slideInfo,
+            slide_number: Object.keys(state.playbook.doc).length + 1
+          }
+        }
       }
     };
 
@@ -93,40 +112,32 @@ export default function playbookView(state = initialState, action) {
       ...state,
       playbook: {
         ...state.playbook,
-        doc: omit(state.playbook.doc, [action.slideID])
+        doc: omit(state.playbook.doc, [slideID])
       }
     };
 
   case EDIT_SLIDE:
-    const { slide_number, data } = action;
-    const { playbook } = state;
-
     // If slide doesn't exist (which is weird...)
-    if (!(slide_number in playbook.doc)) return state;
+    if (!(slide_number in state.playbook.doc)) return state;
     return {
       ...state,
       playbook: {
         ...state.playbook,
         doc: {
-          ...playbook.doc,
+          ...state.playbook.doc,
           [slide_number]: {
-            ...playbook.doc[slide_number],
-            ...action.data
+            ...state.playbook.doc[slide_number],
+            ...data
           }
         }
       },
       saveStatus: 'UNSAVED',
     };
 
-    return {
-      ...state,
-      openCards: [...openCards].concat(action.cardID)
-    };
-
   case UPDATE_MESSAGE:
     return {
       ...state,
-      message: action.message
+      message: message
     };
 
   case SAVING_PLAYBOOK:
@@ -135,15 +146,44 @@ export default function playbookView(state = initialState, action) {
       saveStatus: 'SAVING'
     };
 
-  case PLAYBOOK_MODIFIED:
-    const { newPlaybook } = action;
-    const { list } = state;
-    let pos = list.results.length;
-    list.results.forEach((val, ind) => {
-      if (val.id === newPlaybook.result.id) {
-        pos = ind;
+  case PLAYBOOK_UNASSIGNMENT_SUCCESS:
+    pos = list.results.findIndex(val => val.id === playbookId);
+    return {
+      ...state,
+      list: {
+        ...list,
+        results: [
+          ...list.results.slice(0, pos),
+          {
+            ...list.results[pos],
+            assigned: null
+          },
+          ...list.results.slice(pos + 1)
+        ]
       }
-    });
+    };
+
+  case PLAYBOOK_ASSIGNMENT_SUCCESS:
+    pos = list.results.findIndex(val => val.id === playbookId);
+
+    // TODO: return updated list
+    return {
+      ...state,
+      list: {
+        ...list,
+        results: [
+          ...list.results.slice(0, pos),
+          {
+            ...list.results[pos],
+            assigned: userId
+          },
+          ...list.results.slice(pos + 1)
+        ]
+      }
+    };
+
+  case PLAYBOOK_MODIFIED:
+    pos = list.results.findIndex(val => val.id === newPlaybook.result.id);
 
     return {
       ...state,
@@ -160,6 +200,7 @@ export default function playbookView(state = initialState, action) {
       playbook: newPlaybook.result
     };
 
+  case PLAYBOOK_ASSIGNMENT_PENDING:
   default:
     return state;
   }

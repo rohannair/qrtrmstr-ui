@@ -70,7 +70,7 @@ class Playbook extends Component {
     if (Object.keys(slide.body.options).indexOf(key) > -1) {
       updatedSlide = {
         ...slide,
-        submitted: true,
+        submitted: false,
         body: {
           ...slide.body,
           options: {
@@ -108,7 +108,7 @@ class Playbook extends Component {
 
     const updatedSlide = {
       ...slide,
-      submitted: true,
+      submitted: false,
       body: {
         ...slide.body,
         options: newEquipOptions
@@ -118,8 +118,10 @@ class Playbook extends Component {
     return dispatch(editSubmittedPlaybook(slideKey, updatedSlide));
   };
 
-  _onSubmitPlaybook = () => {
+  _onSubmitPlaybook = (slideNum) => {
     const { dispatch, playbook, params } = this.props;
+    const { slide, slideKey } = this._findSlideKey(slideNum);
+    playbook.submitted_doc[slideNum].submitted = true;
     return dispatch(submitPlaybook({submitted_doc: playbook.submitted_doc}, params.playbookID));
   };
 

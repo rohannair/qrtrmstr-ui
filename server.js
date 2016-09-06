@@ -5,16 +5,21 @@ const path                 = require('path');
 const webpack              = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
-const proxy = require('express-http-proxy');
+const Dashboard            = require('webpack-dashboard');
+const DashboardPlugin      = require('webpack-dashboard/plugin');
+const proxy                = require('express-http-proxy');
 
-const compiler             = webpack(config);
-const app                  = express();
+const compiler  = webpack(config);
+const dashboard = new Dashboard();
+compiler.apply(new DashboardPlugin(dashboard.setData));
+const app       = express();
+
 
 app.use(webpackDevMiddleware(compiler, {
   publicPath: config.output.publicPath,
   progress: true,
   noInfo: true,
-  quiet: false,
+  quiet: true,
   stats : {
     colours: true,
     timings: true,
@@ -22,7 +27,7 @@ app.use(webpackDevMiddleware(compiler, {
 }));
 
 app.use(webpackHotMiddleware(compiler, {
-  log: console.log
+  log: () => {}
 }));
 
 app.use('/api', proxy('http://localhost:3000/api'));

@@ -73,7 +73,6 @@ class AssignPlaybookModal extends Component {
 
   _actAndClose = () => {
     const { closeModal, action, playbook } = this.props;
-
     action(playbook.id, this.state);
     closeModal();
   }

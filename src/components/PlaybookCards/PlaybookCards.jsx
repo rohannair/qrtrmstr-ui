@@ -44,17 +44,7 @@ const PlaybookCards = (props) => {
 
     let field = fields[val];
     const { slideKey } = findSlideKey(field.slide_number);
-    const submittedPic = slideKey && submittedDocProp[slideKey].body.options.profile_image
-    ? submittedDocProp[slideKey].body.options.profile_image
-    : null;
-    let wrapped = (img) => uploaderFn(field.slide_number, 'profile_image', img);
-    let PlaybookUploader = (
-      <Uploader
-        savedPic={ submittedPic }
-        updateState={ wrapped } >
-        <i className="material-icons">cloud_upload</i>
-      </Uploader>
-    );
+
 
     switch (field.type) {
     case 'option':
@@ -67,6 +57,18 @@ const PlaybookCards = (props) => {
       />);
 
     case 'bio':
+      const submittedPic = slideKey && submittedDocProp[slideKey].body.options.profile_image
+      ? submittedDocProp[slideKey].body.options.profile_image
+      : null;
+      let wrapped = (img) => uploaderFn(field.slide_number, 'profile_image', img);
+      let PlaybookUploader = (
+        <Uploader
+          savedPic={ submittedPic }
+          updateState={ wrapped } >
+          <i className="material-icons">cloud_upload</i>
+        </Uploader>
+      );
+
       return (
         <Card key={ field.slide_number }>
           <PlaybookBio
@@ -74,9 +76,9 @@ const PlaybookCards = (props) => {
             onSubmit={ submitAction }
             onChange={ onChange }
             submittedDoc={ submittedDocProp }
-            findSlideKey={ findSlideKey }>
-            { PlaybookUploader }
-          </PlaybookBio>
+            findSlideKey={ findSlideKey }
+            uploader= { PlaybookUploader }
+          />
         </Card>
       );
 
@@ -112,6 +114,14 @@ const PlaybookCards = (props) => {
         );
       });
 
+      const submitStatus = submittedDocProp
+      ? submittedDocProp[field.slide_number].submitted
+      : null;
+
+      const status = submitStatus
+      ? <p>Submitted!</p>
+      : null;
+
       return (
         <Card key={field.slide_number}>
           <h2>{field.heading}</h2>
@@ -120,7 +130,8 @@ const PlaybookCards = (props) => {
             { opts }
           </div>
           <div className="slideFooter">
-            <Button classes="primary sm equipSub" onClick={ submitAction }>Submit</Button>
+            { status }
+            <Button classes="primary sm equipSub" onClick={ () => submitAction(field.slide_number) }>Submit</Button>
           </div>
         </Card>
       );
@@ -164,6 +175,10 @@ const PlaybookCards = (props) => {
         </div>
       : null;
 
+      const fullLocation = field.detailed_location
+      ? `${field.place.formatted_address} - ${field.detailed_location} `
+      : `${field.place.formatted_address}`;
+
       return (
         <Card key={field.slide_number}>
           <h2>{field.heading} - <span>{moment(field.date).format('MMMM D YYYY')}</span></h2>
@@ -181,9 +196,10 @@ const PlaybookCards = (props) => {
               </div>
               <div className="mapDesc">
                 <div className="day1-item">
-                  <i className="material-icons">location_on</i>
-                  { field.detailed_location }
-                  <a href={ dirLoc }>Get Directions</a>
+                  <p><i className="material-icons">location_on</i>
+                  { fullLocation }
+                  </p>
+                  <p><a href={ dirLoc }>Get Directions</a></p>
                 </div>
                 <div className="day1-item">
                   <i className="material-icons">person</i>

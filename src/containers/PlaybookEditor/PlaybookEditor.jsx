@@ -158,12 +158,14 @@ class PlaybookEditor extends Component {
         <PlaybookEditorBody>
           { playbookDoc}
         </PlaybookEditorBody>
-        <PlaybookEditorSidebar
-          save={this._savePlaybook}
-          saveStatus={ saveStatus }
-          id={ playbookID }
-          insertNewSlide={this._insertNewSlide}
-        />
+        <div className="playbookEditor-sidebar-container">
+          <PlaybookEditorSidebar
+            save={this._savePlaybook}
+            saveStatus={ saveStatus }
+            id={ playbookID }
+            insertNewSlide={this._insertNewSlide}
+          />
+        </div>
         { RemoveEquipmentDialog }
       </div>
       );

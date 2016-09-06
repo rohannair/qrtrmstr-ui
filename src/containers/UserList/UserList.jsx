@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import styles from './userList.css';
 import Cookies from 'cookies-js';
+import moment from 'moment';
 import ReactPaginate from 'react-paginate';
 
 import Card from '../../components/Card';
@@ -184,7 +185,8 @@ class UserList extends Component {
         last_name: '',
         personal_email: '',
         role_id: '',
-        is_admin: false
+        is_admin: false,
+        start_date: ''
       },
       errorMessage: null
     });
@@ -263,7 +265,8 @@ class UserList extends Component {
     const data = {
       ...newUser,
       username: newUser.personal_email,
-      password: `${newUser.first_name.toLowerCase()}123`
+      password: `${newUser.first_name.toLowerCase()}123`,
+      start_date: +moment(`${newUser.start_date} 09:00`, 'YYYY-MM-DD HH:mm').format('x')
     };
 
     allErrors += formErrors ? `The fields: ${formErrors}cannot be blank. ` : '';

@@ -86,6 +86,18 @@ class NewUserModal extends Component {
               { rolesOptions }
             </select>
           </div>
+
+          <div className="formField">
+            <label>Start Date: </label>
+            <input
+              type="date"
+              className="inputIcon"
+              name="start_date"
+              value={ val.start_date }
+              onChange={ e => onChange(e.target.name, e.target.value) }
+            />
+          </div>
+
            <div className="formField">
             <label>Admin: </label>
               <input

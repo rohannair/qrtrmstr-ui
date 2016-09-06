@@ -31,7 +31,6 @@ class Contents extends React.Component {
     if (position !== prevState.position) {
       this.props.updateState('position', position);
       this.props.updateState('place', place);
-      this.props.updateLocation('detailed_location', place.formatted_address);
     }
   }
 
@@ -81,12 +80,23 @@ class Contents extends React.Component {
       <div className="flexWrapper">
 
         <div className="slide-input">
-          <strong>Location:</strong>
+          <strong>Address:</strong>
           <input
             ref='autocomplete'
             type="text"
             onSubmit={this.onSubmit}
             placeholder={newPlace.formatted_address}
+          />
+        </div>
+
+        <div className="slide-input">
+          <strong>Addtional Location Details:</strong>
+          <input
+            name="detailed_location"
+            type="text"
+            placeholder="(suite #, floor # ...)"
+            value={ this.props.detailed_location }
+            onChange={ e => this.props.updateState('detailed_location', e.target.value)}
           />
         </div>
 
