@@ -4,7 +4,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import NewUserModal from './index.jsx';
-const wrapper = shallow(<NewUserModal/>);
+const wrapper = shallow(<NewUserModal closeModal={() => {}}/>);
 
 test('NewUserModal does not explode', t => {
   t.plan(1);

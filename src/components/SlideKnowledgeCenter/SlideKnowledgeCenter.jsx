@@ -9,10 +9,20 @@ import SlideKnowledgeCenterLink from '../SlideKnowledgeCenterLink';
 import TextBox from '../TextBox';
 
 class SlideKnowledgeCenter extends Component {
-  state = {
-    options: this.props.body.options || [],
-    textAlign: this.props.body.textAlign || 'left'
-  };
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      options: this.props.body.options || [],
+      textAlign: this.props.body.textAlign || 'left'
+    };
+  }
+
+  static defaultProps = {
+    body: {
+      options: ''
+    }
+  }
 
   render() {
 

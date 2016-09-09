@@ -4,6 +4,12 @@ import styles from './mapWidget.css';
 
 class MapWidget extends Component {
 
+  static defaultProps = {
+    place: {
+      name: ''
+    }
+  };
+
   componentDidUpdate(prevProps) {
     if ((this.props.googleMap !== prevProps.googleMap) ||
       (this.props.place !== prevProps.place)) {

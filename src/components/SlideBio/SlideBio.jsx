@@ -9,11 +9,24 @@ import Card from '../Card';
 import TextBox from '../TextBox';
 
 class SlideBio extends Component {
-  state = {
-    heading: this.props.body.heading,
-    desc: this.props.body.desc,
-    textAlign: this.props.body.textAlign || 'left',
-  };
+  constructor(props) {
+    super(props)
+    
+    this.state = {
+      heading: this.props.body.heading,
+      desc: this.props.body.desc,
+      textAlign: this.props.body.textAlign || 'left',
+    };
+  }
+
+  static defaultProps = {
+    body: {
+      heading: ''
+    },
+    body: { 
+      options: []
+    }
+  }
 
   render() {
     const { slide_number, id, onChange } = this.props;

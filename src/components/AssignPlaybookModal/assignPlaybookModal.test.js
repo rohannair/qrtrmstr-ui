@@ -4,7 +4,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import AssignPlaybookModal from './index.jsx';
-const wrapper = shallow(<AssignPlaybookModal/>);
+const wrapper = shallow(<AssignPlaybookModal />);
 
 test('AssignPlaybookModal does not explode', t => {
   t.plan(1);

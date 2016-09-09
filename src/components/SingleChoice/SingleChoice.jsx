@@ -2,7 +2,8 @@ import React from 'react';
 
 import styles from './singleChoice.css';
 
-const SingleChoice = props => {
+const SingleChoice = props => {  
+
   return (
   	<div className="selection">
       <div className="imageContainer">
@@ -15,5 +16,11 @@ const SingleChoice = props => {
     </div>
   );
 };
+
+SingleChoice.defaultProps = {
+  context: {
+    img: ''
+  }
+}
 
 export default SingleChoice;

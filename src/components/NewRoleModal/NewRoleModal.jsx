@@ -10,6 +10,12 @@ import ButtonGroup from '../ButtonGroup';
 
 class NewRoleModal extends Component {
 
+  static defaultProps = {
+    val: {
+      name: ''
+    }
+  };
+
   render() {
     const {
       val,
@@ -27,7 +33,7 @@ class NewRoleModal extends Component {
 
     return (
 
-    <Modal md>
+    <Modal onClose={closeModal} md>
       <div className="newUserModal">
         <h3>Add New Role</h3>
         <div className="modal-body">

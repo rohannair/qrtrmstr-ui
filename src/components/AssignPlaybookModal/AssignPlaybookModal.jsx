@@ -13,9 +13,19 @@ import ButtonGroup from '../ButtonGroup';
 import Modal from '../Modal';
 
 class AssignPlaybookModal extends Component {
+  constructor(props) {
+    super(props);
 
-  state = {
-    selected: this.props.users[0] || {}
+    this.state = {
+      selected: this.props.users
+    };
+  }
+
+  static defaultProps = {
+    users: {},
+    playbook: {
+      name: ''
+    }
   }
 
   componentDidMount() {

@@ -43,4 +43,10 @@ const SlideEquipmentBody = ({ opt, newOption, editOption, deleteOption }) => {
 
 };
 
+SlideEquipmentBody.defaultProps = {
+  opt: {
+    opts: []
+  }
+}
+
 export default SlideEquipmentBody;

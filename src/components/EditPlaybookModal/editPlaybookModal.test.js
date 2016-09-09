@@ -4,7 +4,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import EditPlaybookModal from './index.jsx';
-const wrapper = shallow(<EditPlaybookModal/>);
+const wrapper = shallow(<EditPlaybookModal closeModal={() => {}}/>);
 
 test('EditPlaybookModal does not explode', t => {
   t.plan(1);

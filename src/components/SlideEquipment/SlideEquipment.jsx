@@ -11,10 +11,21 @@ import SlideEquipmentBody from '../SlideEquipmentBody';
 import TextBox from '../TextBox';
 
 class SlideEquipment extends Component {
-  state = {
-    selected: null,
-    textAlign: this.props.body.textAlign || 'left'
-  };
+  constructor(props) {
+    super(props)  
+    
+    this.state = {
+      selected: null,
+      textAlign: this.props.body.textAlign || 'left'
+    };
+  }
+
+  static defaultProps = {
+    body: {
+      textAlign: '',
+      options: []
+    }
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.selected) {

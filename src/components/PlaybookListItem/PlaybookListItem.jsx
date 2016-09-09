@@ -23,7 +23,9 @@ class PlaybookListItem extends Component {
   }
 
   static defaultProps = {
-    users: []
+    users: [],
+    id: '',
+    name: ''
   }
 
   static propTypes = {

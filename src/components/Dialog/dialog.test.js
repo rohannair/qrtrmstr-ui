@@ -1,10 +1,9 @@
-// Testing Dialog
 import test from 'ava';
 import React from 'react';
 import { shallow } from 'enzyme';
 
 import Dialog from './index.jsx';
-const wrapper = shallow(<Dialog/>);
+const wrapper = shallow(<Dialog onClose={() => {}} onAction={() => {}}/>);
 
 test('Dialog does not explode', t => {
   t.plan(1);

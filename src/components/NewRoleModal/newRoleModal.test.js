@@ -1,12 +1,11 @@
-// Testing PasswordReset
 import test from 'ava';
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import PasswordReset from './index.js';
+import NewRoleModal from './index.jsx';
+const wrapper = shallow(<NewRoleModal closeModal={() => {}}/>);
 
-test('PasswordReset does not explode', t => {
-  const wrapper = shallow(<PasswordReset/>);
+test('NewRoleModal does not explode', t => {
   t.plan(1);
   t.deepEqual(wrapper.length, 1, 'It exploded...');
 });

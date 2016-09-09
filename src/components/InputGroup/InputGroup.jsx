@@ -9,7 +9,9 @@ class InputGroup extends Component {
   };
 
   static defaultProps = {
-
+    groupOption: {
+      options: ''
+    }
   };
 
   state = {

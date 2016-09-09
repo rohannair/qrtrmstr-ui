@@ -45,4 +45,10 @@ const SlideKnowledgeCenterVideo = ({ val, i, deleteItem, onChange }) => {
   );
 };
 
+SlideKnowledgeCenterVideo.defaultProps = {
+  val: {
+    id: ''
+  }
+}
+
 export default SlideKnowledgeCenterVideo;

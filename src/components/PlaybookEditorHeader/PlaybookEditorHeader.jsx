@@ -40,4 +40,8 @@ const PlaybookEditorHeader = (props) => {
   );
 };
 
+PlaybookEditorHeader.defaultProps = {
+  val: ''
+}
+
 export default PlaybookEditorHeader;

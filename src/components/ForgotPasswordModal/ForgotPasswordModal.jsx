@@ -1,5 +1,5 @@
 // Deps
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 // Styles
 import classNames from 'classnames';
@@ -13,10 +13,23 @@ import Modal from '../Modal';
 import ButtonGroup from '../ButtonGroup';
 
 class ForgotPasswordModal extends Component {
+  constructor(props) {
+    super(props)
 
-  state = {
-    email: this.props.modalData.email || ''
+    this.state = {
+      email: this.props.modalData.email
+    };
   }
+
+  static defaultProps = {
+    modalData: {
+      email: ''
+    }
+  };
+
+  static propTypes = {
+    closeModal: PropTypes.func.isRequired
+  };
 
   render() {
     const {

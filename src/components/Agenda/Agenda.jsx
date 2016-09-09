@@ -25,7 +25,11 @@ class Agenda extends Component {
       finishTime: moment(finishTime).add(1, 'hour').format('HH:mm'),
       errorMessage: null
     };
+
   }
+
+
+  static defaultProps = {agenda : []}
 
   componentWillReceiveProps(nextProps) {
 

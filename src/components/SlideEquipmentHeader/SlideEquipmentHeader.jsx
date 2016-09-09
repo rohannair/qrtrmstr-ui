@@ -8,9 +8,17 @@ import styles from './slideEquipmentHeader.css';
 import Button from '../Button';
 
 class SlideEquipmentHeader extends Component {
-  state = {
-    editing: false
-  };
+  constructor(props) {
+    super(props)
+    
+    this.state = {
+      editing: false
+    };
+  }
+
+  static defaultProps = {
+    vals: []
+  }
 
   render() {
     const { vals, onClick, onNew, selected, onRemove, onEdit } = this.props;

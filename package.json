@@ -53,6 +53,8 @@
     "img-loader": "^1.2.2",
     "immutable": "^3.8.0",
     "is-dir": "^1.0.0",
+    "jsdom": "9.5.0",
+    "jsdom-global": "2.1.0",
     "lost": "^6.6.2",
     "morgan": "^1.7.0",
     "open": "0.0.5",

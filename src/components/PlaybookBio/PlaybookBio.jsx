@@ -5,6 +5,7 @@ import Button from '../Button';
 import Uploader from '../../containers/Uploader';
 
 const PlaybookBio = (props) => {
+
   const { options } = props.body;
   const { slideKey } = props.findSlideKey(props.slide_number);
 
@@ -118,6 +119,12 @@ const PlaybookBio = (props) => {
       </div>
     </div>
   );
+};
+
+PlaybookBio.defaultProps = {
+  body: {
+    options: ''
+  }
 };
 
 export default PlaybookBio;

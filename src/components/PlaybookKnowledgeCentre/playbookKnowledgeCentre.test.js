@@ -4,7 +4,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import PlaybookKnowledgeCentre from './index.jsx';
-const wrapper = shallow(<PlaybookKnowledgeCentre/>);
+const wrapper = shallow(<PlaybookKnowledgeCentre body={{ options: [ { id: 0 } ] }}/>);
 
 test('PlaybookKnowledgeCentre does not explode', t => {
   t.plan(1);

@@ -1,5 +1,5 @@
 // Deps
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 // Styles
 import classNames from 'classnames';
@@ -18,14 +18,18 @@ class EditPlaybookModal extends Component {
 
     this.state = {
       name: this.props.playbook.name
-    }
+    };
   }
 
   static defaultProps = {
     playbook: {
       name: ''
     }
-  }
+  };
+
+  static propTypes = {
+    closeModal: PropTypes.func.isRequired
+  };
 
   render() {
     const {

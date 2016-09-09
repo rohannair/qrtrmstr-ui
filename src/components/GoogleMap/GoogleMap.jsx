@@ -4,15 +4,24 @@ import ReactDOM from 'react-dom';
 import styles from './googleMap.css';
 
 class GoogleMap extends Component {
+  constructor(props) {
+    super(props);
 
-  state = {
-    currentLocation: {
-      lat: this.props.pos.lat || this.props.initialCenter.lat,
-      lng: this.props.pos.lng || this.props.initialCenter.lng
-    },
-    editing: this.props.editing,
-    googleMap: null,
-    google: this.props.google || null
+    this.state = {
+      currentLocation: {
+        lat: this.props.pos.lat || this.props.initialCenter.lat,
+        lng: this.props.pos.lng || this.props.initialCenter.lng
+      },
+      editing: this.props.editing,
+      googleMap: null,
+      google: this.props.google || null
+    };
+  }
+
+  static defaultProps = {
+    pos: {
+      lat: ''
+    }
   };
 
   componentDidMount() {
